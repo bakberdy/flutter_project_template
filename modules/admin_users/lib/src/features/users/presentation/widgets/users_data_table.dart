@@ -1,10 +1,11 @@
-import 'package:auto_route/auto_route.dart';
+import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:admin_users/src/router/admin_users_routes.dart';
 import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
 import 'package:admin_users/src/features/users/domain/entities/users_query.dart';
+import 'package:admin_users/src/navigation/admin_users_navigation_routes.dart';
 import 'package:admin_users/src/features/users/presentation/extensions/admin_user_localization_x.dart';
 import 'package:admin_users/src/features/users/presentation/widgets/user_status_card.dart';
 import 'package:admin_users/src/features/users/presentation/widgets/user_verified_icon.dart';
@@ -120,7 +121,14 @@ class UsersDataTable extends StatelessWidget {
                 if (!(selected ?? false)) {
                   return;
                 }
-                await context.router.push(UserRoute(userId: user.id));
+                context.read<CoreNavigationBloc>().add(
+                  CoreNavigationEvent.push(
+                    CoreNavigationRoute(
+                      name: AdminUsersNavigationRoutes.user,
+                      pathParameters: {'userId': user.id},
+                    ),
+                  ),
+                );
               },
               cells: [
                 DataCell(
