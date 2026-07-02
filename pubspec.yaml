@@ -2,8 +2,8 @@ name: flutter_project_template_workspace
 publish_to: none
 
 environment:
-  sdk: ^3.12.1
-  flutter: ">=3.44.1"
+  sdk: ^3.12.0
+  flutter: ">=3.44.0"
 
 workspace:
   - apps/client_app

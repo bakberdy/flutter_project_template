@@ -303,7 +303,7 @@
     },
     {
       "name": "flutter",
-      "rootUri": "file:///Users/bakberdi.yessentay/fvm/versions/3.44.1/packages/flutter",
+      "rootUri": "file:///Users/bakberdi.yessentay/fvm/versions/3.44.0/packages/flutter",
       "packageUri": "lib/",
       "languageVersion": "3.10"
     },
@@ -339,7 +339,7 @@
     },
     {
       "name": "flutter_localizations",
-      "rootUri": "file:///Users/bakberdi.yessentay/fvm/versions/3.44.1/packages/flutter_localizations",
+      "rootUri": "file:///Users/bakberdi.yessentay/fvm/versions/3.44.0/packages/flutter_localizations",
       "packageUri": "lib/",
       "languageVersion": "3.10"
     },
@@ -387,13 +387,13 @@
     },
     {
       "name": "flutter_test",
-      "rootUri": "file:///Users/bakberdi.yessentay/fvm/versions/3.44.1/packages/flutter_test",
+      "rootUri": "file:///Users/bakberdi.yessentay/fvm/versions/3.44.0/packages/flutter_test",
       "packageUri": "lib/",
       "languageVersion": "3.10"
     },
     {
       "name": "flutter_web_plugins",
-      "rootUri": "file:///Users/bakberdi.yessentay/fvm/versions/3.44.1/packages/flutter_web_plugins",
+      "rootUri": "file:///Users/bakberdi.yessentay/fvm/versions/3.44.0/packages/flutter_web_plugins",
       "packageUri": "lib/",
       "languageVersion": "3.10"
     },
@@ -873,7 +873,7 @@
     },
     {
       "name": "sky_engine",
-      "rootUri": "file:///Users/bakberdi.yessentay/fvm/versions/3.44.1/bin/cache/pkg/sky_engine",
+      "rootUri": "file:///Users/bakberdi.yessentay/fvm/versions/3.44.0/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
       "languageVersion": "3.10"
     },
@@ -1161,8 +1161,8 @@
     }
   ],
   "generator": "pub",
-  "generatorVersion": "3.12.1",
-  "flutterRoot": "file:///Users/bakberdi.yessentay/fvm/versions/3.44.1",
-  "flutterVersion": "3.44.1",
+  "generatorVersion": "3.12.0",
+  "flutterRoot": "file:///Users/bakberdi.yessentay/fvm/versions/3.44.0",
+  "flutterVersion": "3.44.0",
   "pubCache": "file:///Users/bakberdi.yessentay/.pub-cache"
 }
