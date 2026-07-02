@@ -11,6 +11,8 @@ workspace:
   - modules/core
   - modules/design_system
   - modules/admin_users
+  - modules/admin_auth
+  - modules/client_auth
 
 dev_dependencies:
   flutter_lints: ^6.0.0

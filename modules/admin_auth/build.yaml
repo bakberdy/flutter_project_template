@@ -1,0 +1,34 @@
+targets:
+  $default:
+    builders:
+      json_serializable:
+        options:
+          field_rename: snake
+
+      freezed:
+        generate_for:
+          - lib/src/features/**/domain/entities/**.dart
+          - lib/src/features/**/presentation/bloc/**.dart
+        options:
+          to_json: false
+          from_json: false
+          when: false
+          map: false
+
+      injectable_generator:injectable_builder:
+        options:
+          auto_register: true
+          generate_for_injectable: true
+
+      flutter_gen_runner:
+        options:
+          output: lib/gen/
+          line_length: 120
+
+      auto_route_generator:auto_route_generator:
+        generate_for:
+          - lib/src/features/**/presentation/screens/**.dart
+
+      auto_route_generator:auto_router_generator:
+        generate_for:
+          - lib/src/router/admin_auth_routes.dart

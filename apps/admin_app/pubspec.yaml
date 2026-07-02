@@ -15,10 +15,16 @@ dependencies:
     sdk: flutter
 
   auto_route: ^11.1.0
-  core: ^0.1.0
-  design_system: ^0.1.0
   flutter_bloc: ^9.1.1
   talker_flutter: ^5.1.17
+  injectable: ^3.0.0
+  talker_bloc_logger: ^5.1.17
+  flutter_talker: ^5.1.17
+
+  #modules
+  core: ^0.1.0
+  design_system: ^0.1.0
+  admin_auth: ^0.1.0
   admin_users: ^0.1.0
 
 dev_dependencies:

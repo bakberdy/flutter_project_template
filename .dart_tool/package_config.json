@@ -938,6 +938,12 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "talker_bloc_logger",
+      "rootUri": "file:///Users/bakberdi.yessentay/.pub-cache/hosted/pub.dev/talker_bloc_logger-5.1.17",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
       "name": "talker_flutter",
       "rootUri": "file:///Users/bakberdi.yessentay/.pub-cache/hosted/pub.dev/talker_flutter-5.1.17",
       "packageUri": "lib/",
@@ -1138,6 +1144,18 @@
     {
       "name": "admin_users",
       "rootUri": "../modules/admin_users",
+      "packageUri": "lib/",
+      "languageVersion": "3.12"
+    },
+    {
+      "name": "admin_auth",
+      "rootUri": "../modules/admin_auth",
+      "packageUri": "lib/",
+      "languageVersion": "3.12"
+    },
+    {
+      "name": "client_auth",
+      "rootUri": "../modules/client_auth",
       "packageUri": "lib/",
       "languageVersion": "3.12"
     }

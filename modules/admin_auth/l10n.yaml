@@ -1,0 +1,6 @@
+arb-dir: lib/l10n/
+template-arb-file: admin_auth_en.arb
+output-localization-file: admin_auth_localizations.dart
+output-class: AdminAuthLocalizations
+output-dir: lib/gen/l10n
+nullable-getter: false

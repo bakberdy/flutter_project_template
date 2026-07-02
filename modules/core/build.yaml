@@ -7,7 +7,7 @@ targets:
 
       freezed:
         generate_for:
-          - lib/src/core/bloc/**/**.dart
+          - lib/bloc/**/**.dart
         options:
           to_json: false
           from_json: false

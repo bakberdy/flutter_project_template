@@ -1,0 +1,50 @@
+# Build outputs
+**/build/
+
+# Dart & Flutter
+**/.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub/
+.pub-cache/
+
+# Generated
+**/generated_plugin_registrant.dart
+
+# IDE
+.idea/
+.vscode/
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.*
+
+# Firebase
+**/google-services.json
+**/GoogleService-Info.plist
+**/firebase_options.dart
+
+# Android
+**/key.properties
+**/*.jks
+**/*.keystore
+
+# iOS
+**/*.mobileprovision
+**/*.p12
+**/*.p8
+
+# Fastlane
+**/fastlane/report.xml
+**/fastlane/Preview.html
+**/fastlane/test_output/
+
+# Coverage
+coverage/

@@ -33,7 +33,7 @@ abstract class UsersRemoteDataSource {
 
 @Singleton(as: UsersRemoteDataSource)
 class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
-  const UsersRemoteDataSourceImpl(this._apiClient);
+  const UsersRemoteDataSourceImpl(@Named('protectedApiClient') this._apiClient);
 
   final ApiClient _apiClient;
 
