@@ -10,7 +10,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies();
 
-  Bloc.observer = TalkerBlocObserver();
+  Bloc.observer = TalkerBlocObserver(talker: sl<Talker>());
 
   unawaited(
     Analytics.track(const AnalyticsEvent(name: AnalyticsEventNames.appOpened)),

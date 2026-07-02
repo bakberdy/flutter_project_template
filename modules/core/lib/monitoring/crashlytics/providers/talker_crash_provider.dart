@@ -1,7 +1,10 @@
-import 'package:app_log/app_log.dart';
 import 'package:core/monitoring/crashlytics/crashlytics_provider.dart';
+import 'package:talker/talker.dart';
 
-class ConsoleCrashProvider implements CrashlyticsProvider {
+class TalkerCrashProvider implements CrashlyticsProvider {
+  TalkerCrashProvider(this._talker);
+
+  final Talker _talker;
   String? _userId;
 
   @override
@@ -29,28 +32,23 @@ class ConsoleCrashProvider implements CrashlyticsProvider {
         ? 'Crash recorded: $exception'
         : 'Crash recorded: $exception (${parts.join(', ')})';
 
-    appLog(
-      message,
-      name: 'Crashlytics',
-      error: exception,
-      stackTrace: stackTrace,
-    );
+    _talker.error(message, exception, stackTrace);
   }
 
   @override
   Future<void> log(String message) async {
-    appLog('Crashlytics: $message', name: 'Crashlytics');
+    _talker.info('Crashlytics: $message');
   }
 
   @override
   Future<void> setUserId(String userId) async {
     _userId = userId;
-    appLog('Crashlytics user set: $userId', name: 'Crashlytics');
+    _talker.info('Crashlytics user set: $userId');
   }
 
   @override
   Future<void> clearUserId() async {
     _userId = null;
-    appLog('Crashlytics user cleared', name: 'Crashlytics');
+    _talker.info('Crashlytics user cleared');
   }
 }

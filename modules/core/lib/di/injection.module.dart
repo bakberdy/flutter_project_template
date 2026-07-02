@@ -41,8 +41,10 @@ class CorePackageModule extends _i526.MicroPackageModule {
         () => _i511.TokenStorageImpl(gh<_i558.FlutterSecureStorage>()));
     gh.singleton<_i2.LocalStorage>(
         () => _i862.SharedPreferencesStorage(gh<_i460.SharedPreferences>()));
-    gh.lazySingleton<_i229.ApiClientFactory>(
-        () => coreModule.apiClientFactory(gh<_i229.TokenStorage>()));
+    gh.lazySingleton<_i229.ApiClientFactory>(() => coreModule.apiClientFactory(
+          gh<_i229.TokenStorage>(),
+          gh<_i993.Talker>(),
+        ));
     gh.lazySingleton<_i229.ApiClient>(
       () => coreModule.protectedApiClient(
         gh<_i776.AppConfig>(),

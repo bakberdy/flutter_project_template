@@ -26,8 +26,8 @@ abstract class CoreModule {
   Talker get talker => Talker();
 
   @lazySingleton
-  ApiClientFactory apiClientFactory(TokenStorage tokenStorage) =>
-      ApiClientFactory(tokenStorage: tokenStorage);
+  ApiClientFactory apiClientFactory(TokenStorage tokenStorage, Talker talker) =>
+      ApiClientFactory(tokenStorage: tokenStorage, talker: talker);
 
   @Named('protectedApiClient')
   @lazySingleton

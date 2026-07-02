@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:talker/talker.dart';
+import 'package:talker_dio_logger/talker_dio_logger.dart';
 
 import '../internal/auth_interceptor.dart';
 import '../internal/extensions.dart';

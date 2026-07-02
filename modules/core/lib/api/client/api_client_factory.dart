@@ -1,9 +1,10 @@
 part of 'api_client.dart';
 
 class ApiClientFactory {
-  const ApiClientFactory({required this.tokenStorage});
+  const ApiClientFactory({required this.tokenStorage, required this.talker});
 
   final TokenStorage tokenStorage;
+  final Talker talker;
 
   ApiClient createPublic({required ApiConfig config}) {
     return ApiClient._(_createDio(config: config));
@@ -24,6 +25,16 @@ class ApiClientFactory {
         receiveTimeout: config.receiveTimeout,
         sendTimeout: config.sendTimeout,
         headers: config.defaultHeaders,
+      ),
+    );
+    dio.interceptors.add(
+      TalkerDioLogger(
+        talker: talker,
+        settings: const TalkerDioLoggerSettings(
+          hiddenHeaders: {'authorization'},
+          printRequestHeaders: true,
+          printResponseTime: true,
+        ),
       ),
     );
 

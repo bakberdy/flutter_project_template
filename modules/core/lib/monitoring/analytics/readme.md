@@ -10,7 +10,7 @@ A lightweight, provider-agnostic analytics layer. Events are tracked once and fa
 Analytics.track(event)
     ├── FirebaseAnalyticsProvider
     ├── MixpanelAnalyticsProvider
-    └── ConsoleAnalyticsProvider  ← dev/debug only
+    └── TalkerAnalyticsProvider  ← dev/debug only
 ```
 
 | File | Purpose |
@@ -28,7 +28,7 @@ Register providers once at app startup in `main.dart`:
 ```dart
 Analytics.initialize(
   [
-    ConsoleAnalyticsProvider(),       // dev builds only
+    TalkerAnalyticsProvider(sl<Talker>()), // dev builds only
     FirebaseAnalyticsProvider(),
     MixpanelAnalyticsProvider(mixpanel),
   ],
@@ -118,26 +118,15 @@ on<LoginSubmitted>((event, emit) async {
 
 ## Screen Tracking
 
-Screen views are tracked automatically via `AnalyticsPageObserver` — no manual calls needed.
+Route changes are logged through `TalkerRouteObserver`. Add analytics screen tracking as a normal analytics provider concern when product analytics needs it.
 
-Register the observer in your router:
+Register the Talker route observer in your router:
 
 ```dart
 AutoRouter(
-  navigatorObservers: () => [getIt<AnalyticsPageObserver>()],
+  navigatorObservers: () => [TalkerRouteObserver(sl<Talker>())],
 )
 ```
-
-Each navigation event sends:
-
-| Event | Triggered by | Includes `view_duration_ms`? |
-|---|---|---|
-| `screen_viewed` | push | no |
-| `screen_closed` | pop | ✅ |
-| `screen_replaced` | replace | ✅ (time on old screen) |
-| `screen_removed` | programmatic remove | ✅ |
-| `screen_became_visible` | top route change | no |
-| `tab_changed` | tab switch | no |
 
 ---
 
