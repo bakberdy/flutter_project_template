@@ -6,11 +6,26 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   App({super.key, ClientAppRouter? appRouter})
     : _appRouter = appRouter ?? ClientAppRouter();
 
   final ClientAppRouter _appRouter;
+
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  final ValueNotifier<bool> _showTalkerDock = ValueNotifier<bool>(true);
+
+  ClientAppRouter get _appRouter => widget._appRouter;
+
+  @override
+  void dispose() {
+    _showTalkerDock.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) => MaterialApp.router(
@@ -19,11 +34,21 @@ class App extends StatelessWidget {
         return Stack(
           children: [
             ?child,
-            // Positioned(
-            //   bottom: 20,
-            //   right: 20,
-            //   // child: LogViewerButton(navigatorKey: _appRouter.navigatorKey),
-            // ),
+            ValueListenableBuilder<bool>(
+              valueListenable: _showTalkerDock,
+              builder: (context, showTalkerDock, _) {
+                if (!showTalkerDock) return const SizedBox.shrink();
+
+                return Positioned(
+                  bottom: 20,
+                  right: 20,
+                  child: FloatingActionButton.small(
+                    onPressed: () => _onOpenTalker(context),
+                    child: const Icon(Icons.bug_report_outlined),
+                  ),
+                );
+              },
+            ),
             Align(
               alignment: Alignment.topRight,
               child: Banner(
@@ -48,6 +73,20 @@ class App extends StatelessWidget {
     supportedLocales: LocalizationConsts.supportedLocales,
     localeResolutionCallback: _localeResolutionCallback,
   );
+
+  Future<void> _onOpenTalker(BuildContext context) async {
+    _showTalkerDock.value = false;
+    try {
+      await _appRouter.navigatorKey.currentState?.push(
+        MaterialPageRoute<void>(
+          builder: (_) => TalkerScreen(talker: context.di<Talker>()),
+          settings: const RouteSettings(name: 'TalkerScreen'),
+        ),
+      );
+    } finally {
+      _showTalkerDock.value = true;
+    }
+  }
 
   Locale _localeResolutionCallback(
     Locale? deviceLocale,
