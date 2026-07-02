@@ -1,0 +1,20 @@
+targets:
+  $default:
+    builders:
+      json_serializable:
+        options:
+          field_rename: snake
+
+      freezed:
+        generate_for:
+          - lib/src/core/bloc/**/**.dart
+        options:
+          to_json: false
+          from_json: false
+          when: false
+          map: false
+
+      injectable_generator:injectable_builder:
+        options:
+          auto_register: true
+          generate_for_injectable: true

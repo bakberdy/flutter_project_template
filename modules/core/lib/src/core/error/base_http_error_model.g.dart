@@ -1,0 +1,55 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'base_http_error_model.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+BaseHttpErrorModel _$BaseHttpErrorModelFromJson(Map<String, dynamic> json) =>
+    BaseHttpErrorModel(
+      message: json['message'] as String,
+      code: (json['code'] as num).toInt(),
+      details: BaseHttpErrorModel._detailsFromJson(json['details']),
+    );
+
+BaseHttpErrorDetailsModel _$BaseHttpErrorDetailsModelFromJson(
+  Map<String, dynamic> json,
+) => BaseHttpErrorDetailsModel(
+  statusCode: (json['status_code'] as num).toInt(),
+  fieldErrors: (json['field_errors'] as List<dynamic>?)
+      ?.map((e) => FieldErrorModel.fromJson(e as Map<String, dynamic>))
+      .toList(),
+  type:
+      $enumDecodeNullable(_$FailureTypeEnumMap, json['type']) ??
+      FailureType.snackbar,
+);
+
+const _$FailureTypeEnumMap = {
+  FailureType.snackbar: 'snackbar',
+  FailureType.banner: 'banner',
+  FailureType.inline: 'inline',
+  FailureType.alert: 'alert',
+  FailureType.fullScreen: 'full_screen',
+  FailureType.silent: 'silent',
+};
+
+AuthHttpErrorDetailsModel _$AuthHttpErrorDetailsModelFromJson(
+  Map<String, dynamic> json,
+) => AuthHttpErrorDetailsModel(
+  statusCode: (json['status_code'] as num).toInt(),
+  fieldErrors: (json['field_errors'] as List<dynamic>?)
+      ?.map((e) => FieldErrorModel.fromJson(e as Map<String, dynamic>))
+      .toList(),
+  type:
+      $enumDecodeNullable(_$FailureTypeEnumMap, json['type']) ??
+      FailureType.snackbar,
+  attemptsLeft: (json['attempts_left'] as num?)?.toInt(),
+  blockedUntil: json['blocked_until'] as String?,
+);
+
+FieldErrorModel _$FieldErrorModelFromJson(Map<String, dynamic> json) =>
+    FieldErrorModel(
+      fieldName: json['field_name'] as String,
+      message: json['message'] as String,
+    );

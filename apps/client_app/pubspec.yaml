@@ -1,0 +1,34 @@
+name: client_app
+description: Client Flutter application.
+publish_to: none
+version: 0.1.0+1
+resolution: workspace
+
+environment:
+  sdk: ^3.12.1
+  flutter: ">=3.44.1"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  app_log:
+    git:
+      url: https://github.com/bakberdy/app_log.git
+  auto_route: ^11.1.0
+  core: ^0.1.0
+  design_system: ^0.1.0
+  flutter_bloc: ^9.1.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  auto_route_generator: ^10.5.0
+  build_runner: ^2.13.0
+  flutter_launcher_icons: ^0.14.4
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true

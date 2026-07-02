@@ -1,0 +1,13 @@
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+PaginationMetaModel _$PaginationMetaModelFromJson(Map<String, dynamic> json) =>
+    PaginationMetaModel(
+      page: (json['page'] as num).toInt(),
+      limit: (json['limit'] as num).toInt(),
+      totalItems: (json['total_items'] as num).toInt(),
+      totalPages: (json['total_pages'] as num).toInt(),
+      hasNext: json['has_next'] as bool,
+      hasPrevious: json['has_previous'] as bool,
+    );

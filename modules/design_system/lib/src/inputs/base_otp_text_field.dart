@@ -1,0 +1,119 @@
+import 'package:design_system/src/tokens/design_spacing.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+class BaseOtpTextField extends StatelessWidget {
+  const BaseOtpTextField({
+    super.key,
+    required this.controller,
+    this.length = 6,
+    this.autofocus = true,
+    this.enabled = true,
+    this.errorText,
+    this.onChanged,
+  });
+
+  final TextEditingController controller;
+  final int length;
+  final bool autofocus;
+  final bool enabled;
+  final String? errorText;
+  final ValueChanged<String>? onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            ValueListenableBuilder<TextEditingValue>(
+              valueListenable: controller,
+              builder: (context, value, _) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(length, (index) {
+                    final digit = index < value.text.length
+                        ? value.text[index]
+                        : '';
+                    return Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          left: index == 0 ? 0 : DesignSpacing.xxs,
+                          right: index == length - 1 ? 0 : DesignSpacing.xxs,
+                        ),
+                        child: _OtpDigitSlot(digit: digit),
+                      ),
+                    );
+                  }),
+                );
+              },
+            ),
+            Positioned.fill(
+              child: Opacity(
+                opacity: 0,
+                child: TextField(
+                  controller: controller,
+                  autofocus: autofocus,
+                  enabled: enabled,
+                  keyboardType: TextInputType.number,
+                  textInputAction: TextInputAction.done,
+                  maxLength: length,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    LengthLimitingTextInputFormatter(length),
+                  ],
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    counterText: '',
+                  ),
+                  onChanged: onChanged,
+                ),
+              ),
+            ),
+          ],
+        ),
+        if (errorText case final error?)
+          Padding(
+            padding: const EdgeInsets.only(top: DesignSpacing.xs),
+            child: Text(
+              error,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Theme.of(context).colorScheme.error,
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+class _OtpDigitSlot extends StatelessWidget {
+  const _OtpDigitSlot({required this.digit});
+
+  final String digit;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 64,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            width: 2,
+            color: Theme.of(context).colorScheme.outline,
+          ),
+        ),
+      ),
+      child: Text(
+        digit,
+        style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+          fontWeight: FontWeight.w600,
+          fontFeatures: const [FontFeature.tabularFigures()],
+        ),
+      ),
+    );
+  }
+}
