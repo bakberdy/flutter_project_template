@@ -69,8 +69,8 @@ class _AppState extends State<App> {
     theme: DesignTheme.light(),
     darkTheme: DesignTheme.dark(),
     themeMode: ThemeMode.system,
-    localizationsDelegates: appLocalizationsDelegates,
-    supportedLocales: _supportedLocales,
+    localizationsDelegates: LocalizationConsts.appLocalizationsDelegates,
+    supportedLocales: LocalizationConsts.supportedLocales,
     localeResolutionCallback: _localeResolutionCallback,
   );
 
@@ -97,9 +97,6 @@ class _AppState extends State<App> {
         return locale;
       }
     }
-    return _defaultLocale;
+    return LocalizationConsts.defaultLocale;
   }
 }
-
-const _defaultLocale = Locale('en');
-const _supportedLocales = [Locale('ru'), Locale('kk'), Locale('en')];

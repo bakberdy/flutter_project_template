@@ -1,4 +1,4 @@
-import 'package:client_app/localization/localization_delegates.dart';
+import 'package:client_app/localization/localization_consts.dart';
 import 'package:client_app/router/client_app_router.dart';
 import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';
@@ -44,8 +44,8 @@ class App extends StatelessWidget {
     theme: DesignTheme.light(),
     darkTheme: DesignTheme.dark(),
     themeMode: ThemeMode.system,
-    localizationsDelegates: appLocalizationsDelegates,
-    supportedLocales: _supportedLocales,
+    localizationsDelegates: LocalizationConsts.appLocalizationsDelegates,
+    supportedLocales: LocalizationConsts.supportedLocales,
     localeResolutionCallback: _localeResolutionCallback,
   );
 
@@ -58,9 +58,6 @@ class App extends StatelessWidget {
         return locale;
       }
     }
-    return _defaultLocale;
+    return LocalizationConsts.defaultLocale;
   }
 }
-
-const _defaultLocale = Locale('en');
-const _supportedLocales = [Locale('ru'), Locale('kk'), Locale('en')];

@@ -14,7 +14,6 @@
 
 # IDE
 .idea/
-.vscode/
 
 # macOS
 .DS_Store
@@ -48,3 +47,6 @@
 
 # Coverage
 coverage/
+
+# FVM Version Cache
+.fvm/
