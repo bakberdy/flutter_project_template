@@ -8,6 +8,7 @@ import 'package:talker_bloc_logger/talker_bloc_logger_observer.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await AppConfig.load();
   await configureDependencies();
 
   Bloc.observer = TalkerBlocObserver(talker: sl<Talker>());

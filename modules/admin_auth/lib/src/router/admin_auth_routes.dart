@@ -8,6 +8,6 @@ const adminAuthShellRoute = EmptyShellRoute('AdminAuthShellRoute');
 class AdminAuthRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
-    AutoRoute(page: adminAuthShellRoute.page, path: 'auth'),
+    AutoRoute(page: adminAuthShellRoute.page, path: '/auth'),
   ];
 }

@@ -8,6 +8,6 @@ const clientAuthShellRoute = EmptyShellRoute('ClientAuthShellRoute');
 class ClientAuthRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
-    AutoRoute(page: clientAuthShellRoute.page, path: 'auth'),
+    AutoRoute(page: clientAuthShellRoute.page, path: '/auth'),
   ];
 }
