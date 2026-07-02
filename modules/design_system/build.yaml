@@ -4,4 +4,4 @@ targets:
       flutter_gen_runner:
         options:
           output: lib/gen/
-          line_length: 120
+          line_length: 80

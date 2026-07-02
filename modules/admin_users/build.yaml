@@ -24,7 +24,7 @@ targets:
       flutter_gen_runner:
         options:
           output: lib/gen/
-          line_length: 120
+          line_length: 80
 
       auto_route_generator:auto_route_generator:
         generate_for:

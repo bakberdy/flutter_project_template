@@ -31,44 +31,33 @@ import 'package:core/core.dart' as _i494;
 import 'package:injectable/injectable.dart' as _i526;
 
 class AdminAuthPackageModule extends _i526.MicroPackageModule {
-  // initializes the registration of main-scope dependencies inside of GetIt
+// initializes the registration of main-scope dependencies inside of GetIt
   @override
   _i687.FutureOr<void> init(_i526.GetItHelper gh) {
     gh.singleton<_i921.AuthSessionInvalidator>(
-      () => _i342.AuthSessionInvalidatorImpl(),
-    );
+        () => _i342.AuthSessionInvalidatorImpl());
     gh.singleton<_i655.AuthRemoteDataSource>(
-      () => _i655.AuthRemoteDataSourceImpl(
-        gh<_i494.ApiClient>(instanceName: 'publicApiClient'),
-        gh<_i494.ApiClient>(instanceName: 'protectedApiClient'),
-      ),
-    );
-    gh.singleton<_i318.AuthRepository>(
-      () => _i71.AuthRepositoryImpl(
-        gh<_i655.AuthRemoteDataSource>(),
-        gh<_i494.TokenStorage>(),
-      ),
-    );
+        () => _i655.AuthRemoteDataSourceImpl(
+              gh<_i494.ApiClient>(instanceName: 'publicApiClient'),
+              gh<_i494.ApiClient>(instanceName: 'protectedApiClient'),
+            ));
+    gh.singleton<_i318.AuthRepository>(() => _i71.AuthRepositoryImpl(
+          gh<_i655.AuthRemoteDataSource>(),
+          gh<_i494.TokenStorage>(),
+        ));
     gh.lazySingleton<_i640.AuthLogOutUseCase>(
-      () => _i640.AuthLogOutUseCase(gh<_i318.AuthRepository>()),
-    );
+        () => _i640.AuthLogOutUseCase(gh<_i318.AuthRepository>()));
     gh.lazySingleton<_i38.AuthLoginUseCase>(
-      () => _i38.AuthLoginUseCase(gh<_i318.AuthRepository>()),
-    );
+        () => _i38.AuthLoginUseCase(gh<_i318.AuthRepository>()));
     gh.lazySingleton<_i751.AuthRefreshTokenUseCase>(
-      () => _i751.AuthRefreshTokenUseCase(gh<_i318.AuthRepository>()),
-    );
+        () => _i751.AuthRefreshTokenUseCase(gh<_i318.AuthRepository>()));
     gh.lazySingleton<_i80.AuthSetNotificationTokenUseCase>(
-      () => _i80.AuthSetNotificationTokenUseCase(gh<_i318.AuthRepository>()),
-    );
+        () => _i80.AuthSetNotificationTokenUseCase(gh<_i318.AuthRepository>()));
     gh.lazySingleton<_i1060.AuthVerifyUseCase>(
-      () => _i1060.AuthVerifyUseCase(gh<_i318.AuthRepository>()),
-    );
-    gh.factory<_i580.AuthBloc>(
-      () => _i580.AuthBloc(
-        gh<_i38.AuthLoginUseCase>(),
-        gh<_i1060.AuthVerifyUseCase>(),
-      ),
-    );
+        () => _i1060.AuthVerifyUseCase(gh<_i318.AuthRepository>()));
+    gh.factory<_i580.AuthBloc>(() => _i580.AuthBloc(
+          gh<_i38.AuthLoginUseCase>(),
+          gh<_i1060.AuthVerifyUseCase>(),
+        ));
   }
 }

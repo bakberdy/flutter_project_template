@@ -1,4 +1,4 @@
-// dart format width=120
+// dart format width=80
 
 /// GENERATED CODE - DO NOT MODIFY BY HAND
 /// *****************************************************
@@ -15,7 +15,8 @@ class $AssetsIconsGen {
   const $AssetsIconsGen();
 
   /// Directory path: assets/icons/country_flags
-  $AssetsIconsCountryFlagsGen get countryFlags => const $AssetsIconsCountryFlagsGen();
+  $AssetsIconsCountryFlagsGen get countryFlags =>
+      const $AssetsIconsCountryFlagsGen();
 
   /// Directory path: assets/icons/general
   $AssetsIconsGeneralGen get general => const $AssetsIconsGeneralGen();
@@ -25,13 +26,16 @@ class $AssetsLauncherIconGen {
   const $AssetsLauncherIconGen();
 
   /// File path: assets/launcher_icon/development.png
-  AssetGenImage get development => const AssetGenImage('assets/launcher_icon/development.png');
+  AssetGenImage get development =>
+      const AssetGenImage('assets/launcher_icon/development.png');
 
   /// File path: assets/launcher_icon/production.png
-  AssetGenImage get production => const AssetGenImage('assets/launcher_icon/production.png');
+  AssetGenImage get production =>
+      const AssetGenImage('assets/launcher_icon/production.png');
 
   /// File path: assets/launcher_icon/staging.png
-  AssetGenImage get staging => const AssetGenImage('assets/launcher_icon/staging.png');
+  AssetGenImage get staging =>
+      const AssetGenImage('assets/launcher_icon/staging.png');
 
   /// List of all assets
   List<AssetGenImage> get values => [development, production, staging];
@@ -41,35 +45,48 @@ class $AssetsIconsCountryFlagsGen {
   const $AssetsIconsCountryFlagsGen();
 
   /// File path: assets/icons/country_flags/kazakhstan.png
-  AssetGenImage get kazakhstan => const AssetGenImage('assets/icons/country_flags/kazakhstan.png');
+  AssetGenImage get kazakhstan =>
+      const AssetGenImage('assets/icons/country_flags/kazakhstan.png');
 
   /// File path: assets/icons/country_flags/russia.png
-  AssetGenImage get russia => const AssetGenImage('assets/icons/country_flags/russia.png');
+  AssetGenImage get russia =>
+      const AssetGenImage('assets/icons/country_flags/russia.png');
 
   /// File path: assets/icons/country_flags/united_kingdom.png
-  AssetGenImage get unitedKingdom => const AssetGenImage('assets/icons/country_flags/united_kingdom.png');
+  AssetGenImage get unitedKingdom =>
+      const AssetGenImage('assets/icons/country_flags/united_kingdom.png');
 
   /// File path: assets/icons/country_flags/united_states.png
-  AssetGenImage get unitedStates => const AssetGenImage('assets/icons/country_flags/united_states.png');
+  AssetGenImage get unitedStates =>
+      const AssetGenImage('assets/icons/country_flags/united_states.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [kazakhstan, russia, unitedKingdom, unitedStates];
+  List<AssetGenImage> get values => [
+    kazakhstan,
+    russia,
+    unitedKingdom,
+    unitedStates,
+  ];
 }
 
 class $AssetsIconsGeneralGen {
   const $AssetsIconsGeneralGen();
 
   /// File path: assets/icons/general/filter.png
-  AssetGenImage get filter => const AssetGenImage('assets/icons/general/filter.png');
+  AssetGenImage get filter =>
+      const AssetGenImage('assets/icons/general/filter.png');
 
   /// File path: assets/icons/general/location_point.png
-  AssetGenImage get locationPoint => const AssetGenImage('assets/icons/general/location_point.png');
+  AssetGenImage get locationPoint =>
+      const AssetGenImage('assets/icons/general/location_point.png');
 
   /// File path: assets/icons/general/route.png
-  AssetGenImage get route => const AssetGenImage('assets/icons/general/route.png');
+  AssetGenImage get route =>
+      const AssetGenImage('assets/icons/general/route.png');
 
   /// File path: assets/icons/general/sort.png
-  AssetGenImage get sort => const AssetGenImage('assets/icons/general/sort.png');
+  AssetGenImage get sort =>
+      const AssetGenImage('assets/icons/general/sort.png');
 
   /// List of all assets
   List<AssetGenImage> get values => [filter, locationPoint, route, sort];
@@ -85,7 +102,12 @@ class Assets {
 }
 
 class AssetGenImage {
-  const AssetGenImage(this._assetName, {this.size, this.flavors = const {}, this.animation});
+  const AssetGenImage(
+    this._assetName, {
+    this.size,
+    this.flavors = const {},
+    this.animation,
+  });
 
   final String _assetName;
 
@@ -115,7 +137,8 @@ class AssetGenImage {
     bool matchTextDirection = false,
     bool gaplessPlayback = true,
     bool isAntiAlias = false,
-    @Deprecated('Do not specify package for a generated library asset') String? package = package,
+    @Deprecated('Do not specify package for a generated library asset')
+    String? package = package,
     FilterQuality filterQuality = FilterQuality.medium,
     int? cacheWidth,
     int? cacheHeight,
@@ -150,7 +173,8 @@ class AssetGenImage {
 
   ImageProvider provider({
     AssetBundle? bundle,
-    @Deprecated('Do not specify package for a generated library asset') String? package = package,
+    @Deprecated('Do not specify package for a generated library asset')
+    String? package = package,
   }) {
     return AssetImage(_assetName, bundle: bundle, package: package);
   }
@@ -161,7 +185,11 @@ class AssetGenImage {
 }
 
 class AssetGenImageAnimation {
-  const AssetGenImageAnimation({required this.isAnimation, required this.duration, required this.frames});
+  const AssetGenImageAnimation({
+    required this.isAnimation,
+    required this.duration,
+    required this.frames,
+  });
 
   final bool isAnimation;
   final Duration duration;
