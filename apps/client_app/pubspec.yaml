@@ -23,7 +23,6 @@ dependencies:
   design_system: ^0.1.0
   client_auth: ^0.1.0
   talker_flutter: ^5.1.17
-  talker_bloc_logger: ^5.1.17
 
 
 dev_dependencies:

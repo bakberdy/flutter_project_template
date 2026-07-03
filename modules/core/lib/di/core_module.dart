@@ -4,7 +4,7 @@ import 'package:core/api/api.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:talker/talker.dart';
+import 'package:talker_flutter/talker_flutter.dart';
 
 @module
 abstract class CoreModule {
@@ -23,7 +23,7 @@ abstract class CoreModule {
   FlutterSecureStorage get secureStorage => const FlutterSecureStorage();
 
   @singleton
-  Talker get talker => Talker();
+  Talker get talker => TalkerFlutter.init();
 
   @lazySingleton
   ApiClientFactory apiClientFactory(TokenStorage tokenStorage, Talker talker) =>

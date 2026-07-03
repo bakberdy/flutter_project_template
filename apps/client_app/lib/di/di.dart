@@ -11,4 +11,6 @@ import 'di.config.dart';
     ExternalModule(ClientAuthPackageModule),
   ],
 )
-Future<void> configureDependencies() async => sl.init();
+Future<void> configureDependencies() async {
+  await sl.init();
+}
