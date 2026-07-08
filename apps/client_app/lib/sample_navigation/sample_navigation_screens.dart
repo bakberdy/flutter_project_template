@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:client_app/sample_navigation/sample_navigation_routes.dart';
+import 'package:client_app/router/client_app_router.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,54 +17,55 @@ class SampleHomeScreen extends StatelessWidget {
         _SampleAction(
           title: 'Push root screen',
           subtitle: 'Pushes a normal page on the root stack.',
-          onTap: () => context.pushSampleRoute(
-            const CoreNavigationRoute(
-              name: SampleNavigationRoutes.push,
-              pathParameters: {'id': 'root-1'},
-            ),
+          onTap: () => context.read<CoreNavigationBloc>().add(
+            CoreNavigationEvent.push(SamplePushRoute(id: 'root-1')),
           ),
         ),
         _SampleAction(
           title: 'Open shell initial child',
           subtitle: 'Opens a nested stack shell at its initial child.',
-          onTap: () => context.pushSampleRoute(
-            const CoreNavigationRoute(name: SampleNavigationRoutes.shell),
+          onTap: () => context.read<CoreNavigationBloc>().add(
+            const CoreNavigationEvent.push(SampleShellRoute()),
           ),
         ),
         _SampleAction(
           title: 'Open shell details',
           subtitle: 'Deep-links into a nested child with a path parameter.',
-          onTap: () => context.pushSampleRoute(
-            const CoreNavigationRoute(
-              name: SampleNavigationRoutes.shellDetails,
-              pathParameters: {'id': 'shell-42'},
+          onTap: () => context.read<CoreNavigationBloc>().add(
+            CoreNavigationEvent.push(
+              SampleShellRoute(
+                children: [SampleShellDetailsRoute(id: 'shell-42')],
+              ),
             ),
           ),
         ),
         _SampleAction(
           title: 'Open tab shell',
           subtitle: 'Shows a tab shell with independent child routers.',
-          onTap: () => context.pushSampleRoute(
-            const CoreNavigationRoute(name: SampleNavigationRoutes.tabs),
+          onTap: () => context.read<CoreNavigationBloc>().add(
+            const CoreNavigationEvent.push(SampleTabsRoute()),
           ),
         ),
         _SampleAction(
           title: 'Open tab child details',
           subtitle: 'Deep-links into a child route inside the first tab.',
-          onTap: () => context.pushSampleRoute(
-            const CoreNavigationRoute(
-              name: SampleNavigationRoutes.tabOneDetails,
-              pathParameters: {'id': 'tab-7'},
+          onTap: () => context.read<CoreNavigationBloc>().add(
+            CoreNavigationEvent.push(
+              SampleTabsRoute(
+                children: [
+                  SampleTabOneShellRoute(
+                    children: [SampleTabOneDetailsRoute(id: 'tab-7')],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
         _SampleAction(
           title: 'Push with result',
           subtitle: 'Pushes a page that pops with a result through core nav.',
-          onTap: () => context.pushSampleRoute(
-            const CoreNavigationRoute(
-              name: SampleNavigationRoutes.resultPicker,
-            ),
+          onTap: () => context.read<CoreNavigationBloc>().add(
+            const CoreNavigationEvent.push(SampleResultPickerRoute()),
           ),
         ),
       ],
@@ -86,16 +87,15 @@ class SamplePushScreen extends StatelessWidget {
       value: id,
       actions: [
         FilledButton(
-          onPressed: () => context.pushSampleRoute(
-            const CoreNavigationRoute(
-              name: SampleNavigationRoutes.push,
-              pathParameters: {'id': 'root-2'},
-            ),
+          onPressed: () => context.read<CoreNavigationBloc>().add(
+            CoreNavigationEvent.push(SamplePushRoute(id: 'root-2')),
           ),
           child: const Text('Push another root screen'),
         ),
         OutlinedButton(
-          onPressed: () => context.popSampleRoute(),
+          onPressed: () => context.read<CoreNavigationBloc>().add(
+            const CoreNavigationEvent.pop(),
+          ),
           child: const Text('Pop'),
         ),
       ],
@@ -127,20 +127,18 @@ class SampleShellHomeScreen extends StatelessWidget {
     value: 'This screen is rendered inside SampleShellRoute.',
     actions: [
       FilledButton(
-        onPressed: () => context.pushSampleRoute(
-          const CoreNavigationRoute(
-            name: SampleNavigationRoutes.shellDetails,
-            pathParameters: {'id': 'child-1'},
+        onPressed: () => context.read<CoreNavigationBloc>().add(
+          CoreNavigationEvent.push(
+            SampleShellRoute(
+              children: [SampleShellDetailsRoute(id: 'child-1')],
+            ),
           ),
         ),
         child: const Text('Push shell child'),
       ),
       OutlinedButton(
-        onPressed: () => context.pushSampleRoute(
-          const CoreNavigationRoute(
-            name: SampleNavigationRoutes.push,
-            pathParameters: {'id': 'from-shell'},
-          ),
+        onPressed: () => context.read<CoreNavigationBloc>().add(
+          CoreNavigationEvent.push(SamplePushRoute(id: 'from-shell')),
         ),
         child: const Text('Push root from shell'),
       ),
@@ -163,16 +161,19 @@ class SampleShellDetailsScreen extends StatelessWidget {
     value: id,
     actions: [
       FilledButton(
-        onPressed: () => context.pushSampleRoute(
-          const CoreNavigationRoute(
-            name: SampleNavigationRoutes.shellDetails,
-            pathParameters: {'id': 'child-2'},
+        onPressed: () => context.read<CoreNavigationBloc>().add(
+          CoreNavigationEvent.push(
+            SampleShellRoute(
+              children: [SampleShellDetailsRoute(id: 'child-2')],
+            ),
           ),
         ),
         child: const Text('Replace sibling path'),
       ),
       OutlinedButton(
-        onPressed: () => context.popSampleRoute(),
+        onPressed: () => context.read<CoreNavigationBloc>().add(
+          const CoreNavigationEvent.pop(),
+        ),
         child: const Text('Pop shell child'),
       ),
     ],
@@ -233,20 +234,22 @@ class SampleTabOneHomeScreen extends StatelessWidget {
     value: 'This tab owns its own nested stack.',
     actions: [
       FilledButton(
-        onPressed: () => context.pushSampleRoute(
-          const CoreNavigationRoute(
-            name: SampleNavigationRoutes.tabOneDetails,
-            pathParameters: {'id': 'tab-one-1'},
+        onPressed: () => context.read<CoreNavigationBloc>().add(
+          CoreNavigationEvent.push(
+            SampleTabsRoute(
+              children: [
+                SampleTabOneShellRoute(
+                  children: [SampleTabOneDetailsRoute(id: 'tab-one-1')],
+                ),
+              ],
+            ),
           ),
         ),
         child: const Text('Push tab child'),
       ),
       OutlinedButton(
-        onPressed: () => context.pushSampleRoute(
-          const CoreNavigationRoute(
-            name: SampleNavigationRoutes.push,
-            pathParameters: {'id': 'from-tab'},
-          ),
+        onPressed: () => context.read<CoreNavigationBloc>().add(
+          CoreNavigationEvent.push(SamplePushRoute(id: 'from-tab')),
         ),
         child: const Text('Push root from tab'),
       ),
@@ -269,16 +272,23 @@ class SampleTabOneDetailsScreen extends StatelessWidget {
     value: id,
     actions: [
       FilledButton(
-        onPressed: () => context.pushSampleRoute(
-          const CoreNavigationRoute(
-            name: SampleNavigationRoutes.tabOneDetails,
-            pathParameters: {'id': 'tab-one-2'},
+        onPressed: () => context.read<CoreNavigationBloc>().add(
+          CoreNavigationEvent.push(
+            SampleTabsRoute(
+              children: [
+                SampleTabOneShellRoute(
+                  children: [SampleTabOneDetailsRoute(id: 'tab-one-2')],
+                ),
+              ],
+            ),
           ),
         ),
         child: const Text('Push sibling details'),
       ),
       OutlinedButton(
-        onPressed: () => context.popSampleRoute(),
+        onPressed: () => context.read<CoreNavigationBloc>().add(
+          const CoreNavigationEvent.pop(),
+        ),
         child: const Text('Pop tab child'),
       ),
     ],
@@ -295,8 +305,8 @@ class SampleTabTwoScreen extends StatelessWidget {
     value: 'Second tab without nested children.',
     actions: [
       FilledButton(
-        onPressed: () => context.pushSampleRoute(
-          const CoreNavigationRoute(name: SampleNavigationRoutes.resultPicker),
+        onPressed: () => context.read<CoreNavigationBloc>().add(
+          const CoreNavigationEvent.push(SampleResultPickerRoute()),
         ),
         child: const Text('Push result picker on root'),
       ),
@@ -317,31 +327,27 @@ class SampleResultPickerScreen extends StatelessWidget {
         _SampleAction(
           title: 'Return approved',
           subtitle: 'Pops this route with a String result.',
-          onTap: () => context.popSampleRoute('approved'),
+          onTap: () => context.read<CoreNavigationBloc>().add(
+            const CoreNavigationEvent.pop(result: 'approved'),
+          ),
         ),
         _SampleAction(
           title: 'Return declined',
           subtitle: 'Pops this route with a different String result.',
-          onTap: () => context.popSampleRoute('declined'),
+          onTap: () => context.read<CoreNavigationBloc>().add(
+            const CoreNavigationEvent.pop(result: 'declined'),
+          ),
         ),
         _SampleAction(
           title: 'Cancel',
           subtitle: 'Pops this route without a result.',
-          onTap: () => context.popSampleRoute(),
+          onTap: () => context.read<CoreNavigationBloc>().add(
+            const CoreNavigationEvent.pop(),
+          ),
         ),
       ],
     ),
   );
-}
-
-extension _SampleNavigationBuildContextX on BuildContext {
-  void pushSampleRoute(CoreNavigationRoute route) {
-    read<CoreNavigationBloc>().add(CoreNavigationEvent.push(route));
-  }
-
-  void popSampleRoute([Object? result]) {
-    read<CoreNavigationBloc>().add(CoreNavigationEvent.pop(result: result));
-  }
 }
 
 class _SampleScaffold extends StatelessWidget {

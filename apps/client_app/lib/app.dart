@@ -1,7 +1,5 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:client_app/localization/localization_consts.dart';
 import 'package:client_app/router/client_app_router.dart';
-import 'package:client_app/sample_navigation/sample_navigation_routes.dart';
 import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/foundation.dart';
@@ -102,18 +100,15 @@ class _AppState extends State<App> {
 
     switch (command) {
       case PushNavigationCommand(:final route):
-        await _appRouter.push(_toAutoRoute(route));
+        await _appRouter.push(route);
       case ReplaceNavigationCommand(:final route):
-        await _appRouter.replace(_toAutoRoute(route));
+        await _appRouter.replace(route);
       case ReplaceAllNavigationCommand(:final routes):
-        await _appRouter.replaceAll(routes.map(_toAutoRoute).toList());
+        await _appRouter.replaceAll(routes);
       case PopNavigationCommand(:final result):
-        await _appRouter.maybePop(result);
-      case PopUntilNavigationCommand(:final match):
-        _appRouter.popUntil((route) {
-          final coreRoute = _fromAutoRouteName(route.settings.name);
-          return coreRoute != null && match.matches(coreRoute);
-        });
+        await _appRouter.maybePopTop(result);
+      case PopUntilNavigationCommand(:final route):
+        _appRouter.popUntilRouteWithName(route.routeName, scoped: false);
       case OpenDeepLinkNavigationCommand(:final uri):
         await _appRouter.pushPath(uri.toString());
     }
@@ -125,55 +120,6 @@ class _AppState extends State<App> {
       CoreNavigationEvent.commandHandled(command.id),
     );
   }
-
-  PageRouteInfo<void> _toAutoRoute(CoreNavigationRoute route) =>
-      switch (route.name) {
-        SampleNavigationRoutes.home => const SampleHomeRoute(),
-        SampleNavigationRoutes.push => SamplePushRoute(
-          id: route.pathParameters['id']!,
-        ),
-        SampleNavigationRoutes.resultPicker => const SampleResultPickerRoute(),
-        SampleNavigationRoutes.shell => const SampleShellRoute(),
-        SampleNavigationRoutes.shellDetails => SampleShellRoute(
-          children: [SampleShellDetailsRoute(id: route.pathParameters['id']!)],
-        ),
-        SampleNavigationRoutes.tabs => const SampleTabsRoute(),
-        SampleNavigationRoutes.tabOneDetails => SampleTabsRoute(
-          children: [
-            SampleTabOneShellRoute(
-              children: [
-                SampleTabOneDetailsRoute(id: route.pathParameters['id']!),
-              ],
-            ),
-          ],
-        ),
-        _ => throw UnsupportedError('Unknown client route: ${route.name}'),
-      };
-
-  CoreNavigationRoute? _fromAutoRouteName(String? name) => switch (name) {
-    SampleHomeRoute.name => const CoreNavigationRoute(
-      name: SampleNavigationRoutes.home,
-    ),
-    SamplePushRoute.name => const CoreNavigationRoute(
-      name: SampleNavigationRoutes.push,
-    ),
-    SampleResultPickerRoute.name => const CoreNavigationRoute(
-      name: SampleNavigationRoutes.resultPicker,
-    ),
-    SampleShellRoute.name => const CoreNavigationRoute(
-      name: SampleNavigationRoutes.shell,
-    ),
-    SampleShellDetailsRoute.name => const CoreNavigationRoute(
-      name: SampleNavigationRoutes.shellDetails,
-    ),
-    SampleTabsRoute.name => const CoreNavigationRoute(
-      name: SampleNavigationRoutes.tabs,
-    ),
-    SampleTabOneDetailsRoute.name => const CoreNavigationRoute(
-      name: SampleNavigationRoutes.tabOneDetails,
-    ),
-    _ => null,
-  };
 
   Future<void> _onOpenTalker(BuildContext context) async {
     _showTalkerDock.value = false;

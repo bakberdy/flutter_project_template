@@ -81,7 +81,7 @@ class PushNavigationCommand extends CoreNavigationCommand {
   
 
 @override final  int id;
- final  CoreNavigationRoute route;
+ final  PageRouteInfo<dynamic> route;
 
 /// Create a copy of CoreNavigationCommand
 /// with the given fields replaced by the non-null parameter values.
@@ -113,11 +113,11 @@ abstract mixin class $PushNavigationCommandCopyWith<$Res> implements $CoreNaviga
   factory $PushNavigationCommandCopyWith(PushNavigationCommand value, $Res Function(PushNavigationCommand) _then) = _$PushNavigationCommandCopyWithImpl;
 @override @useResult
 $Res call({
- int id, CoreNavigationRoute route
+ int id, PageRouteInfo<dynamic> route
 });
 
 
-$CoreNavigationRouteCopyWith<$Res> get route;
+
 
 }
 /// @nodoc
@@ -134,20 +134,11 @@ class _$PushNavigationCommandCopyWithImpl<$Res>
   return _then(PushNavigationCommand(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,route: null == route ? _self.route : route // ignore: cast_nullable_to_non_nullable
-as CoreNavigationRoute,
+as PageRouteInfo<dynamic>,
   ));
 }
 
-/// Create a copy of CoreNavigationCommand
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$CoreNavigationRouteCopyWith<$Res> get route {
-  
-  return $CoreNavigationRouteCopyWith<$Res>(_self.route, (value) {
-    return _then(_self.copyWith(route: value));
-  });
-}
+
 }
 
 /// @nodoc
@@ -158,7 +149,7 @@ class ReplaceNavigationCommand extends CoreNavigationCommand {
   
 
 @override final  int id;
- final  CoreNavigationRoute route;
+ final  PageRouteInfo<dynamic> route;
 
 /// Create a copy of CoreNavigationCommand
 /// with the given fields replaced by the non-null parameter values.
@@ -190,11 +181,11 @@ abstract mixin class $ReplaceNavigationCommandCopyWith<$Res> implements $CoreNav
   factory $ReplaceNavigationCommandCopyWith(ReplaceNavigationCommand value, $Res Function(ReplaceNavigationCommand) _then) = _$ReplaceNavigationCommandCopyWithImpl;
 @override @useResult
 $Res call({
- int id, CoreNavigationRoute route
+ int id, PageRouteInfo<dynamic> route
 });
 
 
-$CoreNavigationRouteCopyWith<$Res> get route;
+
 
 }
 /// @nodoc
@@ -211,32 +202,23 @@ class _$ReplaceNavigationCommandCopyWithImpl<$Res>
   return _then(ReplaceNavigationCommand(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,route: null == route ? _self.route : route // ignore: cast_nullable_to_non_nullable
-as CoreNavigationRoute,
+as PageRouteInfo<dynamic>,
   ));
 }
 
-/// Create a copy of CoreNavigationCommand
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$CoreNavigationRouteCopyWith<$Res> get route {
-  
-  return $CoreNavigationRouteCopyWith<$Res>(_self.route, (value) {
-    return _then(_self.copyWith(route: value));
-  });
-}
+
 }
 
 /// @nodoc
 
 
 class ReplaceAllNavigationCommand extends CoreNavigationCommand {
-  const ReplaceAllNavigationCommand({required this.id, required final  List<CoreNavigationRoute> routes}): _routes = routes,super._();
+  const ReplaceAllNavigationCommand({required this.id, required final  List<PageRouteInfo<dynamic>> routes}): _routes = routes,super._();
   
 
 @override final  int id;
- final  List<CoreNavigationRoute> _routes;
- List<CoreNavigationRoute> get routes {
+ final  List<PageRouteInfo<dynamic>> _routes;
+ List<PageRouteInfo<dynamic>> get routes {
   if (_routes is EqualUnmodifiableListView) return _routes;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_routes);
@@ -273,7 +255,7 @@ abstract mixin class $ReplaceAllNavigationCommandCopyWith<$Res> implements $Core
   factory $ReplaceAllNavigationCommandCopyWith(ReplaceAllNavigationCommand value, $Res Function(ReplaceAllNavigationCommand) _then) = _$ReplaceAllNavigationCommandCopyWithImpl;
 @override @useResult
 $Res call({
- int id, List<CoreNavigationRoute> routes
+ int id, List<PageRouteInfo<dynamic>> routes
 });
 
 
@@ -294,7 +276,7 @@ class _$ReplaceAllNavigationCommandCopyWithImpl<$Res>
   return _then(ReplaceAllNavigationCommand(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,routes: null == routes ? _self._routes : routes // ignore: cast_nullable_to_non_nullable
-as List<CoreNavigationRoute>,
+as List<PageRouteInfo<dynamic>>,
   ));
 }
 
@@ -372,11 +354,11 @@ as int,result: freezed == result ? _self.result : result ,
 
 
 class PopUntilNavigationCommand extends CoreNavigationCommand {
-  const PopUntilNavigationCommand({required this.id, required this.match}): super._();
+  const PopUntilNavigationCommand({required this.id, required this.route}): super._();
   
 
 @override final  int id;
- final  CoreNavigationMatch match;
+ final  PageRouteInfo<dynamic> route;
 
 /// Create a copy of CoreNavigationCommand
 /// with the given fields replaced by the non-null parameter values.
@@ -388,16 +370,16 @@ $PopUntilNavigationCommandCopyWith<PopUntilNavigationCommand> get copyWith => _$
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PopUntilNavigationCommand&&(identical(other.id, id) || other.id == id)&&(identical(other.match, match) || other.match == match));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PopUntilNavigationCommand&&(identical(other.id, id) || other.id == id)&&(identical(other.route, route) || other.route == route));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,match);
+int get hashCode => Object.hash(runtimeType,id,route);
 
 @override
 String toString() {
-  return 'CoreNavigationCommand.popUntil(id: $id, match: $match)';
+  return 'CoreNavigationCommand.popUntil(id: $id, route: $route)';
 }
 
 
@@ -408,11 +390,11 @@ abstract mixin class $PopUntilNavigationCommandCopyWith<$Res> implements $CoreNa
   factory $PopUntilNavigationCommandCopyWith(PopUntilNavigationCommand value, $Res Function(PopUntilNavigationCommand) _then) = _$PopUntilNavigationCommandCopyWithImpl;
 @override @useResult
 $Res call({
- int id, CoreNavigationMatch match
+ int id, PageRouteInfo<dynamic> route
 });
 
 
-$CoreNavigationMatchCopyWith<$Res> get match;
+
 
 }
 /// @nodoc
@@ -425,24 +407,15 @@ class _$PopUntilNavigationCommandCopyWithImpl<$Res>
 
 /// Create a copy of CoreNavigationCommand
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? match = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? route = null,}) {
   return _then(PopUntilNavigationCommand(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,match: null == match ? _self.match : match // ignore: cast_nullable_to_non_nullable
-as CoreNavigationMatch,
+as int,route: null == route ? _self.route : route // ignore: cast_nullable_to_non_nullable
+as PageRouteInfo<dynamic>,
   ));
 }
 
-/// Create a copy of CoreNavigationCommand
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$CoreNavigationMatchCopyWith<$Res> get match {
-  
-  return $CoreNavigationMatchCopyWith<$Res>(_self.match, (value) {
-    return _then(_self.copyWith(match: value));
-  });
-}
+
 }
 
 /// @nodoc
@@ -551,7 +524,7 @@ class _PushRequested implements CoreNavigationEvent {
   const _PushRequested(this.route);
   
 
- final  CoreNavigationRoute route;
+ final  PageRouteInfo<dynamic> route;
 
 /// Create a copy of CoreNavigationEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -583,11 +556,11 @@ abstract mixin class _$PushRequestedCopyWith<$Res> implements $CoreNavigationEve
   factory _$PushRequestedCopyWith(_PushRequested value, $Res Function(_PushRequested) _then) = __$PushRequestedCopyWithImpl;
 @useResult
 $Res call({
- CoreNavigationRoute route
+ PageRouteInfo<dynamic> route
 });
 
 
-$CoreNavigationRouteCopyWith<$Res> get route;
+
 
 }
 /// @nodoc
@@ -603,20 +576,11 @@ class __$PushRequestedCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') $Res call({Object? route = null,}) {
   return _then(_PushRequested(
 null == route ? _self.route : route // ignore: cast_nullable_to_non_nullable
-as CoreNavigationRoute,
+as PageRouteInfo<dynamic>,
   ));
 }
 
-/// Create a copy of CoreNavigationEvent
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$CoreNavigationRouteCopyWith<$Res> get route {
-  
-  return $CoreNavigationRouteCopyWith<$Res>(_self.route, (value) {
-    return _then(_self.copyWith(route: value));
-  });
-}
+
 }
 
 /// @nodoc
@@ -626,7 +590,7 @@ class _ReplaceRequested implements CoreNavigationEvent {
   const _ReplaceRequested(this.route);
   
 
- final  CoreNavigationRoute route;
+ final  PageRouteInfo<dynamic> route;
 
 /// Create a copy of CoreNavigationEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -658,11 +622,11 @@ abstract mixin class _$ReplaceRequestedCopyWith<$Res> implements $CoreNavigation
   factory _$ReplaceRequestedCopyWith(_ReplaceRequested value, $Res Function(_ReplaceRequested) _then) = __$ReplaceRequestedCopyWithImpl;
 @useResult
 $Res call({
- CoreNavigationRoute route
+ PageRouteInfo<dynamic> route
 });
 
 
-$CoreNavigationRouteCopyWith<$Res> get route;
+
 
 }
 /// @nodoc
@@ -678,31 +642,22 @@ class __$ReplaceRequestedCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') $Res call({Object? route = null,}) {
   return _then(_ReplaceRequested(
 null == route ? _self.route : route // ignore: cast_nullable_to_non_nullable
-as CoreNavigationRoute,
+as PageRouteInfo<dynamic>,
   ));
 }
 
-/// Create a copy of CoreNavigationEvent
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$CoreNavigationRouteCopyWith<$Res> get route {
-  
-  return $CoreNavigationRouteCopyWith<$Res>(_self.route, (value) {
-    return _then(_self.copyWith(route: value));
-  });
-}
+
 }
 
 /// @nodoc
 
 
 class _ReplaceAllRequested implements CoreNavigationEvent {
-  const _ReplaceAllRequested(final  List<CoreNavigationRoute> routes): _routes = routes;
+  const _ReplaceAllRequested(final  List<PageRouteInfo<dynamic>> routes): _routes = routes;
   
 
- final  List<CoreNavigationRoute> _routes;
- List<CoreNavigationRoute> get routes {
+ final  List<PageRouteInfo<dynamic>> _routes;
+ List<PageRouteInfo<dynamic>> get routes {
   if (_routes is EqualUnmodifiableListView) return _routes;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_routes);
@@ -739,7 +694,7 @@ abstract mixin class _$ReplaceAllRequestedCopyWith<$Res> implements $CoreNavigat
   factory _$ReplaceAllRequestedCopyWith(_ReplaceAllRequested value, $Res Function(_ReplaceAllRequested) _then) = __$ReplaceAllRequestedCopyWithImpl;
 @useResult
 $Res call({
- List<CoreNavigationRoute> routes
+ List<PageRouteInfo<dynamic>> routes
 });
 
 
@@ -759,7 +714,7 @@ class __$ReplaceAllRequestedCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') $Res call({Object? routes = null,}) {
   return _then(_ReplaceAllRequested(
 null == routes ? _self._routes : routes // ignore: cast_nullable_to_non_nullable
-as List<CoreNavigationRoute>,
+as List<PageRouteInfo<dynamic>>,
   ));
 }
 
@@ -835,10 +790,10 @@ result: freezed == result ? _self.result : result ,
 
 
 class _PopUntilRequested implements CoreNavigationEvent {
-  const _PopUntilRequested(this.match);
+  const _PopUntilRequested(this.route);
   
 
- final  CoreNavigationMatch match;
+ final  PageRouteInfo<dynamic> route;
 
 /// Create a copy of CoreNavigationEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -850,16 +805,16 @@ _$PopUntilRequestedCopyWith<_PopUntilRequested> get copyWith => __$PopUntilReque
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PopUntilRequested&&(identical(other.match, match) || other.match == match));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PopUntilRequested&&(identical(other.route, route) || other.route == route));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,match);
+int get hashCode => Object.hash(runtimeType,route);
 
 @override
 String toString() {
-  return 'CoreNavigationEvent.popUntil(match: $match)';
+  return 'CoreNavigationEvent.popUntil(route: $route)';
 }
 
 
@@ -870,11 +825,11 @@ abstract mixin class _$PopUntilRequestedCopyWith<$Res> implements $CoreNavigatio
   factory _$PopUntilRequestedCopyWith(_PopUntilRequested value, $Res Function(_PopUntilRequested) _then) = __$PopUntilRequestedCopyWithImpl;
 @useResult
 $Res call({
- CoreNavigationMatch match
+ PageRouteInfo<dynamic> route
 });
 
 
-$CoreNavigationMatchCopyWith<$Res> get match;
+
 
 }
 /// @nodoc
@@ -887,23 +842,14 @@ class __$PopUntilRequestedCopyWithImpl<$Res>
 
 /// Create a copy of CoreNavigationEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? match = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? route = null,}) {
   return _then(_PopUntilRequested(
-null == match ? _self.match : match // ignore: cast_nullable_to_non_nullable
-as CoreNavigationMatch,
+null == route ? _self.route : route // ignore: cast_nullable_to_non_nullable
+as PageRouteInfo<dynamic>,
   ));
 }
 
-/// Create a copy of CoreNavigationEvent
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$CoreNavigationMatchCopyWith<$Res> get match {
-  
-  return $CoreNavigationMatchCopyWith<$Res>(_self.match, (value) {
-    return _then(_self.copyWith(match: value));
-  });
-}
+
 }
 
 /// @nodoc
@@ -1042,11 +988,11 @@ as int,
 
 
 class _StackSynchronized implements CoreNavigationEvent {
-  const _StackSynchronized(final  List<CoreNavigationRoute> stack): _stack = stack;
+  const _StackSynchronized(final  List<PageRouteInfo<dynamic>> stack): _stack = stack;
   
 
- final  List<CoreNavigationRoute> _stack;
- List<CoreNavigationRoute> get stack {
+ final  List<PageRouteInfo<dynamic>> _stack;
+ List<PageRouteInfo<dynamic>> get stack {
   if (_stack is EqualUnmodifiableListView) return _stack;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_stack);
@@ -1083,7 +1029,7 @@ abstract mixin class _$StackSynchronizedCopyWith<$Res> implements $CoreNavigatio
   factory _$StackSynchronizedCopyWith(_StackSynchronized value, $Res Function(_StackSynchronized) _then) = __$StackSynchronizedCopyWithImpl;
 @useResult
 $Res call({
- List<CoreNavigationRoute> stack
+ List<PageRouteInfo<dynamic>> stack
 });
 
 
@@ -1103,392 +1049,7 @@ class __$StackSynchronizedCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') $Res call({Object? stack = null,}) {
   return _then(_StackSynchronized(
 null == stack ? _self._stack : stack // ignore: cast_nullable_to_non_nullable
-as List<CoreNavigationRoute>,
-  ));
-}
-
-
-}
-
-/// @nodoc
-mixin _$CoreNavigationMatch {
-
-
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CoreNavigationMatch);
-}
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'CoreNavigationMatch()';
-}
-
-
-}
-
-/// @nodoc
-class $CoreNavigationMatchCopyWith<$Res>  {
-$CoreNavigationMatchCopyWith(CoreNavigationMatch _, $Res Function(CoreNavigationMatch) __);
-}
-
-
-
-/// @nodoc
-
-
-class CoreNavigationNameMatch extends CoreNavigationMatch {
-  const CoreNavigationNameMatch(this.name): super._();
-  
-
- final  String name;
-
-/// Create a copy of CoreNavigationMatch
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$CoreNavigationNameMatchCopyWith<CoreNavigationNameMatch> get copyWith => _$CoreNavigationNameMatchCopyWithImpl<CoreNavigationNameMatch>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CoreNavigationNameMatch&&(identical(other.name, name) || other.name == name));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,name);
-
-@override
-String toString() {
-  return 'CoreNavigationMatch.name(name: $name)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $CoreNavigationNameMatchCopyWith<$Res> implements $CoreNavigationMatchCopyWith<$Res> {
-  factory $CoreNavigationNameMatchCopyWith(CoreNavigationNameMatch value, $Res Function(CoreNavigationNameMatch) _then) = _$CoreNavigationNameMatchCopyWithImpl;
-@useResult
-$Res call({
- String name
-});
-
-
-
-
-}
-/// @nodoc
-class _$CoreNavigationNameMatchCopyWithImpl<$Res>
-    implements $CoreNavigationNameMatchCopyWith<$Res> {
-  _$CoreNavigationNameMatchCopyWithImpl(this._self, this._then);
-
-  final CoreNavigationNameMatch _self;
-  final $Res Function(CoreNavigationNameMatch) _then;
-
-/// Create a copy of CoreNavigationMatch
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? name = null,}) {
-  return _then(CoreNavigationNameMatch(
-null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
-class CoreNavigationPathMatch extends CoreNavigationMatch {
-  const CoreNavigationPathMatch(this.path): super._();
-  
-
- final  String path;
-
-/// Create a copy of CoreNavigationMatch
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$CoreNavigationPathMatchCopyWith<CoreNavigationPathMatch> get copyWith => _$CoreNavigationPathMatchCopyWithImpl<CoreNavigationPathMatch>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CoreNavigationPathMatch&&(identical(other.path, path) || other.path == path));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,path);
-
-@override
-String toString() {
-  return 'CoreNavigationMatch.path(path: $path)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $CoreNavigationPathMatchCopyWith<$Res> implements $CoreNavigationMatchCopyWith<$Res> {
-  factory $CoreNavigationPathMatchCopyWith(CoreNavigationPathMatch value, $Res Function(CoreNavigationPathMatch) _then) = _$CoreNavigationPathMatchCopyWithImpl;
-@useResult
-$Res call({
- String path
-});
-
-
-
-
-}
-/// @nodoc
-class _$CoreNavigationPathMatchCopyWithImpl<$Res>
-    implements $CoreNavigationPathMatchCopyWith<$Res> {
-  _$CoreNavigationPathMatchCopyWithImpl(this._self, this._then);
-
-  final CoreNavigationPathMatch _self;
-  final $Res Function(CoreNavigationPathMatch) _then;
-
-/// Create a copy of CoreNavigationMatch
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? path = null,}) {
-  return _then(CoreNavigationPathMatch(
-null == path ? _self.path : path // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
-class CoreNavigationAnyOfMatch extends CoreNavigationMatch {
-  const CoreNavigationAnyOfMatch(final  List<CoreNavigationMatch> rules): _rules = rules,super._();
-  
-
- final  List<CoreNavigationMatch> _rules;
- List<CoreNavigationMatch> get rules {
-  if (_rules is EqualUnmodifiableListView) return _rules;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_rules);
-}
-
-
-/// Create a copy of CoreNavigationMatch
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$CoreNavigationAnyOfMatchCopyWith<CoreNavigationAnyOfMatch> get copyWith => _$CoreNavigationAnyOfMatchCopyWithImpl<CoreNavigationAnyOfMatch>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CoreNavigationAnyOfMatch&&const DeepCollectionEquality().equals(other._rules, _rules));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_rules));
-
-@override
-String toString() {
-  return 'CoreNavigationMatch.anyOf(rules: $rules)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $CoreNavigationAnyOfMatchCopyWith<$Res> implements $CoreNavigationMatchCopyWith<$Res> {
-  factory $CoreNavigationAnyOfMatchCopyWith(CoreNavigationAnyOfMatch value, $Res Function(CoreNavigationAnyOfMatch) _then) = _$CoreNavigationAnyOfMatchCopyWithImpl;
-@useResult
-$Res call({
- List<CoreNavigationMatch> rules
-});
-
-
-
-
-}
-/// @nodoc
-class _$CoreNavigationAnyOfMatchCopyWithImpl<$Res>
-    implements $CoreNavigationAnyOfMatchCopyWith<$Res> {
-  _$CoreNavigationAnyOfMatchCopyWithImpl(this._self, this._then);
-
-  final CoreNavigationAnyOfMatch _self;
-  final $Res Function(CoreNavigationAnyOfMatch) _then;
-
-/// Create a copy of CoreNavigationMatch
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? rules = null,}) {
-  return _then(CoreNavigationAnyOfMatch(
-null == rules ? _self._rules : rules // ignore: cast_nullable_to_non_nullable
-as List<CoreNavigationMatch>,
-  ));
-}
-
-
-}
-
-/// @nodoc
-mixin _$CoreNavigationRoute {
-
- String get name; String? get path; Map<String, String> get pathParameters; Map<String, String> get queryParameters; Object? get extra;
-/// Create a copy of CoreNavigationRoute
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$CoreNavigationRouteCopyWith<CoreNavigationRoute> get copyWith => _$CoreNavigationRouteCopyWithImpl<CoreNavigationRoute>(this as CoreNavigationRoute, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CoreNavigationRoute&&(identical(other.name, name) || other.name == name)&&(identical(other.path, path) || other.path == path)&&const DeepCollectionEquality().equals(other.pathParameters, pathParameters)&&const DeepCollectionEquality().equals(other.queryParameters, queryParameters)&&const DeepCollectionEquality().equals(other.extra, extra));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,name,path,const DeepCollectionEquality().hash(pathParameters),const DeepCollectionEquality().hash(queryParameters),const DeepCollectionEquality().hash(extra));
-
-@override
-String toString() {
-  return 'CoreNavigationRoute(name: $name, path: $path, pathParameters: $pathParameters, queryParameters: $queryParameters, extra: $extra)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $CoreNavigationRouteCopyWith<$Res>  {
-  factory $CoreNavigationRouteCopyWith(CoreNavigationRoute value, $Res Function(CoreNavigationRoute) _then) = _$CoreNavigationRouteCopyWithImpl;
-@useResult
-$Res call({
- String name, String? path, Map<String, String> pathParameters, Map<String, String> queryParameters, Object? extra
-});
-
-
-
-
-}
-/// @nodoc
-class _$CoreNavigationRouteCopyWithImpl<$Res>
-    implements $CoreNavigationRouteCopyWith<$Res> {
-  _$CoreNavigationRouteCopyWithImpl(this._self, this._then);
-
-  final CoreNavigationRoute _self;
-  final $Res Function(CoreNavigationRoute) _then;
-
-/// Create a copy of CoreNavigationRoute
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? path = freezed,Object? pathParameters = null,Object? queryParameters = null,Object? extra = freezed,}) {
-  return _then(_self.copyWith(
-name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,path: freezed == path ? _self.path : path // ignore: cast_nullable_to_non_nullable
-as String?,pathParameters: null == pathParameters ? _self.pathParameters : pathParameters // ignore: cast_nullable_to_non_nullable
-as Map<String, String>,queryParameters: null == queryParameters ? _self.queryParameters : queryParameters // ignore: cast_nullable_to_non_nullable
-as Map<String, String>,extra: freezed == extra ? _self.extra : extra ,
-  ));
-}
-
-}
-
-
-
-/// @nodoc
-
-
-class _CoreNavigationRoute implements CoreNavigationRoute {
-  const _CoreNavigationRoute({required this.name, this.path, final  Map<String, String> pathParameters = const <String, String>{}, final  Map<String, String> queryParameters = const <String, String>{}, this.extra}): _pathParameters = pathParameters,_queryParameters = queryParameters;
-  
-
-@override final  String name;
-@override final  String? path;
- final  Map<String, String> _pathParameters;
-@override@JsonKey() Map<String, String> get pathParameters {
-  if (_pathParameters is EqualUnmodifiableMapView) return _pathParameters;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableMapView(_pathParameters);
-}
-
- final  Map<String, String> _queryParameters;
-@override@JsonKey() Map<String, String> get queryParameters {
-  if (_queryParameters is EqualUnmodifiableMapView) return _queryParameters;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableMapView(_queryParameters);
-}
-
-@override final  Object? extra;
-
-/// Create a copy of CoreNavigationRoute
-/// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$CoreNavigationRouteCopyWith<_CoreNavigationRoute> get copyWith => __$CoreNavigationRouteCopyWithImpl<_CoreNavigationRoute>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CoreNavigationRoute&&(identical(other.name, name) || other.name == name)&&(identical(other.path, path) || other.path == path)&&const DeepCollectionEquality().equals(other._pathParameters, _pathParameters)&&const DeepCollectionEquality().equals(other._queryParameters, _queryParameters)&&const DeepCollectionEquality().equals(other.extra, extra));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,name,path,const DeepCollectionEquality().hash(_pathParameters),const DeepCollectionEquality().hash(_queryParameters),const DeepCollectionEquality().hash(extra));
-
-@override
-String toString() {
-  return 'CoreNavigationRoute(name: $name, path: $path, pathParameters: $pathParameters, queryParameters: $queryParameters, extra: $extra)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$CoreNavigationRouteCopyWith<$Res> implements $CoreNavigationRouteCopyWith<$Res> {
-  factory _$CoreNavigationRouteCopyWith(_CoreNavigationRoute value, $Res Function(_CoreNavigationRoute) _then) = __$CoreNavigationRouteCopyWithImpl;
-@override @useResult
-$Res call({
- String name, String? path, Map<String, String> pathParameters, Map<String, String> queryParameters, Object? extra
-});
-
-
-
-
-}
-/// @nodoc
-class __$CoreNavigationRouteCopyWithImpl<$Res>
-    implements _$CoreNavigationRouteCopyWith<$Res> {
-  __$CoreNavigationRouteCopyWithImpl(this._self, this._then);
-
-  final _CoreNavigationRoute _self;
-  final $Res Function(_CoreNavigationRoute) _then;
-
-/// Create a copy of CoreNavigationRoute
-/// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? path = freezed,Object? pathParameters = null,Object? queryParameters = null,Object? extra = freezed,}) {
-  return _then(_CoreNavigationRoute(
-name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,path: freezed == path ? _self.path : path // ignore: cast_nullable_to_non_nullable
-as String?,pathParameters: null == pathParameters ? _self._pathParameters : pathParameters // ignore: cast_nullable_to_non_nullable
-as Map<String, String>,queryParameters: null == queryParameters ? _self._queryParameters : queryParameters // ignore: cast_nullable_to_non_nullable
-as Map<String, String>,extra: freezed == extra ? _self.extra : extra ,
+as List<PageRouteInfo<dynamic>>,
   ));
 }
 
@@ -1498,7 +1059,7 @@ as Map<String, String>,extra: freezed == extra ? _self.extra : extra ,
 /// @nodoc
 mixin _$CoreNavigationState {
 
- List<CoreNavigationRoute> get stack; List<CoreNavigationCommand> get pendingCommands; Uri? get lastDeepLink;
+ List<PageRouteInfo<dynamic>> get stack; List<CoreNavigationCommand> get pendingCommands; Uri? get lastDeepLink;
 /// Create a copy of CoreNavigationState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1529,7 +1090,7 @@ abstract mixin class $CoreNavigationStateCopyWith<$Res>  {
   factory $CoreNavigationStateCopyWith(CoreNavigationState value, $Res Function(CoreNavigationState) _then) = _$CoreNavigationStateCopyWithImpl;
 @useResult
 $Res call({
- List<CoreNavigationRoute> stack, List<CoreNavigationCommand> pendingCommands, Uri? lastDeepLink
+ List<PageRouteInfo<dynamic>> stack, List<CoreNavigationCommand> pendingCommands, Uri? lastDeepLink
 });
 
 
@@ -1549,7 +1110,7 @@ class _$CoreNavigationStateCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? stack = null,Object? pendingCommands = null,Object? lastDeepLink = freezed,}) {
   return _then(_self.copyWith(
 stack: null == stack ? _self.stack : stack // ignore: cast_nullable_to_non_nullable
-as List<CoreNavigationRoute>,pendingCommands: null == pendingCommands ? _self.pendingCommands : pendingCommands // ignore: cast_nullable_to_non_nullable
+as List<PageRouteInfo<dynamic>>,pendingCommands: null == pendingCommands ? _self.pendingCommands : pendingCommands // ignore: cast_nullable_to_non_nullable
 as List<CoreNavigationCommand>,lastDeepLink: freezed == lastDeepLink ? _self.lastDeepLink : lastDeepLink // ignore: cast_nullable_to_non_nullable
 as Uri?,
   ));
@@ -1563,11 +1124,11 @@ as Uri?,
 
 
 class _CoreNavigationState implements CoreNavigationState {
-  const _CoreNavigationState({final  List<CoreNavigationRoute> stack = const <CoreNavigationRoute>[], final  List<CoreNavigationCommand> pendingCommands = const <CoreNavigationCommand>[], this.lastDeepLink}): _stack = stack,_pendingCommands = pendingCommands;
+  const _CoreNavigationState({final  List<PageRouteInfo<dynamic>> stack = const <PageRouteInfo<dynamic>>[], final  List<CoreNavigationCommand> pendingCommands = const <CoreNavigationCommand>[], this.lastDeepLink}): _stack = stack,_pendingCommands = pendingCommands;
   
 
- final  List<CoreNavigationRoute> _stack;
-@override@JsonKey() List<CoreNavigationRoute> get stack {
+ final  List<PageRouteInfo<dynamic>> _stack;
+@override@JsonKey() List<PageRouteInfo<dynamic>> get stack {
   if (_stack is EqualUnmodifiableListView) return _stack;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_stack);
@@ -1612,7 +1173,7 @@ abstract mixin class _$CoreNavigationStateCopyWith<$Res> implements $CoreNavigat
   factory _$CoreNavigationStateCopyWith(_CoreNavigationState value, $Res Function(_CoreNavigationState) _then) = __$CoreNavigationStateCopyWithImpl;
 @override @useResult
 $Res call({
- List<CoreNavigationRoute> stack, List<CoreNavigationCommand> pendingCommands, Uri? lastDeepLink
+ List<PageRouteInfo<dynamic>> stack, List<CoreNavigationCommand> pendingCommands, Uri? lastDeepLink
 });
 
 
@@ -1632,7 +1193,7 @@ class __$CoreNavigationStateCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? stack = null,Object? pendingCommands = null,Object? lastDeepLink = freezed,}) {
   return _then(_CoreNavigationState(
 stack: null == stack ? _self._stack : stack // ignore: cast_nullable_to_non_nullable
-as List<CoreNavigationRoute>,pendingCommands: null == pendingCommands ? _self._pendingCommands : pendingCommands // ignore: cast_nullable_to_non_nullable
+as List<PageRouteInfo<dynamic>>,pendingCommands: null == pendingCommands ? _self._pendingCommands : pendingCommands // ignore: cast_nullable_to_non_nullable
 as List<CoreNavigationCommand>,lastDeepLink: freezed == lastDeepLink ? _self.lastDeepLink : lastDeepLink // ignore: cast_nullable_to_non_nullable
 as Uri?,
   ));

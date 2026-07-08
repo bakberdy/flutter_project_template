@@ -1,11 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'core_navigation_bloc.freezed.dart';
 part 'core_navigation_command.dart';
 part 'core_navigation_event.dart';
-part 'core_navigation_match.dart';
-part 'core_navigation_route.dart';
 part 'core_navigation_state.dart';
 
 class CoreNavigationBloc
@@ -110,12 +109,12 @@ class CoreNavigationBloc
   ) {
     emit(
       state.copyWith(
-        stack: _stackUntil(event.match),
+        stack: _stackUntil(event.route),
         pendingCommands: [
           ...state.pendingCommands,
           CoreNavigationCommand.popUntil(
             id: _createCommandId(),
-            match: event.match,
+            route: event.route,
           ),
         ],
       ),
@@ -160,9 +159,11 @@ class CoreNavigationBloc
     emit(state.copyWith(stack: event.stack));
   }
 
-  List<CoreNavigationRoute> _stackUntil(CoreNavigationMatch match) {
+  List<PageRouteInfo<dynamic>> _stackUntil(PageRouteInfo<dynamic> route) {
     final stack = [...state.stack];
-    final index = stack.lastIndexWhere(match.matches);
+    final index = stack.lastIndexWhere(
+      (item) => item.routeName == route.routeName,
+    );
     if (index == -1) {
       return stack;
     }

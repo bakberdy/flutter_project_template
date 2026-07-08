@@ -6,17 +6,17 @@ sealed class CoreNavigationCommand with _$CoreNavigationCommand {
 
   const factory CoreNavigationCommand.push({
     required int id,
-    required CoreNavigationRoute route,
+    required PageRouteInfo<dynamic> route,
   }) = PushNavigationCommand;
 
   const factory CoreNavigationCommand.replace({
     required int id,
-    required CoreNavigationRoute route,
+    required PageRouteInfo<dynamic> route,
   }) = ReplaceNavigationCommand;
 
   const factory CoreNavigationCommand.replaceAll({
     required int id,
-    required List<CoreNavigationRoute> routes,
+    required List<PageRouteInfo<dynamic>> routes,
   }) = ReplaceAllNavigationCommand;
 
   const factory CoreNavigationCommand.pop({required int id, Object? result}) =
@@ -24,7 +24,7 @@ sealed class CoreNavigationCommand with _$CoreNavigationCommand {
 
   const factory CoreNavigationCommand.popUntil({
     required int id,
-    required CoreNavigationMatch match,
+    required PageRouteInfo<dynamic> route,
   }) = PopUntilNavigationCommand;
 
   const factory CoreNavigationCommand.openDeepLink({

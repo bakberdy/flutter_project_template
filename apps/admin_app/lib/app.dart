@@ -1,7 +1,5 @@
 import 'package:admin_app/localization/localization_delegates.dart';
 import 'package:admin_app/router/admin_app_router.dart';
-import 'package:admin_users/admin_users.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/foundation.dart';
@@ -102,18 +100,15 @@ class _AppState extends State<App> {
 
     switch (command) {
       case PushNavigationCommand(:final route):
-        await _appRouter.push(_toAutoRoute(route));
+        await _appRouter.push(route);
       case ReplaceNavigationCommand(:final route):
-        await _appRouter.replace(_toAutoRoute(route));
+        await _appRouter.replace(route);
       case ReplaceAllNavigationCommand(:final routes):
-        await _appRouter.replaceAll(routes.map(_toAutoRoute).toList());
+        await _appRouter.replaceAll(routes);
       case PopNavigationCommand(:final result):
-        await _appRouter.maybePop(result);
-      case PopUntilNavigationCommand(:final match):
-        _appRouter.popUntil((route) {
-          final coreRoute = _fromAutoRouteName(route.settings.name);
-          return coreRoute != null && match.matches(coreRoute);
-        });
+        await _appRouter.maybePopTop(result);
+      case PopUntilNavigationCommand(:final route):
+        _appRouter.popUntilRouteWithName(route.routeName, scoped: false);
       case OpenDeepLinkNavigationCommand(:final uri):
         await _appRouter.pushPath(uri.toString());
     }
@@ -125,25 +120,6 @@ class _AppState extends State<App> {
       CoreNavigationEvent.commandHandled(command.id),
     );
   }
-
-  PageRouteInfo<void> _toAutoRoute(CoreNavigationRoute route) =>
-      switch (route.name) {
-        AdminUsersNavigationRoutes.users => const UsersRoute(),
-        AdminUsersNavigationRoutes.user => UserRoute(
-          userId: route.pathParameters['userId']!,
-        ),
-        _ => throw UnsupportedError('Unknown admin route: ${route.name}'),
-      };
-
-  CoreNavigationRoute? _fromAutoRouteName(String? name) => switch (name) {
-    UsersRoute.name => const CoreNavigationRoute(
-      name: AdminUsersNavigationRoutes.users,
-    ),
-    UserRoute.name => const CoreNavigationRoute(
-      name: AdminUsersNavigationRoutes.user,
-    ),
-    _ => null,
-  };
 
   Future<void> _onOpenTalker(BuildContext context) async {
     _showTalkerDock.value = false;

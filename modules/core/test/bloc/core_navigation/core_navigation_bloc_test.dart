@@ -1,12 +1,12 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:core/core.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  const home = CoreNavigationRoute(name: 'home', path: '/');
-  const details = CoreNavigationRoute(
-    name: 'details',
-    path: '/details',
-    pathParameters: {'id': '1'},
+  const home = PageRouteInfo<void>.named('HomeRoute');
+  const details = PageRouteInfo<void>.named(
+    'DetailsRoute',
+    params: {'id': '1'},
   );
 
   group('CoreNavigationBloc', () {
@@ -84,15 +84,13 @@ void main() {
     });
 
     test('popUntil keeps the matched route as the top of the stack', () async {
-      const settings = CoreNavigationRoute(name: 'settings', path: '/settings');
+      const settings = PageRouteInfo<void>.named('SettingsRoute');
       final bloc = CoreNavigationBloc();
 
       bloc.add(const CoreNavigationEvent.replaceAll([home, details, settings]));
       await expectLater(bloc.stream, emits(isA<CoreNavigationState>()));
 
-      bloc.add(
-        const CoreNavigationEvent.popUntil(CoreNavigationMatch.name('details')),
-      );
+      bloc.add(const CoreNavigationEvent.popUntil(details));
       await expectLater(
         bloc.stream,
         emits(
