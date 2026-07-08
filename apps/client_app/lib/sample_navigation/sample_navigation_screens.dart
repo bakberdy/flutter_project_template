@@ -18,37 +18,44 @@ class SampleHomeScreen extends StatelessWidget {
           title: 'Push root screen',
           subtitle: 'Pushes a normal page on the root stack.',
           onTap: () => context.read<CoreNavigationBloc>().add(
-            CoreNavigationEvent.push(SamplePushRoute(id: 'root-1')),
+            CoreNavigationEvent.push(
+              SamplePushRoute(id: 'root-1', key: ValueKey('root-1')),
+            ),
           ),
         ),
         _SampleAction(
-          title: 'Open shell initial child',
-          subtitle: 'Opens a nested stack shell at its initial child.',
+          title: 'Push shell initial child',
+          subtitle: 'Pushes a nested stack shell at its initial child.',
           onTap: () => context.read<CoreNavigationBloc>().add(
             const CoreNavigationEvent.push(SampleShellRoute()),
           ),
         ),
         _SampleAction(
-          title: 'Open shell details',
-          subtitle: 'Deep-links into a nested child with a path parameter.',
+          title: 'Push shell details',
+          subtitle: 'Pushes a shell route with a nested details child.',
           onTap: () => context.read<CoreNavigationBloc>().add(
             CoreNavigationEvent.push(
               SampleShellRoute(
-                children: [SampleShellDetailsRoute(id: 'shell-42')],
+                children: [
+                  SampleShellDetailsRoute(
+                    id: 'shell-42',
+                    key: ValueKey('shell-42'),
+                  ),
+                ],
               ),
             ),
           ),
         ),
         _SampleAction(
-          title: 'Open tab shell',
+          title: 'Push tab shell',
           subtitle: 'Shows a tab shell with independent child routers.',
           onTap: () => context.read<CoreNavigationBloc>().add(
             const CoreNavigationEvent.push(SampleTabsRoute()),
           ),
         ),
         _SampleAction(
-          title: 'Open tab child details',
-          subtitle: 'Deep-links into a child route inside the first tab.',
+          title: 'Push tab details',
+          subtitle: 'Pushes a tab shell with a details route in the first tab.',
           onTap: () => context.read<CoreNavigationBloc>().add(
             CoreNavigationEvent.push(
               SampleTabsRoute(
@@ -88,7 +95,9 @@ class SamplePushScreen extends StatelessWidget {
       actions: [
         FilledButton(
           onPressed: () => context.read<CoreNavigationBloc>().add(
-            CoreNavigationEvent.push(SamplePushRoute(id: 'root-2')),
+            CoreNavigationEvent.push(
+              SamplePushRoute(id: 'root-2', key: ValueKey('root-2')),
+            ),
           ),
           child: const Text('Push another root screen'),
         ),
@@ -130,7 +139,12 @@ class SampleShellHomeScreen extends StatelessWidget {
         onPressed: () => context.read<CoreNavigationBloc>().add(
           CoreNavigationEvent.push(
             SampleShellRoute(
-              children: [SampleShellDetailsRoute(id: 'child-1')],
+              children: [
+                SampleShellDetailsRoute(
+                  id: 'child-1',
+                  key: ValueKey('child-1'),
+                ),
+              ],
             ),
           ),
         ),
@@ -162,13 +176,9 @@ class SampleShellDetailsScreen extends StatelessWidget {
     actions: [
       FilledButton(
         onPressed: () => context.read<CoreNavigationBloc>().add(
-          CoreNavigationEvent.push(
-            SampleShellRoute(
-              children: [SampleShellDetailsRoute(id: 'child-2')],
-            ),
-          ),
+          CoreNavigationEvent.replace(SamplePushRoute(id: 'replaced-shell')),
         ),
-        child: const Text('Replace sibling path'),
+        child: const Text('Replace shell with root screen'),
       ),
       OutlinedButton(
         onPressed: () => context.read<CoreNavigationBloc>().add(
@@ -235,17 +245,9 @@ class SampleTabOneHomeScreen extends StatelessWidget {
     actions: [
       FilledButton(
         onPressed: () => context.read<CoreNavigationBloc>().add(
-          CoreNavigationEvent.push(
-            SampleTabsRoute(
-              children: [
-                SampleTabOneShellRoute(
-                  children: [SampleTabOneDetailsRoute(id: 'tab-one-1')],
-                ),
-              ],
-            ),
-          ),
+          CoreNavigationEvent.push(SampleTabOneDetailsRoute(id: 'tab-one-1')),
         ),
-        child: const Text('Push tab child'),
+        child: const Text('Push tab details route'),
       ),
       OutlinedButton(
         onPressed: () => context.read<CoreNavigationBloc>().add(
@@ -283,7 +285,7 @@ class SampleTabOneDetailsScreen extends StatelessWidget {
             ),
           ),
         ),
-        child: const Text('Push sibling details'),
+        child: const Text('Push another tab details route'),
       ),
       OutlinedButton(
         onPressed: () => context.read<CoreNavigationBloc>().add(

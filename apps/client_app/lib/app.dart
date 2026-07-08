@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:client_app/localization/localization_consts.dart';
 import 'package:client_app/router/client_app_router.dart';
 import 'package:core/core.dart';
@@ -8,11 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
 class App extends StatefulWidget {
-  App({super.key, ClientAppRouter? appRouter, this.navigationBloc})
-    : _appRouter = appRouter ?? ClientAppRouter();
-
-  final ClientAppRouter _appRouter;
-  final CoreNavigationBloc? navigationBloc;
+  const App({super.key});
 
   @override
   State<App> createState() => _AppState();
@@ -20,17 +18,14 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   final ValueNotifier<bool> _showTalkerDock = ValueNotifier<bool>(true);
-  late final CoreNavigationBloc _navigationBloc =
-      widget.navigationBloc ?? CoreNavigationBloc();
-
-  ClientAppRouter get _appRouter => widget._appRouter;
+  final CoreNavigationBloc _navigationBloc = CoreNavigationBloc();
+  final ClientAppRouter _appRouter = ClientAppRouter();
 
   @override
   void dispose() {
     _showTalkerDock.dispose();
-    if (widget.navigationBloc == null) {
-      _navigationBloc.close();
-    }
+    _navigationBloc.close();
+    _appRouter.dispose();
     super.dispose();
   }
 
@@ -100,17 +95,17 @@ class _AppState extends State<App> {
 
     switch (command) {
       case PushNavigationCommand(:final route):
-        await _appRouter.push(route);
+        unawaited(_appRouter.push(route));
       case ReplaceNavigationCommand(:final route):
-        await _appRouter.replace(route);
+        unawaited(_appRouter.popAndPush(route));
       case ReplaceAllNavigationCommand(:final routes):
-        await _appRouter.replaceAll(routes);
+        unawaited(_appRouter.replaceAll(routes));
       case PopNavigationCommand(:final result):
         await _appRouter.maybePopTop(result);
       case PopUntilNavigationCommand(:final route):
         _appRouter.popUntilRouteWithName(route.routeName, scoped: false);
       case OpenDeepLinkNavigationCommand(:final uri):
-        await _appRouter.pushPath(uri.toString());
+        unawaited(_appRouter.pushPath(uri.toString()));
     }
 
     if (!context.mounted) {

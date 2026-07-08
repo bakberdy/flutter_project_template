@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:admin_app/localization/localization_delegates.dart';
 import 'package:admin_app/router/admin_app_router.dart';
 import 'package:core/core.dart';
@@ -100,17 +102,17 @@ class _AppState extends State<App> {
 
     switch (command) {
       case PushNavigationCommand(:final route):
-        await _appRouter.push(route);
+        unawaited(_appRouter.push(route));
       case ReplaceNavigationCommand(:final route):
-        await _appRouter.replace(route);
+        unawaited(_appRouter.popAndPush(route));
       case ReplaceAllNavigationCommand(:final routes):
-        await _appRouter.replaceAll(routes);
+        unawaited(_appRouter.replaceAll(routes));
       case PopNavigationCommand(:final result):
         await _appRouter.maybePopTop(result);
       case PopUntilNavigationCommand(:final route):
         _appRouter.popUntilRouteWithName(route.routeName, scoped: false);
       case OpenDeepLinkNavigationCommand(:final uri):
-        await _appRouter.pushPath(uri.toString());
+        unawaited(_appRouter.pushPath(uri.toString()));
     }
 
     if (!context.mounted) {
