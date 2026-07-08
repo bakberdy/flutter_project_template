@@ -1,5 +1,6 @@
 import 'dart:async';
-import 'package:client_app/app.dart';
+
+import 'package:client_app/app/app.dart';
 import 'package:client_app/di/di.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
