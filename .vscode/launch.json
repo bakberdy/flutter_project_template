@@ -5,16 +5,40 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "admin_app",
+            "name": "admin_app (development)",
             "cwd": "apps/admin_app",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "toolArgs": [
+                "--dart-define-from-file=config/run/config.development.json"
+            ]
         },
         {
-            "name": "client_app",
+            "name": "admin_app (production)",
+            "cwd": "apps/admin_app",
+            "request": "launch",
+            "type": "dart",
+            "toolArgs": [
+                "--dart-define-from-file=config/run/config.production.json"
+            ]
+        },
+        {
+            "name": "client_app (development)",
             "cwd": "apps/client_app",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "toolArgs": [
+                "--dart-define-from-file=config/run/config.development.json"
+            ]
+        },
+        {
+            "name": "client_app (production)",
+            "cwd": "apps/client_app",
+            "request": "launch",
+            "type": "dart",
+            "toolArgs": [
+                "--dart-define-from-file=config/run/config.production.json"
+            ]
         },
     ]
 }

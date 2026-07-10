@@ -131,5 +131,71 @@ void main() {
         await bloc.close();
       },
     );
+
+    test('authenticated queues an authenticated command', () async {
+      final bloc = CoreNavigationBloc();
+
+      bloc.add(const CoreNavigationEvent.authenticated());
+      await expectLater(
+        bloc.stream,
+        emits(
+          isA<CoreNavigationState>().having(
+            (state) => state.nextCommand,
+            'nextCommand',
+            isA<AuthenticatedNavigationCommand>().having(
+              (command) => command.id,
+              'id',
+              0,
+            ),
+          ),
+        ),
+      );
+
+      await bloc.close();
+    });
+
+    test('unAuthenticated queues an unauthenticated command', () async {
+      final bloc = CoreNavigationBloc();
+
+      bloc.add(const CoreNavigationEvent.unAuthenticated());
+      await expectLater(
+        bloc.stream,
+        emits(
+          isA<CoreNavigationState>().having(
+            (state) => state.nextCommand,
+            'nextCommand',
+            isA<UnAuthenticatedNavigationCommand>().having(
+              (command) => command.id,
+              'id',
+              0,
+            ),
+          ),
+        ),
+      );
+
+      await bloc.close();
+    });
+
+    test('refreshUser queues a refresh-user command', () async {
+      final bloc = CoreNavigationBloc();
+
+      bloc.add(const CoreNavigationEvent.refreshUser());
+      await expectLater(
+        bloc.stream,
+        emits(
+          isA<CoreNavigationState>().having(
+            (state) => state.nextCommand,
+            'nextCommand',
+            isA<RefreshUserNavigationCommand>().having(
+              (command) => command.id,
+              'id',
+              0,
+            ),
+          ),
+        ),
+      );
+
+      await bloc.close();
+    });
   });
 }

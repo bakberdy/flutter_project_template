@@ -14,7 +14,6 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource _remoteDataSource;
   final TokenStorage _tokenStorage;
   final DeviceInfoService _deviceInfoService;
-
   AuthRepositoryImpl(
     this._remoteDataSource,
     this._tokenStorage,

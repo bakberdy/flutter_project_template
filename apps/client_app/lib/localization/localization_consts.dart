@@ -1,3 +1,4 @@
+import 'package:client_auth/gen/l10n/client_auth_localizations.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -10,5 +11,6 @@ final class LocalizationConsts {
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
+        ClientAuthLocalizations.delegate,
       ];
 }

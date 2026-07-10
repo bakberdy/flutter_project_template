@@ -6,8 +6,6 @@ targets:
           field_rename: snake
 
       freezed:
-        generate_for:
-          - lib/bloc/**/**.dart
         options:
           to_json: false
           from_json: false
@@ -18,3 +16,6 @@ targets:
         options:
           auto_register: true
           generate_for_injectable: true
+
+      index_generator:
+        enabled: true

@@ -1,3 +1,158 @@
 {
-  "@@locale": "kk"
+  "@@locale": "kk",
+  "addTodo": "Тапсырма қосу",
+  "apiFailureDefaultMessage": "Сұрау орындалмады. Қайта көріңіз.",
+  "appApiUrlValue": "API URL: {apiUrl}",
+  "@appApiUrlValue": {
+    "placeholders": {
+      "apiUrl": { "type": "String" }
+    }
+  },
+  "appBuildNumberValue": "Жинақ нөмірі: {buildNumber}",
+  "@appBuildNumberValue": {
+    "placeholders": {
+      "buildNumber": { "type": "String" }
+    }
+  },
+  "appEnvironmentValue": "Орта: {environment}",
+  "@appEnvironmentValue": {
+    "placeholders": {
+      "environment": { "type": "String" }
+    }
+  },
+  "appNameValue": "Қолданба: {appName}",
+  "@appNameValue": {
+    "placeholders": {
+      "appName": { "type": "String" }
+    }
+  },
+  "appPackageNameValue": "Пакет: {packageName}",
+  "@appPackageNameValue": {
+    "placeholders": {
+      "packageName": { "type": "String" }
+    }
+  },
+  "appVersionWithBuild": "Нұсқа {version} ({buildNumber})",
+  "@appVersionWithBuild": {
+    "placeholders": {
+      "version": { "type": "String" },
+      "buildNumber": { "type": "String" }
+    }
+  },
+  "authEmailLabel": "Электрондық пошта",
+  "authOtpLabel": "Бір реттік код",
+  "authSubmitEmail": "Жалғастыру",
+  "authSubmitOtp": "Растау",
+  "authTitle": "Кіру",
+  "baseDefaultMessage": "Бірдеңе дұрыс болмады. Қайта көріңіз.",
+  "clearForm": "Форманы тазалау",
+  "continueToLogin": "Кіруге жалғастыру",
+  "createdAtLabel": "Құрылған күні",
+  "createTodo": "Тапсырма құру",
+  "dark": "Қара",
+  "deleteTodo": "Тапсырманы жою",
+  "devClearAuthTokens": "Токендерді тазалау",
+  "devTokensCleared": "Токендер тазаланды",
+  "dismiss": "Жабу",
+  "editTodo": "Тапсырманы өңдеу",
+  "english": "Ағылшын",
+  "errorTitle": "Қате",
+  "exampleTodosTitle": "Тапсырмалар мысалы",
+  "internetConnectionErrorMessage": "Интернет қосылымын тексеріп, қайта көріңіз.",
+  "kazakh": "Қазақ",
+  "light": "Жарық",
+  "markTodoDone": "Орындалды деп белгілеу",
+  "markTodoUndone": "Орындалмады деп белгілеу",
+  "navigationHomeTitle": "Басты бет",
+  "navigationProfileTitle": "Профиль",
+  "noTodosYet": "Әзірше тапсырмалар жоқ",
+  "notSelected": "Таңдалмаған",
+  "parseFailureDefaultMessage": "Жауапты оқу мүмкін болмады. Қайта көріңіз.",
+  "profileAvatarActionChange": "Аватарды өзгерту",
+  "profileAvatarActionRemove": "Аватарды жою",
+  "profileAvatarActionView": "Аватарды көру",
+  "profileAvatarRemoveDialogMessage": "Қазіргі аватар профиліңізден жойылады.",
+  "profileAvatarRemoveDialogTitle": "Аватарды жою керек пе?",
+  "profileAvatarRemovedSuccessMessage": "Аватар сәтті жойылды",
+  "profileAvatarUpdatedSuccessMessage": "Аватар сәтті жаңартылды",
+  "profileEditFullNameLabel": "Толық аты",
+  "profileEditDiscardChanges": "Сақтамай шығу",
+  "profileEditDiscardChangesMessage": "Профильдегі өзгерістер әлі сақталған жоқ.",
+  "profileEditDiscardChangesTitle": "Сақтамай шығасыз ба?",
+  "profileEditInvalidOtpMessage": "Код сәйкес келмеді. Тексеріп, қайта енгізіңіз.",
+  "profileEditLogout": "Шығу",
+  "profileEditLogoutDialogMessage": "Аккаунтқа қайта кіру үшін қайта авторизациядан өту қажет болады.",
+  "profileEditLogoutDialogTitle": "Шығу керек пе?",
+  "profileEditOtpBottomSheetDescription": "{phoneNumber} нөміріне 6 таңбалы код жібердік. Нөмірді растау үшін сол кодты енгізіңіз.",
+  "@profileEditOtpBottomSheetDescription": {
+    "placeholders": {
+      "phoneNumber": { "type": "String" }
+    }
+  },
+  "profileEditOtpBottomSheetTitle": "Растау кодын енгізіңіз",
+  "profileEditPhoneNumberLabel": "Телефон нөмірі",
+  "profileEditPhoneNumberInvalidFormatMessage": "Телефон нөмірінің 10 санын енгізіңіз.",
+  "profileEditPhoneVerificationPrompt": "Телефон нөмірі расталмаған",
+  "profileEditPhoneVerificationRequestMessage": "{phoneNumber} нөміріне код жіберу керек пе?",
+  "@profileEditPhoneVerificationRequestMessage": {
+    "placeholders": {
+      "phoneNumber": { "type": "String" }
+    }
+  },
+  "profileEditPhoneVerificationRequestTitle": "Телефон нөмірін растау",
+  "profileEditPhoneVerificationSendCode": "Жіберу",
+  "profileEditPhoneVerified": "Расталды",
+  "profileEditRemoveAccount": "Аккаунтты жою",
+  "profileEditRemoveAccountDialogMessage": "Аккаунтты жоюға сұрау жіберіледі, содан кейін жүйеден шығасыз.",
+  "profileEditRemoveAccountDialogTitle": "Аккаунтты жою керек пе?",
+  "profileEditSaveChanges": "Өзгерістерді сақтау",
+  "profileEditTitle": "Профильді өңдеу",
+  "profileEditVerifyNow": "Растау",
+  "profileSavedSuccessMessage": "Профиль сәтті сақталды",
+  "profilePreferencesAppearance": "Сыртқы көрініс",
+  "profilePreferencesDevices": "Құрылғылар",
+  "profilePreferencesEmailNotifications": "Email хабарландырулар",
+  "profilePreferencesLanguage": "Тіл",
+  "profilePreferencesMarketingNotifications": "Маркетинг хабарландырулары",
+  "profilePreferencesNotificationsAndSounds": "Хабарландырулар мен дыбыстар",
+  "profilePreferencesPushNotifications": "Push хабарландырулар",
+  "profileSupportFaq": "FAQ",
+  "profileSupportSupport": "Қолдау",
+  "refreshTodos": "Тапсырмаларды жаңарту",
+  "requiredField": "Бұл өріс міндетті",
+  "revokeAllSessions": "Барлық сеанстарды алып тастау",
+  "revokeAllSessionsDialogMessage": "Барлық құрылғыларға қайта кіру қажет болады.",
+  "revokeAllSessionsDialogTitle": "Барлық сеанстар алып тасталсын ба?",
+  "revokeSession": "Алып тастау",
+  "revokeSessionDialogMessage": "Бұл құрылғыға қайта кіру қажет болады.",
+  "revokeSessionDialogTitle": "Бұл сеанс алып тасталсын ба?",
+  "sessionRevokedBadge": "Күшінен жойылған",
+  "russian": "Орыс",
+  "santoniLuxuryFurnitureDescription": "Santoni Luxury Furniture әлеміне қош келдіңіз, премиум жиһазға арналған бірегей мекеніңіз. Сәнді әрі талғампаз бұйымдардан құралған арнайы топтамамызды зерттеңіз.",
+  "santoniLuxuryFurnitureTitle": "Santoni Luxury Furniture",
+  "sessionsListEmptyTitle": "Әзірше сеанстар жоқ",
+  "sessionsLoadMore": "Тағы жүктеу",
+  "sessionsRetry": "Қайталау",
+  "sessionsSessionLastActive": "Соңғы белсенділік: {formatted}",
+  "@sessionsSessionLastActive": {
+    "placeholders": {
+      "formatted": {
+        "type": "String"
+      }
+    }
+  },
+  "sessionsTitle": "Сеанстар",
+  "secureConnectionErrorMessage": "Қауіпсіз қосылым қатесі. Қайта көріңіз.",
+  "system": "Жүйелік",
+  "themeMode": "Тема режимі",
+  "todoDescriptionLabel": "Сипаттама",
+  "todoDoneLabel": "Орындалды",
+  "todoFormTitle": "Тапсырма формасы",
+  "todoListTitle": "Тапсырмалар тізімі",
+  "todoTitleLabel": "Атауы",
+  "userBlockedMessage": "Аккаунтыңыз бұғатталған. Бұл қате деп ойласаңыз, қолдау қызметіне хабарласыңыз.",
+  "userBlockedTitle": "Аккаунт бұғатталған",
+  "userDeletionRequestedMessage": "Аккаунтты жою сұрауы өңделіп жатыр. Жою аяқталғанша қолданбаға кіру мүмкін емес.",
+  "userDeletionRequestedTitle": "Жою сұралды",
+  "updateTodo": "Тапсырманы жаңарту"
 }

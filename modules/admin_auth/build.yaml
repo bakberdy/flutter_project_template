@@ -20,6 +20,9 @@ targets:
           auto_register: true
           generate_for_injectable: true
 
+      index_generator:
+        enabled: true
+
       flutter_gen_runner:
         options:
           output: lib/gen/

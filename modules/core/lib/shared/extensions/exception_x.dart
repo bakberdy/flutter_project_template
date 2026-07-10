@@ -14,7 +14,8 @@ extension ExceptionX on Exception {
         return clientFailure;
       }
 
-      final data = e.response?.data as DataMap?;
+      final responseData = e.response?.data;
+      final data = responseData is DataMap ? responseData : null;
       HttpErrorModel? error;
       try {
         error = HttpErrorModel.fromJson(data ?? {});

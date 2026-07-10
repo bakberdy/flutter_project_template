@@ -43,7 +43,32 @@ dev_dependencies:
     sdk: flutter
   freezed: ^3.2.5
   injectable_generator: ^3.0.2
+  index_generator: ^4.1.2
   json_serializable: ^6.13.0
+
+index_generator:
+  exclude:
+    - "**.freezed.dart"
+    - "**.g.dart"
+    - "api/client/api_client_factory.dart"
+    - "core_navigation/core_navigation_command.dart"
+    - "core_navigation/core_navigation_event.dart"
+    - "core_navigation/core_navigation_state.dart"
+  libraries:
+    - directory_path: lib
+      exports:
+        - package: package:talker/talker.dart
+      include:
+        - api/**.dart
+        - bloc/**.dart
+        - config/**.dart
+        - core_navigation/**.dart
+        - di/**.dart
+        - monitoring/**.dart
+        - shared/**.dart
+        - storage/**.dart
+        - usecases/**.dart
+        - utils/**.dart
 
 flutter:
   generate: true

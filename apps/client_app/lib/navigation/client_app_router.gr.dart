@@ -111,6 +111,22 @@ class ClientAppFlowRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [SplashScreen]
+class SplashRoute extends PageRouteInfo<void> {
+  const SplashRoute({List<PageRouteInfo>? children})
+    : super(SplashRoute.name, initialChildren: children);
+
+  static const String name = 'SplashRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const SplashScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [UserHomeScreen]
 class UserHomeRoute extends PageRouteInfo<void> {
   const UserHomeRoute({List<PageRouteInfo>? children})
@@ -122,70 +138,6 @@ class UserHomeRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const UserHomeScreen();
-    },
-  );
-}
-
-/// generated route for
-/// [UserInitialScreen]
-class UserInitialRoute extends PageRouteInfo<void> {
-  const UserInitialRoute({List<PageRouteInfo>? children})
-    : super(UserInitialRoute.name, initialChildren: children);
-
-  static const String name = 'UserInitialRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const UserInitialScreen();
-    },
-  );
-}
-
-/// generated route for
-/// [UserLoggedOutScreen]
-class UserLoggedOutRoute extends PageRouteInfo<void> {
-  const UserLoggedOutRoute({List<PageRouteInfo>? children})
-    : super(UserLoggedOutRoute.name, initialChildren: children);
-
-  static const String name = 'UserLoggedOutRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const UserLoggedOutScreen();
-    },
-  );
-}
-
-/// generated route for
-/// [UserOnboardingScreen]
-class UserOnboardingRoute extends PageRouteInfo<void> {
-  const UserOnboardingRoute({List<PageRouteInfo>? children})
-    : super(UserOnboardingRoute.name, initialChildren: children);
-
-  static const String name = 'UserOnboardingRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const UserOnboardingScreen();
-    },
-  );
-}
-
-/// generated route for
-/// [UserProfileRequiredScreen]
-class UserProfileRequiredRoute extends PageRouteInfo<void> {
-  const UserProfileRequiredRoute({List<PageRouteInfo>? children})
-    : super(UserProfileRequiredRoute.name, initialChildren: children);
-
-  static const String name = 'UserProfileRequiredRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const UserProfileRequiredScreen();
     },
   );
 }

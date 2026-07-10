@@ -19,7 +19,7 @@ import 'package:core/storage/secure/secure_storage.dart' as _i423;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
-import 'package:talker/talker.dart' as _i993;
+import 'package:talker_flutter/talker_flutter.dart' as _i207;
 
 class CorePackageModule extends _i526.MicroPackageModule {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -33,18 +33,18 @@ class CorePackageModule extends _i526.MicroPackageModule {
       preResolve: true,
     );
     gh.singleton<_i558.FlutterSecureStorage>(() => coreModule.secureStorage);
-    gh.singleton<_i993.Talker>(() => coreModule.talker);
+    gh.singleton<_i207.Talker>(() => coreModule.talker);
     gh.singleton<_i19.DeviceInfoService>(() => _i19.DeviceInfoService());
     gh.lazySingleton<_i423.SecureStorage>(
         () => _i181.FlutterSecureStorageImpl(gh<_i558.FlutterSecureStorage>()));
     gh.singleton<_i610.TokenStorage>(
         () => _i511.TokenStorageImpl(gh<_i558.FlutterSecureStorage>()));
-    gh.singleton<_i2.LocalStorage>(
-        () => _i862.SharedPreferencesStorage(gh<_i460.SharedPreferences>()));
     gh.lazySingleton<_i229.ApiClientFactory>(() => coreModule.apiClientFactory(
           gh<_i229.TokenStorage>(),
-          gh<_i993.Talker>(),
+          gh<_i207.Talker>(),
         ));
+    gh.singleton<_i2.LocalStorage>(
+        () => _i862.SharedPreferencesStorage(gh<_i460.SharedPreferences>()));
     gh.lazySingleton<_i229.ApiClient>(
       () => coreModule.protectedApiClient(
         gh<_i776.AppConfig>(),

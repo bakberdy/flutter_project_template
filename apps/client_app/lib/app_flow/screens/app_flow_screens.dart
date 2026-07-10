@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:client_app/app_flow/bloc/user_bloc.dart';
 import 'package:client_app/navigation/client_app_router.dart';
+import 'package:client_auth/client_auth.dart';
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,82 +11,44 @@ class ClientAppFlowScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userState = context.watch<UserBloc>().state;
-
-    return AutoRouter.declarative(
-      routes: (_) => [_routeForUserState(userState)],
+    return BlocBuilder<UserBloc, UserState>(
+      builder: (context, state) {
+        return AutoRouter.declarative(routes: (_) => _routesForState(state));
+      },
     );
   }
 
-  PageRouteInfo _routeForUserState(UserState state) {
-    return switch (state) {
-      UserInitial() => const UserInitialRoute(),
-      UserLoggedOut() => const UserLoggedOutRoute(),
-      UserLoggedIn(:final isOnboarded, :final isFilledProfile) =>
-        !isOnboarded
-            ? const UserOnboardingRoute()
-            : !isFilledProfile
-            ? const UserProfileRequiredRoute()
-            : const UserHomeRoute(),
+  List<PageRouteInfo<dynamic>> _routesForState(UserState state) {
+    if (state.status.isInitial || state.status.isLoading) {
+      return const [SplashRoute()];
+    }
+
+    final user = state.user;
+    if (!state.status.isSuccess || user == null) {
+      return const [AuthWrapperRoute()];
+    }
+
+    return switch (user.status) {
+      UserStatus.blocked => const [UserBlockedRoute()],
+      UserStatus.deletionRequested ||
+      UserStatus.deleted => const [UserDeletionRequestedRoute()],
+      UserStatus.active =>
+        user.isUserDataUploaded
+            ? const [
+                UserHomeRoute(children: [AuthorizedDashboardRoute()]),
+              ]
+            : const [UserDataRegistrationRoute()],
     };
   }
 }
 
 @RoutePage()
-class UserInitialScreen extends StatelessWidget {
-  const UserInitialScreen({super.key});
+class SplashScreen extends StatelessWidget {
+  const SplashScreen({super.key});
 
   @override
-  Widget build(BuildContext context) => _UserStateScaffold(
-    title: 'Initial',
-    description: 'Startup checks are still pending.',
-    primaryLabel: 'Finish startup',
-    onPrimaryPressed: () => context.read<UserBloc>().add(UserLogoutEvent()),
-  );
-}
-
-@RoutePage()
-class UserLoggedOutScreen extends StatelessWidget {
-  const UserLoggedOutScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) => _UserStateScaffold(
-    title: 'Logged out',
-    description: 'The user must sign in before entering the app.',
-    primaryLabel: 'Log in',
-    onPrimaryPressed: () => context.read<UserBloc>().add(UserLoginEvent()),
-  );
-}
-
-@RoutePage()
-class UserOnboardingScreen extends StatelessWidget {
-  const UserOnboardingScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) => _UserStateScaffold(
-    title: 'Onboarding required',
-    description: 'The user is authenticated but has not completed onboarding.',
-    primaryLabel: 'Complete onboarding',
-    onPrimaryPressed: () => context.read<UserBloc>().add(UserOnboardedEvent()),
-    secondaryLabel: 'Log out',
-    onSecondaryPressed: () => context.read<UserBloc>().add(UserLogoutEvent()),
-  );
-}
-
-@RoutePage()
-class UserProfileRequiredScreen extends StatelessWidget {
-  const UserProfileRequiredScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) => _UserStateScaffold(
-    title: 'Profile required',
-    description: 'The user must fill profile data before entering the app.',
-    primaryLabel: 'Fill profile',
-    onPrimaryPressed: () =>
-        context.read<UserBloc>().add(UserProfileFilledEvent()),
-    secondaryLabel: 'Log out',
-    onSecondaryPressed: () => context.read<UserBloc>().add(UserLogoutEvent()),
-  );
+  Widget build(BuildContext context) =>
+      const Scaffold(body: Center(child: CircularProgressIndicator()));
 }
 
 @RoutePage()
@@ -98,8 +61,15 @@ class UserHomeScreen extends StatelessWidget {
       title: const Text('Authorized zone'),
       actions: [
         IconButton(
+          tooltip: 'Profile',
+          onPressed: () => context.router.push(const ProfileTabShellRoute()),
+          icon: const Icon(Icons.person_outline),
+        ),
+        IconButton(
           tooltip: 'Log out',
-          onPressed: () => context.read<UserBloc>().add(UserLogoutEvent()),
+          onPressed: () => context.read<CoreNavigationBloc>().add(
+            const CoreNavigationEvent.unAuthenticated(),
+          ),
           icon: const Icon(Icons.logout),
         ),
       ],
@@ -113,7 +83,7 @@ class AuthorizedDashboardScreen extends StatelessWidget {
   const AuthorizedDashboardScreen({super.key});
 
   @override
-  Widget build(BuildContext context) => _UserStateScaffold(
+  Widget build(BuildContext context) => _AuthorizedScaffold(
     title: 'Dashboard',
     description: 'This is the initial screen inside the authorized zone.',
     primaryLabel: 'Push details',
@@ -132,7 +102,7 @@ class AuthorizedDetailsScreen extends StatelessWidget {
   final String id;
 
   @override
-  Widget build(BuildContext context) => _UserStateScaffold(
+  Widget build(BuildContext context) => _AuthorizedScaffold(
     title: 'Details',
     description: 'Authorized details route id: $id',
     primaryLabel: 'Push next details',
@@ -149,18 +119,20 @@ class AuthorizedSettingsScreen extends StatelessWidget {
   const AuthorizedSettingsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) => _UserStateScaffold(
+  Widget build(BuildContext context) => _AuthorizedScaffold(
     title: 'Settings',
     description: 'This route is still inside the authorized zone.',
     primaryLabel: 'Pop',
     onPrimaryPressed: () => context.router.maybePop(),
     secondaryLabel: 'Log out',
-    onSecondaryPressed: () => context.read<UserBloc>().add(UserLogoutEvent()),
+    onSecondaryPressed: () => context.read<CoreNavigationBloc>().add(
+      const CoreNavigationEvent.unAuthenticated(),
+    ),
   );
 }
 
-class _UserStateScaffold extends StatelessWidget {
-  const _UserStateScaffold({
+class _AuthorizedScaffold extends StatelessWidget {
+  const _AuthorizedScaffold({
     required this.title,
     required this.description,
     required this.primaryLabel,
@@ -178,7 +150,6 @@ class _UserStateScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: Text(title)),
     body: Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 420),

@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:client_app/app_flow/screens/app_flow_screens.dart';
+import 'package:client_auth/client_auth.dart';
 import 'package:flutter/widgets.dart';
 
 part 'client_app_router.gr.dart';
@@ -13,10 +14,8 @@ class ClientAppRouter extends RootStackRouter {
       path: '/',
       initial: true,
       children: [
-        AutoRoute(page: UserInitialRoute.page, path: 'initial'),
-        AutoRoute(page: UserLoggedOutRoute.page, path: 'logged-out'),
-        AutoRoute(page: UserOnboardingRoute.page, path: 'onboarding'),
-        AutoRoute(page: UserProfileRequiredRoute.page, path: 'profile'),
+        AutoRoute(page: SplashRoute.page, path: 'splash'),
+        ...clientAuthRoutes,
         AutoRoute(
           page: UserHomeRoute.page,
           path: 'home',
@@ -28,6 +27,27 @@ class ClientAppRouter extends RootStackRouter {
             ),
             AutoRoute(page: AuthorizedDetailsRoute.page, path: 'details/:id'),
             AutoRoute(page: AuthorizedSettingsRoute.page, path: 'settings'),
+            AutoRoute(
+              page: ProfileTabShellRoute.page,
+              path: 'profile',
+              children: [
+                AutoRoute(page: UserProfileRoute.page, path: '', initial: true),
+                AutoRoute(page: UserProfileEditRoute.page, path: 'edit'),
+                AutoRoute(
+                  page: UserPreferencesNotificationsRoute.page,
+                  path: 'notifications',
+                ),
+                AutoRoute(
+                  page: UserPreferencesAppearanceRoute.page,
+                  path: 'appearance',
+                ),
+                AutoRoute(
+                  page: UserPreferencesLocaleRoute.page,
+                  path: 'locale',
+                ),
+                AutoRoute(page: SessionsRoute.page, path: 'devices'),
+              ],
+            ),
           ],
         ),
       ],

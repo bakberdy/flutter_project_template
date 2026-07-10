@@ -5,7 +5,12 @@ import 'package:injectable/injectable.dart';
 import 'client_auth_di.module.dart';
 
 @InjectableInit.microPackage(
-  ignoreUnregisteredTypes: [ApiClient, TokenStorage, DeviceInfoService],
+  ignoreUnregisteredTypes: [
+    ApiClient,
+    CoreAppConfig,
+    TokenStorage,
+    DeviceInfoService,
+  ],
 )
 Future<void> configureClientAuthDependencies() async =>
     ClientAuthPackageModule().init(GetItHelper(GetIt.instance));

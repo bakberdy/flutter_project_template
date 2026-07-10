@@ -4,9 +4,7 @@ import 'package:core/core.dart';
 import 'package:client_auth/src/features/auth/domain/analytics/authorization_events.dart';
 import 'package:client_auth/src/features/auth/domain/entities/verify_response.dart';
 import 'package:client_auth/src/features/auth/domain/repositories/auth_repository.dart';
-import 'package:injectable/injectable.dart';
 
-@lazySingleton
 class AuthRefreshTokenUseCase extends UseCase<VerifyResponse, NoParams> {
   final AuthRepository _repository;
   AuthRefreshTokenUseCase(this._repository);

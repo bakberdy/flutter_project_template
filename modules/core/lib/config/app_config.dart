@@ -14,6 +14,8 @@ class AppConfig implements CoreAppConfig {
     'ENVIRONMENT',
     defaultValue: 'not-provided',
   );
+  static const bool _hasDartDefineConfig =
+      _baseUrl != 'not-provided' || _environmentFromDefine != 'not-provided';
 
   @override
   final String environment;
@@ -38,6 +40,11 @@ class AppConfig implements CoreAppConfig {
   );
 
   static Future<void> load({String assetPath = defaultAssetPath}) async {
+    if (_hasDartDefineConfig) {
+      instance = _fromEnvironment();
+      return;
+    }
+
     try {
       final source = await rootBundle.loadString(assetPath);
       final json = jsonDecode(source);
@@ -52,28 +59,44 @@ class AppConfig implements CoreAppConfig {
 
   factory AppConfig.fromJson(Map<String, dynamic> json) {
     return AppConfig._internal(
-      baseUrl: _readString(json, 'baseUrl', fallback: _baseUrl),
+      baseUrl: _readString(
+        json,
+        keys: const ['baseUrl', 'API_URL'],
+        fallback: _baseUrl,
+      ),
       environment: _readString(
         json,
-        'environment',
+        keys: const ['environment', 'ENVIRONMENT'],
         fallback: _environmentFromDefine,
       ),
-      enableLogging: _readBool(json, 'enableLogging', fallback: true),
-      enableAnalytics: _readBool(json, 'enableAnalytics', fallback: true),
-      enableCrashlytics: _readBool(json, 'enableCrashlytics', fallback: true),
+      enableLogging: _readBool(
+        json,
+        keys: const ['enableLogging', 'ENABLE_LOGGING'],
+        fallback: true,
+      ),
+      enableAnalytics: _readBool(
+        json,
+        keys: const ['enableAnalytics', 'ENABLE_ANALYTICS'],
+        fallback: true,
+      ),
+      enableCrashlytics: _readBool(
+        json,
+        keys: const ['enableCrashlytics', 'ENABLE_CRASHLYTICS'],
+        fallback: true,
+      ),
       connectTimeout: _readDuration(
         json,
-        'connectTimeoutSeconds',
+        keys: const ['connectTimeoutSeconds', 'CONNECT_TIMEOUT_SECONDS'],
         fallback: const Duration(seconds: 30),
       ),
       receiveTimeout: _readDuration(
         json,
-        'receiveTimeoutSeconds',
+        keys: const ['receiveTimeoutSeconds', 'RECEIVE_TIMEOUT_SECONDS'],
         fallback: const Duration(seconds: 30),
       ),
       sendTimeout: _readDuration(
         json,
-        'sendTimeoutSeconds',
+        keys: const ['sendTimeoutSeconds', 'SEND_TIMEOUT_SECONDS'],
         fallback: const Duration(seconds: 30),
       ),
     );
@@ -104,37 +127,43 @@ class AppConfig implements CoreAppConfig {
   }
 
   static String _readString(
-    Map<String, dynamic> json,
-    String key, {
+    Map<String, dynamic> json, {
+    required List<String> keys,
     required String fallback,
   }) {
-    final value = json[key];
-    if (value is String && value.isNotEmpty) {
-      return value;
+    for (final key in keys) {
+      final value = json[key];
+      if (value is String && value.isNotEmpty) {
+        return value;
+      }
     }
     return fallback;
   }
 
   static bool _readBool(
-    Map<String, dynamic> json,
-    String key, {
+    Map<String, dynamic> json, {
+    required List<String> keys,
     required bool fallback,
   }) {
-    final value = json[key];
-    if (value is bool) {
-      return value;
+    for (final key in keys) {
+      final value = json[key];
+      if (value is bool) {
+        return value;
+      }
     }
     return fallback;
   }
 
   static Duration _readDuration(
-    Map<String, dynamic> json,
-    String key, {
+    Map<String, dynamic> json, {
+    required List<String> keys,
     required Duration fallback,
   }) {
-    final value = json[key];
-    if (value is int && value > 0) {
-      return Duration(seconds: value);
+    for (final key in keys) {
+      final value = json[key];
+      if (value is int && value > 0) {
+        return Duration(seconds: value);
+      }
     }
     return fallback;
   }

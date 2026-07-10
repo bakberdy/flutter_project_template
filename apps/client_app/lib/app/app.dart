@@ -1,6 +1,6 @@
-import 'package:client_app/app_flow/bloc/user_bloc.dart';
 import 'package:client_app/localization/localization_consts.dart';
 import 'package:client_app/navigation/client_app_router.dart';
+import 'package:client_auth/client_auth.dart';
 import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +17,8 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   final ValueNotifier<bool> _showTalkerDock = ValueNotifier<bool>(true);
   final CoreNavigationBloc _navigationBloc = CoreNavigationBloc();
-  final UserBloc _userBloc = UserBloc(sl<LocalStorage>());
   final ClientAppRouter _appRouter = ClientAppRouter();
+  late final UserBloc _userBloc = sl<UserBloc>()..add(const UserStartedEvent());
 
   @override
   void dispose() {
@@ -36,6 +36,17 @@ class _AppState extends State<App> {
       BlocProvider.value(value: _userBloc),
     ],
     child: CoreNavigationListener(
+      onAuthenticated: () {
+        _userBloc.add(const UserStartedEvent());
+      },
+      onUnauthenticated: () {
+        _navigationBloc.add(
+          CoreNavigationEvent.replaceAll([AuthWrapperRoute()]),
+        );
+      },
+      onRefreshUser: () {
+        _userBloc.add(const UserStartedEvent());
+      },
       router: _appRouter,
       child: MaterialApp.router(
         builder: (context, child) => DebugOverlay(

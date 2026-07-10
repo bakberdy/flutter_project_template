@@ -1,5 +1,5 @@
 import 'package:core/core.dart';
-import 'package:client_auth/src/common/auth_api_endpoints.dart';
+import 'package:client_auth/src/features/auth/configs/api_endpoints.dart';
 import 'package:client_auth/src/features/auth/data/models/authorization_login_request_json.dart';
 import 'package:client_auth/src/features/auth/data/models/authorization_login_response_model/authorization_login_response_model.dart';
 import 'package:client_auth/src/features/auth/data/models/authorization_verify_request_model/authorization_verify_request_model.dart';
@@ -20,17 +20,13 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   static const _authorizationHeader = 'Authorization';
   static const _bearerPrefix = 'Bearer';
 
-  final ApiClient _publicApiClient;
-  final ApiClient _protectedApiClient;
+  final ApiClient _apiClient;
 
-  AuthRemoteDataSourceImpl(
-    @Named('publicApiClient') this._publicApiClient,
-    @Named('protectedApiClient') this._protectedApiClient,
-  );
+  AuthRemoteDataSourceImpl(@Named('protectedApiClient') this._apiClient);
 
   @override
   Future<LoginResponseModel> login(AuthLoginRequest request) async {
-    final response = await _publicApiClient.post<Map<String, dynamic>>(
+    final response = await _apiClient.post<Map<String, dynamic>>(
       AuthApiEndpoints.login,
       data: AuthLoginRequestJson.toMap(request),
     );
@@ -39,7 +35,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<VerifyResponseModel> verify(VerifyRequestModel request) async {
-    final response = await _publicApiClient.post<Map<String, dynamic>>(
+    final response = await _apiClient.post<Map<String, dynamic>>(
       AuthApiEndpoints.verifyEmail,
       data: request.toJson(),
     );
@@ -48,7 +44,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<VerifyResponseModel> refreshToken(String refreshToken) async {
-    final response = await _publicApiClient.post<Map<String, dynamic>>(
+    final response = await _apiClient.post<Map<String, dynamic>>(
       AuthApiEndpoints.refresh,
       data: {'refresh_token': refreshToken},
       options: ApiOptions(
@@ -60,14 +56,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<void> logOut() async {
-    await _protectedApiClient.post<Map<String, dynamic>>(
-      AuthApiEndpoints.logOut,
-    );
+    await _apiClient.post<Map<String, dynamic>>(AuthApiEndpoints.logOut);
   }
 
   @override
   Future<void> setNotificationToken(String token, String provider) async {
-    await _protectedApiClient.patch<void>(
+    await _apiClient.patch<void>(
       AuthApiEndpoints.deviceNotifications,
       data: {'push_token': token, 'push_provider': provider},
     );

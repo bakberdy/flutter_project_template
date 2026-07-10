@@ -26,6 +26,8 @@
 .env
 .env.*
 **/config/app_config.json
+**/config/run/config.*.json
+!**/config/run/config.example.json
 
 # Firebase
 **/google-services.json
