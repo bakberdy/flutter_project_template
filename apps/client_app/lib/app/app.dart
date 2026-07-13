@@ -1,5 +1,5 @@
 import 'package:client_app/localization/localization_consts.dart';
-import 'package:client_app/navigation/client_app_router.dart';
+import 'package:client_app/src/common/config/router/client_app_router.dart';
 import 'package:client_auth/client_auth.dart';
 import 'package:client_preferences/client_preferences.dart';
 import 'package:core/core.dart';

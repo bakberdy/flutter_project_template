@@ -10,7 +10,8 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:client_app/di/client_app_module.dart' as _i309;
-import 'package:client_app/navigation/client_app_router.dart' as _i715;
+import 'package:client_app/src/common/config/router/client_app_router.dart'
+    as _i594;
 import 'package:client_auth/client_auth.dart' as _i798;
 import 'package:client_preferences/client_preferences.dart' as _i344;
 import 'package:core/core.dart' as _i494;
@@ -28,7 +29,7 @@ extension GetItInjectableX on _i174.GetIt {
     await _i798.ClientAuthPackageModule().init(gh);
     await _i344.ClientPreferencesPackageModule().init(gh);
     final clientAppModule = _$ClientAppModule();
-    gh.singleton<_i715.ClientAppRouter>(() => clientAppModule.appRouter);
+    gh.singleton<_i594.ClientAppRouter>(() => clientAppModule.appRouter);
     gh.singleton<_i494.CoreNavigationBloc>(
       () => clientAppModule.navigationBloc,
     );

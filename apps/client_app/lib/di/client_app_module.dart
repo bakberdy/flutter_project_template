@@ -1,4 +1,4 @@
-import 'package:client_app/navigation/client_app_router.dart';
+import 'package:client_app/src/common/config/router/client_app_router.dart';
 import 'package:core/core.dart';
 import 'package:injectable/injectable.dart';
 
