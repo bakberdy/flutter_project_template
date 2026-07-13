@@ -7,9 +7,10 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 final class AppLocalizationConfig {
-  static const defaultLocale = ClientPreferencesLocaleConstants.defaultLocale;
+  static const defaultLocale =
+      ClientPreferencesLocalizationConfig.defaultLocale;
   static const supportedLocales =
-      ClientPreferencesLocaleConstants.supportedLocales;
+      ClientPreferencesLocalizationConfig.supportedLocales;
 
   static const List<LocalizationsDelegate<dynamic>> appLocalizationsDelegates =
       [

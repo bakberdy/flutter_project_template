@@ -1,6 +1,6 @@
 import 'package:core/core.dart';
 import 'package:injectable/injectable.dart';
-import 'package:admin_users/src/common/users_api_endpoints.dart';
+import 'package:admin_users/src/common/config/admin_users_api_endpoints.dart';
 import 'package:admin_users/src/features/users/data/mappers/users_api_mapper.dart';
 import 'package:admin_users/src/features/users/data/models/admin_user_model/admin_user_model.dart';
 import 'package:admin_users/src/features/users/data/models/admin_user_profile_model/admin_user_profile_model.dart';
@@ -43,7 +43,7 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
     ApiCancelToken? cancelToken,
   }) async {
     final response = await _apiClient.get<Map<String, dynamic>>(
-      UsersApiEndpoints.users,
+      AdminUsersApiEndpoints.users,
       queryParameters: {
         'page_number': query.pageNumber,
         'limit': query.limit,
@@ -72,7 +72,7 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
     ApiCancelToken? cancelToken,
   }) async {
     final response = await _apiClient.get<Map<String, dynamic>>(
-      UsersApiEndpoints.user(userId),
+      AdminUsersApiEndpoints.user(userId),
       cancelToken: cancelToken,
     );
     return AdminUserModel.fromJson(_requireData(response.data));
@@ -84,7 +84,7 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
     ApiCancelToken? cancelToken,
   }) async {
     final response = await _apiClient.get<Map<String, dynamic>>(
-      UsersApiEndpoints.profile(userId),
+      AdminUsersApiEndpoints.profile(userId),
       cancelToken: cancelToken,
     );
     return AdminUserProfileModel.fromJson(_requireData(response.data));
@@ -96,7 +96,7 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
     AdminUserStatus status,
   ) async {
     final response = await _apiClient.patch<Map<String, dynamic>>(
-      UsersApiEndpoints.status(userId),
+      AdminUsersApiEndpoints.status(userId),
       data: {'status': status.apiValue},
     );
     return AdminUserModel.fromJson(_requireData(response.data));
@@ -108,7 +108,7 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
     AdminUserRole role,
   ) async {
     final response = await _apiClient.patch<Map<String, dynamic>>(
-      UsersApiEndpoints.role(userId),
+      AdminUsersApiEndpoints.role(userId),
       data: {'role': role.apiValue},
     );
     return AdminUserModel.fromJson(_requireData(response.data));
@@ -117,7 +117,7 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
   @override
   Future<AdminUserModel> approveDeletionRequest(String userId) async {
     final response = await _apiClient.post<Map<String, dynamic>>(
-      UsersApiEndpoints.approveDeletionRequest(userId),
+      AdminUsersApiEndpoints.approveDeletionRequest(userId),
     );
     return AdminUserModel.fromJson(_requireData(response.data));
   }

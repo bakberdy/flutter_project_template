@@ -1,6 +1,5 @@
 import 'package:core/core.dart';
-import 'package:client_preferences/src/common/config/local_storage_consts.dart';
-import 'package:client_preferences/src/common/config/locale_constants.dart';
+import 'package:client_preferences/src/common/config/client_preferences_constants.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
@@ -17,13 +16,15 @@ class AcceptLanguageHeadersProvider implements ApiRequestHeadersProvider {
   };
 
   Future<String> _languageCode() async {
-    final stored = await _localStorage.read(key: LocalStorageConsts.localeKey);
+    final stored = await _localStorage.read(
+      key: ClientPreferencesConstants.localeStorageKey,
+    );
     final normalized = stored?.trim().toLowerCase();
-    final isSupported = ClientPreferencesLocaleConstants.supportedLocales.any(
+    final isSupported = ClientPreferencesConstants.supportedLocales.any(
       (locale) => locale.languageCode == normalized,
     );
     return isSupported
         ? normalized!
-        : ClientPreferencesLocaleConstants.defaultLocale.languageCode;
+        : ClientPreferencesConstants.defaultLocale.languageCode;
   }
 }

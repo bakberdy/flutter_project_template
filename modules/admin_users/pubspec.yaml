@@ -40,7 +40,7 @@ dev_dependencies:
 flutter:
   generate: true
   assets:
-    - assets/
+    - assets/admin_users/
 
 flutter_gen:
   assets:

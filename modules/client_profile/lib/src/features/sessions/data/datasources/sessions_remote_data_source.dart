@@ -1,5 +1,5 @@
 import 'package:core/core.dart';
-import 'package:client_profile/src/features/sessions/configs/client_profile_api_endpoints.dart';
+import 'package:client_profile/src/common/config/client_profile_api_endpoints.dart';
 import 'package:client_profile/src/features/sessions/data/models/session_model/session_model.dart';
 import 'package:client_profile/src/features/sessions/domain/entities/session.dart';
 import 'package:injectable/injectable.dart';
@@ -49,9 +49,7 @@ class SessionsRemoteDataSourceImpl implements SessionsRemoteDataSource {
 
   @override
   Future<void> revokeSession(String sessionId) async {
-    await _apiClient.delete<void>(
-      ClientProfileApiEndpoints.sessionById(sessionId),
-    );
+    await _apiClient.delete<void>(ClientProfileApiEndpoints.session(sessionId));
   }
 
   @override

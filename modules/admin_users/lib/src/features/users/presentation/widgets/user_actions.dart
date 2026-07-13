@@ -1,7 +1,7 @@
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
-import 'package:admin_users/src/common/admin_users_localization_x.dart';
+import 'package:admin_users/src/common/admin_users_context_x.dart';
 
 class UserActions extends StatelessWidget {
   const UserActions({

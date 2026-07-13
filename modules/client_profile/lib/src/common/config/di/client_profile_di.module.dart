@@ -5,6 +5,36 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i687;
 
+import 'package:client_profile/src/features/profile/data/datasources/user_profile_remote_data_source.dart'
+    as _i694;
+import 'package:client_profile/src/features/profile/data/repositories/user_profile_repository_impl.dart'
+    as _i328;
+import 'package:client_profile/src/features/profile/domain/repositories/user_profile_repository.dart'
+    as _i569;
+import 'package:client_profile/src/features/profile/domain/usecases/create_user_profile_use_case.dart'
+    as _i243;
+import 'package:client_profile/src/features/profile/domain/usecases/get_app_info_use_case.dart'
+    as _i195;
+import 'package:client_profile/src/features/profile/domain/usecases/get_current_user_profile_use_case.dart'
+    as _i722;
+import 'package:client_profile/src/features/profile/domain/usecases/get_current_user_use_case.dart'
+    as _i225;
+import 'package:client_profile/src/features/profile/domain/usecases/remove_user_avatar_use_case.dart'
+    as _i133;
+import 'package:client_profile/src/features/profile/domain/usecases/request_account_deletion_use_case.dart'
+    as _i61;
+import 'package:client_profile/src/features/profile/domain/usecases/update_user_avatar_use_case.dart'
+    as _i1046;
+import 'package:client_profile/src/features/profile/domain/usecases/update_user_profile_use_case.dart'
+    as _i302;
+import 'package:client_profile/src/features/profile/presentation/blocs/create_user_profile/create_user_profile_bloc.dart'
+    as _i773;
+import 'package:client_profile/src/features/profile/presentation/blocs/user/user_bloc.dart'
+    as _i100;
+import 'package:client_profile/src/features/profile/presentation/blocs/user_profile/user_profile_bloc.dart'
+    as _i922;
+import 'package:client_profile/src/features/profile/presentation/blocs/user_profile_edit/user_profile_edit_bloc.dart'
+    as _i149;
 import 'package:client_profile/src/features/sessions/data/datasources/sessions_remote_data_source.dart'
     as _i279;
 import 'package:client_profile/src/features/sessions/data/repositories/sessions_repository_impl.dart'
@@ -19,36 +49,6 @@ import 'package:client_profile/src/features/sessions/domain/usecases/revoke_sess
     as _i764;
 import 'package:client_profile/src/features/sessions/presentation/blocs/sessions/sessions_bloc.dart'
     as _i186;
-import 'package:client_profile/src/features/users/data/datasources/user_profile_remote_data_source.dart'
-    as _i869;
-import 'package:client_profile/src/features/users/data/repositories/user_profile_repository_impl.dart'
-    as _i664;
-import 'package:client_profile/src/features/users/domain/repositories/user_profile_repository.dart'
-    as _i882;
-import 'package:client_profile/src/features/users/domain/usecases/create_user_profile_use_case.dart'
-    as _i330;
-import 'package:client_profile/src/features/users/domain/usecases/get_app_info_use_case.dart'
-    as _i23;
-import 'package:client_profile/src/features/users/domain/usecases/get_current_user_profile_use_case.dart'
-    as _i271;
-import 'package:client_profile/src/features/users/domain/usecases/get_current_user_use_case.dart'
-    as _i148;
-import 'package:client_profile/src/features/users/domain/usecases/remove_user_avatar_use_case.dart'
-    as _i771;
-import 'package:client_profile/src/features/users/domain/usecases/request_account_deletion_use_case.dart'
-    as _i100;
-import 'package:client_profile/src/features/users/domain/usecases/update_user_avatar_use_case.dart'
-    as _i815;
-import 'package:client_profile/src/features/users/domain/usecases/update_user_profile_use_case.dart'
-    as _i38;
-import 'package:client_profile/src/features/users/presentation/blocs/create_user_profile_bloc/create_user_profile_bloc.dart'
-    as _i357;
-import 'package:client_profile/src/features/users/presentation/blocs/user/user_bloc.dart'
-    as _i406;
-import 'package:client_profile/src/features/users/presentation/blocs/user_profile_bloc/user_profile_bloc.dart'
-    as _i107;
-import 'package:client_profile/src/features/users/presentation/blocs/user_profile_edit_bloc/user_profile_edit_bloc.dart'
-    as _i370;
 import 'package:core/core.dart' as _i494;
 import 'package:injectable/injectable.dart' as _i526;
 
@@ -56,8 +56,8 @@ class ClientProfilePackageModule extends _i526.MicroPackageModule {
   // initializes the registration of main-scope dependencies inside of GetIt
   @override
   _i687.FutureOr<void> init(_i526.GetItHelper gh) {
-    gh.singleton<_i869.UserProfileRemoteDataSource>(
-      () => _i869.UserProfileRemoteDataSourceImpl(
+    gh.singleton<_i694.UserProfileRemoteDataSource>(
+      () => _i694.UserProfileRemoteDataSourceImpl(
         gh<_i494.ApiClient>(instanceName: 'protectedApiClient'),
       ),
     );
@@ -66,37 +66,13 @@ class ClientProfilePackageModule extends _i526.MicroPackageModule {
         gh<_i494.ApiClient>(instanceName: 'protectedApiClient'),
       ),
     );
-    gh.lazySingleton<_i23.GetAppInfoUseCase>(
-      () => _i23.GetAppInfoUseCase(gh<_i494.DeviceInfoService>()),
+    gh.lazySingleton<_i195.GetAppInfoUseCase>(
+      () => _i195.GetAppInfoUseCase(gh<_i494.DeviceInfoService>()),
     );
-    gh.singleton<_i882.UserProfileRepository>(
-      () => _i664.UserProfileRepositoryImpl(
-        gh<_i869.UserProfileRemoteDataSource>(),
+    gh.singleton<_i569.UserProfileRepository>(
+      () => _i328.UserProfileRepositoryImpl(
+        gh<_i694.UserProfileRemoteDataSource>(),
       ),
-    );
-    gh.lazySingleton<_i330.CreateUserProfileUseCase>(
-      () => _i330.CreateUserProfileUseCase(gh<_i882.UserProfileRepository>()),
-    );
-    gh.lazySingleton<_i271.GetCurrentUserProfileUseCase>(
-      () =>
-          _i271.GetCurrentUserProfileUseCase(gh<_i882.UserProfileRepository>()),
-    );
-    gh.lazySingleton<_i148.GetCurrentUserUseCase>(
-      () => _i148.GetCurrentUserUseCase(gh<_i882.UserProfileRepository>()),
-    );
-    gh.lazySingleton<_i771.RemoveUserAvatarUseCase>(
-      () => _i771.RemoveUserAvatarUseCase(gh<_i882.UserProfileRepository>()),
-    );
-    gh.lazySingleton<_i100.RequestAccountDeletionUseCase>(
-      () => _i100.RequestAccountDeletionUseCase(
-        gh<_i882.UserProfileRepository>(),
-      ),
-    );
-    gh.lazySingleton<_i815.UpdateUserAvatarUseCase>(
-      () => _i815.UpdateUserAvatarUseCase(gh<_i882.UserProfileRepository>()),
-    );
-    gh.lazySingleton<_i38.UpdateUserProfileUseCase>(
-      () => _i38.UpdateUserProfileUseCase(gh<_i882.UserProfileRepository>()),
     );
     gh.singleton<_i481.SessionsRepository>(
       () => _i814.SessionsRepositoryImpl(
@@ -113,25 +89,48 @@ class ClientProfilePackageModule extends _i526.MicroPackageModule {
     gh.lazySingleton<_i764.RevokeSessionUseCase>(
       () => _i764.RevokeSessionUseCase(gh<_i481.SessionsRepository>()),
     );
-    gh.factory<_i370.UserProfileEditBloc>(
-      () => _i370.UserProfileEditBloc(gh<_i38.UpdateUserProfileUseCase>()),
+    gh.lazySingleton<_i243.CreateUserProfileUseCase>(
+      () => _i243.CreateUserProfileUseCase(gh<_i569.UserProfileRepository>()),
     );
-    gh.factory<_i107.UserProfileBloc>(
-      () => _i107.UserProfileBloc(
-        gh<_i23.GetAppInfoUseCase>(),
-        gh<_i148.GetCurrentUserUseCase>(),
-        gh<_i271.GetCurrentUserProfileUseCase>(),
-        gh<_i815.UpdateUserAvatarUseCase>(),
-        gh<_i771.RemoveUserAvatarUseCase>(),
-        gh<_i100.RequestAccountDeletionUseCase>(),
+    gh.lazySingleton<_i722.GetCurrentUserProfileUseCase>(
+      () =>
+          _i722.GetCurrentUserProfileUseCase(gh<_i569.UserProfileRepository>()),
+    );
+    gh.lazySingleton<_i225.GetCurrentUserUseCase>(
+      () => _i225.GetCurrentUserUseCase(gh<_i569.UserProfileRepository>()),
+    );
+    gh.lazySingleton<_i133.RemoveUserAvatarUseCase>(
+      () => _i133.RemoveUserAvatarUseCase(gh<_i569.UserProfileRepository>()),
+    );
+    gh.lazySingleton<_i61.RequestAccountDeletionUseCase>(
+      () =>
+          _i61.RequestAccountDeletionUseCase(gh<_i569.UserProfileRepository>()),
+    );
+    gh.lazySingleton<_i1046.UpdateUserAvatarUseCase>(
+      () => _i1046.UpdateUserAvatarUseCase(gh<_i569.UserProfileRepository>()),
+    );
+    gh.lazySingleton<_i302.UpdateUserProfileUseCase>(
+      () => _i302.UpdateUserProfileUseCase(gh<_i569.UserProfileRepository>()),
+    );
+    gh.factory<_i100.UserBloc>(
+      () => _i100.UserBloc(gh<_i225.GetCurrentUserUseCase>()),
+    );
+    gh.factory<_i922.UserProfileBloc>(
+      () => _i922.UserProfileBloc(
+        gh<_i195.GetAppInfoUseCase>(),
+        gh<_i225.GetCurrentUserUseCase>(),
+        gh<_i722.GetCurrentUserProfileUseCase>(),
+        gh<_i1046.UpdateUserAvatarUseCase>(),
+        gh<_i133.RemoveUserAvatarUseCase>(),
+        gh<_i61.RequestAccountDeletionUseCase>(),
         gh<_i494.CoreAppConfig>(),
       ),
     );
-    gh.factory<_i406.UserBloc>(
-      () => _i406.UserBloc(gh<_i148.GetCurrentUserUseCase>()),
+    gh.factory<_i149.UserProfileEditBloc>(
+      () => _i149.UserProfileEditBloc(gh<_i302.UpdateUserProfileUseCase>()),
     );
-    gh.factory<_i357.CreateUserProfileBloc>(
-      () => _i357.CreateUserProfileBloc(gh<_i330.CreateUserProfileUseCase>()),
+    gh.factory<_i773.CreateUserProfileBloc>(
+      () => _i773.CreateUserProfileBloc(gh<_i243.CreateUserProfileUseCase>()),
     );
     gh.factory<_i186.SessionsBloc>(
       () => _i186.SessionsBloc(

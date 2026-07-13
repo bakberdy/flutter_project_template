@@ -79,16 +79,4 @@ class AuthRepositoryImpl implements AuthRepository {
       return Left(await e.toFailure(source: '$runtimeType.logOut'));
     }
   }
-
-  @override
-  FutureEither<void> setNotificationToken(String token, String provider) async {
-    try {
-      await _remoteDataSource.setNotificationToken(token, provider);
-      return const Right(null);
-    } on Exception catch (e) {
-      return Left(
-        await e.toFailure(source: '$runtimeType.setNotificationToken'),
-      );
-    }
-  }
 }

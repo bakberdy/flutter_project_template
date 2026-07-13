@@ -8,5 +8,4 @@ abstract class AuthRepository {
   FutureEither<VerifyResponse> verify(VerifyRequest request);
   FutureEither<VerifyResponse> refreshToken();
   FutureEither<void> logOut();
-  FutureEither<void> setNotificationToken(String token, String provider);
 }

@@ -68,24 +68,3 @@ final class AuthLogOutUseCaseEvent extends AnalyticsEvent {
     properties: properties,
   );
 }
-
-final class AuthSetNotificationTokenUseCaseEvent extends AnalyticsEvent {
-  const AuthSetNotificationTokenUseCaseEvent({
-    required super.name,
-    super.properties,
-  });
-
-  factory AuthSetNotificationTokenUseCaseEvent.success({
-    Map<String, dynamic>? properties,
-  }) => AuthSetNotificationTokenUseCaseEvent(
-    name: 'auth_set_notification_token_usecase_success',
-    properties: properties,
-  );
-
-  factory AuthSetNotificationTokenUseCaseEvent.failure({
-    required Map<String, dynamic> properties,
-  }) => AuthSetNotificationTokenUseCaseEvent(
-    name: 'auth_set_notification_token_usecase_failure',
-    properties: properties,
-  );
-}

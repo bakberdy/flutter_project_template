@@ -8,7 +8,7 @@ import 'package:admin_users/src/features/users/presentation/widgets/users_data_t
 import 'package:admin_users/src/features/users/presentation/widgets/users_filters_menu_button.dart';
 import 'package:admin_users/src/features/users/presentation/widgets/users_pagination.dart';
 import 'package:admin_users/src/features/users/presentation/widgets/users_search_bar.dart';
-import 'package:admin_users/src/common/admin_users_localization_x.dart';
+import 'package:admin_users/src/common/admin_users_context_x.dart';
 
 class UsersListView extends StatelessWidget {
   const UsersListView({super.key});

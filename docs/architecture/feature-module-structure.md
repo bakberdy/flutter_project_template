@@ -33,9 +33,10 @@ feature-модулей. У этих пакетов другая ответств
 ```text
 modules/<module_name>/
 ├── assets/
-│   ├── icons/
-│   ├── images/
-│   └── files/
+│   └── <module_name>/
+│       ├── icons/
+│       ├── images/
+│       └── files/
 ├── lib/
 │   ├── <module_name>.dart
 │   ├── gen/
@@ -135,7 +136,7 @@ import 'package:client_profile/src/features/profile/...';
 
 Feature-модули могут использовать общие assets дизайн-системы через
 `context.designAssets`. Такие assets не копируются в feature-модуль и не
-оборачиваются повторно в его собственный asset facade.
+оборачиваются повторно в module assets.
 
 App-level composition остаётся в приложении:
 
@@ -161,28 +162,17 @@ import 'package:client_profile/gen/assets.gen.dart';
 import 'package:client_profile/gen/l10n/client_profile_localizations.dart';
 import 'package:flutter/widgets.dart';
 
-final class ClientProfileAssets {
-  const ClientProfileAssets();
-
-  $AssetsIconsGen get icons => Assets.icons;
-  $AssetsImagesGen get images => Assets.images;
-}
-
 extension ClientProfileContextX on BuildContext {
   ClientProfileLocalizations get l10n =>
       ClientProfileLocalizations.of(this);
 
-  ClientProfileAssets get assets => const ClientProfileAssets();
+  $AssetsClientProfileGen get assets => Assets.clientProfile;
 }
 ```
 
-Если у модуля пока нет runtime assets, facade остаётся пустым:
-
-```dart
-final class ClientAuthAssets {
-  const ClientAuthAssets();
-}
-```
+`assets` возвращает только тип и значение, сгенерированные FlutterGen.
+Рукописные asset classes, facades, wrappers и строковые пути запрещены, в том
+числе когда у модуля пока нет runtime assets.
 
 Обязательные имена:
 
@@ -191,7 +181,6 @@ final class ClientAuthAssets {
 | Файл | `<module_name>_context_x.dart` |
 | Extension | `<ModuleName>ContextX` |
 | Localization getter | `l10n` |
-| Asset facade | `<ModuleName>Assets` |
 | Asset getter | `assets` |
 
 Внутри presentation используется:
@@ -209,7 +198,7 @@ ClientProfileLocalizations.of(context).profileTitle;
 Assets.icons.edit;
 ```
 
-Context extension и asset facade не экспортируются из package barrel. Это
+Context extension и `assets.gen.dart` не экспортируются из package barrel. Это
 предотвращает конфликт одинаковых `context.l10n` и `context.assets` между
 модулями.
 
@@ -222,9 +211,10 @@ Context extension и asset facade не экспортируются из package
 
 ```text
 assets/
-├── icons/
-├── images/
-└── files/
+└── <module_name>/
+    ├── icons/
+    ├── images/
+    └── files/
 ```
 
 Правила:
@@ -238,8 +228,11 @@ assets/
 - строковые пути до assets в Dart запрещены;
 - presentation получает module-owned assets через `context.assets`;
 - `lib/gen/assets.gen.dart` не экспортируется;
-- facade возвращает только реально существующие generated groups;
-- placeholder runtime assets только ради генерации не добавляются.
+- `context.assets` возвращает generated module group из `assets.gen.dart`;
+- рукописные asset classes, facades и wrappers запрещены;
+- FlutterGen настраивается во всех feature-модулях;
+- пустой модуль хранит только `.gitkeep` в generated module group; этот marker
+  не используется как runtime asset.
 
 Настройка в `pubspec.yaml`:
 
@@ -247,7 +240,7 @@ assets/
 flutter:
   generate: true
   assets:
-    - assets/
+    - assets/<module_name>/
 
 flutter_gen:
   assets:
@@ -699,7 +692,7 @@ lib/<module_name>.dart
 
 - `<module_name>_context_x.dart`;
 - `gen/assets.gen.dart`;
-- asset facade;
+- handwritten asset classes, facades и wrappers;
 - feature-specific theme extension без явного внешнего контракта;
 - constants;
 - API endpoints;
@@ -755,7 +748,7 @@ targets:
 ```
 
 AutoRoute builders не добавляются в модуль без routes. FlutterGen builder
-добавляется, когда модуль содержит runtime assets.
+обязателен для каждого feature-модуля: asset API никогда не пишется вручную.
 
 ## Pubspec
 
@@ -846,6 +839,23 @@ routes, DI registrations, assets, dependencies или exports.
 
 ## Checklist нового модуля
 
+Новый модуль создаётся repository generator-скриптом:
+
+```bash
+dart run tool/create_feature_module.dart <module_name>
+```
+
+При необходимости имя первой feature-зоны задаётся отдельно:
+
+```bash
+dart run tool/create_feature_module.dart admin_reports --feature reports
+```
+
+Скрипт валидирует `snake_case`, не перезаписывает существующий package,
+добавляет модуль в root workspace, создаёт canonical scaffold и запускает
+localization, FlutterGen, DI generation, format и analyze. `--no-codegen`
+используется только когда генерация намеренно будет выполнена позже.
+
 - [ ] Package добавлен в root workspace.
 - [ ] Package добавлен в dependencies consuming app.
 - [ ] Создан минимальный public barrel.
@@ -853,7 +863,8 @@ routes, DI registrations, assets, dependencies или exports.
 - [ ] Добавлены `context.l10n` и `context.assets`.
 - [ ] Общие design-system assets используются через `context.designAssets`.
 - [ ] Создан собственный `assets/` root.
-- [ ] Настроен FlutterGen при наличии runtime assets.
+- [ ] Настроен FlutterGen; `context.assets` возвращает generated module group.
+- [ ] Нет рукописных asset classes, facades, wrappers и строковых путей.
 - [ ] Создан собственный ARB-набор.
 - [ ] Настроен `l10n.yaml`.
 - [ ] Создан один constants-файл при наличии module constants.

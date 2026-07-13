@@ -8,7 +8,6 @@ targets:
       freezed:
         generate_for:
           - lib/src/features/**/domain/entities/**.dart
-          - lib/src/features/**/presentation/bloc/**.dart
           - lib/src/features/**/presentation/blocs/**.dart
         options:
           to_json: false
@@ -20,6 +19,11 @@ targets:
         options:
           auto_register: true
           generate_for_injectable: true
+
+      flutter_gen_runner:
+        options:
+          output: lib/gen/
+          line_length: 80
 
       auto_route_generator:auto_route_generator:
         generate_for:

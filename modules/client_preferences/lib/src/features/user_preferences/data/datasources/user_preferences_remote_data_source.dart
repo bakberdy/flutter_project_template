@@ -1,5 +1,5 @@
 import 'package:core/core.dart';
-import 'package:client_preferences/src/common/config/user_preferences_api_endpoints.dart';
+import 'package:client_preferences/src/common/config/client_preferences_api_endpoints.dart';
 import 'package:client_preferences/src/features/user_preferences/data/models/user_preferences_model/user_preferences_model.dart';
 import 'package:client_preferences/src/features/user_preferences/domain/entities/user_preferences.dart';
 import 'package:injectable/injectable.dart';
@@ -36,7 +36,7 @@ class UserPreferencesRemoteDataSourceImpl
   @override
   Future<UserPreferencesModel> getPreferences() async {
     final response = await _apiClient.get<Map<String, dynamic>>(
-      UserPreferencesApiEndpoints.myPreferences,
+      ClientPreferencesApiEndpoints.myPreferences,
     );
     return UserPreferencesModel.fromJson(response.data!);
   }
@@ -50,7 +50,7 @@ class UserPreferencesRemoteDataSourceImpl
     required bool marketingNotificationsEnabled,
   }) async {
     final response = await _apiClient.post<Map<String, dynamic>>(
-      UserPreferencesApiEndpoints.myPreferences,
+      ClientPreferencesApiEndpoints.myPreferences,
       data: {
         'language': const UserLanguageJsonConverter().toJson(language),
         'theme': const UserThemeJsonConverter().toJson(theme),
@@ -71,7 +71,7 @@ class UserPreferencesRemoteDataSourceImpl
     bool? marketingNotificationsEnabled,
   }) async {
     final response = await _apiClient.patch<Map<String, dynamic>>(
-      UserPreferencesApiEndpoints.myPreferences,
+      ClientPreferencesApiEndpoints.myPreferences,
       data: {
         if (language != null)
           'language': const UserLanguageJsonConverter().toJson(language),

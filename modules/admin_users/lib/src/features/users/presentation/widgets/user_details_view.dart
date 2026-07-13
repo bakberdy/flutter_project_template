@@ -9,7 +9,7 @@ import 'package:admin_users/src/features/users/presentation/widgets/user_actions
 import 'package:admin_users/src/features/users/presentation/widgets/user_header_card.dart';
 import 'package:admin_users/src/features/users/presentation/widgets/user_info_card.dart';
 import 'package:admin_users/gen/l10n/admin_users_localizations.dart';
-import 'package:admin_users/src/common/admin_users_localization_x.dart';
+import 'package:admin_users/src/common/admin_users_context_x.dart';
 
 class UserDetailsView extends StatelessWidget {
   const UserDetailsView({

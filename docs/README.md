@@ -6,4 +6,5 @@
   каноническая структура, ownership, context extensions, assets, localization,
   design-system assets, feature theme extensions, constants, endpoints,
   navigation paths, DI, routing, public API, generators, tests и checklist
-  миграции модулей.
+  миграции модулей. Документ также описывает использование
+  `tool/create_feature_module.dart` для создания нового модуля.

@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
 import 'package:admin_users/src/features/users/presentation/blocs/user/user_bloc.dart';
 import 'package:admin_users/src/features/users/presentation/widgets/user_details_view.dart';
-import 'package:admin_users/src/common/admin_users_localization_x.dart';
+import 'package:admin_users/src/common/admin_users_context_x.dart';
 
 @RoutePage()
 class UserScreen extends StatefulWidget implements AutoRouteWrapper {

@@ -1,5 +1,5 @@
 import 'package:core/core.dart';
-import 'package:admin_auth/src/common/auth_api_endpoints.dart';
+import 'package:admin_auth/src/common/config/admin_auth_api_endpoints.dart';
 import 'package:admin_auth/src/features/auth/data/models/authorization_login_request_json.dart';
 import 'package:admin_auth/src/features/auth/data/models/authorization_login_response_model/authorization_login_response_model.dart';
 import 'package:admin_auth/src/features/auth/data/models/authorization_verify_request_model/authorization_verify_request_model.dart';
@@ -31,7 +31,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<LoginResponseModel> login(AuthLoginRequest request) async {
     final response = await _publicApiClient.post<Map<String, dynamic>>(
-      AuthApiEndpoints.login,
+      AdminAuthApiEndpoints.login,
       data: AuthLoginRequestJson.toMap(request),
     );
     return LoginResponseModel.fromJson(response.data!);
@@ -40,7 +40,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<VerifyResponseModel> verify(VerifyRequestModel request) async {
     final response = await _publicApiClient.post<Map<String, dynamic>>(
-      AuthApiEndpoints.verifyEmail,
+      AdminAuthApiEndpoints.verifyEmail,
       data: request.toJson(),
     );
     return VerifyResponseModel.fromJson(response.data!);
@@ -49,7 +49,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<VerifyResponseModel> refreshToken(String refreshToken) async {
     final response = await _publicApiClient.post<Map<String, dynamic>>(
-      AuthApiEndpoints.refresh,
+      AdminAuthApiEndpoints.refresh,
       data: {'refresh_token': refreshToken},
       options: ApiOptions(
         headers: {_authorizationHeader: '$_bearerPrefix $refreshToken'},
@@ -61,14 +61,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<void> logOut() async {
     await _protectedApiClient.post<Map<String, dynamic>>(
-      AuthApiEndpoints.logOut,
+      AdminAuthApiEndpoints.logOut,
     );
   }
 
   @override
   Future<void> setNotificationToken(String token, String provider) async {
     await _protectedApiClient.patch<void>(
-      AuthApiEndpoints.deviceNotifications,
+      AdminAuthApiEndpoints.deviceNotifications,
       data: {'push_token': token, 'push_provider': provider},
     );
   }

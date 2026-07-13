@@ -5,7 +5,7 @@ import 'package:admin_users/src/features/users/domain/entities/admin_user_profil
 import 'package:admin_users/src/features/users/presentation/extensions/admin_user_localization_x.dart';
 import 'package:admin_users/src/features/users/presentation/widgets/user_avatar.dart';
 import 'package:admin_users/src/features/users/presentation/widgets/user_status_card.dart';
-import 'package:admin_users/src/common/admin_users_localization_x.dart';
+import 'package:admin_users/src/common/admin_users_context_x.dart';
 
 class UserHeaderCard extends StatelessWidget {
   const UserHeaderCard({super.key, required this.user, required this.profile});

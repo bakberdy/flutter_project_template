@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:client_preferences/src/common/client_preferences_localization_x.dart';
-import 'package:client_preferences/src/common/config/locale_constants.dart';
+import 'package:client_preferences/src/common/client_preferences_context_x.dart';
+import 'package:client_preferences/src/common/config/client_preferences_constants.dart';
 import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';
-import 'package:client_preferences/src/features/user_preferences/presentation/blocs/locale_bloc/locale_bloc.dart';
+import 'package:client_preferences/src/features/user_preferences/presentation/blocs/locale/locale_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -50,13 +50,10 @@ class UserPreferencesLocaleScreen extends StatelessWidget
                       disableBottomRadius: true,
                       title: _kazakhTitle,
                       subtitle: context.l10n.languageKazakh,
-                      value:
-                          ClientPreferencesLocaleConstants.kazakh.languageCode,
+                      value: ClientPreferencesConstants.kazakh.languageCode,
                       icon:
                           selectedLanguageCode ==
-                              ClientPreferencesLocaleConstants
-                                  .kazakh
-                                  .languageCode
+                              ClientPreferencesConstants.kazakh.languageCode
                           ? Icon(
                               Icons.check,
                               color: context.colorScheme.primary,
@@ -65,9 +62,7 @@ class UserPreferencesLocaleScreen extends StatelessWidget
                       loading:
                           state.status.isLoading &&
                           state.languageCode ==
-                              ClientPreferencesLocaleConstants
-                                  .kazakh
-                                  .languageCode,
+                              ClientPreferencesConstants.kazakh.languageCode,
                     ),
                     const Divider(
                       height: 1,
@@ -79,13 +74,10 @@ class UserPreferencesLocaleScreen extends StatelessWidget
                       disableTopRadius: true,
                       title: _russianTitle,
                       subtitle: context.l10n.languageRussian,
-                      value:
-                          ClientPreferencesLocaleConstants.russian.languageCode,
+                      value: ClientPreferencesConstants.russian.languageCode,
                       icon:
                           selectedLanguageCode ==
-                              ClientPreferencesLocaleConstants
-                                  .russian
-                                  .languageCode
+                              ClientPreferencesConstants.russian.languageCode
                           ? Icon(
                               Icons.check,
                               color: context.colorScheme.primary,
@@ -94,9 +86,7 @@ class UserPreferencesLocaleScreen extends StatelessWidget
                       loading:
                           state.status.isLoading &&
                           state.languageCode ==
-                              ClientPreferencesLocaleConstants
-                                  .russian
-                                  .languageCode,
+                              ClientPreferencesConstants.russian.languageCode,
                     ),
                     const Divider(
                       height: 1,
@@ -107,13 +97,10 @@ class UserPreferencesLocaleScreen extends StatelessWidget
                       disableTopRadius: true,
                       title: _englishTitle,
                       subtitle: context.l10n.languageEnglish,
-                      value:
-                          ClientPreferencesLocaleConstants.english.languageCode,
+                      value: ClientPreferencesConstants.english.languageCode,
                       icon:
                           selectedLanguageCode ==
-                              ClientPreferencesLocaleConstants
-                                  .english
-                                  .languageCode
+                              ClientPreferencesConstants.english.languageCode
                           ? Icon(
                               Icons.check,
                               color: context.colorScheme.primary,
@@ -122,9 +109,7 @@ class UserPreferencesLocaleScreen extends StatelessWidget
                       loading:
                           state.status.isLoading &&
                           state.languageCode ==
-                              ClientPreferencesLocaleConstants
-                                  .english
-                                  .languageCode,
+                              ClientPreferencesConstants.english.languageCode,
                     ),
                   ],
                 );

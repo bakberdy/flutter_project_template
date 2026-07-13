@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:core/core.dart';
-import 'package:client_preferences/src/common/config/local_storage_consts.dart';
+import 'package:client_preferences/src/common/config/client_preferences_constants.dart';
 import 'package:client_preferences/src/features/user_preferences/data/datasources/user_preferences_local_data_source.dart';
 import 'package:client_preferences/src/features/user_preferences/data/datasources/user_preferences_remote_data_source.dart';
 import 'package:client_preferences/src/features/user_preferences/data/models/user_preferences_model/user_preferences_model.dart';
@@ -224,7 +224,7 @@ class UserPreferencesRepositoryImpl implements UserPreferencesRepository {
 
   Future<UserLanguage?> _readLocalLanguage() async {
     final value = await _localDataSource.getUserPreference(
-      key: LocalStorageConsts.localeKey,
+      key: ClientPreferencesConstants.localeStorageKey,
     );
     if (value == null) {
       return null;
@@ -234,13 +234,13 @@ class UserPreferencesRepositoryImpl implements UserPreferencesRepository {
 
   Future<void> _writeLocalLanguage(UserLanguage language) =>
       _localDataSource.setUserPreference(
-        key: LocalStorageConsts.localeKey,
+        key: ClientPreferencesConstants.localeStorageKey,
         value: const UserLanguageJsonConverter().toJson(language),
       );
 
   Future<UserTheme?> _readLocalTheme() async {
     final value = await _localDataSource.getUserPreference(
-      key: LocalStorageConsts.themeModeKey,
+      key: ClientPreferencesConstants.themeModeStorageKey,
     );
     if (value == null) {
       return null;
@@ -250,7 +250,7 @@ class UserPreferencesRepositoryImpl implements UserPreferencesRepository {
 
   Future<void> _writeLocalTheme(UserTheme theme) =>
       _localDataSource.setUserPreference(
-        key: LocalStorageConsts.themeModeKey,
+        key: ClientPreferencesConstants.themeModeStorageKey,
         value: const UserThemeJsonConverter().toJson(theme),
       );
 }
