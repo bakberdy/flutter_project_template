@@ -1,0 +1,26 @@
+{
+  "@@locale": "ru",
+  "adminPanel": "Панель администратора",
+  "dashboard": "Главная",
+  "users": "Пользователи",
+  "settings": "Настройки",
+  "logout": "Выйти",
+  "signInTitle": "Вход в панель администратора",
+  "signInHero": "Управляйте продуктом из единого защищённого пространства.",
+  "signInEmailDescription": "Введите email администратора, чтобы продолжить.",
+  "signInOtpDescription": "Введите код подтверждения, отправленный на {email}.",
+  "@signInOtpDescription": {
+    "placeholders": {"email": {"type": "String"}}
+  },
+  "email": "Email",
+  "continueLabel": "Продолжить",
+  "signIn": "Войти",
+  "backToEmail": "Использовать другой email",
+  "usersCardDescription": "Управление аккаунтами, ролями и статусами доступа.",
+  "security": "Безопасность",
+  "securityCardDescription": "Контроль доступа администраторов и сессий.",
+  "systemStatus": "Состояние системы",
+  "systemStatusCardDescription": "Мониторинг доступности подключённых сервисов.",
+  "language": "Язык",
+  "languageDescription": "Интерфейс использует язык вашего браузера."
+}

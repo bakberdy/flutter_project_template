@@ -1,0 +1,26 @@
+{
+  "@@locale": "en",
+  "adminPanel": "Admin Panel",
+  "dashboard": "Dashboard",
+  "users": "Users",
+  "settings": "Settings",
+  "logout": "Log out",
+  "signInTitle": "Sign in to Admin Panel",
+  "signInHero": "Manage your product from one secure workspace.",
+  "signInEmailDescription": "Enter your administrator email to continue.",
+  "signInOtpDescription": "Enter the verification code sent to {email}.",
+  "@signInOtpDescription": {
+    "placeholders": {"email": {"type": "String"}}
+  },
+  "email": "Email",
+  "continueLabel": "Continue",
+  "signIn": "Sign in",
+  "backToEmail": "Use another email",
+  "usersCardDescription": "Review accounts, roles and access states.",
+  "security": "Security",
+  "securityCardDescription": "Monitor administrator access and sessions.",
+  "systemStatus": "System status",
+  "systemStatusCardDescription": "Track the health of connected services.",
+  "language": "Language",
+  "languageDescription": "The interface follows your browser language."
+}

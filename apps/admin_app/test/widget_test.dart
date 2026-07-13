@@ -2,7 +2,7 @@ import 'package:admin_app/app/app.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('creates admin app widget', (tester) async {
+  test('creates admin app widget', () {
     expect(App, isA<Type>());
   });
 }

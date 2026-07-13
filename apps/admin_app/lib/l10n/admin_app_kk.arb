@@ -1,0 +1,26 @@
+{
+  "@@locale": "kk",
+  "adminPanel": "Әкімші панелі",
+  "dashboard": "Басты бет",
+  "users": "Пайдаланушылар",
+  "settings": "Баптаулар",
+  "logout": "Шығу",
+  "signInTitle": "Әкімші панеліне кіру",
+  "signInHero": "Өнімді бір қауіпсіз кеңістіктен басқарыңыз.",
+  "signInEmailDescription": "Жалғастыру үшін әкімшінің email мекенжайын енгізіңіз.",
+  "signInOtpDescription": "{email} мекенжайына жіберілген растау кодын енгізіңіз.",
+  "@signInOtpDescription": {
+    "placeholders": {"email": {"type": "String"}}
+  },
+  "email": "Email",
+  "continueLabel": "Жалғастыру",
+  "signIn": "Кіру",
+  "backToEmail": "Басқа email пайдалану",
+  "usersCardDescription": "Аккаунттарды, рөлдерді және қолжетімділік күйлерін басқару.",
+  "security": "Қауіпсіздік",
+  "securityCardDescription": "Әкімші қолжетімділігі мен сессияларын бақылау.",
+  "systemStatus": "Жүйе күйі",
+  "systemStatusCardDescription": "Қосылған сервистердің қолжетімділігін бақылау.",
+  "language": "Тіл",
+  "languageDescription": "Интерфейс браузер тілін қолданады."
+}

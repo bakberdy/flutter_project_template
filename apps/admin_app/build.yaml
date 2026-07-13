@@ -1,0 +1,9 @@
+targets:
+  $default:
+    builders:
+      auto_route_generator:auto_router_generator:
+        generate_for:
+          - lib/src/common/config/router/admin_app_router.dart
+      auto_route_generator:auto_route_generator:
+        generate_for:
+          - lib/src/features/**/presentation/screens/*.dart

@@ -36,6 +36,8 @@ class UserProfileAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
+      floating: false,
+      pinned: true,
       leading: IconButton(icon: const Icon(Icons.share), onPressed: onShare),
       actions: [IconButton(icon: const Icon(Icons.edit), onPressed: onEdit)],
       expandedHeight: 200,
@@ -164,10 +166,14 @@ class ExpandedHeader extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           if (fullName != null)
-            Text(
-              fullName!,
-              style: context.designTextTheme.titleLarge,
-              maxLines: 1,
+            Flexible(
+              child: Text(
+                fullName!,
+                style: context.designTextTheme.titleLarge?.copyWith(
+                  overflow: TextOverflow.ellipsis,
+                ),
+                maxLines: 1,
+              ),
             ),
           if (email != null) ...[
             const SizedBox(height: 4),

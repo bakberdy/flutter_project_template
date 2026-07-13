@@ -22,6 +22,7 @@ class UsersPagination extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         BaseButton.secondary(
+          expand: false,
           onPressed: pagination.hasPrevious
               ? () => onPageChanged(pagination.page - 1)
               : null,
@@ -33,6 +34,7 @@ class UsersPagination extends StatelessWidget {
         Text(l10n.usersPagination(pagination.page, pagination.totalPages)),
         const SizedBox(width: AppSpacing.md),
         BaseButton.secondary(
+          expand: false,
           onPressed: pagination.hasNext
               ? () => onPageChanged(pagination.page + 1)
               : null,

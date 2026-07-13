@@ -10,6 +10,8 @@
             "request": "launch",
             "type": "dart",
             "toolArgs": [
+                "--web-browser-flag",
+                "--disable-web-security",
                 "--dart-define-from-file=config/run/config.development.json"
             ]
         },
@@ -19,6 +21,8 @@
             "request": "launch",
             "type": "dart",
             "toolArgs": [
+                "--web-browser-flag",
+                "--disable-web-security",
                 "--dart-define-from-file=config/run/config.production.json"
             ]
         },
