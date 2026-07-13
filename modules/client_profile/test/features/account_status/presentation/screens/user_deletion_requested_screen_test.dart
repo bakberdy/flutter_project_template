@@ -2,6 +2,7 @@ import 'package:client_profile/gen/l10n/client_profile_localizations.dart';
 import 'package:client_profile/src/features/account_status/presentation/screens/user_deletion_requested_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -31,7 +32,12 @@ void main() {
 Widget _app({required bool isDeleted}) => MaterialApp(
   locale: const Locale('ru'),
   theme: DesignTheme.light(),
-  localizationsDelegates: const [ClientProfileLocalizations.delegate],
+  localizationsDelegates: const [
+    GlobalMaterialLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+    ClientProfileLocalizations.delegate,
+  ],
   supportedLocales: ClientProfileLocalizations.supportedLocales,
   home: UserDeletionRequestedScreen(isDeleted: isDeleted),
 );
