@@ -17,7 +17,7 @@ class UserPreferencesItemsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverList(
       delegate: SliverChildListDelegate([
-        AppItemCard(
+        BaseListTile(
           onTap: onNotificationsTap,
           title: context.l10n.profilePreferencesNotificationsAndSounds,
           leading: const Icon(Icons.notifications),
@@ -29,7 +29,7 @@ class UserPreferencesItemsList extends StatelessWidget {
           indent: DesignSpacing.lg,
           endIndent: DesignSpacing.lg,
         ),
-        AppItemCard(
+        BaseListTile(
           disableTopRadius: true,
           disableBottomRadius: true,
           onTap: onAppearanceTap,
@@ -42,7 +42,7 @@ class UserPreferencesItemsList extends StatelessWidget {
           indent: DesignSpacing.lg,
           endIndent: DesignSpacing.lg,
         ),
-        AppItemCard(
+        BaseListTile(
           disableTopRadius: true,
           onTap: onLanguageTap,
           title: context.l10n.profilePreferencesLanguage,

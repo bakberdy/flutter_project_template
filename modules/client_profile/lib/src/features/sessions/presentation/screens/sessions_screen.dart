@@ -80,13 +80,13 @@ class SessionsScreen extends StatelessWidget
                   );
                 }
                 if (sessions.isEmpty) {
-                  return AppItemCard(
+                  return BaseListTile(
                     margin: EdgeInsets.zero,
                     title: context.l10n.sessionsListEmptyTitle,
                   );
                 }
                 if (index == sessions.length) {
-                  return AppItemCard(
+                  return BaseListTile(
                     margin: EdgeInsets.zero,
                     title: context.l10n.revokeAllSessions,
                     foregroundColor: context.colorScheme.error,

@@ -15,7 +15,7 @@ class AppSupportItemsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverList(
       delegate: SliverChildListDelegate([
-        AppItemCard(
+        BaseListTile(
           onTap: onFAQTap,
           title: context.l10n.profileSupportFaq,
           leading: const Icon(Icons.help_outline),
@@ -27,7 +27,7 @@ class AppSupportItemsList extends StatelessWidget {
           indent: DesignSpacing.lg,
           endIndent: DesignSpacing.lg,
         ),
-        AppItemCard(
+        BaseListTile(
           disableTopRadius: true,
           onTap: onSupportTap,
           title: context.l10n.profileSupportSupport,

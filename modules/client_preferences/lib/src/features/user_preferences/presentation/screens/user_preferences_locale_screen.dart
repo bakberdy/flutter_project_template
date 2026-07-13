@@ -46,7 +46,7 @@ class UserPreferencesLocaleScreen extends StatelessWidget
                     vertical: DesignSpacing.sm,
                   ),
                   children: [
-                    AppRadioListTile<String>(
+                    BaseRadioListTile<String>(
                       disableBottomRadius: true,
                       title: _kazakhTitle,
                       subtitle: context.l10n.languageKazakh,
@@ -69,7 +69,7 @@ class UserPreferencesLocaleScreen extends StatelessWidget
                       indent: DesignSpacing.lg,
                       endIndent: DesignSpacing.lg,
                     ),
-                    AppRadioListTile<String>(
+                    BaseRadioListTile<String>(
                       disableBottomRadius: true,
                       disableTopRadius: true,
                       title: _russianTitle,
@@ -93,7 +93,7 @@ class UserPreferencesLocaleScreen extends StatelessWidget
                       indent: DesignSpacing.lg,
                       endIndent: DesignSpacing.lg,
                     ),
-                    AppRadioListTile<String>(
+                    BaseRadioListTile<String>(
                       disableTopRadius: true,
                       title: _englishTitle,
                       subtitle: context.l10n.languageEnglish,

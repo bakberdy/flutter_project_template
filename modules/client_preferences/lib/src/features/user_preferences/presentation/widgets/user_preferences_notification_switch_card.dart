@@ -21,7 +21,7 @@ class UserPreferencesNotificationSwitchCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppItemCard(
+    return BaseListTile(
       padding: const EdgeInsets.symmetric(
         horizontal: DesignSpacing.sm,
         vertical: DesignSpacing.xs,

@@ -2,8 +2,8 @@ import 'package:design_system/src/tokens/design_radii.dart';
 import 'package:design_system/src/tokens/design_spacing.dart';
 import 'package:flutter/material.dart';
 
-class AppItemCard extends StatelessWidget {
-  const AppItemCard({
+class BaseListTile extends StatelessWidget {
+  const BaseListTile({
     super.key,
     this.onTap,
     required this.title,

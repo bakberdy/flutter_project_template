@@ -1,8 +1,8 @@
-import 'package:design_system/src/widgets/app_item_card.dart';
+import 'package:design_system/src/widgets/base_list_tile.dart';
 import 'package:flutter/material.dart';
 
-class AppRadioListTile<T> extends StatelessWidget {
-  const AppRadioListTile({
+class BaseRadioListTile<T> extends StatelessWidget {
+  const BaseRadioListTile({
     super.key,
     required this.title,
     this.subtitle,
@@ -23,7 +23,7 @@ class AppRadioListTile<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppItemCard(
+    return BaseListTile(
       onTap: loading
           ? () {}
           : () {

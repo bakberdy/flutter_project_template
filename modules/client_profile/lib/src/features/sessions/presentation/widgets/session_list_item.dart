@@ -43,7 +43,7 @@ class SessionListItem extends StatelessWidget {
           ),
         ],
       ),
-      child: AppItemCard(
+      child: BaseListTile(
         margin: EdgeInsets.zero,
         disableTopRadius: disableTopRadius,
         disableBottomRadius: disableBottomRadius,

@@ -42,7 +42,7 @@ class UserPreferencesAppearanceScreen extends StatelessWidget
                     vertical: DesignSpacing.sm,
                   ),
                   children: [
-                    AppRadioListTile<UserTheme>(
+                    BaseRadioListTile<UserTheme>(
                       disableBottomRadius: true,
                       title: context.l10n.themeSystem,
                       value: UserTheme.system,
@@ -61,7 +61,7 @@ class UserPreferencesAppearanceScreen extends StatelessWidget
                       indent: DesignSpacing.lg,
                       endIndent: DesignSpacing.lg,
                     ),
-                    AppRadioListTile<UserTheme>(
+                    BaseRadioListTile<UserTheme>(
                       disableBottomRadius: true,
                       disableTopRadius: true,
                       title: context.l10n.themeLight,
@@ -81,7 +81,7 @@ class UserPreferencesAppearanceScreen extends StatelessWidget
                       indent: DesignSpacing.lg,
                       endIndent: DesignSpacing.lg,
                     ),
-                    AppRadioListTile<UserTheme>(
+                    BaseRadioListTile<UserTheme>(
                       disableTopRadius: true,
                       title: context.l10n.themeDark,
                       value: UserTheme.dark,

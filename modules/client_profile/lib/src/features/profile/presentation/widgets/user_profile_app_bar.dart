@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:client_profile/src/common/client_profile_context_x.dart';
-import 'package:client_profile/src/features/profile/presentation/widgets/user_avatar.dart';
+import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
@@ -157,6 +157,7 @@ class ExpandedHeader extends StatelessWidget {
             UserAvatar(
               fullName: fullName ?? '',
               avatarUrl: avatarUrl,
+              baseUrl: context.di<CoreAppConfig>().baseUrl,
               radius: 70,
               loading: avatarLoading,
               loadingProgress: avatarLoadingProgress,
@@ -164,7 +165,7 @@ class ExpandedHeader extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             if (fullName != null)
-              Text(fullName!, style: context.textTheme.titleLarge),
+              Text(fullName!, style: context.textTheme.titleLarge, maxLines: 1),
             if (email != null) ...[
               const SizedBox(height: 4),
               Text(

@@ -68,7 +68,7 @@ class UserProfileScreen extends StatelessWidget with UiFailureHandlerMixin {
             ),
             const SliverToBoxAdapter(child: SizedBox(height: DesignSpacing.md)),
             SliverToBoxAdapter(
-              child: AppItemCard(
+              child: BaseListTile(
                 trailing: const Icon(Icons.chevron_right),
                 leading: const Icon(Icons.devices),
                 title: context.l10n.profilePreferencesDevices,
@@ -180,6 +180,7 @@ class UserProfileScreen extends StatelessWidget with UiFailureHandlerMixin {
       body: UserAvatar(
         fullName: fullName,
         avatarUrl: avatarUrl,
+        baseUrl: context.di<CoreAppConfig>().baseUrl,
         radius: 120,
         format: UserAvatarFormat.square,
       ),
