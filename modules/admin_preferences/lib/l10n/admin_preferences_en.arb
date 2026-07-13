@@ -1,0 +1,15 @@
+{
+  "@@locale": "en",
+  "notificationsTitle": "Notifications and sounds",
+  "pushNotifications": "Push notifications",
+  "emailNotifications": "Email notifications",
+  "marketingNotifications": "Marketing notifications",
+  "appearanceTitle": "Appearance",
+  "themeSystem": "System",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "languageTitle": "Language",
+  "languageKazakh": "Kazakh",
+  "languageRussian": "Russian",
+  "languageEnglish": "English"
+}

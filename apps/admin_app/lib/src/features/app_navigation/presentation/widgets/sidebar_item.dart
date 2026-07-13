@@ -1,13 +1,15 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class SidebarItem {
   const SidebarItem({
+    required this.name,
     required this.icon,
-    required this.selectedIcon,
-    required this.label,
+    this.subItems,
+    this.routePath,
   });
 
-  final IconData icon;
-  final IconData selectedIcon;
-  final String label;
+  final String name;
+  final Widget icon;
+  final List<SidebarItem>? subItems;
+  final String? routePath;
 }

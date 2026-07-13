@@ -1,0 +1,15 @@
+{
+  "@@locale": "ru",
+  "notificationsTitle": "Уведомления и звуки",
+  "pushNotifications": "Push-уведомления",
+  "emailNotifications": "Email-уведомления",
+  "marketingNotifications": "Маркетинговые уведомления",
+  "appearanceTitle": "Оформление",
+  "themeSystem": "Системная",
+  "themeLight": "Светлая",
+  "themeDark": "Темная",
+  "languageTitle": "Язык",
+  "languageKazakh": "Казахский",
+  "languageRussian": "Русский",
+  "languageEnglish": "Английский"
+}

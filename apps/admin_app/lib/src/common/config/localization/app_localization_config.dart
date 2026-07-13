@@ -1,5 +1,7 @@
 import 'package:admin_app/gen/l10n/admin_app_localizations.dart';
 import 'package:admin_auth/gen/l10n/admin_auth_localizations.dart';
+import 'package:admin_preferences/gen/l10n/admin_preferences_localizations.dart';
+import 'package:admin_profile/gen/l10n/admin_profile_localizations.dart';
 import 'package:admin_users/gen/l10n/admin_users_localizations.dart';
 import 'package:design_system/gen/l10n/design_system_localizations.dart';
 import 'package:flutter/widgets.dart';
@@ -15,6 +17,8 @@ final class AppLocalizationConfig {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
         AdminAuthLocalizations.delegate,
+        AdminProfileLocalizations.delegate,
+        AdminPreferencesLocalizations.delegate,
         AdminUsersLocalizations.delegate,
         DesignSystemLocalizations.delegate,
         AdminAppLocalizations.delegate,

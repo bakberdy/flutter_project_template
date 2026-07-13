@@ -1,0 +1,6 @@
+arb-dir: lib/l10n
+template-arb-file: admin_profile_en.arb
+output-dir: lib/gen/l10n
+output-localization-file: admin_profile_localizations.dart
+output-class: AdminProfileLocalizations
+nullable-getter: false

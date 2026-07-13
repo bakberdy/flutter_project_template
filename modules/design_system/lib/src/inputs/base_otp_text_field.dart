@@ -12,6 +12,8 @@ class BaseOtpTextField extends StatelessWidget {
     this.enabled = true,
     this.errorText,
     this.onChanged,
+    this.onSubmitted,
+    this.focusNode,
   });
 
   final TextEditingController controller;
@@ -20,6 +22,8 @@ class BaseOtpTextField extends StatelessWidget {
   final bool enabled;
   final String? errorText;
   final ValueChanged<String>? onChanged;
+  final ValueChanged<String>? onSubmitted;
+  final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +59,7 @@ class BaseOtpTextField extends StatelessWidget {
               child: Opacity(
                 opacity: 0,
                 child: TextField(
+                  focusNode: focusNode,
                   controller: controller,
                   autofocus: autofocus,
                   enabled: enabled,
@@ -70,6 +75,7 @@ class BaseOtpTextField extends StatelessWidget {
                     counterText: '',
                   ),
                   onChanged: onChanged,
+                  onSubmitted: onSubmitted,
                 ),
               ),
             ),

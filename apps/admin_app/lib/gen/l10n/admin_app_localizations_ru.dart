@@ -74,5 +74,60 @@ class AdminAppLocalizationsRu extends AdminAppLocalizations {
 
   @override
   String get languageDescription =>
-      'Интерфейс использует язык вашего браузера.';
+      'Интерфейс использует сохранённую языковую настройку.';
+
+  @override
+  String get editProfile => 'Редактировать профиль';
+
+  @override
+  String get notifications => 'Уведомления и звуки';
+
+  @override
+  String get preferences => 'Предпочтения';
+
+  @override
+  String get devices => 'Устройства';
+
+  @override
+  String get appearance => 'Оформление';
+
+  @override
+  String get moreExamples => 'Другие примеры';
+
+  @override
+  String get innerItemOne => 'Вложенный пункт 1';
+
+  @override
+  String get innerItemTwo => 'Вложенный пункт 2';
+
+  @override
+  String get logoutTitle => 'Выйти?';
+
+  @override
+  String get logoutMessage =>
+      'Для доступа к панели администратора потребуется войти снова.';
+
+  @override
+  String get cancel => 'Отмена';
+
+  @override
+  String get authEmailLabel => 'Электронная почта';
+
+  @override
+  String get authSubmitEmail => 'Продолжить';
+
+  @override
+  String get authSubmitOtp => 'Подтвердить';
+
+  @override
+  String get authTitle => 'Вход';
+
+  @override
+  String get devTalkerOpen => 'Открыть Talker';
+
+  @override
+  String get devTalkerDockLeft => 'Переместить Talker вправо';
+
+  @override
+  String get devTalkerDockRight => 'Переместить Talker влево';
 }

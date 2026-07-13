@@ -1,0 +1,75 @@
+{
+  "@@locale": "ru",
+  "continueToLogin": "Продолжить вход",
+  "dismiss": "Закрыть",
+  "profileAvatarActionChange": "Изменить аватар",
+  "profileAvatarActionRemove": "Удалить аватар",
+  "profileAvatarActionView": "Посмотреть аватар",
+  "profileEditFullNameLabel": "Полное имя",
+  "profileEditDiscardChanges": "Выйти без сохранения",
+  "profileEditDiscardChangesMessage": "Изменения профиля ещё не сохранены.",
+  "profileEditDiscardChangesTitle": "Выйти без сохранения?",
+  "profileEditInvalidOtpMessage": "Код не подошёл. Проверьте его и попробуйте ещё раз.",
+  "profileEditLogout": "Выйти",
+  "profileEditLogoutDialogMessage": "Чтобы снова получить доступ к аккаунту, потребуется войти.",
+  "profileEditLogoutDialogTitle": "Выйти?",
+  "profileEditOtpBottomSheetDescription": "Мы отправили 6-значный код на номер {phoneNumber}. Введите его, чтобы подтвердить номер.",
+  "@profileEditOtpBottomSheetDescription": {
+    "placeholders": {
+      "phoneNumber": {
+        "type": "String"
+      }
+    }
+  },
+  "profileEditOtpBottomSheetTitle": "Введите код подтверждения",
+  "profileEditPhoneNumberLabel": "Номер телефона",
+  "profileEditPhoneNumberInvalidFormatMessage": "Введите 10 цифр номера телефона.",
+  "profileEditPhoneVerificationPrompt": "Номер телефона не подтверждён",
+  "profileEditPhoneVerificationRequestMessage": "Отправить код на {phoneNumber}?",
+  "@profileEditPhoneVerificationRequestMessage": {
+    "placeholders": {
+      "phoneNumber": {
+        "type": "String"
+      }
+    }
+  },
+  "profileEditPhoneVerificationRequestTitle": "Подтвердить номер телефона",
+  "profileEditPhoneVerificationSendCode": "Отправить",
+  "profileEditPhoneVerified": "Подтверждён",
+  "profileEditRemoveAccount": "Удалить аккаунт",
+  "profileEditRemoveAccountDialogMessage": "Будет отправлен запрос на удаление аккаунта, после чего вы выйдете.",
+  "profileEditRemoveAccountDialogTitle": "Удалить аккаунт?",
+  "profileEditSaveChanges": "Сохранить изменения",
+  "profileEditTitle": "Редактировать профиль",
+  "profileEditVerifyNow": "Подтвердить",
+  "profileSavedSuccessMessage": "Профиль успешно сохранён",
+  "revokeAllSessions": "Отозвать всё",
+  "revokeAllSessionsDialogMessage": "Потребуется повторный вход на всех устройствах.",
+  "revokeAllSessionsDialogTitle": "Отозвать все сеансы?",
+  "revokeSession": "Отозвать",
+  "revokeSessionDialogMessage": "На этом устройстве потребуется войти снова.",
+  "revokeSessionDialogTitle": "Отозвать этот сеанс?",
+  "sessionsListEmptyTitle": "Сеансов пока нет",
+  "sessionsRetry": "Повторить",
+  "sessionsSessionLastActive": "Последняя активность: {formatted}",
+  "@sessionsSessionLastActive": {
+    "placeholders": {
+      "formatted": {
+        "type": "String"
+      }
+    }
+  },
+  "sessionsTitle": "Сеансы",
+  "userBlockedMessage": "Ваш аккаунт заблокирован. Обратитесь в поддержку, если считаете, что это ошибка.",
+  "userBlockedTitle": "Аккаунт заблокирован",
+  "userDeletionRequestedMessage": "Запрос на удаление аккаунта обрабатывается. Пока удаление не завершено, доступ к приложению закрыт.",
+  "userDeletionRequestedTitle": "Запрошено удаление",
+  "appBuildNumberValue": "Номер сборки: {buildNumber}",
+  "@appBuildNumberValue": {"placeholders": {"buildNumber": {"type": "String"}}},
+  "appNameValue": "Приложение: {appName}",
+  "@appNameValue": {"placeholders": {"appName": {"type": "String"}}},
+  "appPackageNameValue": "Пакет: {packageName}",
+  "@appPackageNameValue": {"placeholders": {"packageName": {"type": "String"}}},
+  "appVersionWithBuild": "Версия {version} ({buildNumber})",
+  "@appVersionWithBuild": {"placeholders": {"version": {"type": "String"}, "buildNumber": {"type": "String"}}}
+}

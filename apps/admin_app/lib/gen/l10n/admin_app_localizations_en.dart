@@ -73,5 +73,60 @@ class AdminAppLocalizationsEn extends AdminAppLocalizations {
 
   @override
   String get languageDescription =>
-      'The interface follows your browser language.';
+      'The interface follows your saved language preference.';
+
+  @override
+  String get editProfile => 'Edit profile';
+
+  @override
+  String get notifications => 'Notifications and sounds';
+
+  @override
+  String get preferences => 'Preferences';
+
+  @override
+  String get devices => 'Devices';
+
+  @override
+  String get appearance => 'Appearance';
+
+  @override
+  String get moreExamples => 'More examples';
+
+  @override
+  String get innerItemOne => 'Inner item 1';
+
+  @override
+  String get innerItemTwo => 'Inner item 2';
+
+  @override
+  String get logoutTitle => 'Log out?';
+
+  @override
+  String get logoutMessage =>
+      'You will need to sign in again to access the admin panel.';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get authEmailLabel => 'Email';
+
+  @override
+  String get authSubmitEmail => 'Continue';
+
+  @override
+  String get authSubmitOtp => 'Verify';
+
+  @override
+  String get authTitle => 'Sign in';
+
+  @override
+  String get devTalkerOpen => 'Open Talker';
+
+  @override
+  String get devTalkerDockLeft => 'Move Talker control to the right';
+
+  @override
+  String get devTalkerDockRight => 'Move Talker control to the left';
 }

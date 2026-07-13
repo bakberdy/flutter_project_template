@@ -72,5 +72,61 @@ class AdminAppLocalizationsKk extends AdminAppLocalizations {
   String get language => 'Тіл';
 
   @override
-  String get languageDescription => 'Интерфейс браузер тілін қолданады.';
+  String get languageDescription =>
+      'Интерфейс сақталған тіл баптауын қолданады.';
+
+  @override
+  String get editProfile => 'Профильді өңдеу';
+
+  @override
+  String get notifications => 'Хабарландырулар мен дыбыстар';
+
+  @override
+  String get preferences => 'Қалаулар';
+
+  @override
+  String get devices => 'Құрылғылар';
+
+  @override
+  String get appearance => 'Безендіру';
+
+  @override
+  String get moreExamples => 'Басқа мысалдар';
+
+  @override
+  String get innerItemOne => 'Ішкі тармақ 1';
+
+  @override
+  String get innerItemTwo => 'Ішкі тармақ 2';
+
+  @override
+  String get logoutTitle => 'Шығу керек пе?';
+
+  @override
+  String get logoutMessage =>
+      'Әкімші панеліне кіру үшін қайта авторизациядан өту қажет.';
+
+  @override
+  String get cancel => 'Бас тарту';
+
+  @override
+  String get authEmailLabel => 'Электрондық пошта';
+
+  @override
+  String get authSubmitEmail => 'Жалғастыру';
+
+  @override
+  String get authSubmitOtp => 'Растау';
+
+  @override
+  String get authTitle => 'Кіру';
+
+  @override
+  String get devTalkerOpen => 'Talker ашу';
+
+  @override
+  String get devTalkerDockLeft => 'Talker басқаруын оңға жылжыту';
+
+  @override
+  String get devTalkerDockRight => 'Talker басқаруын солға жылжыту';
 }

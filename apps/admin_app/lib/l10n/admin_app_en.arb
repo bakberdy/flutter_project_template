@@ -22,5 +22,23 @@
   "systemStatus": "System status",
   "systemStatusCardDescription": "Track the health of connected services.",
   "language": "Language",
-  "languageDescription": "The interface follows your browser language."
+  "languageDescription": "The interface follows your saved language preference.",
+  "editProfile": "Edit profile",
+  "notifications": "Notifications and sounds",
+  "preferences": "Preferences",
+  "devices": "Devices",
+  "appearance": "Appearance",
+  "moreExamples": "More examples",
+  "innerItemOne": "Inner item 1",
+  "innerItemTwo": "Inner item 2",
+  "logoutTitle": "Log out?",
+  "logoutMessage": "You will need to sign in again to access the admin panel.",
+  "cancel": "Cancel"
+  ,"authEmailLabel": "Email",
+  "authSubmitEmail": "Continue",
+  "authSubmitOtp": "Verify",
+  "authTitle": "Sign in",
+  "devTalkerOpen": "Open Talker",
+  "devTalkerDockLeft": "Move Talker control to the right",
+  "devTalkerDockRight": "Move Talker control to the left"
 }

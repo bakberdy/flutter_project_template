@@ -22,5 +22,23 @@
   "systemStatus": "Жүйе күйі",
   "systemStatusCardDescription": "Қосылған сервистердің қолжетімділігін бақылау.",
   "language": "Тіл",
-  "languageDescription": "Интерфейс браузер тілін қолданады."
+  "languageDescription": "Интерфейс сақталған тіл баптауын қолданады.",
+  "editProfile": "Профильді өңдеу",
+  "notifications": "Хабарландырулар мен дыбыстар",
+  "preferences": "Қалаулар",
+  "devices": "Құрылғылар",
+  "appearance": "Безендіру",
+  "moreExamples": "Басқа мысалдар",
+  "innerItemOne": "Ішкі тармақ 1",
+  "innerItemTwo": "Ішкі тармақ 2",
+  "logoutTitle": "Шығу керек пе?",
+  "logoutMessage": "Әкімші панеліне кіру үшін қайта авторизациядан өту қажет.",
+  "cancel": "Бас тарту"
+  ,"authEmailLabel": "Электрондық пошта",
+  "authSubmitEmail": "Жалғастыру",
+  "authSubmitOtp": "Растау",
+  "authTitle": "Кіру",
+  "devTalkerOpen": "Talker ашу",
+  "devTalkerDockLeft": "Talker басқаруын оңға жылжыту",
+  "devTalkerDockRight": "Talker басқаруын солға жылжыту"
 }

@@ -12,6 +12,8 @@ workspace:
   - modules/design_system
   - modules/admin_users
   - modules/admin_auth
+  - modules/admin_profile
+  - modules/admin_preferences
   - modules/client_auth
   - modules/client_profile
   - modules/client_preferences

@@ -220,8 +220,116 @@ abstract class AdminAppLocalizations {
   /// No description provided for @languageDescription.
   ///
   /// In en, this message translates to:
-  /// **'The interface follows your browser language.'**
+  /// **'The interface follows your saved language preference.'**
   String get languageDescription;
+
+  /// No description provided for @editProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit profile'**
+  String get editProfile;
+
+  /// No description provided for @notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications and sounds'**
+  String get notifications;
+
+  /// No description provided for @preferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences'**
+  String get preferences;
+
+  /// No description provided for @devices.
+  ///
+  /// In en, this message translates to:
+  /// **'Devices'**
+  String get devices;
+
+  /// No description provided for @appearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get appearance;
+
+  /// No description provided for @moreExamples.
+  ///
+  /// In en, this message translates to:
+  /// **'More examples'**
+  String get moreExamples;
+
+  /// No description provided for @innerItemOne.
+  ///
+  /// In en, this message translates to:
+  /// **'Inner item 1'**
+  String get innerItemOne;
+
+  /// No description provided for @innerItemTwo.
+  ///
+  /// In en, this message translates to:
+  /// **'Inner item 2'**
+  String get innerItemTwo;
+
+  /// No description provided for @logoutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out?'**
+  String get logoutTitle;
+
+  /// No description provided for @logoutMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'You will need to sign in again to access the admin panel.'**
+  String get logoutMessage;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @authEmailLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get authEmailLabel;
+
+  /// No description provided for @authSubmitEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get authSubmitEmail;
+
+  /// No description provided for @authSubmitOtp.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify'**
+  String get authSubmitOtp;
+
+  /// No description provided for @authTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get authTitle;
+
+  /// No description provided for @devTalkerOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Talker'**
+  String get devTalkerOpen;
+
+  /// No description provided for @devTalkerDockLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'Move Talker control to the right'**
+  String get devTalkerDockLeft;
+
+  /// No description provided for @devTalkerDockRight.
+  ///
+  /// In en, this message translates to:
+  /// **'Move Talker control to the left'**
+  String get devTalkerDockRight;
 }
 
 class _AdminAppLocalizationsDelegate

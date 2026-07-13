@@ -1,0 +1,75 @@
+{
+  "@@locale": "kk",
+  "continueToLogin": "Кіруге жалғастыру",
+  "dismiss": "Жабу",
+  "profileAvatarActionChange": "Аватарды өзгерту",
+  "profileAvatarActionRemove": "Аватарды жою",
+  "profileAvatarActionView": "Аватарды көру",
+  "profileEditFullNameLabel": "Толық аты",
+  "profileEditDiscardChanges": "Сақтамай шығу",
+  "profileEditDiscardChangesMessage": "Профильдегі өзгерістер әлі сақталған жоқ.",
+  "profileEditDiscardChangesTitle": "Сақтамай шығасыз ба?",
+  "profileEditInvalidOtpMessage": "Код сәйкес келмеді. Тексеріп, қайта енгізіңіз.",
+  "profileEditLogout": "Шығу",
+  "profileEditLogoutDialogMessage": "Аккаунтқа қайта кіру үшін қайта авторизациядан өту қажет болады.",
+  "profileEditLogoutDialogTitle": "Шығу керек пе?",
+  "profileEditOtpBottomSheetDescription": "{phoneNumber} нөміріне 6 таңбалы код жібердік. Нөмірді растау үшін сол кодты енгізіңіз.",
+  "@profileEditOtpBottomSheetDescription": {
+    "placeholders": {
+      "phoneNumber": {
+        "type": "String"
+      }
+    }
+  },
+  "profileEditOtpBottomSheetTitle": "Растау кодын енгізіңіз",
+  "profileEditPhoneNumberLabel": "Телефон нөмірі",
+  "profileEditPhoneNumberInvalidFormatMessage": "Телефон нөмірінің 10 санын енгізіңіз.",
+  "profileEditPhoneVerificationPrompt": "Телефон нөмірі расталмаған",
+  "profileEditPhoneVerificationRequestMessage": "{phoneNumber} нөміріне код жіберу керек пе?",
+  "@profileEditPhoneVerificationRequestMessage": {
+    "placeholders": {
+      "phoneNumber": {
+        "type": "String"
+      }
+    }
+  },
+  "profileEditPhoneVerificationRequestTitle": "Телефон нөмірін растау",
+  "profileEditPhoneVerificationSendCode": "Жіберу",
+  "profileEditPhoneVerified": "Расталды",
+  "profileEditRemoveAccount": "Аккаунтты жою",
+  "profileEditRemoveAccountDialogMessage": "Аккаунтты жоюға сұрау жіберіледі, содан кейін жүйеден шығасыз.",
+  "profileEditRemoveAccountDialogTitle": "Аккаунтты жою керек пе?",
+  "profileEditSaveChanges": "Өзгерістерді сақтау",
+  "profileEditTitle": "Профильді өңдеу",
+  "profileEditVerifyNow": "Растау",
+  "profileSavedSuccessMessage": "Профиль сәтті сақталды",
+  "revokeAllSessions": "Барлық сеанстарды алып тастау",
+  "revokeAllSessionsDialogMessage": "Барлық құрылғыларға қайта кіру қажет болады.",
+  "revokeAllSessionsDialogTitle": "Барлық сеанстар алып тасталсын ба?",
+  "revokeSession": "Алып тастау",
+  "revokeSessionDialogMessage": "Бұл құрылғыға қайта кіру қажет болады.",
+  "revokeSessionDialogTitle": "Бұл сеанс алып тасталсын ба?",
+  "sessionsListEmptyTitle": "Әзірше сеанстар жоқ",
+  "sessionsRetry": "Қайталау",
+  "sessionsSessionLastActive": "Соңғы белсенділік: {formatted}",
+  "@sessionsSessionLastActive": {
+    "placeholders": {
+      "formatted": {
+        "type": "String"
+      }
+    }
+  },
+  "sessionsTitle": "Сеанстар",
+  "userBlockedMessage": "Аккаунтыңыз бұғатталған. Бұл қате деп ойласаңыз, қолдау қызметіне хабарласыңыз.",
+  "userBlockedTitle": "Аккаунт бұғатталған",
+  "userDeletionRequestedMessage": "Аккаунтты жою сұрауы өңделіп жатыр. Жою аяқталғанша қолданбаға кіру мүмкін емес.",
+  "userDeletionRequestedTitle": "Жою сұралды",
+  "appBuildNumberValue": "Жинақ нөмірі: {buildNumber}",
+  "@appBuildNumberValue": {"placeholders": {"buildNumber": {"type": "String"}}},
+  "appNameValue": "Қолданба: {appName}",
+  "@appNameValue": {"placeholders": {"appName": {"type": "String"}}},
+  "appPackageNameValue": "Пакет: {packageName}",
+  "@appPackageNameValue": {"placeholders": {"packageName": {"type": "String"}}},
+  "appVersionWithBuild": "Нұсқа {version} ({buildNumber})",
+  "@appVersionWithBuild": {"placeholders": {"version": {"type": "String"}, "buildNumber": {"type": "String"}}}
+}

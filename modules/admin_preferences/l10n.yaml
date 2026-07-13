@@ -1,0 +1,6 @@
+arb-dir: lib/l10n
+template-arb-file: admin_preferences_en.arb
+output-dir: lib/gen/l10n
+output-localization-file: admin_preferences_localizations.dart
+output-class: AdminPreferencesLocalizations
+nullable-getter: false

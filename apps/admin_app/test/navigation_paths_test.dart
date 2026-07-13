@@ -1,6 +1,7 @@
 import 'package:admin_app/src/common/config/router/admin_app_navigation_paths.dart';
 import 'package:admin_app/src/common/config/router/admin_app_router.dart';
 import 'package:admin_users/admin_users.dart';
+import 'package:admin_profile/admin_profile.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -11,10 +12,16 @@ void main() {
 
   final cases = <String, String>{
     AdminAppNavigationPaths.signIn: AdminSignInRoute.name,
+    AdminAppNavigationPaths.otp: AdminOtpRoute.name,
     AdminAppNavigationPaths.home: AdminDashboardRoute.name,
     AdminAppNavigationPaths.users: UsersRoute.name,
     AdminAppNavigationPaths.user('user-1'): UserRoute.name,
-    AdminAppNavigationPaths.settings: AdminSettingsRoute.name,
+    AdminAppNavigationPaths.innerOne: AdminInnerOneRoute.name,
+    AdminAppNavigationPaths.innerTwo: AdminInnerTwoRoute.name,
+    '/${AdminProfileNavigationPaths.register}': UserDataRegistrationRoute.name,
+    '/${AdminProfileNavigationPaths.blocked}': UserBlockedRoute.name,
+    '/${AdminProfileNavigationPaths.deletionRequested}':
+        UserDeletionRequestedRoute.name,
   };
 
   for (final MapEntry(key: path, value: routeName) in cases.entries) {

@@ -1,0 +1,15 @@
+{
+  "@@locale": "kk",
+  "notificationsTitle": "Хабарландырулар мен дыбыстар",
+  "pushNotifications": "Push хабарландырулар",
+  "emailNotifications": "Email хабарландырулар",
+  "marketingNotifications": "Маркетингтік хабарландырулар",
+  "appearanceTitle": "Безендіру",
+  "themeSystem": "Жүйелік",
+  "themeLight": "Ашық",
+  "themeDark": "Қараңғы",
+  "languageTitle": "Тіл",
+  "languageKazakh": "Қазақша",
+  "languageRussian": "Орысша",
+  "languageEnglish": "Ағылшынша"
+}

@@ -11,6 +11,22 @@
 part of 'admin_app_router.dart';
 
 /// generated route for
+/// [AdminAuthWrapperScreen]
+class AdminAuthWrapperRoute extends PageRouteInfo<void> {
+  const AdminAuthWrapperRoute({List<PageRouteInfo>? children})
+    : super(AdminAuthWrapperRoute.name, initialChildren: children);
+
+  static const String name = 'AdminAuthWrapperRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return WrappedRoute(child: const AdminAuthWrapperScreen());
+    },
+  );
+}
+
+/// generated route for
 /// [AdminDashboardScreen]
 class AdminDashboardRoute extends PageRouteInfo<void> {
   const AdminDashboardRoute({List<PageRouteInfo>? children})
@@ -22,6 +38,54 @@ class AdminDashboardRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const AdminDashboardScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [AdminInnerOneScreen]
+class AdminInnerOneRoute extends PageRouteInfo<void> {
+  const AdminInnerOneRoute({List<PageRouteInfo>? children})
+    : super(AdminInnerOneRoute.name, initialChildren: children);
+
+  static const String name = 'AdminInnerOneRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const AdminInnerOneScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [AdminInnerTwoScreen]
+class AdminInnerTwoRoute extends PageRouteInfo<void> {
+  const AdminInnerTwoRoute({List<PageRouteInfo>? children})
+    : super(AdminInnerTwoRoute.name, initialChildren: children);
+
+  static const String name = 'AdminInnerTwoRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const AdminInnerTwoScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [AdminOtpScreen]
+class AdminOtpRoute extends PageRouteInfo<void> {
+  const AdminOtpRoute({List<PageRouteInfo>? children})
+    : super(AdminOtpRoute.name, initialChildren: children);
+
+  static const String name = 'AdminOtpRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const AdminOtpScreen();
     },
   );
 }
@@ -53,7 +117,7 @@ class AdminSignInRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return WrappedRoute(child: const AdminSignInScreen());
+      return const AdminSignInScreen();
     },
   );
 }

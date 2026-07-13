@@ -1,0 +1,36 @@
+import 'package:admin_profile/src/common/admin_profile_context_x.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+class UserProfileFullNameTextField extends StatelessWidget {
+  const UserProfileFullNameTextField({
+    super.key,
+    required this.controller,
+    this.onChanged,
+    this.errorText,
+  });
+
+  final TextEditingController controller;
+  final ValueChanged<String>? onChanged;
+  final String? errorText;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      autofocus: false,
+      controller: controller,
+      onChanged: onChanged,
+      textInputAction: TextInputAction.next,
+      inputFormatters: [
+        FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')),
+      ],
+      autocorrect: false,
+      textCapitalization: TextCapitalization.words,
+      decoration: InputDecoration(
+        labelText: context.l10n.profileEditFullNameLabel,
+        prefixIcon: const Icon(Icons.person),
+        errorText: errorText,
+      ),
+    );
+  }
+}

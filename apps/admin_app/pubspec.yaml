@@ -25,6 +25,8 @@ dependencies:
   design_system: ^0.1.0
   admin_auth: ^0.1.0
   admin_users: ^0.1.0
+  admin_profile: ^0.1.0
+  admin_preferences: ^0.1.0
 
 dev_dependencies:
   flutter_test:
