@@ -1,0 +1,34 @@
+name: analyzer-check
+on:
+  workflow_call:
+
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+concurrency:
+  group: analyzer-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          cache: true
+      - run: flutter pub get
+      - run: flutter analyze --no-pub
+      - name: Report success-analyze
+        if: success()
+        run: |
+          echo "## success-analyze" >> "$GITHUB_STEP_SUMMARY"
+          echo "Flutter analyzer completed with no failing errors." >> "$GITHUB_STEP_SUMMARY"
+          echo "::notice::success-analyze — analyzer passed"

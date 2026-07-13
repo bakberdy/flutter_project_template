@@ -1,0 +1,26 @@
+default_platform(:ios)
+
+FASTLANE_DIR = File.expand_path(__dir__)
+IOS_DIR      = File.expand_path("..", FASTLANE_DIR)
+PROJECT_ROOT = File.expand_path("..", IOS_DIR)
+
+import "helpers.rb"
+import "lanes/prepare.rb"
+import "lanes/build.rb"
+import "lanes/deploy.rb"
+
+platform :ios do
+  desc "Build and upload development IPA to TestFlight"
+  lane :beta_development do
+    prepare
+    build(flavor: "development")
+    deploy(flavor: "development")
+  end
+
+  desc "Build and upload production IPA to TestFlight"
+  lane :beta_production do
+    prepare
+    build(flavor: "production")
+    deploy(flavor: "production")
+  end
+end

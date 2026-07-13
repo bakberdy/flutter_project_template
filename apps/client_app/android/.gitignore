@@ -10,5 +10,13 @@ GeneratedPluginRegistrant.java
 # Remember to never publicly share your keystore.
 # See https://flutter.dev/to/reference-keystore
 key.properties
+key.*.properties
 **/*.keystore
 **/*.jks
+
+vendor/bundle
+.bundle
+keys/*
+!keys/.env.example
+fastlane/report.xml
+fastlane/README.md

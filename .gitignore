@@ -25,6 +25,7 @@
 # Environment
 .env
 .env.*
+!**/keys/.env.example
 **/config/app_config.json
 **/config/run/config.*.json
 !**/config/run/config.example.json
@@ -36,6 +37,7 @@
 
 # Android
 **/key.properties
+**/key.*.properties
 **/*.jks
 **/*.keystore
 

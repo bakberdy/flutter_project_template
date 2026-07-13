@@ -1,0 +1,224 @@
+name: ios-upload-to-testflight
+
+on:
+  workflow_dispatch:
+    inputs:
+      flavor:
+        description: "Flutter iOS flavor to build and upload (development or production)"
+        type: string
+        default: production
+      ref:
+        description: "Git ref or SHA to checkout (defaults to the event ref)"
+        type: string
+        required: false
+        default: ""
+      release_body:
+        description: "Optional. Release notes for TestFlight What to Test (first 4000 chars)."
+        type: string
+        required: false
+        default: ""
+  workflow_call:
+    inputs:
+      flavor:
+        description: "Flutter iOS flavor to build and upload (development or production)"
+        type: string
+        default: production
+      ref:
+        description: "Git ref or SHA to checkout (defaults to the event ref)"
+        type: string
+        required: false
+        default: ""
+      release_body:
+        description: "Optional. Passed by release-on-publish. TestFlight What to Test (first 4000 chars)."
+        type: string
+        required: false
+        default: ""
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+jobs:
+  upload-to-testflight:
+    runs-on: macos-26
+    timeout-minutes: 60
+    env:
+      CI: "true"
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.ref || github.sha }}
+
+      - name: Write TestFlight What to Test from workflow input
+        if: ${{ inputs.release_body != '' }}
+        env:
+          RELEASE_BODY: ${{ inputs.release_body }}
+        run: |
+          set -euo pipefail
+          python3 <<'PY'
+          import os
+          from pathlib import Path
+
+          body = (os.environ.get("RELEASE_BODY") or "").strip()
+          if not body:
+              raise SystemExit(0)
+          testflight = body[:4000]
+          d = Path(os.environ["GITHUB_WORKSPACE"]) / "release-notes"
+          d.mkdir(parents=True, exist_ok=True)
+          (d / "testflight.txt").write_text(testflight, encoding="utf-8")
+          print("Wrote release-notes/testflight.txt for TestFlight (max 4000 chars).")
+          PY
+
+      - name: Check required secrets
+        env:
+          FLAVOR: ${{ inputs.flavor }}
+          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
+          IOS_BUILD_CERTIFICATE_BASE64: ${{ secrets.IOS_BUILD_CERTIFICATE_BASE64 }}
+          IOS_BUILD_CERTIFICATE_PASSWORD: ${{ secrets.IOS_BUILD_CERTIFICATE_PASSWORD }}
+          IOS_BUILD_PROVISION_PROFILE_BASE64_DEVELOPMENT: ${{ secrets.IOS_BUILD_PROVISION_PROFILE_BASE64_DEVELOPMENT }}
+          IOS_PROVISIONING_PROFILE_NAME_DEVELOPMENT: ${{ secrets.IOS_PROVISIONING_PROFILE_NAME_DEVELOPMENT }}
+          IOS_BUILD_PROVISION_PROFILE_BASE64_PRODUCTION: ${{ secrets.IOS_BUILD_PROVISION_PROFILE_BASE64_PRODUCTION }}
+          IOS_PROVISIONING_PROFILE_NAME_PRODUCTION: ${{ secrets.IOS_PROVISIONING_PROFILE_NAME_PRODUCTION }}
+          DEVELOPMENT_API_URL: ${{ secrets.DEVELOPMENT_API_URL }}
+          DEVELOPMENT_ENVIRONMENT: ${{ secrets.DEVELOPMENT_ENVIRONMENT }}
+          PRODUCTION_API_URL: ${{ secrets.PRODUCTION_API_URL }}
+          PRODUCTION_ENVIRONMENT: ${{ secrets.PRODUCTION_ENVIRONMENT }}
+        run: |
+          set -euo pipefail
+          rc=0
+          if [ -z "${APP_STORE_CONNECT_KEY_ID}" ]; then echo "::error::Secret APP_STORE_CONNECT_KEY_ID is missing or empty."; rc=1; fi
+          if [ -z "${APP_STORE_CONNECT_ISSUER_ID}" ]; then echo "::error::Secret APP_STORE_CONNECT_ISSUER_ID is missing or empty."; rc=1; fi
+          if [ -z "${APP_STORE_CONNECT_API_KEY}" ]; then echo "::error::Secret APP_STORE_CONNECT_API_KEY is missing or empty (App Store Connect API .p8 contents or Base64 of that file)."; rc=1; fi
+          if [ -z "${IOS_BUILD_CERTIFICATE_BASE64}" ]; then echo "::error::Secret IOS_BUILD_CERTIFICATE_BASE64 is missing or empty (Base64 of the iOS Distribution .p12)."; rc=1; fi
+          if [ -z "${IOS_BUILD_CERTIFICATE_PASSWORD}" ]; then echo "::error::Secret IOS_BUILD_CERTIFICATE_PASSWORD is missing or empty."; rc=1; fi
+
+          case "${FLAVOR}" in
+            production)
+              if [ -z "${IOS_BUILD_PROVISION_PROFILE_BASE64_PRODUCTION}" ]; then echo "::error::For flavor production, secret IOS_BUILD_PROVISION_PROFILE_BASE64_PRODUCTION is required."; rc=1; fi
+              if [ -z "${IOS_PROVISIONING_PROFILE_NAME_PRODUCTION}" ]; then echo "::error::For flavor production, secret IOS_PROVISIONING_PROFILE_NAME_PRODUCTION is required."; rc=1; fi
+              if [ -z "${PRODUCTION_API_URL}" ]; then echo "::error::For flavor production, secret PRODUCTION_API_URL is required (build config; see config/run/config.example.json)."; rc=1; fi
+              if [ -z "${PRODUCTION_ENVIRONMENT}" ]; then echo "::error::For flavor production, secret PRODUCTION_ENVIRONMENT is required (build config; see config/run/config.example.json)."; rc=1; fi
+              ;;
+            development)
+              if [ -z "${IOS_BUILD_PROVISION_PROFILE_BASE64_DEVELOPMENT}" ]; then echo "::error::For flavor development, secret IOS_BUILD_PROVISION_PROFILE_BASE64_DEVELOPMENT is required."; rc=1; fi
+              if [ -z "${IOS_PROVISIONING_PROFILE_NAME_DEVELOPMENT}" ]; then echo "::error::For flavor development, secret IOS_PROVISIONING_PROFILE_NAME_DEVELOPMENT is required."; rc=1; fi
+              if [ -z "${DEVELOPMENT_API_URL}" ]; then echo "::error::For flavor development, secret DEVELOPMENT_API_URL is required (build config; see config/run/config.example.json)."; rc=1; fi
+              if [ -z "${DEVELOPMENT_ENVIRONMENT}" ]; then echo "::error::For flavor development, secret DEVELOPMENT_ENVIRONMENT is required (build config; see config/run/config.example.json)."; rc=1; fi
+              ;;
+            *)
+              echo "::error::Invalid flavor '${FLAVOR}'. Use development or production."
+              exit 1
+              ;;
+          esac
+
+          if [ "${rc}" -ne 0 ]; then
+            echo "::error::Add the listed secrets under Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+          working-directory: apps/client_app/ios
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Flutter pub get
+        run: |
+          set -euo pipefail
+          flutter pub get
+
+      - name: Install Fastlane and verify SPM-only iOS setup
+        env:
+          LANG: en_US.UTF-8
+          LC_ALL: en_US.UTF-8
+        run: |
+          set -euo pipefail
+          test ! -f apps/client_app/ios/Podfile
+          test ! -f apps/client_app/ios/Podfile.lock
+          test ! -d apps/client_app/ios/Pods
+          if grep -R "Pods/Target Support Files" apps/client_app/ios/Flutter apps/client_app/ios/Runner.xcodeproj; then
+            echo "::error::CocoaPods reference found in the SPM-only client_app iOS project."
+            exit 1
+          fi
+          cd apps/client_app/ios
+          bundle install
+
+      - name: Write App Store Connect API key and signing assets
+        env:
+          FLAVOR: ${{ inputs.flavor }}
+          APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
+          IOS_BUILD_CERTIFICATE_BASE64: ${{ secrets.IOS_BUILD_CERTIFICATE_BASE64 }}
+          IOS_BUILD_PROVISION_PROFILE_BASE64_DEVELOPMENT: ${{ secrets.IOS_BUILD_PROVISION_PROFILE_BASE64_DEVELOPMENT }}
+          IOS_BUILD_PROVISION_PROFILE_BASE64_PRODUCTION: ${{ secrets.IOS_BUILD_PROVISION_PROFILE_BASE64_PRODUCTION }}
+        run: |
+          set -euo pipefail
+          KEY_OUT="${RUNNER_TEMP}/AuthKey.p8"
+          printf '%b' "${APP_STORE_CONNECT_API_KEY}" | tr -d '\r' > "${RUNNER_TEMP}/candidate_asc.pem"
+          if openssl pkey -in "${RUNNER_TEMP}/candidate_asc.pem" -noout 2>/dev/null \
+            || openssl ec -in "${RUNNER_TEMP}/candidate_asc.pem" -noout 2>/dev/null; then
+            cp "${RUNNER_TEMP}/candidate_asc.pem" "${KEY_OUT}"
+          else
+            printf '%b' "${APP_STORE_CONNECT_API_KEY}" | tr -d '\r' | tr -d '\n' | base64 -d > "${KEY_OUT}" 2>/dev/null || true
+            if ! openssl pkey -in "${KEY_OUT}" -noout 2>/dev/null \
+              && ! openssl ec -in "${KEY_OUT}" -noout 2>/dev/null; then
+              echo "::error::APP_STORE_CONNECT_API_KEY must be the full .p8 PEM from App Store Connect (Users and Access → Keys) or Base64 of that file."
+              exit 1
+            fi
+          fi
+          echo "APP_STORE_CONNECT_API_KEY_PATH=${KEY_OUT}" >> "${GITHUB_ENV}"
+          echo "${IOS_BUILD_CERTIFICATE_BASE64}" | base64 -d > "${RUNNER_TEMP}/ios_distribution.p12"
+          echo "IOS_BUILD_CERTIFICATE_PATH=${RUNNER_TEMP}/ios_distribution.p12" >> "${GITHUB_ENV}"
+
+          case "${FLAVOR}" in
+            production)
+              echo "${IOS_BUILD_PROVISION_PROFILE_BASE64_PRODUCTION}" | base64 -d > "${RUNNER_TEMP}/selected.mobileprovision"
+              echo "IOS_BUILD_PROVISION_PROFILE_PATH_PRODUCTION=${RUNNER_TEMP}/selected.mobileprovision" >> "${GITHUB_ENV}"
+              ;;
+            development)
+              echo "${IOS_BUILD_PROVISION_PROFILE_BASE64_DEVELOPMENT}" | base64 -d > "${RUNNER_TEMP}/selected.mobileprovision"
+              echo "IOS_BUILD_PROVISION_PROFILE_PATH_DEVELOPMENT=${RUNNER_TEMP}/selected.mobileprovision" >> "${GITHUB_ENV}"
+              ;;
+          esac
+          echo "IOS_KEYCHAIN_PASSWORD=$(openssl rand -hex 32)" >> "${GITHUB_ENV}"
+
+      - name: Expose TestFlight "What to Test" path
+        run: |
+          set -euo pipefail
+          TF="${GITHUB_WORKSPACE}/release-notes/testflight.txt"
+          if [ -f "${TF}" ] && [ -s "${TF}" ]; then
+            echo "TESTFLIGHT_CHANGELOG_FILE=${TF}" >> "${GITHUB_ENV}"
+            echo "Using TestFlight What to Test from workflow input (max 4000 chars)."
+          else
+            echo "No release_body input; TestFlight upload without What to Test text."
+          fi
+
+      - name: Run Fastlane TestFlight upload
+        env:
+          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          IOS_TEAM_ID: ${{ secrets.IOS_TEAM_ID || 'C466ZHPP34' }}
+          IOS_BUILD_CERTIFICATE_PASSWORD: ${{ secrets.IOS_BUILD_CERTIFICATE_PASSWORD }}
+          IOS_PROVISIONING_PROFILE_NAME_DEVELOPMENT: ${{ secrets.IOS_PROVISIONING_PROFILE_NAME_DEVELOPMENT }}
+          IOS_PROVISIONING_PROFILE_NAME_PRODUCTION: ${{ secrets.IOS_PROVISIONING_PROFILE_NAME_PRODUCTION }}
+          DEVELOPMENT_API_URL: ${{ secrets.DEVELOPMENT_API_URL }}
+          DEVELOPMENT_ENVIRONMENT: ${{ secrets.DEVELOPMENT_ENVIRONMENT }}
+          PRODUCTION_API_URL: ${{ secrets.PRODUCTION_API_URL }}
+          PRODUCTION_ENVIRONMENT: ${{ secrets.PRODUCTION_ENVIRONMENT }}
+        run: |
+          set -euo pipefail
+          cd apps/client_app/ios
+          bundle exec fastlane "beta_${{ inputs.flavor }}"
+
+      - name: Upload IPA artifact
+        if: success()
+        uses: actions/upload-artifact@v7
+        with:
+          name: ios-${{ inputs.flavor }}-ipa
+          path: apps/client_app/build/ios/ipa/*.ipa
+          if-no-files-found: warn

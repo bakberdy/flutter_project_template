@@ -1,0 +1,182 @@
+name: release-on-publish
+
+on:
+  release:
+    types: [published]
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+jobs:
+  validate-tag:
+    runs-on: ubuntu-latest
+    outputs:
+      app_version: ${{ steps.version.outputs.app_version }}
+      env: ${{ steps.version.outputs.env }}
+      release_body: ${{ steps.store_body.outputs.release_body }}
+    steps:
+      - name: Validate release tag and compute pubspec version
+        id: version
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          set -euo pipefail
+          if [[ "${TAG}" =~ ^(development|production)-([0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
+            ENV="${BASH_REMATCH[1]}"
+            SEMVER="${BASH_REMATCH[2]}"
+          else
+            echo "::error::Release tag must be 'development-MAJOR.MINOR.PATCH' or 'production-MAJOR.MINOR.PATCH' (got: ${TAG})"
+            exit 1
+          fi
+          echo "env=${ENV}" >> "${GITHUB_OUTPUT}"
+          echo "app_version=${SEMVER}+${GITHUB_RUN_NUMBER}" >> "${GITHUB_OUTPUT}"
+
+      - name: Expose release body for store upload workflows
+        id: store_body
+        env:
+          BODY: ${{ github.event.release.body }}
+        run: |
+          set -euo pipefail
+          python3 <<'PY'
+          import os
+          import secrets
+
+          body = os.environ.get("BODY") or ""
+          if len(body) > 10_000:
+              body = body[:10_000]
+          out = os.environ.get("GITHUB_OUTPUT", "")
+          delim = f"RB_{secrets.token_hex(16)}"
+          with open(out, "a", encoding="utf-8") as f:
+              f.write(f"release_body<<{delim}\n")
+              f.write(body)
+              f.write(f"\n{delim}\n")
+          if not body.strip():
+              print("::notice::No release description; store uploads will omit release notes.")
+          PY
+
+  commit-version:
+    needs: [validate-tag]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      bumped_sha: ${{ steps.bump.outputs.bumped_sha }}
+    steps:
+      - name: Prepare GitHub App private key (PEM newlines / base64)
+        id: prep-app-key
+        env:
+          RAW: ${{ secrets.RELEASE_APP_PRIVATE_KEY }}
+        run: |
+          set -euo pipefail
+          printf '%b' "${RAW}" | tr -d '\r' > "${RUNNER_TEMP}/candidate.pem"
+          if openssl pkey -in "${RUNNER_TEMP}/candidate.pem" -noout 2>/dev/null \
+            || openssl rsa -in "${RUNNER_TEMP}/candidate.pem" -noout 2>/dev/null; then
+            cp "${RUNNER_TEMP}/candidate.pem" "${RUNNER_TEMP}/app.pem"
+          else
+            printf '%b' "${RAW}" | tr -d '\r' | tr -d '\n' | base64 -d > "${RUNNER_TEMP}/app.pem" 2>/dev/null || true
+            if ! openssl pkey -in "${RUNNER_TEMP}/app.pem" -noout 2>/dev/null \
+              && ! openssl rsa -in "${RUNNER_TEMP}/app.pem" -noout 2>/dev/null; then
+              echo "::error::RELEASE_APP_PRIVATE_KEY must be the full PEM from the GitHub App (-----BEGIN … -----END …). Re-copy from Developer settings → Your app → Private keys, or store the file as Base64 (single line) in the same secret."
+              exit 1
+            fi
+          fi
+          {
+            echo "pem<<KEY_EOF"
+            cat "${RUNNER_TEMP}/app.pem"
+            echo "KEY_EOF"
+          } >> "${GITHUB_OUTPUT}"
+
+      - name: Create release bot installation token
+        id: release-app-token
+        uses: actions/create-github-app-token@v3.1.1
+        with:
+          client-id: ${{ secrets.RELEASE_APP_CLIENT_ID }}
+          private-key: ${{ steps.prep-app-key.outputs.pem }}
+          permission-contents: write
+
+      - name: Verify installation token can push
+        env:
+          GH_TOKEN: ${{ steps.release-app-token.outputs.token }}
+        run: |
+          set -euo pipefail
+          unset GITHUB_TOKEN
+          PUSH=$(gh api "repos/${GITHUB_REPOSITORY}" --jq '(.permissions // {}) | .push // "skip"')
+          if [ "${PUSH}" = "false" ]; then
+            echo "::error::This app token has push=false on ${GITHUB_REPOSITORY}. App → Repository permissions: Contents = Read and write → Save. Install App → Configure → accept permission update. Include this repo in the installation."
+            exit 1
+          fi
+
+      - uses: actions/checkout@v5
+        with:
+          ref: refs/tags/${{ github.event.release.tag_name }}
+          fetch-depth: 0
+          token: ${{ steps.release-app-token.outputs.token }}
+
+      - name: Configure Git author for GitHub App
+        env:
+          GH_TOKEN: ${{ steps.release-app-token.outputs.token }}
+        run: |
+          set -euo pipefail
+          unset GITHUB_TOKEN
+          APP_SLUG='${{ steps.release-app-token.outputs.app-slug }}'
+          USER_ID=$(gh api "/users/${APP_SLUG}[bot]" --jq .id)
+          git config user.name "${APP_SLUG}[bot]"
+          git config user.email "${USER_ID}+${APP_SLUG}[bot]@users.noreply.github.com"
+
+      - name: Bump pubspec and push to default branch
+        id: bump
+        env:
+          APP_VERSION: ${{ needs.validate-tag.outputs.app_version }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          RELEASE_APP_INSTALLATION_TOKEN: ${{ steps.release-app-token.outputs.token }}
+        run: |
+          set -euo pipefail
+          sed -i -E "s/^version:.+/version: ${APP_VERSION}/" apps/client_app/pubspec.yaml
+          if git diff --quiet apps/client_app/pubspec.yaml; then
+            echo "apps/client_app/pubspec.yaml already at ${APP_VERSION}; nothing to commit."
+            echo "bumped_sha=$(git rev-parse HEAD)" >> "${GITHUB_OUTPUT}"
+            exit 0
+          fi
+          TAG_SHA=$(git rev-parse HEAD)
+          git add apps/client_app/pubspec.yaml
+          git commit -m "chore: bump version to ${APP_VERSION}"
+          git fetch origin "${DEFAULT_BRANCH}"
+          MAIN_SHA=$(git rev-parse "refs/remotes/origin/${DEFAULT_BRANCH}")
+          if [ "${MAIN_SHA}" = "${TAG_SHA}" ]; then
+            true
+          elif git merge-base --is-ancestor "${TAG_SHA}" "${MAIN_SHA}"; then
+            true
+          else
+            echo "::error::Tag must point to a commit on '${DEFAULT_BRANCH}' (same tip or an ancestor). Merge or move '${DEFAULT_BRANCH}' so it contains the tagged commit, then push the tag."
+            exit 1
+          fi
+          if ! git rebase "origin/${DEFAULT_BRANCH}"; then
+            echo "::error::Rebase onto origin/${DEFAULT_BRANCH} failed (e.g. pubspec conflict on '${DEFAULT_BRANCH}'). Fix on '${DEFAULT_BRANCH}' and re-tag, or bump version manually."
+            exit 1
+          fi
+          unset GITHUB_TOKEN
+          git remote set-url origin "https://x-access-token:${RELEASE_APP_INSTALLATION_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          if ! git push origin "HEAD:refs/heads/${DEFAULT_BRANCH}"; then
+            echo "::error::Push refused for the release bot. (1) App → Repository permissions: Contents = Read and write, save, then open Install App → Configure and accept the permission update for this repo. (2) Ruleset bypass for this app must be Always allow — if it is For pull requests only, direct pushes to ${DEFAULT_BRANCH} stay blocked."
+            exit 1
+          fi
+          echo "bumped_sha=$(git rev-parse HEAD)" >> "${GITHUB_OUTPUT}"
+
+  upload-android-to-play:
+    needs: [commit-version, validate-tag]
+    uses: ./.github/workflows/android-upload-to-play.yml
+    secrets: inherit
+    with:
+      flavor: ${{ needs.validate-tag.outputs.env }}
+      track: internal
+      ref: ${{ needs.commit-version.outputs.bumped_sha }}
+      release_body: ${{ needs.validate-tag.outputs.release_body }}
+
+  upload-ios-to-testflight:
+    needs: [commit-version, validate-tag]
+    uses: ./.github/workflows/ios-upload-to-testflight.yml
+    secrets: inherit
+    with:
+      flavor: ${{ needs.validate-tag.outputs.env }}
+      ref: ${{ needs.commit-version.outputs.bumped_sha }}
+      release_body: ${{ needs.validate-tag.outputs.release_body }}

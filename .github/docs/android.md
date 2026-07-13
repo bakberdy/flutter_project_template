@@ -1,0 +1,380 @@
+# Android CI/CD (step by step)
+
+The same upload keystore is used both locally and in CI. Set up local first; CI just packages the same artifacts as secrets.
+
+---
+
+# Part A — Local builds
+
+Use this path when you build a release AAB on your machine and either drag-drop it into Play Console yourself, or push it via your own CLI. This is also the fallback when CI is broken.
+
+> **Where to run the commands:** Steps **A1–A4** are written for **repo root** (paths are relative to the project: `apps/client_app/android/...`, `config/run/...`, `build/...`).
+
+## Step A1 — Generate the upload keystore (one per flavor)
+
+> Run from: **repo root**.
+
+Each flavor gets its **own** upload keystore (mirror of iOS's per-flavor provisioning profiles). Generate once; keep the `.jks` under the repo at `apps/client_app/android/keystores/...` (the file is **gitignored** and never committed). The commands below match `storeFile` in `key.properties.example`. `keytool` will prompt for store password, key password (press Enter to reuse the store password), and a Distinguished Name.
+
+> **Already shipped via CI?** The keystore Play registered as your upload key is the **only** one that can sign future uploads for that app. Reuse the same `.jks`, do **not** regenerate — only run the command for flavors that don't have a keystore yet.
+
+#### production
+
+```bash
+mkdir -p apps/client_app/android/keystores/production
+keytool -genkey -v \
+  -keystore apps/client_app/android/keystores/production/upload.jks \
+  -keyalg RSA -keysize 2048 -validity 10000 \
+  -alias upload
+```
+
+#### development
+
+```bash
+mkdir -p apps/client_app/android/keystores/development
+keytool -genkey -v \
+  -keystore apps/client_app/android/keystores/development/upload.jks \
+  -keyalg RSA -keysize 2048 -validity 10000 \
+  -alias upload
+```
+
+Verify any keystore:
+
+```bash
+keytool -list -v -keystore apps/client_app/android/keystores/production/upload.jks -storepass '<store password>'
+```
+
+## Step A2 — Create `apps/client_app/android/key.<flavor>.properties` (one per flavor)
+
+> Run from: **repo root** (the `cat > apps/client_app/android/key.<flavor>.properties` blocks write to relative paths).
+
+Committed template (no secrets): `[apps/client_app/android/key.properties.example](../../apps/client_app/android/key.properties.example)`. Copy to `apps/client_app/android/key.production.properties` and/or `apps/client_app/android/key.development.properties`, set `storePassword` and `keyPassword`, and point `storeFile` at each flavor’s `.jks` (see comments in the example).
+
+`build.gradle.kts` resolves signing in this order, so you can keep all three files on disk simultaneously and `flutter build appbundle --flavor <flavor>` automatically picks the right one — **no swapping needed**:
+
+1. `apps/client_app/android/key.<flavor>.properties` — flavor-specific signing config (preferred)
+2. `apps/client_app/android/key.properties` — shared fallback for any flavor without its own file
+3. Neither — falls back to the debug keystore so `flutter run --release` still works
+
+All three patterns are gitignored (`key.properties`, `key.*.properties`, plus `**/*.jks` / `**/*.keystore`).
+
+
+| Key             | Meaning                                                                                                                                                                                                                                                                     |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `storeFile`     | Path to the upload keystore (`.jks`) — **relative to the `apps/client_app/android/` directory** (e.g. `keystores/production/upload.jks` → `apps/client_app/android/keystores/production/upload.jks`). Do **not** use a path starting with a single `/` at the real disk root (e.g. `/keys/...`) by mistake. |
+| `storePassword` | Keystore (store) password                                                                                                                                                                                                                                                   |
+| `keyAlias`      | Key alias inside the keystore (the commands in A1 use `upload`)                                                                                                                                                                                                             |
+| `keyPassword`   | Key password (often equal to `storePassword`)                                                                                                                                                                                                                               |
+
+
+**In-project keystores:** copy or generate the `.jks` into `apps/client_app/android/keystores/production/` and `.../development/` (paths must match `storeFile` in the templates). The `keystores/` tree can be partly tracked; `**/*.jks` stays gitignored so keystore files are never committed.
+
+**Replace store password and key password before running.** Run only the flavors you ship.
+
+#### production
+
+```bash
+mkdir -p apps/client_app/android/keystores/production
+# cp /path/to/upload.jks apps/client_app/android/keystores/production/upload.jks
+cp apps/client_app/android/key.properties.example apps/client_app/android/key.production.properties
+# Edit: set storePassword and keyPassword; keep or change storeFile to match the .jks path.
+```
+
+#### development
+
+```bash
+mkdir -p apps/client_app/android/keystores/development
+# cp /path/to/upload.jks apps/client_app/android/keystores/development/upload.jks
+cp apps/client_app/android/key.properties.example apps/client_app/android/key.development.properties
+# Edit: set passwords; set storeFile=keystores/development/upload.jks if you use the template’s production path.
+```
+
+## Step A3 — Build the AAB locally
+
+> Run from: **repo root**.
+
+Bump `apps/client_app/pubspec.yaml` first (`version: <name>+<buildNumber>`). The `buildNumber` (the part after `+`) must be **strictly greater** than the highest value Play has ever seen for that app, or Play rejects the upload.
+
+#### production
+
+```bash
+cd apps/client_app
+flutter clean && cd ../.. && flutter pub get && cd apps/client_app
+flutter build appbundle --release --flavor production \
+  --dart-define-from-file=config/run/config.production.json
+# Output: apps/client_app/build/app/outputs/bundle/productionRelease/app-production-release.aab
+```
+
+#### development
+
+```bash
+cd apps/client_app
+flutter clean && cd ../.. && flutter pub get && cd apps/client_app
+flutter build appbundle --release --flavor development \
+  --dart-define-from-file=config/run/config.development.json
+# Output: apps/client_app/build/app/outputs/bundle/developmentRelease/app-development-release.aab
+```
+
+## Step A4 — Upload the AAB
+
+> Run from: **repo root** (the `--aab apps/client_app/build/app/outputs/...` paths are relative to it).
+
+Three paths — pick whichever you prefer. **Path 3 (Fastlane lane) replaces Step A3 + this step in one command** (same upload rules as GitHub Actions).
+
+**Path 1 — Drag-drop in Play Console (simplest, no extra setup):**
+
+Play Console → the flavor's app → **Testing → Internal testing → Create new release** → drag the `.aab` in → **Save → Review → Roll out**.
+
+**Path 2 — CLI via service account.** Requires the `play-service-account.json` from [Step B2](#step-b2--google-play-api-service-account-play-service-accountjson) at `apps/client_app/android/keys/play-service-account.json` (see [B2.1](#b21-create-the-service-account-in-google-cloud)) and Fastlane installed (`gem install fastlane`). The same JSON is used in CI as the `PLAY_STORE_SERVICE_ACCOUNT_JSON` secret.
+
+#### production
+
+```bash
+fastlane supply \
+  --aab apps/client_app/build/app/outputs/bundle/productionRelease/app-production-release.aab \
+  --package_name com.example.client_app \
+  --track internal \
+  --json_key apps/client_app/android/keys/play-service-account.json \
+  --skip_upload_metadata true \
+  --skip_upload_changelogs true \
+  --skip_upload_images true \
+  --skip_upload_screenshots true
+```
+
+#### development
+
+```bash
+fastlane supply \
+  --aab apps/client_app/build/app/outputs/bundle/developmentRelease/app-development-release.aab \
+  --package_name com.example.client_app.development \
+  --track internal \
+  --json_key apps/client_app/android/keys/play-service-account.json \
+  --skip_upload_metadata true \
+  --skip_upload_changelogs true \
+  --skip_upload_images true \
+  --skip_upload_screenshots true
+```
+
+**Path 3 — Fastlane lane (build + upload in one command).** Mirrors the iOS `beta_<flavor>` lanes and is what CI runs. One-time: `cd apps/client_app/android && bundle install`. Create `apps/client_app/android/keys/.env` from `apps/client_app/android/keys/.env.example` and point `PLAY_STORE_SERVICE_ACCOUNT_JSON_PATH` at your `play-service-account.json`. Then from **repo root**:
+
+```bash
+make client-android-deploy-prod
+# or: make client-android-deploy-dev
+```
+
+This runs `cd apps/client_app/android && bundle exec fastlane beta_<flavor>` which calls the `prepare → build → deploy` lanes in `apps/client_app/android/fastlane/`. The lane uses your existing `apps/client_app/android/key.<flavor>.properties` for signing (Step A2) and uploads to the **internal** track by default. Override with `PLAY_TRACK=alpha` (or `beta`/`production`) in `apps/client_app/android/keys/.env`, or pass `track:alpha` directly:
+
+```bash
+cd apps/client_app/android && bundle exec fastlane beta_production track:alpha
+```
+
+**Release status (`draft` vs `completed`):** While the app is still a **draft** in Play Console (first-time setup, or not yet published to a track), Google’s API only allows creating a **draft** release. The default is `draft` (`PLAY_RELEASE_STATUS` in `apps/client_app/android/keys/.env`). If you see `Only releases with status draft may be created on draft app`, keep `draft` and finish the rollout in Play Console. After the app is fully live, you can set `PLAY_RELEASE_STATUS=completed` (or `release_status:completed` on the lane) to publish the release in one step.
+
+The Play Console app must already exist for the chosen flavor — see Step B1 below.
+
+---
+
+# Part B — CI/CD on GitHub Actions
+
+Set up everything in Part A first (you'll reuse the same keystore here). Then proceed.
+
+## Step B1 — Play Console app per flavor
+
+Each Flutter flavor uploads to a **separate** Play Console app, because each flavor has a distinct `applicationId`.
+
+
+| Flutter flavor | Play `packageName`                    |
+| -------------- | ------------------------------------- |
+| `production`   | `com.example.client_app`             |
+| `development`  | `com.example.client_app.development` |
+
+
+For each app:
+
+1. **Create app** in Play Console with the matching `packageName`.
+2. Complete the **App content** wizard (privacy policy, target audience, ads, data safety, etc.). You usually need at least one upload to the **internal** track before later API uploads behave normally; the first AAB can come from Step A4 or from the CI workflow.
+3. Enable **Play App Signing** (recommended). Play stores the actual signing key; you only protect the upload key from Step A1.
+4. Confirm the service account from Step B2 has access on this app.
+
+## Step B2 — Google Play API service account (`play-service-account.json`)
+
+This single JSON key authenticates uploads to Play. It's reused by both **local Fastlane uploads** (Step A4 Path 2) and **CI** (Step B3.2). Create it once. One service account is enough — it can manage all flavor apps you ship.
+
+> **Treat this file like a password.** Anyone with it can publish to your Play apps. Keep it at `apps/client_app/android/keys/play-service-account.json` (gitignored under `apps/client_app/android/keys/`), `chmod 600`, never commit it.
+
+### B2.1 Create the service account in Google Cloud
+
+1. Open **[Google Cloud Console](https://console.cloud.google.com/)** and select (or create) any project — it just hosts the service account.
+2. **APIs & Services → Library** → search **"Google Play Android Developer API"** → **Enable**.
+3. **IAM & Admin → Service Accounts → Create service account**.
+  - **Name:** something memorable, e.g. `mobile-app-play-uploader`.
+  - **Grant this service account access to project:** leave blank (Play access is granted in B2.2, not here).
+  - Click **Done**.
+4. Open the new service account → **Keys** tab → **Add key → Create new key → JSON → Create**. Your browser downloads `<project>-<hash>.json`.
+5. From **repo root**, save the key in the project as `apps/client_app/android/keys/play-service-account.json` (copy the download there with Finder or your editor). Then:
+
+```bash
+mkdir -p apps/client_app/android/keys
+chmod 600 apps/client_app/android/keys/play-service-account.json
+```
+
+### B2.2 Link the project to Play Console and grant access
+
+The key now exists in Google Cloud, but Play doesn't know about it yet.
+
+1. **Play Console → Setup → API access**.
+2. **Link Google Cloud project** → choose the project from B2.1 (one-time per Play developer account; if it's already linked, skip).
+3. Under **Service accounts**, find the account from B2.1 (it auto-appears once the project is linked) → **Manage Play Console permissions**.
+4. **App permissions** tab → **Add app** → add **all flavor apps you ship** (`com.example.client_app`, `com.example.client_app.development`). The apps must already exist (Step B1).
+5. **Account permissions** tab → enable at minimum:
+  - **View app information and download bulk reports** (read access)
+  - **Manage testing tracks and edit testers**
+  - **Release apps to testing tracks**
+  - Add **Release to production, exclude devices, and use Play app signing** only if this account will also push to production. Internal/alpha/beta tracks don't need it.
+6. **Invite user → Send invite**. (No email is sent for service accounts — access is immediate.)
+
+### B2.3 Smoke-test the key locally
+
+Before wiring it into CI, confirm Fastlane can authenticate:
+
+```bash
+fastlane run validate_play_store_json_key \
+  json_key:apps/client_app/android/keys/play-service-account.json
+```
+
+Expected output: `Successfully established connection to Google Play Store`. If you see `401/403`, recheck **B2.2 step 5** (account permissions) and that the **app exists in Play Console** (Step B1).
+
+### B2.4 Where this file is consumed
+
+
+| Used by                         | How                                                                                                                                                                          |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Local Fastlane (Step A4 Path 2) | `--json_key apps/client_app/android/keys/play-service-account.json` (from repo root) or `keys/play-service-account.json` in `PLAY_STORE_SERVICE_ACCOUNT_JSON_PATH` under `apps/client_app/android/keys/.env` |
+| GitHub Actions (Step B3.2)      | Paste the full file content (`{ ... }`) into the `PLAY_STORE_SERVICE_ACCOUNT_JSON` repo secret                                                                               |
+
+
+## Step B3 — GitHub Actions secrets
+
+**Repo → Settings → Secrets and variables → Actions → New repository secret.**
+
+### B3.1 Per-flavor signing (one set per flavor you ship)
+
+Replace `<FLAVOR>` with `DEVELOPMENT` or `PRODUCTION`.
+
+
+| Secret                               | Value                                                         |
+| ------------------------------------ | ------------------------------------------------------------- |
+| `ANDROID_KEYSTORE_BASE64_<FLAVOR>`   | Base64 of the upload `.jks` from Step A1 (see commands below) |
+| `ANDROID_KEYSTORE_PASSWORD_<FLAVOR>` | Same `storePassword` you used in `key.<flavor>.properties`    |
+| `ANDROID_KEY_ALIAS_<FLAVOR>`         | Same `keyAlias`                                               |
+| `ANDROID_KEY_PASSWORD_<FLAVOR>`      | Same `keyPassword`                                            |
+
+
+**Base64 the keystore (run from repo root):**
+
+```bash
+# Production keystore → secret ANDROID_KEYSTORE_BASE64_PRODUCTION
+base64 -i apps/client_app/android/keystores/production/upload.jks | tr -d '\n' | pbcopy
+
+# Development keystore → secret ANDROID_KEYSTORE_BASE64_DEVELOPMENT
+base64 -i apps/client_app/android/keystores/development/upload.jks | tr -d '\n' | pbcopy
+```
+
+On Linux: `base64 -w0 apps/client_app/android/keystores/production/upload.jks | xclip -selection clipboard` (or `wl-copy`).
+
+Sanity-check a base64 secret by reversing it locally (paths under `build/`, which is gitignored):
+
+```bash
+echo "" | base64 -d > build/keystore-check.jks
+keytool -list -v -keystore build/keystore-check.jks -storepass "<your store password>"
+rm build/keystore-check.jks
+```
+
+If the alias prints, the secret value will work in CI.
+
+### B3.2 Google Play API
+
+
+| Secret                            | Value                                                                                   |
+| --------------------------------- | --------------------------------------------------------------------------------------- |
+| `PLAY_STORE_SERVICE_ACCOUNT_JSON` | Full service account JSON from Step B2 (plaintext, including the surrounding `{ ... }`) |
+
+
+### B3.3 Build config (flavor-scoped — same as iOS)
+
+Same JSON keys as `config/run/config.example.json` (`API_URL`, `ENVIRONMENT`, …). **Secret name = `<FLAVOR>_<KEY>`** with **FLAVOR** uppercase: `DEVELOPMENT` | `PRODUCTION`. Local builds still read `config/run/config.<flavor>.json`; CI passes `--dart-define` from these secrets.
+
+
+| Secret                    | JSON field in that flavor's `config.*.json` |
+| ------------------------- | ------------------------------------------- |
+| `DEVELOPMENT_API_URL`     | `API_URL`                                   |
+| `DEVELOPMENT_ENVIRONMENT` | `ENVIRONMENT`                               |
+| `PRODUCTION_API_URL`      | `API_URL`                                   |
+| `PRODUCTION_ENVIRONMENT`  | `ENVIRONMENT`                               |
+
+
+For a given workflow run, the workflow `inputs.flavor` must have its keystore quartet (B3.1) **and** its build-config pair (B3.3), plus the shared Play row (B3.2). Tag-based release uses the **flavor in the tag prefix** (see Step B4).
+
+### B3.4 Tag-based release automation (shared with iOS)
+
+These drive the GitHub App that bumps `apps/client_app/pubspec.yaml` on the default branch after a valid release tag.
+
+
+| Secret                    | Format                   |
+| ------------------------- | ------------------------ |
+| `RELEASE_APP_CLIENT_ID` | GitHub App **Client ID** (string from the app’s **Settings → General**, e.g. `Iv1.…` — not the numeric *App ID*) |
+| `RELEASE_APP_PRIVATE_KEY` | PEM **or** base64 of PEM |
+
+If you still have a repo secret named `RELEASE_APP_ID` (the old numeric **App ID**), create **`RELEASE_APP_CLIENT_ID`** with the **Client ID** value instead — `actions/create-github-app-token` no longer accepts `app-id`.
+
+The App needs **Repository permissions → Contents = Read and write**, must be **installed** on this repo, and (if branch protection / rulesets are on the default branch) must be in the bypass list as **"Always allow"**.
+
+## Step B4 — What CI runs and how
+
+- **Workflow:** `.github/workflows/android-upload-to-play.yml` (reusable). It checks out the chosen `ref`, validates secrets per flavor, decodes the keystore from base64 to `${RUNNER_TEMP}/upload.jks`, writes `apps/client_app/android/key.<flavor>.properties` with that path so Gradle picks the matching per-flavor signing config, runs `flutter build appbundle --release --flavor <flavor>` with `--build-number` set to the **last five decimal digits** of `GITHUB_RUN_ID` (i.e. `run_id % 100000`, with `0` mapped to `1` so the value is always a valid positive `versionCode` under the [Play maximum](https://developer.android.com/studio/publish/versioning.html)), then `--dart-define=API_URL=... --dart-define=ENVIRONMENT=...`, and uploads the AAB via `r0adkll/upload-google-play@v1`. iOS TestFlight builds use the same rule in `ios/fastlane` for a matching Flutter build number.
+- **Inputs:**
+  - `flavor` — `development` | `production` (default `production`)
+  - `track` — `internal` | `alpha` | `beta` | `production` (default `internal`)
+  - `release_status` — `draft` | `completed` | … (default `draft`). Use `draft` until the Play app is no longer a draft listing; `completed` fails with *“Only releases with status draft may be created on draft app”* in that case.
+  - `ref` — optional Git ref/SHA to check out (defaults to event ref)
+- `**packageName`** is derived from `flavor` automatically (see Step B1 table).
+- **Tag releases:** `.github/workflows/release-on-publish.yml` triggers on `release: published`, validates the tag must be `development-MAJOR.MINOR.PATCH` or `production-MAJOR.MINOR.PATCH`, bumps `apps/client_app/pubspec.yaml`, then calls this workflow with `flavor: <prefix>`, `track: internal`, and `release_body` (the published release’s description, truncated in the job output for the 10k workflow-input cap). The bumped commit’s SHA is passed as `ref`. If the release has a **description**, the first **500** characters are written as en-US **What’s new** for this Play build (reusable workflows cannot read **artifacts** from the parent; text is passed as an **input** instead).
+- **Artifact:** on success, the AAB is uploaded as `android-<flavor>-aab-<name>-<code>` (also goes to Play in the same run).
+- **Other flavors / other tracks in CI:** open **Actions → android-upload-to-play → Run workflow**, pick `flavor` and `track`. Only the secrets for that flavor + the shared Play row need to be filled.
+
+---
+
+## Reference (quick)
+
+
+| Flutter flavor | applicationId / Play `packageName`    | Config JSON (local / `dart-define-from-file`) |
+| -------------- | ------------------------------------- | --------------------------------------------- |
+| `development`  | `com.example.client_app.development` | `config/run/config.development.json`          |
+| `production`   | `com.example.client_app`             | `config/run/config.production.json`           |
+
+
+
+| Output / artifact              | Path                                                                |
+| ------------------------------ | ------------------------------------------------------------------- |
+| Release AAB                    | `apps/client_app/build/app/outputs/bundle/<flavor>Release/app-<flavor>-release.aab` |
+| Decoded upload keystore in CI  | `${RUNNER_TEMP}/upload.jks`                                         |
+| Generated signing config in CI | `apps/client_app/android/key.<flavor>.properties` (CI-written; gitignored)          |
+
+
+
+| Fastlane lane      | Flavor      | `make` target (from repo root)                |
+| ------------------ | ----------- | --------------------------------------------- |
+| `beta_development` | development | `make client-android-deploy-dev` |
+| `beta_production`  | production  | `make client-android-deploy-prod`  |
+
+
+
+| Tag prefix                      | Triggers flavor |
+| ------------------------------- | --------------- |
+| `production-MAJOR.MINOR.PATCH`  | `production`    |
+| `development-MAJOR.MINOR.PATCH` | `development`   |
+
+
+**Dart / compile-time defines:** `API_URL` and `ENVIRONMENT` come from `modules/core/lib/config/app_config.dart`. **Local:** `config/run/*.json`. **CI:** secrets `<FLAVOR>_<KEY>` (see Step B3.3). New key: add to `config.example.json` + `String.fromEnvironment(...)` in Dart, then add `DEVELOPMENT_NEWKEY` and `PRODUCTION_NEWKEY` in GitHub Actions secrets and add `--dart-define=NEWKEY="$NEWKEY"` to the `Build AAB` step in `.github/workflows/android-upload-to-play.yml` (and a matching `<FLAVOR>_NEWKEY` env entry).
+
+**iOS CI:** [.github/docs/ios.md](ios.md)
