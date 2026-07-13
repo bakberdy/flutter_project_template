@@ -4,8 +4,8 @@ import 'package:client_preferences/src/common/config/locale_constants.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
-class AcceptLanguageInterceptor implements ApiRequestHeadersProvider {
-  AcceptLanguageInterceptor(this._localStorage);
+class AcceptLanguageHeadersProvider implements ApiRequestHeadersProvider {
+  AcceptLanguageHeadersProvider(this._localStorage);
 
   final LocalStorage _localStorage;
 

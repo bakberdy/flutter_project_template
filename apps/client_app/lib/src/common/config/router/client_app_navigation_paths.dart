@@ -1,4 +1,4 @@
-abstract final class AppNavigationPaths {
+abstract final class ClientAppNavigationPaths {
   static const auth = '/auth';
   static const register = '/register';
   static const blocked = '/blocked';

@@ -31,10 +31,6 @@ class LocaleBloc extends Bloc<LocaleEvent, LocaleState> {
     add(LocaleEvent.changed(languageCode));
   }
 
-  void setLocaleByCode(String languageCode) {
-    add(LocaleEvent.changed(languageCode));
-  }
-
   Future<void> _onStarted(
     LocaleStarted event,
     Emitter<LocaleState> emit,
@@ -67,7 +63,7 @@ class LocaleBloc extends Bloc<LocaleEvent, LocaleState> {
           }
           emit(
             state.copyWith(
-              languageCode: event.deviceLanguageCode,
+              languageCode: deviceLanguage.languageCode,
               status: const StateStatus.success(),
             ),
           );

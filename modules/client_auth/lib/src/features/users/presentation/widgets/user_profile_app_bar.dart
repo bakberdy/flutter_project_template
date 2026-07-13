@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:client_auth/gen/l10n/client_auth_localizations.dart';
+import 'package:client_auth/src/common/client_auth_context_x.dart';
 import 'package:client_auth/src/features/users/presentation/widgets/user_avatar.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -79,25 +79,19 @@ class UserProfileAppBar extends StatelessWidget {
     final items = [
       if (onViewAvatar != null)
         BottomSheetListItem(
-          labelText: ClientAuthLocalizations.of(
-            context,
-          ).profileAvatarActionView,
+          labelText: context.l10n.profileAvatarActionView,
           onTap: onViewAvatar,
           leading: const Icon(Icons.visibility),
         ),
       if (onChangeAvatar != null)
         BottomSheetListItem(
-          labelText: ClientAuthLocalizations.of(
-            context,
-          ).profileAvatarActionChange,
+          labelText: context.l10n.profileAvatarActionChange,
           onTap: onChangeAvatar,
           leading: const Icon(Icons.edit),
         ),
       if (onRemoveAvatar != null)
         BottomSheetListItem(
-          labelText: ClientAuthLocalizations.of(
-            context,
-          ).profileAvatarActionRemove,
+          labelText: context.l10n.profileAvatarActionRemove,
           onTap: onRemoveAvatar,
           leading: const Icon(Icons.delete),
         ),

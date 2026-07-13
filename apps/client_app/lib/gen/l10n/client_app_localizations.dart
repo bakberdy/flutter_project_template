@@ -120,6 +120,102 @@ abstract class ClientAppLocalizations {
   /// In en, this message translates to:
   /// **'Home item {number}'**
   String homeItem(int number);
+
+  /// No description provided for @profilePreferencesNotificationsAndSounds.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications and sounds'**
+  String get profilePreferencesNotificationsAndSounds;
+
+  /// No description provided for @profilePreferencesAppearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get profilePreferencesAppearance;
+
+  /// No description provided for @profilePreferencesLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get profilePreferencesLanguage;
+
+  /// No description provided for @profilePreferencesDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'Devices'**
+  String get profilePreferencesDevices;
+
+  /// No description provided for @profileSupportFaq.
+  ///
+  /// In en, this message translates to:
+  /// **'FAQ'**
+  String get profileSupportFaq;
+
+  /// No description provided for @profileSupportSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Support'**
+  String get profileSupportSupport;
+
+  /// No description provided for @appVersionWithBuild.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version} ({buildNumber})'**
+  String appVersionWithBuild(String version, String buildNumber);
+
+  /// No description provided for @appNameValue.
+  ///
+  /// In en, this message translates to:
+  /// **'App: {appName}'**
+  String appNameValue(String appName);
+
+  /// No description provided for @appPackageNameValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Package: {packageName}'**
+  String appPackageNameValue(String packageName);
+
+  /// No description provided for @appBuildNumberValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Build number: {buildNumber}'**
+  String appBuildNumberValue(String buildNumber);
+
+  /// No description provided for @profileAvatarRemoveDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove avatar?'**
+  String get profileAvatarRemoveDialogTitle;
+
+  /// No description provided for @profileAvatarRemoveDialogMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Your current avatar will be removed from your profile.'**
+  String get profileAvatarRemoveDialogMessage;
+
+  /// No description provided for @profileAvatarActionRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove avatar'**
+  String get profileAvatarActionRemove;
+
+  /// No description provided for @profileAvatarRemovedSuccessMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Avatar removed successfully'**
+  String get profileAvatarRemovedSuccessMessage;
+
+  /// No description provided for @profileAvatarUpdatedSuccessMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Avatar updated successfully'**
+  String get profileAvatarUpdatedSuccessMessage;
+
+  /// No description provided for @dismiss.
+  ///
+  /// In en, this message translates to:
+  /// **'Dismiss'**
+  String get dismiss;
 }
 
 class _ClientAppLocalizationsDelegate

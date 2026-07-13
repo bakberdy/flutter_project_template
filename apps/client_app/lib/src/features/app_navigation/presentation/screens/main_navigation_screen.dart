@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:client_app/gen/l10n/client_app_localizations.dart';
+import 'package:client_app/src/common/client_app_localization_x.dart';
 import 'package:client_app/src/features/app_navigation/presentation/observers/bottom_nav_visibility_observer.dart';
 import 'package:client_app/src/features/app_navigation/presentation/providers/scroll_to_top_provider.dart';
 import 'package:client_app/src/features/app_navigation/presentation/widgets/nav_bar.dart';
@@ -34,7 +34,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       ],
       builder: (context, child) {
         final tabsRouter = context.tabsRouter;
-        final l10n = ClientAppLocalizations.of(context);
+        final l10n = context.l10n;
         return Scaffold(
           extendBody: true,
           body: child,

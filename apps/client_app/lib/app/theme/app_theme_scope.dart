@@ -1,6 +1,5 @@
 import 'package:core/core.dart';
-import 'package:client_preferences/src/features/user_preferences/domain/entities/user_preferences.dart';
-import 'package:client_preferences/src/features/user_preferences/presentation/blocs/theme_bloc/theme_bloc.dart';
+import 'package:client_preferences/client_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

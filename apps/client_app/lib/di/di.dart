@@ -16,6 +16,6 @@ import 'di.config.dart';
 Future<void> configureDependencies() async {
   await sl.init();
   sl<ApiClientFactory>().registerHeadersProvider(
-    sl<AcceptLanguageInterceptor>(),
+    sl<AcceptLanguageHeadersProvider>(),
   );
 }

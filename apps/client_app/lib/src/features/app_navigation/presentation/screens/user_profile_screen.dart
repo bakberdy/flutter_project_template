@@ -1,28 +1,19 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:design_system/design_system.dart';
+import 'package:client_app/src/common/client_app_localization_x.dart';
+import 'package:client_app/src/features/app_navigation/presentation/widgets/app_support_items_list.dart';
+import 'package:client_app/src/features/app_navigation/presentation/widgets/app_version_view.dart';
+import 'package:client_app/src/features/app_navigation/presentation/widgets/user_preferences_items_list.dart';
+import 'package:client_auth/client_auth.dart';
+import 'package:client_auth/client_profile.dart';
+import 'package:client_preferences/client_preferences.dart';
 import 'package:core/core.dart';
-import 'package:client_auth/gen/l10n/client_auth_localizations.dart';
-import 'package:client_auth/src/features/users/domain/entities/user_avatar_upload.dart';
-import 'package:client_auth/src/features/users/presentation/blocs/user_profile_bloc/user_profile_bloc.dart';
-import 'package:client_auth/src/features/users/presentation/widgets/app_support_items_list.dart';
-import 'package:client_auth/src/features/users/presentation/widgets/app_version_view.dart';
-import 'package:client_auth/src/features/users/presentation/widgets/user_avatar.dart';
-import 'package:client_auth/src/features/users/presentation/widgets/user_preferences_items_list.dart';
-import 'package:client_auth/src/features/users/presentation/widgets/user_profile_app_bar.dart';
-import 'package:client_auth/src/common/config/router/client_auth_router.dart';
+import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
-class UserProfileScreen extends StatelessWidget
-    with UiFailureHandlerMixin
-    implements AutoRouteWrapper {
+class UserProfileScreen extends StatelessWidget with UiFailureHandlerMixin {
   const UserProfileScreen({super.key});
-
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return this;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,22 +54,17 @@ class UserProfileScreen extends StatelessWidget
             const SliverToBoxAdapter(child: SizedBox(height: DesignSpacing.xl)),
             UserPreferencesItemsList(
               onNotificationsTap: () => context.read<CoreNavigationBloc>().add(
-                const CoreNavigationEvent.navigatePath(
-                  AppNavigationPaths.profileNotifications,
-                  includePrefixMatches: true,
+                const CoreNavigationEvent.push(
+                  UserPreferencesNotificationsRoute(),
                 ),
               ),
               onAppearanceTap: () => context.read<CoreNavigationBloc>().add(
-                const CoreNavigationEvent.navigatePath(
-                  AppNavigationPaths.profileAppearance,
-                  includePrefixMatches: true,
+                const CoreNavigationEvent.push(
+                  UserPreferencesAppearanceRoute(),
                 ),
               ),
               onLanguageTap: () => context.read<CoreNavigationBloc>().add(
-                const CoreNavigationEvent.navigatePath(
-                  AppNavigationPaths.profileLanguage,
-                  includePrefixMatches: true,
-                ),
+                const CoreNavigationEvent.push(UserPreferencesLocaleRoute()),
               ),
             ),
             const SliverToBoxAdapter(child: SizedBox(height: DesignSpacing.md)),
@@ -86,14 +72,9 @@ class UserProfileScreen extends StatelessWidget
               child: AppItemCard(
                 trailing: const Icon(Icons.chevron_right),
                 leading: const Icon(Icons.devices),
-                title: ClientAuthLocalizations.of(
-                  context,
-                ).profilePreferencesDevices,
+                title: context.l10n.profilePreferencesDevices,
                 onTap: () => context.read<CoreNavigationBloc>().add(
-                  const CoreNavigationEvent.navigatePath(
-                    AppNavigationPaths.profileDevices,
-                    includePrefixMatches: true,
-                  ),
+                  const CoreNavigationEvent.push(SessionsRoute()),
                 ),
               ),
             ),
@@ -133,12 +114,8 @@ class UserProfileScreen extends StatelessWidget
         break;
       case SuccessStateStatus():
         final message = state.avatarAction == UserProfileAvatarAction.remove
-            ? ClientAuthLocalizations.of(
-                context,
-              ).profileAvatarRemovedSuccessMessage
-            : ClientAuthLocalizations.of(
-                context,
-              ).profileAvatarUpdatedSuccessMessage;
+            ? context.l10n.profileAvatarRemovedSuccessMessage
+            : context.l10n.profileAvatarUpdatedSuccessMessage;
         BaseSnackbar.success(context, message: message);
         break;
       default:
@@ -178,14 +155,10 @@ class UserProfileScreen extends StatelessWidget
   Future<void> _confirmRemoveAvatar(BuildContext context) async {
     final shouldRemove = await BaseDialog.show<bool>(
       context,
-      title: ClientAuthLocalizations.of(context).profileAvatarRemoveDialogTitle,
-      description: ClientAuthLocalizations.of(
-        context,
-      ).profileAvatarRemoveDialogMessage,
-      primaryLabel: ClientAuthLocalizations.of(
-        context,
-      ).profileAvatarActionRemove,
-      secondaryLabel: ClientAuthLocalizations.of(context).dismiss,
+      title: context.l10n.profileAvatarRemoveDialogTitle,
+      description: context.l10n.profileAvatarRemoveDialogMessage,
+      primaryLabel: context.l10n.profileAvatarActionRemove,
+      secondaryLabel: context.l10n.dismiss,
       primaryValue: true,
       secondaryValue: false,
       primaryFirst: true,

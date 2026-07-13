@@ -1,5 +1,5 @@
 import 'package:design_system/design_system.dart';
-import 'package:client_auth/gen/l10n/client_auth_localizations.dart';
+import 'package:client_app/src/common/client_app_localization_x.dart';
 import 'package:flutter/material.dart';
 
 class AppSupportItemsList extends StatelessWidget {
@@ -17,7 +17,7 @@ class AppSupportItemsList extends StatelessWidget {
       delegate: SliverChildListDelegate([
         AppItemCard(
           onTap: onFAQTap,
-          title: ClientAuthLocalizations.of(context).profileSupportFaq,
+          title: context.l10n.profileSupportFaq,
           leading: const Icon(Icons.help_outline),
           trailing: const Icon(Icons.chevron_right),
           disableBottomRadius: true,
@@ -30,7 +30,7 @@ class AppSupportItemsList extends StatelessWidget {
         AppItemCard(
           disableTopRadius: true,
           onTap: onSupportTap,
-          title: ClientAuthLocalizations.of(context).profileSupportSupport,
+          title: context.l10n.profileSupportSupport,
           leading: const Icon(Icons.support_agent_outlined),
           trailing: const Icon(Icons.chevron_right),
         ),

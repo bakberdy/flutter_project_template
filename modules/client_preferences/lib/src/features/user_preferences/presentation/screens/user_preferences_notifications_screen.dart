@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:client_preferences/gen/l10n/client_preferences_localizations.dart';
+import 'package:client_preferences/src/common/client_preferences_localization_x.dart';
 import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:client_preferences/src/features/user_preferences/presentation/blocs/notifications_bloc/notifications_bloc.dart';
@@ -31,11 +31,7 @@ class UserPreferencesNotificationsScreen extends StatelessWidget
         }
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            ClientPreferencesLocalizations.of(context).notificationsTitle,
-          ),
-        ),
+        appBar: AppBar(title: Text(context.l10n.notificationsTitle)),
         body: SafeArea(
           child: BlocBuilder<NotificationsBloc, NotificationsState>(
             builder: (context, state) {
@@ -45,9 +41,7 @@ class UserPreferencesNotificationsScreen extends StatelessWidget
                 children: [
                   UserPreferencesNotificationSwitchCard(
                     disableBottomRadius: true,
-                    title: ClientPreferencesLocalizations.of(
-                      context,
-                    ).pushNotifications,
+                    title: context.l10n.pushNotifications,
                     value: preferences?.pushNotificationsEnabled ?? true,
                     loading:
                         state.updatingType ==
@@ -68,9 +62,7 @@ class UserPreferencesNotificationsScreen extends StatelessWidget
                   UserPreferencesNotificationSwitchCard(
                     disableTopRadius: true,
                     disableBottomRadius: true,
-                    title: ClientPreferencesLocalizations.of(
-                      context,
-                    ).emailNotifications,
+                    title: context.l10n.emailNotifications,
                     value: preferences?.emailNotificationsEnabled ?? true,
                     loading:
                         state.updatingType ==
@@ -90,9 +82,7 @@ class UserPreferencesNotificationsScreen extends StatelessWidget
                   ),
                   UserPreferencesNotificationSwitchCard(
                     disableTopRadius: true,
-                    title: ClientPreferencesLocalizations.of(
-                      context,
-                    ).marketingNotifications,
+                    title: context.l10n.marketingNotifications,
                     value: preferences?.marketingNotificationsEnabled ?? false,
                     loading:
                         state.updatingType ==

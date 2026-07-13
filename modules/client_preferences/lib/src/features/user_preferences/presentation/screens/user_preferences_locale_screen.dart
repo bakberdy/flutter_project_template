@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:client_preferences/gen/l10n/client_preferences_localizations.dart';
+import 'package:client_preferences/src/common/client_preferences_localization_x.dart';
 import 'package:client_preferences/src/common/config/locale_constants.dart';
 import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';
@@ -30,9 +30,7 @@ class UserPreferencesLocaleScreen extends StatelessWidget
         }
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(ClientPreferencesLocalizations.of(context).languageTitle),
-        ),
+        appBar: AppBar(title: Text(context.l10n.languageTitle)),
         body: SafeArea(
           child: RadioGroup<String>(
             groupValue: selectedLanguageCode,
@@ -51,9 +49,7 @@ class UserPreferencesLocaleScreen extends StatelessWidget
                     AppRadioListTile<String>(
                       disableBottomRadius: true,
                       title: _kazakhTitle,
-                      subtitle: ClientPreferencesLocalizations.of(
-                        context,
-                      ).languageKazakh,
+                      subtitle: context.l10n.languageKazakh,
                       value:
                           ClientPreferencesLocaleConstants.kazakh.languageCode,
                       icon:
@@ -82,9 +78,7 @@ class UserPreferencesLocaleScreen extends StatelessWidget
                       disableBottomRadius: true,
                       disableTopRadius: true,
                       title: _russianTitle,
-                      subtitle: ClientPreferencesLocalizations.of(
-                        context,
-                      ).languageRussian,
+                      subtitle: context.l10n.languageRussian,
                       value:
                           ClientPreferencesLocaleConstants.russian.languageCode,
                       icon:
@@ -112,9 +106,7 @@ class UserPreferencesLocaleScreen extends StatelessWidget
                     AppRadioListTile<String>(
                       disableTopRadius: true,
                       title: _englishTitle,
-                      subtitle: ClientPreferencesLocalizations.of(
-                        context,
-                      ).languageEnglish,
+                      subtitle: context.l10n.languageEnglish,
                       value:
                           ClientPreferencesLocaleConstants.english.languageCode,
                       icon:

@@ -103,53 +103,11 @@ abstract class ClientAuthLocalizations {
     Locale('ru'),
   ];
 
-  /// No description provided for @addTodo.
-  ///
-  /// In en, this message translates to:
-  /// **'Add Todo'**
-  String get addTodo;
-
   /// No description provided for @apiFailureDefaultMessage.
   ///
   /// In en, this message translates to:
   /// **'Request failed. Try again.'**
   String get apiFailureDefaultMessage;
-
-  /// No description provided for @appApiUrlValue.
-  ///
-  /// In en, this message translates to:
-  /// **'API URL: {apiUrl}'**
-  String appApiUrlValue(String apiUrl);
-
-  /// No description provided for @appBuildNumberValue.
-  ///
-  /// In en, this message translates to:
-  /// **'Build number: {buildNumber}'**
-  String appBuildNumberValue(String buildNumber);
-
-  /// No description provided for @appEnvironmentValue.
-  ///
-  /// In en, this message translates to:
-  /// **'Environment: {environment}'**
-  String appEnvironmentValue(String environment);
-
-  /// No description provided for @appNameValue.
-  ///
-  /// In en, this message translates to:
-  /// **'App: {appName}'**
-  String appNameValue(String appName);
-
-  /// No description provided for @appPackageNameValue.
-  ///
-  /// In en, this message translates to:
-  /// **'Package: {packageName}'**
-  String appPackageNameValue(String packageName);
-
-  /// No description provided for @appVersionWithBuild.
-  ///
-  /// In en, this message translates to:
-  /// **'Version {version} ({buildNumber})'**
-  String appVersionWithBuild(String version, String buildNumber);
 
   /// No description provided for @authEmailLabel.
   ///
@@ -510,66 +468,6 @@ abstract class ClientAuthLocalizations {
   /// In en, this message translates to:
   /// **'Profile saved successfully'**
   String get profileSavedSuccessMessage;
-
-  /// No description provided for @profilePreferencesAppearance.
-  ///
-  /// In en, this message translates to:
-  /// **'Appearance'**
-  String get profilePreferencesAppearance;
-
-  /// No description provided for @profilePreferencesDevices.
-  ///
-  /// In en, this message translates to:
-  /// **'Devices'**
-  String get profilePreferencesDevices;
-
-  /// No description provided for @profilePreferencesEmailNotifications.
-  ///
-  /// In en, this message translates to:
-  /// **'Email notifications'**
-  String get profilePreferencesEmailNotifications;
-
-  /// No description provided for @profilePreferencesLanguage.
-  ///
-  /// In en, this message translates to:
-  /// **'Language'**
-  String get profilePreferencesLanguage;
-
-  /// No description provided for @profilePreferencesMarketingNotifications.
-  ///
-  /// In en, this message translates to:
-  /// **'Marketing notifications'**
-  String get profilePreferencesMarketingNotifications;
-
-  /// No description provided for @profilePreferencesNotificationsAndSounds.
-  ///
-  /// In en, this message translates to:
-  /// **'Notifications and sounds'**
-  String get profilePreferencesNotificationsAndSounds;
-
-  /// No description provided for @profilePreferencesPushNotifications.
-  ///
-  /// In en, this message translates to:
-  /// **'Push notifications'**
-  String get profilePreferencesPushNotifications;
-
-  /// No description provided for @profileSupportFaq.
-  ///
-  /// In en, this message translates to:
-  /// **'FAQ'**
-  String get profileSupportFaq;
-
-  /// No description provided for @profileSupportSupport.
-  ///
-  /// In en, this message translates to:
-  /// **'Support'**
-  String get profileSupportSupport;
-
-  /// No description provided for @refreshTodos.
-  ///
-  /// In en, this message translates to:
-  /// **'Refresh todos'**
-  String get refreshTodos;
 
   /// No description provided for @requiredField.
   ///

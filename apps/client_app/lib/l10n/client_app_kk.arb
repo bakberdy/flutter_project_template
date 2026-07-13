@@ -7,5 +7,36 @@
     "placeholders": {
       "number": {"type": "int"}
     }
-  }
+  },
+  "profilePreferencesNotificationsAndSounds": "Хабарландырулар мен дыбыстар",
+  "profilePreferencesAppearance": "Сыртқы көрініс",
+  "profilePreferencesLanguage": "Тіл",
+  "profilePreferencesDevices": "Құрылғылар",
+  "profileSupportFaq": "FAQ",
+  "profileSupportSupport": "Қолдау",
+  "appVersionWithBuild": "Нұсқа {version} ({buildNumber})",
+  "@appVersionWithBuild": {
+    "placeholders": {
+      "version": {"type": "String"},
+      "buildNumber": {"type": "String"}
+    }
+  },
+  "appNameValue": "Қолданба: {appName}",
+  "@appNameValue": {
+    "placeholders": {"appName": {"type": "String"}}
+  },
+  "appPackageNameValue": "Пакет: {packageName}",
+  "@appPackageNameValue": {
+    "placeholders": {"packageName": {"type": "String"}}
+  },
+  "appBuildNumberValue": "Жинақ нөмірі: {buildNumber}",
+  "@appBuildNumberValue": {
+    "placeholders": {"buildNumber": {"type": "String"}}
+  },
+  "profileAvatarRemoveDialogTitle": "Аватарды жою керек пе?",
+  "profileAvatarRemoveDialogMessage": "Қазіргі аватар профиліңізден жойылады.",
+  "profileAvatarActionRemove": "Аватарды жою",
+  "profileAvatarRemovedSuccessMessage": "Аватар сәтті жойылды",
+  "profileAvatarUpdatedSuccessMessage": "Аватар сәтті жаңартылды",
+  "dismiss": "Жабу"
 }

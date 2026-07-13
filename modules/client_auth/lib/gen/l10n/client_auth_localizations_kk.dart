@@ -9,40 +9,7 @@ class ClientAuthLocalizationsKk extends ClientAuthLocalizations {
   ClientAuthLocalizationsKk([String locale = 'kk']) : super(locale);
 
   @override
-  String get addTodo => 'Тапсырма қосу';
-
-  @override
   String get apiFailureDefaultMessage => 'Сұрау орындалмады. Қайта көріңіз.';
-
-  @override
-  String appApiUrlValue(String apiUrl) {
-    return 'API URL: $apiUrl';
-  }
-
-  @override
-  String appBuildNumberValue(String buildNumber) {
-    return 'Жинақ нөмірі: $buildNumber';
-  }
-
-  @override
-  String appEnvironmentValue(String environment) {
-    return 'Орта: $environment';
-  }
-
-  @override
-  String appNameValue(String appName) {
-    return 'Қолданба: $appName';
-  }
-
-  @override
-  String appPackageNameValue(String packageName) {
-    return 'Пакет: $packageName';
-  }
-
-  @override
-  String appVersionWithBuild(String version, String buildNumber) {
-    return 'Нұсқа $version ($buildNumber)';
-  }
 
   @override
   String get authEmailLabel => 'Электрондық пошта';
@@ -236,38 +203,6 @@ class ClientAuthLocalizationsKk extends ClientAuthLocalizations {
 
   @override
   String get profileSavedSuccessMessage => 'Профиль сәтті сақталды';
-
-  @override
-  String get profilePreferencesAppearance => 'Сыртқы көрініс';
-
-  @override
-  String get profilePreferencesDevices => 'Құрылғылар';
-
-  @override
-  String get profilePreferencesEmailNotifications => 'Email хабарландырулар';
-
-  @override
-  String get profilePreferencesLanguage => 'Тіл';
-
-  @override
-  String get profilePreferencesMarketingNotifications =>
-      'Маркетинг хабарландырулары';
-
-  @override
-  String get profilePreferencesNotificationsAndSounds =>
-      'Хабарландырулар мен дыбыстар';
-
-  @override
-  String get profilePreferencesPushNotifications => 'Push хабарландырулар';
-
-  @override
-  String get profileSupportFaq => 'FAQ';
-
-  @override
-  String get profileSupportSupport => 'Қолдау';
-
-  @override
-  String get refreshTodos => 'Тапсырмаларды жаңарту';
 
   @override
   String get requiredField => 'Бұл өріс міндетті';

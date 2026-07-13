@@ -1,7 +1,7 @@
+import 'package:client_app/src/common/config/router/client_app_navigation_paths.dart';
 import 'package:client_app/src/common/config/router/client_app_router.dart';
 import 'package:client_auth/client_auth.dart';
 import 'package:client_preferences/client_preferences.dart';
-import 'package:core/core.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -11,12 +11,13 @@ void main() {
   tearDown(() => router.dispose());
 
   final cases = <String, String>{
-    AppNavigationPaths.profileEdit: UserProfileEditRoute.name,
-    AppNavigationPaths.profileNotifications:
+    ClientAppNavigationPaths.profileEdit: UserProfileEditRoute.name,
+    ClientAppNavigationPaths.profileNotifications:
         UserPreferencesNotificationsRoute.name,
-    AppNavigationPaths.profileAppearance: UserPreferencesAppearanceRoute.name,
-    AppNavigationPaths.profileLanguage: UserPreferencesLocaleRoute.name,
-    AppNavigationPaths.profileDevices: SessionsRoute.name,
+    ClientAppNavigationPaths.profileAppearance:
+        UserPreferencesAppearanceRoute.name,
+    ClientAppNavigationPaths.profileLanguage: UserPreferencesLocaleRoute.name,
+    ClientAppNavigationPaths.profileDevices: SessionsRoute.name,
   };
 
   for (final MapEntry(key: path, value: routeName) in cases.entries) {

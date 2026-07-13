@@ -1,5 +1,5 @@
 import 'package:design_system/design_system.dart';
-import 'package:client_auth/gen/l10n/client_auth_localizations.dart';
+import 'package:client_auth/src/common/client_auth_context_x.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -39,7 +39,7 @@ class SessionListItem extends StatelessWidget {
             backgroundColor: context.colorScheme.error,
             foregroundColor: context.colorScheme.onError,
             icon: Icons.cancel_outlined,
-            label: ClientAuthLocalizations.of(context).revokeSession,
+            label: context.l10n.revokeSession,
           ),
         ],
       ),

@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:core/core.dart';
-import 'package:client_auth/gen/l10n/client_auth_localizations.dart';
+import 'package:client_auth/src/common/client_auth_context_x.dart';
 import 'package:client_auth/src/features/users/configs/user_profile_dial_codes.dart';
 import 'package:client_auth/src/features/users/presentation/blocs/user_profile_bloc/user_profile_bloc.dart';
 import 'package:client_auth/src/features/users/presentation/blocs/user_profile_edit_bloc/user_profile_edit_bloc.dart';
@@ -167,7 +167,7 @@ class _UserProfileEditScreenState extends State<UserProfileEditScreen>
   void _handleSaveSuccess(BuildContext context) {
     BaseSnackbar.success(
       context,
-      message: ClientAuthLocalizations.of(context).profileSavedSuccessMessage,
+      message: context.l10n.profileSavedSuccessMessage,
     );
     context.read<UserProfileEditBloc>().add(
       const UserProfileEditEvent.resetAfterSave(),
@@ -196,12 +196,10 @@ class _UserProfileEditScreenState extends State<UserProfileEditScreen>
   Future<void> _onLogoutPressed() async {
     final accepted = await BaseDialog.show<bool>(
       context,
-      title: ClientAuthLocalizations.of(context).profileEditLogoutDialogTitle,
-      description: ClientAuthLocalizations.of(
-        context,
-      ).profileEditLogoutDialogMessage,
-      primaryLabel: ClientAuthLocalizations.of(context).profileEditLogout,
-      secondaryLabel: ClientAuthLocalizations.of(context).dismiss,
+      title: context.l10n.profileEditLogoutDialogTitle,
+      description: context.l10n.profileEditLogoutDialogMessage,
+      primaryLabel: context.l10n.profileEditLogout,
+      secondaryLabel: context.l10n.dismiss,
       primaryValue: true,
       secondaryValue: false,
       primaryFirst: true,
@@ -216,16 +214,10 @@ class _UserProfileEditScreenState extends State<UserProfileEditScreen>
   Future<void> _onRemoveAccountPressed() async {
     final accepted = await BaseDialog.show<bool>(
       context,
-      title: ClientAuthLocalizations.of(
-        context,
-      ).profileEditRemoveAccountDialogTitle,
-      description: ClientAuthLocalizations.of(
-        context,
-      ).profileEditRemoveAccountDialogMessage,
-      primaryLabel: ClientAuthLocalizations.of(
-        context,
-      ).profileEditRemoveAccount,
-      secondaryLabel: ClientAuthLocalizations.of(context).dismiss,
+      title: context.l10n.profileEditRemoveAccountDialogTitle,
+      description: context.l10n.profileEditRemoveAccountDialogMessage,
+      primaryLabel: context.l10n.profileEditRemoveAccount,
+      secondaryLabel: context.l10n.dismiss,
       primaryValue: true,
       secondaryValue: false,
       primaryFirst: true,
@@ -240,14 +232,10 @@ class _UserProfileEditScreenState extends State<UserProfileEditScreen>
   Future<bool?> _showDiscardChangesDialog() {
     return BaseDialog.show<bool>(
       context,
-      title: ClientAuthLocalizations.of(context).profileEditDiscardChangesTitle,
-      description: ClientAuthLocalizations.of(
-        context,
-      ).profileEditDiscardChangesMessage,
-      primaryLabel: ClientAuthLocalizations.of(
-        context,
-      ).profileEditDiscardChanges,
-      secondaryLabel: ClientAuthLocalizations.of(context).dismiss,
+      title: context.l10n.profileEditDiscardChangesTitle,
+      description: context.l10n.profileEditDiscardChangesMessage,
+      primaryLabel: context.l10n.profileEditDiscardChanges,
+      secondaryLabel: context.l10n.dismiss,
       primaryValue: true,
       secondaryValue: false,
       primaryFirst: true,
@@ -285,29 +273,23 @@ class _UserProfileEditScreenState extends State<UserProfileEditScreen>
     return BaseBottomSheet.show<bool?>(
       isScrollControlled: false,
       routeName: 'phone_verification_request',
-      title: ClientAuthLocalizations.of(
-        context,
-      ).profileEditPhoneVerificationRequestTitle,
+      title: context.l10n.profileEditPhoneVerificationRequestTitle,
       context: context,
       actions: [
         BaseButton.secondary(
           onPressed: () => Navigator.pop<bool>(context, false),
-          label: ClientAuthLocalizations.of(context).dismiss,
+          label: context.l10n.dismiss,
         ),
         BaseButton.primary(
           onPressed: () => Navigator.pop<bool>(context, true),
-          label: ClientAuthLocalizations.of(
-            context,
-          ).profileEditPhoneVerificationSendCode,
+          label: context.l10n.profileEditPhoneVerificationSendCode,
           trailingIcon: const Icon(Icons.chevron_right),
         ),
       ],
       builder: (context) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Text(
-          ClientAuthLocalizations.of(
-            context,
-          ).profileEditPhoneVerificationRequestMessage(
+          context.l10n.profileEditPhoneVerificationRequestMessage(
             phoneNumber.displayValue,
           ),
         ),
@@ -321,29 +303,25 @@ class _UserProfileEditScreenState extends State<UserProfileEditScreen>
   ) {
     return BaseBottomSheet.show(
       context: context,
-      title: ClientAuthLocalizations.of(context).profileEditOtpBottomSheetTitle,
+      title: context.l10n.profileEditOtpBottomSheetTitle,
       builder: (context) => BlocProvider.value(
         value: bloc,
         child: BlocBuilder<UserProfileEditBloc, UserProfileEditState>(
           builder: (context, state) => BaseOtpVerificationBottomSheet(
             errorText: state.otpInvalid
-                ? ClientAuthLocalizations.of(
-                    context,
-                  ).profileEditInvalidOtpMessage
+                ? context.l10n.profileEditInvalidOtpMessage
                 : null,
             loading: state.otpStatus.isLoading,
-            buttonLabel: ClientAuthLocalizations.of(
-              context,
-            ).profileEditVerifyNow,
+            buttonLabel: context.l10n.profileEditVerifyNow,
             otpLength: state.otpLength,
             onOtpSubmitted: (otpCode) {
               context.read<UserProfileEditBloc>().add(
                 UserProfileEditEvent.otpSubmitted(otpCode),
               );
             },
-            description: ClientAuthLocalizations.of(
-              context,
-            ).profileEditOtpBottomSheetDescription(phoneNumber.displayValue),
+            description: context.l10n.profileEditOtpBottomSheetDescription(
+              phoneNumber.displayValue,
+            ),
           ),
         ),
       ),

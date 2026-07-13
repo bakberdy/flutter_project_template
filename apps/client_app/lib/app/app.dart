@@ -1,4 +1,5 @@
-import 'package:client_app/localization/localization_consts.dart';
+import 'package:client_app/app/theme/app_theme_scope.dart';
+import 'package:client_app/src/common/config/localization/app_localization_config.dart';
 import 'package:client_app/src/common/config/router/client_app_router.dart';
 import 'package:client_auth/client_auth.dart';
 import 'package:client_preferences/client_preferences.dart';
@@ -78,8 +79,8 @@ class _AppState extends State<App> {
                 darkTheme: DesignTheme.dark(),
                 themeMode: themeMode,
                 localizationsDelegates:
-                    LocalizationConsts.appLocalizationsDelegates,
-                supportedLocales: LocalizationConsts.supportedLocales,
+                    AppLocalizationConfig.appLocalizationsDelegates,
+                supportedLocales: AppLocalizationConfig.supportedLocales,
                 locale: localeState.languageCode == null
                     ? null
                     : Locale(localeState.languageCode!),
@@ -113,6 +114,6 @@ class _AppState extends State<App> {
         return locale;
       }
     }
-    return LocalizationConsts.defaultLocale;
+    return AppLocalizationConfig.defaultLocale;
   }
 }

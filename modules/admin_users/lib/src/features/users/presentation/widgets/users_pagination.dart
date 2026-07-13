@@ -17,7 +17,7 @@ class UsersPagination extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.adminUsersL10n;
+    final l10n = context.l10n;
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [

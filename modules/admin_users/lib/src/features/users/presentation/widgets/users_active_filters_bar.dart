@@ -29,7 +29,7 @@ class UsersActiveFiltersBar extends StatelessWidget {
     if (!query.hasFilters) {
       return const SizedBox.shrink();
     }
-    final l10n = context.adminUsersL10n;
+    final l10n = context.l10n;
     return Wrap(
       spacing: AppSpacing.xs,
       runSpacing: AppSpacing.xs,

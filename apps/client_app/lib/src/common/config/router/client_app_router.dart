@@ -3,6 +3,7 @@ import 'package:client_app/src/features/app_navigation/presentation/screens/clie
 import 'package:client_app/src/features/app_navigation/presentation/screens/main_navigation_screen.dart';
 import 'package:client_app/src/features/app_navigation/presentation/screens/root_navigation_screen.dart';
 import 'package:client_app/src/features/app_navigation/presentation/screens/splash_screen.dart';
+import 'package:client_app/src/features/app_navigation/presentation/screens/user_profile_screen.dart';
 import 'package:client_auth/client_auth.dart';
 import 'package:client_preferences/client_preferences.dart';
 
@@ -18,7 +19,7 @@ class ClientAppRouter extends RootStackRouter {
       initial: true,
       children: [
         AutoRoute(page: SplashRoute.page, path: 'splash'),
-        ...clientAuthRouter,
+        ...clientAuthRoutes,
         AutoRoute(
           page: MainNavigationRoute.page,
           path: 'home',

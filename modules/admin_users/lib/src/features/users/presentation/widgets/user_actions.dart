@@ -21,7 +21,7 @@ class UserActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.adminUsersL10n;
+    final l10n = context.l10n;
     final canApproveDeletion = user.status == AdminUserStatus.deletionRequested;
     final canBlock =
         user.status != AdminUserStatus.blocked &&

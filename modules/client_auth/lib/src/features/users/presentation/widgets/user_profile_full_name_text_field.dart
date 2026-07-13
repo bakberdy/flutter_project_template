@@ -1,4 +1,4 @@
-import 'package:client_auth/gen/l10n/client_auth_localizations.dart';
+import 'package:client_auth/src/common/client_auth_context_x.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -27,7 +27,7 @@ class UserProfileFullNameTextField extends StatelessWidget {
       autocorrect: false,
       textCapitalization: TextCapitalization.words,
       decoration: InputDecoration(
-        labelText: ClientAuthLocalizations.of(context).profileEditFullNameLabel,
+        labelText: context.l10n.profileEditFullNameLabel,
         prefixIcon: const Icon(Icons.person),
         errorText: errorText,
       ),

@@ -20,13 +20,17 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   static const _authorizationHeader = 'Authorization';
   static const _bearerPrefix = 'Bearer';
 
-  final ApiClient _apiClient;
+  final ApiClient _publicApiClient;
+  final ApiClient _protectedApiClient;
 
-  AuthRemoteDataSourceImpl(@Named('protectedApiClient') this._apiClient);
+  AuthRemoteDataSourceImpl(
+    @Named('publicApiClient') this._publicApiClient,
+    @Named('protectedApiClient') this._protectedApiClient,
+  );
 
   @override
   Future<LoginResponseModel> login(AuthLoginRequest request) async {
-    final response = await _apiClient.post<Map<String, dynamic>>(
+    final response = await _publicApiClient.post<Map<String, dynamic>>(
       AuthApiEndpoints.login,
       data: AuthLoginRequestJson.toMap(request),
     );
@@ -35,7 +39,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<VerifyResponseModel> verify(VerifyRequestModel request) async {
-    final response = await _apiClient.post<Map<String, dynamic>>(
+    final response = await _publicApiClient.post<Map<String, dynamic>>(
       AuthApiEndpoints.verifyEmail,
       data: request.toJson(),
     );
@@ -44,7 +48,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<VerifyResponseModel> refreshToken(String refreshToken) async {
-    final response = await _apiClient.post<Map<String, dynamic>>(
+    final response = await _publicApiClient.post<Map<String, dynamic>>(
       AuthApiEndpoints.refresh,
       data: {'refresh_token': refreshToken},
       options: ApiOptions(
@@ -56,12 +60,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<void> logOut() async {
-    await _apiClient.post<Map<String, dynamic>>(AuthApiEndpoints.logOut);
+    await _protectedApiClient.post<Map<String, dynamic>>(
+      AuthApiEndpoints.logOut,
+    );
   }
 
   @override
   Future<void> setNotificationToken(String token, String provider) async {
-    await _apiClient.patch<void>(
+    await _protectedApiClient.patch<void>(
       AuthApiEndpoints.deviceNotifications,
       data: {'push_token': token, 'push_provider': provider},
     );

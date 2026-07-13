@@ -56,7 +56,7 @@ class _UsersSearchBarState extends State<UsersSearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.adminUsersL10n;
+    final l10n = context.l10n;
     final colorScheme = context.colorScheme;
     return SizedBox(
       height: 40,

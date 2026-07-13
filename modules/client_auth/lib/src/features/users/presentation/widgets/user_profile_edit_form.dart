@@ -1,6 +1,6 @@
 import 'package:design_system/design_system.dart';
 import 'package:core/core.dart';
-import 'package:client_auth/gen/l10n/client_auth_localizations.dart';
+import 'package:client_auth/src/common/client_auth_context_x.dart';
 import 'package:client_auth/src/features/users/presentation/helpers/user_profile_phone_number_validation.dart';
 import 'package:client_auth/src/features/users/presentation/widgets/user_profile_full_name_text_field.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +57,7 @@ class UserProfileEditForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = ClientAuthLocalizations.of(context);
+    final l10n = context.l10n;
 
     if (isInitialLoading && fullNameController.text.isEmpty) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));

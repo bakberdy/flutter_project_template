@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:design_system/design_system.dart';
 import 'package:core/core.dart';
-import 'package:client_auth/gen/l10n/client_auth_localizations.dart';
+import 'package:client_auth/src/common/client_auth_context_x.dart';
 import 'package:client_auth/src/features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:client_auth/src/common/config/router/client_auth_router.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +37,7 @@ class _AuthEmailScreenState extends State<AuthEmailScreen>
 
   @override
   Widget build(BuildContext context) {
-    final l10n = ClientAuthLocalizations.of(context);
+    final l10n = context.l10n;
     return BlocConsumer<AuthBloc, AuthState>(
       listenWhen: (previous, current) {
         if (current.status.isError && previous.status != current.status) {

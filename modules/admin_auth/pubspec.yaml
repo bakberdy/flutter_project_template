@@ -12,7 +12,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-  auto_route: ^11.1.0
   core:
     path: ../core
   dartz: ^0.10.1
@@ -24,32 +23,12 @@ dependencies:
   json_annotation: ^4.12.0
 
 dev_dependencies:
-  auto_route_generator: ^10.5.0
   build_runner: ^2.13.0
   flutter_gen_runner: ^5.13.0+1
   flutter_lints: ^6.0.0
   freezed: ^3.2.5
   injectable_generator: ^3.0.2
-  index_generator: ^4.1.2
   json_serializable: ^6.13.0
-
-index_generator:
-  exclude:
-    - "**.freezed.dart"
-    - "**.g.dart"
-    - "**.gr.dart"
-    - "src/features/**/presentation/**/*_event.dart"
-    - "src/features/**/presentation/**/*_state.dart"
-  libraries:
-    - directory_path: lib
-      include:
-        - gen/**.dart
-        - src/common/**.dart
-        - src/common/config/di/**.dart
-        - src/features/**/data/**.dart
-        - src/features/**/domain/**.dart
-        - src/features/**/presentation/**.dart
-        - src/common/config/router/**.dart
 
 flutter:
   generate: true

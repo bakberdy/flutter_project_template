@@ -17,7 +17,7 @@ class UserStatusChip extends StatelessWidget {
       side: BorderSide.none,
       backgroundColor: color.withValues(alpha: 0.12),
       label: Text(
-        status.localizedName(context.adminUsersL10n),
+        status.localizedName(context.l10n),
         style: TextStyle(color: color, fontWeight: FontWeight.w600),
       ),
       avatar: Container(

@@ -15,7 +15,7 @@ class UsersListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.adminUsersL10n;
+    final l10n = context.l10n;
     return BlocBuilder<UsersListBloc, UsersListState>(
       builder: (context, state) {
         final loading = state.status.isLoading;

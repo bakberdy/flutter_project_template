@@ -9,40 +9,7 @@ class ClientAuthLocalizationsEn extends ClientAuthLocalizations {
   ClientAuthLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get addTodo => 'Add Todo';
-
-  @override
   String get apiFailureDefaultMessage => 'Request failed. Try again.';
-
-  @override
-  String appApiUrlValue(String apiUrl) {
-    return 'API URL: $apiUrl';
-  }
-
-  @override
-  String appBuildNumberValue(String buildNumber) {
-    return 'Build number: $buildNumber';
-  }
-
-  @override
-  String appEnvironmentValue(String environment) {
-    return 'Environment: $environment';
-  }
-
-  @override
-  String appNameValue(String appName) {
-    return 'App: $appName';
-  }
-
-  @override
-  String appPackageNameValue(String packageName) {
-    return 'Package: $packageName';
-  }
-
-  @override
-  String appVersionWithBuild(String version, String buildNumber) {
-    return 'Version $version ($buildNumber)';
-  }
 
   @override
   String get authEmailLabel => 'Email';
@@ -237,38 +204,6 @@ class ClientAuthLocalizationsEn extends ClientAuthLocalizations {
 
   @override
   String get profileSavedSuccessMessage => 'Profile saved successfully';
-
-  @override
-  String get profilePreferencesAppearance => 'Appearance';
-
-  @override
-  String get profilePreferencesDevices => 'Devices';
-
-  @override
-  String get profilePreferencesEmailNotifications => 'Email notifications';
-
-  @override
-  String get profilePreferencesLanguage => 'Language';
-
-  @override
-  String get profilePreferencesMarketingNotifications =>
-      'Marketing notifications';
-
-  @override
-  String get profilePreferencesNotificationsAndSounds =>
-      'Notifications and sounds';
-
-  @override
-  String get profilePreferencesPushNotifications => 'Push notifications';
-
-  @override
-  String get profileSupportFaq => 'FAQ';
-
-  @override
-  String get profileSupportSupport => 'Support';
-
-  @override
-  String get refreshTodos => 'Refresh todos';
 
   @override
   String get requiredField => 'This field is required';

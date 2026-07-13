@@ -1,44 +1,6 @@
 {
   "@@locale": "ru",
-  "addTodo": "Добавить задачу",
   "apiFailureDefaultMessage": "Запрос не выполнен. Повторите попытку.",
-  "appApiUrlValue": "API URL: {apiUrl}",
-  "@appApiUrlValue": {
-    "placeholders": {
-      "apiUrl": { "type": "String" }
-    }
-  },
-  "appBuildNumberValue": "Номер сборки: {buildNumber}",
-  "@appBuildNumberValue": {
-    "placeholders": {
-      "buildNumber": { "type": "String" }
-    }
-  },
-  "appEnvironmentValue": "Среда: {environment}",
-  "@appEnvironmentValue": {
-    "placeholders": {
-      "environment": { "type": "String" }
-    }
-  },
-  "appNameValue": "Приложение: {appName}",
-  "@appNameValue": {
-    "placeholders": {
-      "appName": { "type": "String" }
-    }
-  },
-  "appPackageNameValue": "Пакет: {packageName}",
-  "@appPackageNameValue": {
-    "placeholders": {
-      "packageName": { "type": "String" }
-    }
-  },
-  "appVersionWithBuild": "Версия {version} ({buildNumber})",
-  "@appVersionWithBuild": {
-    "placeholders": {
-      "version": { "type": "String" },
-      "buildNumber": { "type": "String" }
-    }
-  },
   "authEmailLabel": "Электронная почта",
   "authOtpLabel": "Одноразовый код",
   "authSubmitEmail": "Продолжить",
@@ -109,16 +71,6 @@
   "profileEditTitle": "Редактировать профиль",
   "profileEditVerifyNow": "Подтвердить",
   "profileSavedSuccessMessage": "Профиль успешно сохранён",
-  "profilePreferencesAppearance": "Внешний вид",
-  "profilePreferencesDevices": "Устройства",
-  "profilePreferencesEmailNotifications": "Email-уведомления",
-  "profilePreferencesLanguage": "Язык",
-  "profilePreferencesMarketingNotifications": "Маркетинговые уведомления",
-  "profilePreferencesNotificationsAndSounds": "Уведомления и звуки",
-  "profilePreferencesPushNotifications": "Push-уведомления",
-  "profileSupportFaq": "FAQ",
-  "profileSupportSupport": "Поддержка",
-  "refreshTodos": "Обновить задачи",
   "requiredField": "Это поле обязательно",
   "revokeAllSessions": "Отозвать всё",
   "revokeAllSessionsDialogMessage": "Потребуется повторный вход на всех устройствах.",

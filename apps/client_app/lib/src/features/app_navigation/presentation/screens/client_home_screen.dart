@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:client_app/gen/l10n/client_app_localizations.dart';
+import 'package:client_app/src/common/client_app_localization_x.dart';
 import 'package:client_app/src/features/app_navigation/presentation/providers/scroll_to_top_provider.dart';
 import 'package:flutter/material.dart';
 
@@ -28,14 +28,13 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: Text(ClientAppLocalizations.of(context).home)),
+    appBar: AppBar(title: Text(context.l10n.home)),
     body: ListView.builder(
       controller: _scrollController,
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 112),
       itemCount: 20,
-      itemBuilder: (context, index) => ListTile(
-        title: Text(ClientAppLocalizations.of(context).homeItem(index + 1)),
-      ),
+      itemBuilder: (context, index) =>
+          ListTile(title: Text(context.l10n.homeItem(index + 1))),
     ),
   );
 

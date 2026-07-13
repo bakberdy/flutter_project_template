@@ -15,7 +15,7 @@ class UserHeaderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.adminUsersL10n;
+    final l10n = context.l10n;
     final displayName = profile?.fullName.trim();
     final title = displayName == null || displayName.isEmpty
         ? user.email

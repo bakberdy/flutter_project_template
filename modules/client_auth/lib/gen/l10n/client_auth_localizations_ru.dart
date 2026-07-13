@@ -9,41 +9,8 @@ class ClientAuthLocalizationsRu extends ClientAuthLocalizations {
   ClientAuthLocalizationsRu([String locale = 'ru']) : super(locale);
 
   @override
-  String get addTodo => 'Добавить задачу';
-
-  @override
   String get apiFailureDefaultMessage =>
       'Запрос не выполнен. Повторите попытку.';
-
-  @override
-  String appApiUrlValue(String apiUrl) {
-    return 'API URL: $apiUrl';
-  }
-
-  @override
-  String appBuildNumberValue(String buildNumber) {
-    return 'Номер сборки: $buildNumber';
-  }
-
-  @override
-  String appEnvironmentValue(String environment) {
-    return 'Среда: $environment';
-  }
-
-  @override
-  String appNameValue(String appName) {
-    return 'Приложение: $appName';
-  }
-
-  @override
-  String appPackageNameValue(String packageName) {
-    return 'Пакет: $packageName';
-  }
-
-  @override
-  String appVersionWithBuild(String version, String buildNumber) {
-    return 'Версия $version ($buildNumber)';
-  }
 
   @override
   String get authEmailLabel => 'Электронная почта';
@@ -238,37 +205,6 @@ class ClientAuthLocalizationsRu extends ClientAuthLocalizations {
 
   @override
   String get profileSavedSuccessMessage => 'Профиль успешно сохранён';
-
-  @override
-  String get profilePreferencesAppearance => 'Внешний вид';
-
-  @override
-  String get profilePreferencesDevices => 'Устройства';
-
-  @override
-  String get profilePreferencesEmailNotifications => 'Email-уведомления';
-
-  @override
-  String get profilePreferencesLanguage => 'Язык';
-
-  @override
-  String get profilePreferencesMarketingNotifications =>
-      'Маркетинговые уведомления';
-
-  @override
-  String get profilePreferencesNotificationsAndSounds => 'Уведомления и звуки';
-
-  @override
-  String get profilePreferencesPushNotifications => 'Push-уведомления';
-
-  @override
-  String get profileSupportFaq => 'FAQ';
-
-  @override
-  String get profileSupportSupport => 'Поддержка';
-
-  @override
-  String get refreshTodos => 'Обновить задачи';
 
   @override
   String get requiredField => 'Это поле обязательно';

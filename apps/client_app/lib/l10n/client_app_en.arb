@@ -7,5 +7,36 @@
     "placeholders": {
       "number": {"type": "int"}
     }
-  }
+  },
+  "profilePreferencesNotificationsAndSounds": "Notifications and sounds",
+  "profilePreferencesAppearance": "Appearance",
+  "profilePreferencesLanguage": "Language",
+  "profilePreferencesDevices": "Devices",
+  "profileSupportFaq": "FAQ",
+  "profileSupportSupport": "Support",
+  "appVersionWithBuild": "Version {version} ({buildNumber})",
+  "@appVersionWithBuild": {
+    "placeholders": {
+      "version": {"type": "String"},
+      "buildNumber": {"type": "String"}
+    }
+  },
+  "appNameValue": "App: {appName}",
+  "@appNameValue": {
+    "placeholders": {"appName": {"type": "String"}}
+  },
+  "appPackageNameValue": "Package: {packageName}",
+  "@appPackageNameValue": {
+    "placeholders": {"packageName": {"type": "String"}}
+  },
+  "appBuildNumberValue": "Build number: {buildNumber}",
+  "@appBuildNumberValue": {
+    "placeholders": {"buildNumber": {"type": "String"}}
+  },
+  "profileAvatarRemoveDialogTitle": "Remove avatar?",
+  "profileAvatarRemoveDialogMessage": "Your current avatar will be removed from your profile.",
+  "profileAvatarActionRemove": "Remove avatar",
+  "profileAvatarRemovedSuccessMessage": "Avatar removed successfully",
+  "profileAvatarUpdatedSuccessMessage": "Avatar updated successfully",
+  "dismiss": "Dismiss"
 }

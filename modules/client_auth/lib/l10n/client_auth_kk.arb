@@ -1,44 +1,6 @@
 {
   "@@locale": "kk",
-  "addTodo": "Тапсырма қосу",
   "apiFailureDefaultMessage": "Сұрау орындалмады. Қайта көріңіз.",
-  "appApiUrlValue": "API URL: {apiUrl}",
-  "@appApiUrlValue": {
-    "placeholders": {
-      "apiUrl": { "type": "String" }
-    }
-  },
-  "appBuildNumberValue": "Жинақ нөмірі: {buildNumber}",
-  "@appBuildNumberValue": {
-    "placeholders": {
-      "buildNumber": { "type": "String" }
-    }
-  },
-  "appEnvironmentValue": "Орта: {environment}",
-  "@appEnvironmentValue": {
-    "placeholders": {
-      "environment": { "type": "String" }
-    }
-  },
-  "appNameValue": "Қолданба: {appName}",
-  "@appNameValue": {
-    "placeholders": {
-      "appName": { "type": "String" }
-    }
-  },
-  "appPackageNameValue": "Пакет: {packageName}",
-  "@appPackageNameValue": {
-    "placeholders": {
-      "packageName": { "type": "String" }
-    }
-  },
-  "appVersionWithBuild": "Нұсқа {version} ({buildNumber})",
-  "@appVersionWithBuild": {
-    "placeholders": {
-      "version": { "type": "String" },
-      "buildNumber": { "type": "String" }
-    }
-  },
   "authEmailLabel": "Электрондық пошта",
   "authOtpLabel": "Бір реттік код",
   "authSubmitEmail": "Жалғастыру",
@@ -109,16 +71,6 @@
   "profileEditTitle": "Профильді өңдеу",
   "profileEditVerifyNow": "Растау",
   "profileSavedSuccessMessage": "Профиль сәтті сақталды",
-  "profilePreferencesAppearance": "Сыртқы көрініс",
-  "profilePreferencesDevices": "Құрылғылар",
-  "profilePreferencesEmailNotifications": "Email хабарландырулар",
-  "profilePreferencesLanguage": "Тіл",
-  "profilePreferencesMarketingNotifications": "Маркетинг хабарландырулары",
-  "profilePreferencesNotificationsAndSounds": "Хабарландырулар мен дыбыстар",
-  "profilePreferencesPushNotifications": "Push хабарландырулар",
-  "profileSupportFaq": "FAQ",
-  "profileSupportSupport": "Қолдау",
-  "refreshTodos": "Тапсырмаларды жаңарту",
   "requiredField": "Бұл өріс міндетті",
   "revokeAllSessions": "Барлық сеанстарды алып тастау",
   "revokeAllSessionsDialogMessage": "Барлық құрылғыларға қайта кіру қажет болады.",

@@ -18,7 +18,7 @@ class UsersStatusFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.adminUsersL10n;
+    final l10n = context.l10n;
     final selectedLabel =
         value?.localizedName(l10n) ?? l10n.usersStatusFilterAll;
     final colorScheme = context.colorScheme;

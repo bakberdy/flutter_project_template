@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:core/core.dart';
-import 'package:client_auth/gen/l10n/client_auth_localizations.dart';
+import 'package:client_auth/src/common/client_auth_context_x.dart';
 import 'package:client_auth/src/features/users/configs/user_profile_dial_codes.dart';
 import 'package:client_auth/src/features/users/presentation/blocs/create_user_profile_bloc/create_user_profile_bloc.dart';
 import 'package:client_auth/src/features/users/presentation/widgets/user_profile_edit_form.dart';
@@ -51,7 +51,7 @@ class _UserDataRegistrationScreenState extends State<UserDataRegistrationScreen>
 
   @override
   Widget build(BuildContext context) {
-    final l10n = ClientAuthLocalizations.of(context);
+    final l10n = context.l10n;
     final bloc = context.watch<CreateUserProfileBloc>();
     final state = bloc.state;
     return BlocListener<CreateUserProfileBloc, CreateUserProfileState>(
@@ -125,14 +125,10 @@ class _UserDataRegistrationScreenState extends State<UserDataRegistrationScreen>
   Future<bool?> showDiscardChangesDialog(BuildContext context) {
     return BaseDialog.show<bool>(
       context,
-      title: ClientAuthLocalizations.of(context).profileEditDiscardChangesTitle,
-      description: ClientAuthLocalizations.of(
-        context,
-      ).profileEditDiscardChangesMessage,
-      primaryLabel: ClientAuthLocalizations.of(
-        context,
-      ).profileEditDiscardChanges,
-      secondaryLabel: ClientAuthLocalizations.of(context).dismiss,
+      title: context.l10n.profileEditDiscardChangesTitle,
+      description: context.l10n.profileEditDiscardChangesMessage,
+      primaryLabel: context.l10n.profileEditDiscardChanges,
+      secondaryLabel: context.l10n.dismiss,
       primaryValue: true,
       secondaryValue: false,
       primaryFirst: true,

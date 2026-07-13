@@ -1,0 +1,10 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'design_system_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for Kazakh (`kk`).
+class DesignSystemLocalizationsKk extends DesignSystemLocalizations {
+  DesignSystemLocalizationsKk([String locale = 'kk']) : super(locale);
+}

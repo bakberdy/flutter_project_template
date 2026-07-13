@@ -27,7 +27,7 @@ class UserScreen extends StatefulWidget implements AutoRouteWrapper {
 class _UserScreenState extends State<UserScreen> {
   @override
   Widget build(BuildContext context) {
-    final l10n = context.adminUsersL10n;
+    final l10n = context.l10n;
     return BlocConsumer<UserBloc, UserState>(
       listenWhen: (previous, current) =>
           previous.actionStatus != current.actionStatus,
@@ -122,7 +122,7 @@ class _UserScreenState extends State<UserScreen> {
     }
     BaseSnackbar.error(
       context,
-      message: failure.message ?? context.adminUsersL10n.userLoadFailed,
+      message: failure.message ?? context.l10n.userLoadFailed,
     );
   }
 }

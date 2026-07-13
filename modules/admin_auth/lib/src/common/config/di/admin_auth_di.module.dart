@@ -9,12 +9,8 @@ import 'package:admin_auth/src/features/auth/data/datasources/auth_remote_data_s
     as _i655;
 import 'package:admin_auth/src/features/auth/data/repositories/auth_repository_impl.dart'
     as _i71;
-import 'package:admin_auth/src/features/auth/data/services/auth_session_invalidator_impl.dart'
-    as _i342;
 import 'package:admin_auth/src/features/auth/domain/repositories/auth_repository.dart'
     as _i318;
-import 'package:admin_auth/src/features/auth/domain/services/auth_session_invalidator.dart'
-    as _i921;
 import 'package:admin_auth/src/features/auth/domain/usecases/auth_log_out_use_case.dart'
     as _i640;
 import 'package:admin_auth/src/features/auth/domain/usecases/auth_login_use_case.dart'
@@ -34,8 +30,6 @@ class AdminAuthPackageModule extends _i526.MicroPackageModule {
 // initializes the registration of main-scope dependencies inside of GetIt
   @override
   _i687.FutureOr<void> init(_i526.GetItHelper gh) {
-    gh.singleton<_i921.AuthSessionInvalidator>(
-        () => _i342.AuthSessionInvalidatorImpl());
     gh.singleton<_i655.AuthRemoteDataSource>(
         () => _i655.AuthRemoteDataSourceImpl(
               gh<_i494.ApiClient>(instanceName: 'publicApiClient'),

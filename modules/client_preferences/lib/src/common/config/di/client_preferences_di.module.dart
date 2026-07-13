@@ -9,8 +9,8 @@ import 'package:client_preferences/src/features/user_preferences/data/datasource
     as _i937;
 import 'package:client_preferences/src/features/user_preferences/data/datasources/user_preferences_remote_data_source.dart'
     as _i669;
-import 'package:client_preferences/src/features/user_preferences/data/interceptors/accept_language_interceptor.dart'
-    as _i714;
+import 'package:client_preferences/src/features/user_preferences/data/interceptors/accept_language_headers_provider.dart'
+    as _i176;
 import 'package:client_preferences/src/features/user_preferences/data/repositories/user_preferences_repository_impl.dart'
     as _i233;
 import 'package:client_preferences/src/features/user_preferences/domain/repositories/user_preferences_repository.dart'
@@ -46,8 +46,8 @@ class ClientPreferencesPackageModule extends _i526.MicroPackageModule {
     gh.singleton<_i669.UserPreferencesRemoteDataSource>(() =>
         _i669.UserPreferencesRemoteDataSourceImpl(
             gh<_i494.ApiClient>(instanceName: 'protectedApiClient')));
-    gh.lazySingleton<_i714.AcceptLanguageInterceptor>(
-        () => _i714.AcceptLanguageInterceptor(gh<_i494.LocalStorage>()));
+    gh.lazySingleton<_i176.AcceptLanguageHeadersProvider>(
+        () => _i176.AcceptLanguageHeadersProvider(gh<_i494.LocalStorage>()));
     gh.singleton<_i796.UserPreferencesRepository>(
         () => _i233.UserPreferencesRepositoryImpl(
               gh<_i937.UserPreferencesLocalDataSource>(),

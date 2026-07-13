@@ -7,5 +7,36 @@
     "placeholders": {
       "number": {"type": "int"}
     }
-  }
+  },
+  "profilePreferencesNotificationsAndSounds": "Уведомления и звуки",
+  "profilePreferencesAppearance": "Внешний вид",
+  "profilePreferencesLanguage": "Язык",
+  "profilePreferencesDevices": "Устройства",
+  "profileSupportFaq": "FAQ",
+  "profileSupportSupport": "Поддержка",
+  "appVersionWithBuild": "Версия {version} ({buildNumber})",
+  "@appVersionWithBuild": {
+    "placeholders": {
+      "version": {"type": "String"},
+      "buildNumber": {"type": "String"}
+    }
+  },
+  "appNameValue": "Приложение: {appName}",
+  "@appNameValue": {
+    "placeholders": {"appName": {"type": "String"}}
+  },
+  "appPackageNameValue": "Пакет: {packageName}",
+  "@appPackageNameValue": {
+    "placeholders": {"packageName": {"type": "String"}}
+  },
+  "appBuildNumberValue": "Номер сборки: {buildNumber}",
+  "@appBuildNumberValue": {
+    "placeholders": {"buildNumber": {"type": "String"}}
+  },
+  "profileAvatarRemoveDialogTitle": "Удалить аватар?",
+  "profileAvatarRemoveDialogMessage": "Текущий аватар будет удалён из вашего профиля.",
+  "profileAvatarActionRemove": "Удалить аватар",
+  "profileAvatarRemovedSuccessMessage": "Аватар успешно удалён",
+  "profileAvatarUpdatedSuccessMessage": "Аватар успешно обновлён",
+  "dismiss": "Закрыть"
 }

@@ -9,12 +9,8 @@ import 'package:client_auth/src/features/auth/data/datasources/auth_remote_data_
     as _i279;
 import 'package:client_auth/src/features/auth/data/repositories/auth_repository_impl.dart'
     as _i201;
-import 'package:client_auth/src/features/auth/data/services/auth_session_invalidator_impl.dart'
-    as _i273;
 import 'package:client_auth/src/features/auth/domain/repositories/auth_repository.dart'
     as _i296;
-import 'package:client_auth/src/features/auth/domain/services/auth_session_invalidator.dart'
-    as _i514;
 import 'package:client_auth/src/features/auth/domain/usecases/auth_login_use_case.dart'
     as _i4;
 import 'package:client_auth/src/features/auth/domain/usecases/auth_verify_use_case.dart'
@@ -72,17 +68,17 @@ class ClientAuthPackageModule extends _i526.MicroPackageModule {
 // initializes the registration of main-scope dependencies inside of GetIt
   @override
   _i687.FutureOr<void> init(_i526.GetItHelper gh) {
-    gh.singleton<_i279.AuthRemoteDataSource>(() =>
-        _i279.AuthRemoteDataSourceImpl(
-            gh<_i494.ApiClient>(instanceName: 'protectedApiClient')));
-    gh.singleton<_i514.AuthSessionInvalidator>(
-        () => _i273.AuthSessionInvalidatorImpl());
     gh.singleton<_i312.SessionsRemoteDataSource>(() =>
         _i312.SessionsRemoteDataSourceImpl(
             gh<_i494.ApiClient>(instanceName: 'protectedApiClient')));
     gh.singleton<_i47.UserProfileRemoteDataSource>(() =>
         _i47.UserProfileRemoteDataSourceImpl(
             gh<_i494.ApiClient>(instanceName: 'protectedApiClient')));
+    gh.singleton<_i279.AuthRemoteDataSource>(
+        () => _i279.AuthRemoteDataSourceImpl(
+              gh<_i494.ApiClient>(instanceName: 'publicApiClient'),
+              gh<_i494.ApiClient>(instanceName: 'protectedApiClient'),
+            ));
     gh.lazySingleton<_i490.GetAppInfoUseCase>(
         () => _i490.GetAppInfoUseCase(gh<_i494.DeviceInfoService>()));
     gh.singleton<_i296.AuthRepository>(() => _i201.AuthRepositoryImpl(

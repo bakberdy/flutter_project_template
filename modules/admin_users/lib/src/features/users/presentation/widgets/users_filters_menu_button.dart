@@ -20,7 +20,7 @@ class UsersFiltersMenuButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.adminUsersL10n;
+    final l10n = context.l10n;
     final active = query.hasFilters;
     final colorScheme = context.colorScheme;
     final borderColor = !enabled
@@ -79,7 +79,7 @@ class UsersFiltersMenuButton extends StatelessWidget {
     var applied = false;
     await BaseDialog.show<void>(
       context,
-      title: context.adminUsersL10n.usersFiltersLabel,
+      title: context.l10n.usersFiltersLabel,
       width: 560,
       primaryLabel: materialL10n.okButtonLabel,
       secondaryLabel: materialL10n.cancelButtonLabel,
@@ -88,7 +88,7 @@ class UsersFiltersMenuButton extends StatelessWidget {
       },
       body: StatefulBuilder(
         builder: (context, setState) {
-          final l10n = context.adminUsersL10n;
+          final l10n = context.l10n;
           return Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,

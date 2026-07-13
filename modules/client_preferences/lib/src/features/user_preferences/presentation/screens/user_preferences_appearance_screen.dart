@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:client_preferences/gen/l10n/client_preferences_localizations.dart';
+import 'package:client_preferences/src/common/client_preferences_localization_x.dart';
 import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:client_preferences/src/features/user_preferences/domain/entities/user_preferences.dart';
@@ -26,11 +26,7 @@ class UserPreferencesAppearanceScreen extends StatelessWidget
         }
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            ClientPreferencesLocalizations.of(context).appearanceTitle,
-          ),
-        ),
+        appBar: AppBar(title: Text(context.l10n.appearanceTitle)),
         body: SafeArea(
           child: RadioGroup<UserTheme>(
             groupValue: selectedThemeMode,
@@ -48,9 +44,7 @@ class UserPreferencesAppearanceScreen extends StatelessWidget
                   children: [
                     AppRadioListTile<UserTheme>(
                       disableBottomRadius: true,
-                      title: ClientPreferencesLocalizations.of(
-                        context,
-                      ).themeSystem,
+                      title: context.l10n.themeSystem,
                       value: UserTheme.system,
                       icon: selectedThemeMode == UserTheme.system
                           ? Icon(
@@ -70,9 +64,7 @@ class UserPreferencesAppearanceScreen extends StatelessWidget
                     AppRadioListTile<UserTheme>(
                       disableBottomRadius: true,
                       disableTopRadius: true,
-                      title: ClientPreferencesLocalizations.of(
-                        context,
-                      ).themeLight,
+                      title: context.l10n.themeLight,
                       value: UserTheme.light,
                       icon: selectedThemeMode == UserTheme.light
                           ? Icon(
@@ -91,9 +83,7 @@ class UserPreferencesAppearanceScreen extends StatelessWidget
                     ),
                     AppRadioListTile<UserTheme>(
                       disableTopRadius: true,
-                      title: ClientPreferencesLocalizations.of(
-                        context,
-                      ).themeDark,
+                      title: context.l10n.themeDark,
                       value: UserTheme.dark,
                       icon: selectedThemeMode == UserTheme.dark
                           ? Icon(
