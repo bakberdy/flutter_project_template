@@ -1,5 +1,5 @@
 import 'package:design_system/design_system.dart';
-import 'package:client_auth/src/common/client_auth_context_x.dart';
+import 'package:client_auth/gen/l10n/client_auth_localizations.dart';
 import 'package:flutter/material.dart';
 
 class AppVersionView extends StatelessWidget {
@@ -31,24 +31,30 @@ class AppVersionView extends StatelessWidget {
           const SizedBox(height: DesignSpacing.lg),
           if (version != null && buildNumber != null)
             SelectableText(
-              context.l10n.appVersionWithBuild(version, buildNumber),
+              ClientAuthLocalizations.of(
+                context,
+              ).appVersionWithBuild(version, buildNumber),
               style: textStyle,
             ),
           if (showBuildDetails) ...[
             const SizedBox(height: DesignSpacing.sm),
             if (appName != null)
               SelectableText(
-                context.l10n.appNameValue(appName!),
+                ClientAuthLocalizations.of(context).appNameValue(appName!),
                 style: textStyle,
               ),
             if (packageName != null)
               SelectableText(
-                context.l10n.appPackageNameValue(packageName!),
+                ClientAuthLocalizations.of(
+                  context,
+                ).appPackageNameValue(packageName!),
                 style: textStyle,
               ),
             if (buildNumber != null)
               SelectableText(
-                context.l10n.appBuildNumberValue(buildNumber),
+                ClientAuthLocalizations.of(
+                  context,
+                ).appBuildNumberValue(buildNumber),
                 style: textStyle,
               ),
           ],

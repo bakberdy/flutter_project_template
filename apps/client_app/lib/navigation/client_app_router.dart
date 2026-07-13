@@ -15,7 +15,7 @@ class ClientAppRouter extends RootStackRouter {
       initial: true,
       children: [
         AutoRoute(page: SplashRoute.page, path: 'splash'),
-        ...clientAuthRoutes,
+        ...clientAuthRouter,
         AutoRoute(
           page: UserHomeRoute.page,
           path: 'home',

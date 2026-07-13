@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:design_system/design_system.dart';
 import 'package:core/core.dart';
-import 'package:client_auth/src/common/client_auth_context_x.dart';
+import 'package:client_auth/gen/l10n/client_auth_localizations.dart';
 import 'package:client_auth/src/features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,7 +36,7 @@ class _AuthOtpScreenState extends State<AuthOtpScreen>
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
+    final l10n = ClientAuthLocalizations.of(context);
     return BlocConsumer<AuthBloc, AuthState>(
       listenWhen: (previous, current) {
         if (current.status.isError && previous.status != current.status) {

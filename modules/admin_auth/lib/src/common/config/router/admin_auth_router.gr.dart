@@ -8,4 +8,4 @@
 // ignore_for_file: type=lint
 // coverage:ignore-file
 
-part of 'admin_auth_routes.dart';
+part of 'admin_auth_router.dart';

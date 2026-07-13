@@ -8,7 +8,7 @@
 // ignore_for_file: type=lint
 // coverage:ignore-file
 
-part of 'client_auth_routes.dart';
+part of 'client_auth_router.dart';
 
 /// generated route for
 /// [AuthEmailScreen]

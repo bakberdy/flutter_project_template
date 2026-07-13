@@ -1,9 +1,11 @@
-import 'package:design_system/design_system.dart';
-import 'package:client_auth/src/common/client_auth_context_x.dart';
-import 'package:core/core.dart';
+import 'package:design_system/src/extensions/build_context_design_x.dart';
+import 'package:design_system/src/inputs/phone/base_country_dial_code_prefix_button.dart';
+import 'package:design_system/src/inputs/phone/country_dial_code_option.dart';
+import 'package:design_system/src/tokens/design_radii.dart';
+import 'package:design_system/src/tokens/design_spacing.dart';
 import 'package:flutter/material.dart';
 
-class CountryCodeSelectorOverlay {
+class BaseCountryDialCodeSelectorOverlay {
   OverlayEntry? _entry;
 
   bool get isVisible => _entry?.mounted ?? false;
@@ -11,8 +13,8 @@ class CountryCodeSelectorOverlay {
   void show({
     required BuildContext context,
     required LayerLink layerLink,
-    required List<CountryDialCode> dialCodesByCountryCode,
-    required ValueChanged<CountryDialCode> onCountryCodeSelected,
+    required List<CountryDialCodeOption> dialCodes,
+    required ValueChanged<CountryDialCodeOption> onSelected,
   }) {
     if (isVisible) {
       return;
@@ -20,13 +22,13 @@ class CountryCodeSelectorOverlay {
 
     late final OverlayEntry entry;
     entry = OverlayEntry(
-      builder: (context) => CountryCodeSelector(
+      builder: (context) => BaseCountryDialCodeSelector(
         layerLink: layerLink,
-        dialCodesByCountryCode: dialCodesByCountryCode,
+        dialCodes: dialCodes,
         onDismiss: hide,
-        onCountryCodeSelected: (value) {
+        onSelected: (value) {
           close();
-          onCountryCodeSelected(value);
+          onSelected(value);
         },
       ),
     );
@@ -47,19 +49,19 @@ class CountryCodeSelectorOverlay {
   }
 }
 
-class CountryCodeSelector extends StatelessWidget {
-  const CountryCodeSelector({
+class BaseCountryDialCodeSelector extends StatelessWidget {
+  const BaseCountryDialCodeSelector({
     super.key,
-    required this.dialCodesByCountryCode,
+    required this.dialCodes,
     required this.layerLink,
     required this.onDismiss,
-    required this.onCountryCodeSelected,
+    required this.onSelected,
   });
 
-  final List<CountryDialCode> dialCodesByCountryCode;
+  final List<CountryDialCodeOption> dialCodes;
   final LayerLink layerLink;
   final VoidCallback onDismiss;
-  final ValueChanged<CountryDialCode> onCountryCodeSelected;
+  final ValueChanged<CountryDialCodeOption> onSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -84,10 +86,10 @@ class CountryCodeSelector extends StatelessWidget {
                 child: ListView(
                   padding: EdgeInsets.zero,
                   shrinkWrap: true,
-                  children: dialCodesByCountryCode
+                  children: dialCodes
                       .map(
                         (dialCode) => InkWell(
-                          onTap: () => onCountryCodeSelected(dialCode),
+                          onTap: () => onSelected(dialCode),
                           child: Ink(
                             padding: const EdgeInsets.symmetric(
                               horizontal: DesignSpacing.md,
@@ -95,7 +97,7 @@ class CountryCodeSelector extends StatelessWidget {
                             ),
                             child: Row(
                               children: [
-                                _countryFlag(context, dialCode),
+                                countryDialCodeFlag(context, dialCode),
                                 const SizedBox(width: DesignSpacing.xs),
                                 Text(
                                   '${dialCode.dialCode} (${dialCode.countryCode})',
@@ -115,35 +117,4 @@ class CountryCodeSelector extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget _countryFlag(BuildContext context, CountryDialCode dialCode) {
-  final flags = context.assets.icons.countryFlags;
-  return switch (dialCode.countryCode) {
-    'KZ' => flags.kazakhstan.image(
-      width: 24,
-      height: 24,
-      errorBuilder: (context, error, stackTrace) =>
-          const SizedBox(width: 24, height: 24),
-    ),
-    'RU' => flags.russia.image(
-      width: 24,
-      height: 24,
-      errorBuilder: (context, error, stackTrace) =>
-          const SizedBox(width: 24, height: 24),
-    ),
-    'US' => flags.unitedStates.image(
-      width: 24,
-      height: 24,
-      errorBuilder: (context, error, stackTrace) =>
-          const SizedBox(width: 24, height: 24),
-    ),
-    'GB' => flags.unitedKingdom.image(
-      width: 24,
-      height: 24,
-      errorBuilder: (context, error, stackTrace) =>
-          const SizedBox(width: 24, height: 24),
-    ),
-    _ => const SizedBox(width: 24, height: 24),
-  };
 }

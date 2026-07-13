@@ -1,14 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:core/core.dart';
-import 'package:client_auth/src/common/client_auth_context_x.dart';
+import 'package:client_auth/gen/l10n/client_auth_localizations.dart';
 import 'package:client_auth/src/features/users/configs/user_profile_dial_codes.dart';
 import 'package:client_auth/src/features/users/presentation/blocs/user_profile_bloc/user_profile_bloc.dart';
 import 'package:client_auth/src/features/users/presentation/blocs/user_profile_edit_bloc/user_profile_edit_bloc.dart';
 import 'package:client_auth/src/features/users/presentation/widgets/user_profile_edit_form.dart';
 import 'package:design_system/design_system.dart';
-import 'package:client_auth/src/common/inputs/phone_number_input_formatter.dart';
-import 'package:client_auth/src/common/widgets/country_code_selector.dart';
-import 'package:client_auth/src/common/widgets/verify_otp_bottom_sheet_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -33,12 +30,12 @@ class _UserProfileEditScreenState extends State<UserProfileEditScreen>
   final phoneFieldLayerLink = LayerLink();
   final fullNameController = TextEditingController();
   final phoneNumberController = TextEditingController();
-  final countryCodeSelector = CountryCodeSelectorOverlay();
+  final countryCodeSelector = BaseCountryDialCodeSelectorOverlay();
   bool _profileInitialized = false;
 
-  void _onCountryCodeSelected(CountryDialCode value) {
+  void _onCountryCodeSelected(CountryDialCodeOption value) {
     context.read<UserProfileEditBloc>().add(
-      UserProfileEditEvent.countryCodeSelected(value),
+      UserProfileEditEvent.countryCodeSelected(_countryDialCodeFrom(value)),
     );
   }
 
@@ -170,7 +167,7 @@ class _UserProfileEditScreenState extends State<UserProfileEditScreen>
   void _handleSaveSuccess(BuildContext context) {
     BaseSnackbar.success(
       context,
-      message: context.l10n.profileSavedSuccessMessage,
+      message: ClientAuthLocalizations.of(context).profileSavedSuccessMessage,
     );
     context.read<UserProfileEditBloc>().add(
       const UserProfileEditEvent.resetAfterSave(),
@@ -199,10 +196,12 @@ class _UserProfileEditScreenState extends State<UserProfileEditScreen>
   Future<void> _onLogoutPressed() async {
     final accepted = await BaseDialog.show<bool>(
       context,
-      title: context.l10n.profileEditLogoutDialogTitle,
-      description: context.l10n.profileEditLogoutDialogMessage,
-      primaryLabel: context.l10n.profileEditLogout,
-      secondaryLabel: context.l10n.dismiss,
+      title: ClientAuthLocalizations.of(context).profileEditLogoutDialogTitle,
+      description: ClientAuthLocalizations.of(
+        context,
+      ).profileEditLogoutDialogMessage,
+      primaryLabel: ClientAuthLocalizations.of(context).profileEditLogout,
+      secondaryLabel: ClientAuthLocalizations.of(context).dismiss,
       primaryValue: true,
       secondaryValue: false,
       primaryFirst: true,
@@ -217,10 +216,16 @@ class _UserProfileEditScreenState extends State<UserProfileEditScreen>
   Future<void> _onRemoveAccountPressed() async {
     final accepted = await BaseDialog.show<bool>(
       context,
-      title: context.l10n.profileEditRemoveAccountDialogTitle,
-      description: context.l10n.profileEditRemoveAccountDialogMessage,
-      primaryLabel: context.l10n.profileEditRemoveAccount,
-      secondaryLabel: context.l10n.dismiss,
+      title: ClientAuthLocalizations.of(
+        context,
+      ).profileEditRemoveAccountDialogTitle,
+      description: ClientAuthLocalizations.of(
+        context,
+      ).profileEditRemoveAccountDialogMessage,
+      primaryLabel: ClientAuthLocalizations.of(
+        context,
+      ).profileEditRemoveAccount,
+      secondaryLabel: ClientAuthLocalizations.of(context).dismiss,
       primaryValue: true,
       secondaryValue: false,
       primaryFirst: true,
@@ -235,10 +240,14 @@ class _UserProfileEditScreenState extends State<UserProfileEditScreen>
   Future<bool?> _showDiscardChangesDialog() {
     return BaseDialog.show<bool>(
       context,
-      title: context.l10n.profileEditDiscardChangesTitle,
-      description: context.l10n.profileEditDiscardChangesMessage,
-      primaryLabel: context.l10n.profileEditDiscardChanges,
-      secondaryLabel: context.l10n.dismiss,
+      title: ClientAuthLocalizations.of(context).profileEditDiscardChangesTitle,
+      description: ClientAuthLocalizations.of(
+        context,
+      ).profileEditDiscardChangesMessage,
+      primaryLabel: ClientAuthLocalizations.of(
+        context,
+      ).profileEditDiscardChanges,
+      secondaryLabel: ClientAuthLocalizations.of(context).dismiss,
       primaryValue: true,
       secondaryValue: false,
       primaryFirst: true,
@@ -254,8 +263,8 @@ class _UserProfileEditScreenState extends State<UserProfileEditScreen>
     countryCodeSelector.show(
       context: context,
       layerLink: phoneFieldLayerLink,
-      dialCodesByCountryCode: countryDialCodes,
-      onCountryCodeSelected: _onCountryCodeSelected,
+      dialCodes: _countryDialCodeOptions,
+      onSelected: _onCountryCodeSelected,
     );
   }
 
@@ -276,23 +285,29 @@ class _UserProfileEditScreenState extends State<UserProfileEditScreen>
     return BaseBottomSheet.show<bool?>(
       isScrollControlled: false,
       routeName: 'phone_verification_request',
-      title: context.l10n.profileEditPhoneVerificationRequestTitle,
+      title: ClientAuthLocalizations.of(
+        context,
+      ).profileEditPhoneVerificationRequestTitle,
       context: context,
       actions: [
         BaseButton.secondary(
           onPressed: () => Navigator.pop<bool>(context, false),
-          label: context.l10n.dismiss,
+          label: ClientAuthLocalizations.of(context).dismiss,
         ),
         BaseButton.primary(
           onPressed: () => Navigator.pop<bool>(context, true),
-          label: context.l10n.profileEditPhoneVerificationSendCode,
+          label: ClientAuthLocalizations.of(
+            context,
+          ).profileEditPhoneVerificationSendCode,
           trailingIcon: const Icon(Icons.chevron_right),
         ),
       ],
       builder: (context) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Text(
-          context.l10n.profileEditPhoneVerificationRequestMessage(
+          ClientAuthLocalizations.of(
+            context,
+          ).profileEditPhoneVerificationRequestMessage(
             phoneNumber.displayValue,
           ),
         ),
@@ -306,25 +321,29 @@ class _UserProfileEditScreenState extends State<UserProfileEditScreen>
   ) {
     return BaseBottomSheet.show(
       context: context,
-      title: context.l10n.profileEditOtpBottomSheetTitle,
+      title: ClientAuthLocalizations.of(context).profileEditOtpBottomSheetTitle,
       builder: (context) => BlocProvider.value(
         value: bloc,
         child: BlocBuilder<UserProfileEditBloc, UserProfileEditState>(
-          builder: (context, state) => VerifyOtpBottomSheetView(
+          builder: (context, state) => BaseOtpVerificationBottomSheet(
             errorText: state.otpInvalid
-                ? context.l10n.profileEditInvalidOtpMessage
+                ? ClientAuthLocalizations.of(
+                    context,
+                  ).profileEditInvalidOtpMessage
                 : null,
             loading: state.otpStatus.isLoading,
-            buttonLabel: context.l10n.profileEditVerifyNow,
+            buttonLabel: ClientAuthLocalizations.of(
+              context,
+            ).profileEditVerifyNow,
             otpLength: state.otpLength,
             onOtpSubmitted: (otpCode) {
               context.read<UserProfileEditBloc>().add(
                 UserProfileEditEvent.otpSubmitted(otpCode),
               );
             },
-            description: context.l10n.profileEditOtpBottomSheetDescription(
-              phoneNumber.displayValue,
-            ),
+            description: ClientAuthLocalizations.of(
+              context,
+            ).profileEditOtpBottomSheetDescription(phoneNumber.displayValue),
           ),
         ),
       ),
@@ -350,7 +369,7 @@ class _UserProfileEditScreenState extends State<UserProfileEditScreen>
   void _initializeProfileForm(UserProfile profile) {
     _profileInitialized = true;
     fullNameController.text = profile.fullName;
-    phoneNumberController.text = PhoneNumberInputFormatter.formatForDisplay(
+    phoneNumberController.text = BasePhoneNumberInputFormatter.formatForDisplay(
       profile.phoneNumber?.number ?? '',
     );
     context.read<UserProfileEditBloc>().add(
@@ -358,12 +377,29 @@ class _UserProfileEditScreenState extends State<UserProfileEditScreen>
     );
   }
 
-  CountryDialCode? _dialCodeFromPhoneNumber(UserPhoneNumber phoneNumber) {
-    return countryDialCodes.firstWhere(
+  CountryDialCodeOption? _dialCodeFromPhoneNumber(UserPhoneNumber phoneNumber) {
+    return _countryDialCodeOptions.firstWhere(
       (code) =>
           code.countryCode == phoneNumber.countryCode ||
           code.dialCode == phoneNumber.dialCode,
-      orElse: () => countryDialCodes.last,
+      orElse: () => _countryDialCodeOptions.last,
     );
   }
+
+  CountryDialCode _countryDialCodeFrom(CountryDialCodeOption value) {
+    return countryDialCodes.firstWhere(
+      (code) =>
+          code.countryCode == value.countryCode ||
+          code.dialCode == value.dialCode,
+    );
+  }
+
+  List<CountryDialCodeOption> get _countryDialCodeOptions => countryDialCodes
+      .map(
+        (code) => CountryDialCodeOption(
+          countryCode: code.countryCode,
+          dialCode: code.dialCode,
+        ),
+      )
+      .toList(growable: false);
 }

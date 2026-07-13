@@ -52,12 +52,12 @@ index_generator:
       include:
         - gen/**.dart
         - src/common/**.dart
-        - src/di/**.dart
+        - src/common/config/di/**.dart
         - src/features/**/configs/**.dart
         - src/features/**/data/**.dart
         - src/features/**/domain/**.dart
         - src/features/**/presentation/**.dart
-        - src/router/**.dart
+        - src/common/config/router/**.dart
 
 flutter:
   generate: true

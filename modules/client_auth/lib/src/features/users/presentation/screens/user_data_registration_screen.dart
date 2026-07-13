@@ -1,11 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:core/core.dart';
-import 'package:client_auth/src/common/client_auth_context_x.dart';
+import 'package:client_auth/gen/l10n/client_auth_localizations.dart';
 import 'package:client_auth/src/features/users/configs/user_profile_dial_codes.dart';
 import 'package:client_auth/src/features/users/presentation/blocs/create_user_profile_bloc/create_user_profile_bloc.dart';
 import 'package:client_auth/src/features/users/presentation/widgets/user_profile_edit_form.dart';
 import 'package:design_system/design_system.dart';
-import 'package:client_auth/src/common/widgets/country_code_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,11 +33,11 @@ class _UserDataRegistrationScreenState extends State<UserDataRegistrationScreen>
   final phoneFieldLayerLink = LayerLink();
   final fullNameController = TextEditingController();
   final phoneNumberController = TextEditingController();
-  final countryCodeSelector = CountryCodeSelectorOverlay();
+  final countryCodeSelector = BaseCountryDialCodeSelectorOverlay();
 
-  void _onCountryCodeSelected(CountryDialCode value) {
+  void _onCountryCodeSelected(CountryDialCodeOption value) {
     context.read<CreateUserProfileBloc>().add(
-      CreateUserProfileEvent.countryCodeSelected(value),
+      CreateUserProfileEvent.countryCodeSelected(_countryDialCodeFrom(value)),
     );
   }
 
@@ -52,7 +51,7 @@ class _UserDataRegistrationScreenState extends State<UserDataRegistrationScreen>
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
+    final l10n = ClientAuthLocalizations.of(context);
     final bloc = context.watch<CreateUserProfileBloc>();
     final state = bloc.state;
     return BlocListener<CreateUserProfileBloc, CreateUserProfileState>(
@@ -111,8 +110,8 @@ class _UserDataRegistrationScreenState extends State<UserDataRegistrationScreen>
           countryCodeSelector.show(
             context: context,
             layerLink: phoneFieldLayerLink,
-            dialCodesByCountryCode: countryDialCodes,
-            onCountryCodeSelected: _onCountryCodeSelected,
+            dialCodes: _countryDialCodeOptions,
+            onSelected: _onCountryCodeSelected,
           );
         },
         onSavePressed: () {
@@ -126,22 +125,43 @@ class _UserDataRegistrationScreenState extends State<UserDataRegistrationScreen>
   Future<bool?> showDiscardChangesDialog(BuildContext context) {
     return BaseDialog.show<bool>(
       context,
-      title: context.l10n.profileEditDiscardChangesTitle,
-      description: context.l10n.profileEditDiscardChangesMessage,
-      primaryLabel: context.l10n.profileEditDiscardChanges,
-      secondaryLabel: context.l10n.dismiss,
+      title: ClientAuthLocalizations.of(context).profileEditDiscardChangesTitle,
+      description: ClientAuthLocalizations.of(
+        context,
+      ).profileEditDiscardChangesMessage,
+      primaryLabel: ClientAuthLocalizations.of(
+        context,
+      ).profileEditDiscardChanges,
+      secondaryLabel: ClientAuthLocalizations.of(context).dismiss,
       primaryValue: true,
       secondaryValue: false,
       primaryFirst: true,
     );
   }
 
-  CountryDialCode? _dialCodeFromPhoneNumber(UserPhoneNumber phoneNumber) {
-    return countryDialCodes.firstWhere(
+  CountryDialCodeOption? _dialCodeFromPhoneNumber(UserPhoneNumber phoneNumber) {
+    return _countryDialCodeOptions.firstWhere(
       (code) =>
           code.countryCode == phoneNumber.countryCode ||
           code.dialCode == phoneNumber.dialCode,
-      orElse: () => countryDialCodes.last,
+      orElse: () => _countryDialCodeOptions.last,
     );
   }
+
+  CountryDialCode _countryDialCodeFrom(CountryDialCodeOption value) {
+    return countryDialCodes.firstWhere(
+      (code) =>
+          code.countryCode == value.countryCode ||
+          code.dialCode == value.dialCode,
+    );
+  }
+
+  List<CountryDialCodeOption> get _countryDialCodeOptions => countryDialCodes
+      .map(
+        (code) => CountryDialCodeOption(
+          countryCode: code.countryCode,
+          dialCode: code.dialCode,
+        ),
+      )
+      .toList(growable: false);
 }

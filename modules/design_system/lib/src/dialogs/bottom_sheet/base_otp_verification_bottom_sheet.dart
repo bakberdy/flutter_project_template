@@ -1,8 +1,10 @@
-import 'package:design_system/design_system.dart';
+import 'package:design_system/src/buttons/base_button.dart';
+import 'package:design_system/src/inputs/base_otp_text_field.dart';
+import 'package:design_system/src/tokens/design_spacing.dart';
 import 'package:flutter/material.dart';
 
-class VerifyOtpBottomSheetView extends StatefulWidget {
-  const VerifyOtpBottomSheetView({
+class BaseOtpVerificationBottomSheet extends StatefulWidget {
+  const BaseOtpVerificationBottomSheet({
     super.key,
     required this.description,
     this.buttonLabel,
@@ -20,11 +22,12 @@ class VerifyOtpBottomSheetView extends StatefulWidget {
   final ValueChanged<String>? onOtpSubmitted;
 
   @override
-  State<VerifyOtpBottomSheetView> createState() =>
-      _VerifyOtpBottomSheetViewState();
+  State<BaseOtpVerificationBottomSheet> createState() =>
+      _BaseOtpVerificationBottomSheetState();
 }
 
-class _VerifyOtpBottomSheetViewState extends State<VerifyOtpBottomSheetView> {
+class _BaseOtpVerificationBottomSheetState
+    extends State<BaseOtpVerificationBottomSheet> {
   final otpCodeController = TextEditingController();
   String? errorText;
   bool loading = false;
@@ -37,7 +40,7 @@ class _VerifyOtpBottomSheetViewState extends State<VerifyOtpBottomSheetView> {
   }
 
   @override
-  void didUpdateWidget(covariant VerifyOtpBottomSheetView oldWidget) {
+  void didUpdateWidget(covariant BaseOtpVerificationBottomSheet oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.errorText != widget.errorText) {
       errorText = widget.errorText;

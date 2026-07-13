@@ -1,9 +1,8 @@
 import 'package:design_system/design_system.dart';
 import 'package:core/core.dart';
-import 'package:client_auth/src/common/client_auth_context_x.dart';
+import 'package:client_auth/gen/l10n/client_auth_localizations.dart';
 import 'package:client_auth/src/features/users/presentation/helpers/user_profile_phone_number_validation.dart';
 import 'package:client_auth/src/features/users/presentation/widgets/user_profile_full_name_text_field.dart';
-import 'package:client_auth/src/common/inputs/phone_number_text_field.dart';
 import 'package:flutter/material.dart';
 
 class UserProfileEditForm extends StatelessWidget {
@@ -41,7 +40,7 @@ class UserProfileEditForm extends StatelessWidget {
   final StateStatus accountDeletionStatus;
   final bool showPhoneVerificationPrompt;
   final bool showPhoneVerified;
-  final CountryDialCode? dialCode;
+  final CountryDialCodeOption? dialCode;
   final TextEditingController fullNameController;
   final TextEditingController phoneNumberController;
   final LayerLink phoneFieldLayerLink;
@@ -58,7 +57,7 @@ class UserProfileEditForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
+    final l10n = ClientAuthLocalizations.of(context);
 
     if (isInitialLoading && fullNameController.text.isEmpty) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
@@ -112,9 +111,14 @@ class UserProfileEditForm extends StatelessWidget {
                       style: context.textTheme.labelLarge,
                     ),
                     const SizedBox(height: DesignSpacing.xs),
-                    PhoneNumberTextField(
+                    BasePhoneNumberTextField(
+                      labelText: l10n.profileEditPhoneNumberLabel,
                       showVerificationPrompt: showPhoneVerificationPrompt,
                       showVerified: showPhoneVerified,
+                      verifiedLabel: l10n.profileEditPhoneVerified,
+                      verificationPromptLabel:
+                          l10n.profileEditPhoneVerificationPrompt,
+                      verifyActionLabel: l10n.profileEditVerifyNow,
                       errorText: mapPhoneNumberErrorText(
                         context,
                         phoneNumber.error,

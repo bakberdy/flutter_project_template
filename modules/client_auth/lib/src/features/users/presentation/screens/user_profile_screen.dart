@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:design_system/design_system.dart';
 import 'package:core/core.dart';
-import 'package:client_auth/src/common/client_auth_context_x.dart';
+import 'package:client_auth/gen/l10n/client_auth_localizations.dart';
 import 'package:client_auth/src/features/users/domain/entities/user_avatar_upload.dart';
 import 'package:client_auth/src/features/users/presentation/blocs/user_profile_bloc/user_profile_bloc.dart';
 import 'package:client_auth/src/features/users/presentation/widgets/app_support_items_list.dart';
@@ -9,7 +9,7 @@ import 'package:client_auth/src/features/users/presentation/widgets/app_version_
 import 'package:client_auth/src/features/users/presentation/widgets/user_avatar.dart';
 import 'package:client_auth/src/features/users/presentation/widgets/user_preferences_items_list.dart';
 import 'package:client_auth/src/features/users/presentation/widgets/user_profile_app_bar.dart';
-import 'package:client_auth/src/router/client_auth_routes.dart';
+import 'package:client_auth/src/common/config/router/client_auth_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -81,7 +81,9 @@ class UserProfileScreen extends StatelessWidget
               child: AppItemCard(
                 trailing: const Icon(Icons.chevron_right),
                 leading: const Icon(Icons.devices),
-                title: context.l10n.profilePreferencesDevices,
+                title: ClientAuthLocalizations.of(
+                  context,
+                ).profilePreferencesDevices,
                 onTap: () async {
                   await context.router.push(const SessionsRoute());
                 },
@@ -123,8 +125,12 @@ class UserProfileScreen extends StatelessWidget
         break;
       case SuccessStateStatus():
         final message = state.avatarAction == UserProfileAvatarAction.remove
-            ? context.l10n.profileAvatarRemovedSuccessMessage
-            : context.l10n.profileAvatarUpdatedSuccessMessage;
+            ? ClientAuthLocalizations.of(
+                context,
+              ).profileAvatarRemovedSuccessMessage
+            : ClientAuthLocalizations.of(
+                context,
+              ).profileAvatarUpdatedSuccessMessage;
         BaseSnackbar.success(context, message: message);
         break;
       default:
@@ -164,10 +170,14 @@ class UserProfileScreen extends StatelessWidget
   Future<void> _confirmRemoveAvatar(BuildContext context) async {
     final shouldRemove = await BaseDialog.show<bool>(
       context,
-      title: context.l10n.profileAvatarRemoveDialogTitle,
-      description: context.l10n.profileAvatarRemoveDialogMessage,
-      primaryLabel: context.l10n.profileAvatarActionRemove,
-      secondaryLabel: context.l10n.dismiss,
+      title: ClientAuthLocalizations.of(context).profileAvatarRemoveDialogTitle,
+      description: ClientAuthLocalizations.of(
+        context,
+      ).profileAvatarRemoveDialogMessage,
+      primaryLabel: ClientAuthLocalizations.of(
+        context,
+      ).profileAvatarActionRemove,
+      secondaryLabel: ClientAuthLocalizations.of(context).dismiss,
       primaryValue: true,
       secondaryValue: false,
       primaryFirst: true,

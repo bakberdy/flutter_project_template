@@ -1,20 +1,24 @@
-import 'package:design_system/design_system.dart';
-import 'package:client_auth/src/common/client_auth_context_x.dart';
-import 'package:core/core.dart';
-import 'package:client_auth/src/common/inputs/phone_number_input_formatter.dart';
-import 'package:client_auth/src/common/widgets/country_dial_code_prefix_button.dart';
+import 'package:design_system/src/extensions/build_context_design_x.dart';
+import 'package:design_system/src/inputs/phone/base_country_dial_code_prefix_button.dart';
+import 'package:design_system/src/inputs/phone/base_phone_number_input_formatter.dart';
+import 'package:design_system/src/inputs/phone/country_dial_code_option.dart';
+import 'package:design_system/src/tokens/design_spacing.dart';
 import 'package:flutter/material.dart';
 
-class PhoneNumberTextField extends StatelessWidget {
-  const PhoneNumberTextField({
+class BasePhoneNumberTextField extends StatelessWidget {
+  const BasePhoneNumberTextField({
     super.key,
     required this.controller,
     required this.layerLink,
+    required this.labelText,
     required this.dialCode,
     required this.onCountryCodeTap,
     this.maxDigits = 10,
     this.showVerificationPrompt = false,
     this.showVerified = false,
+    this.verifiedLabel,
+    this.verificationPromptLabel,
+    this.verifyActionLabel,
     this.onVerifyTap,
     this.onChanged,
     this.errorText,
@@ -22,13 +26,17 @@ class PhoneNumberTextField extends StatelessWidget {
 
   final TextEditingController controller;
   final LayerLink layerLink;
-  final CountryDialCode? dialCode;
+  final String labelText;
+  final CountryDialCodeOption? dialCode;
   final VoidCallback onCountryCodeTap;
   final int maxDigits;
   final VoidCallback? onVerifyTap;
   final ValueChanged<String>? onChanged;
   final bool showVerificationPrompt;
   final bool showVerified;
+  final String? verifiedLabel;
+  final String? verificationPromptLabel;
+  final String? verifyActionLabel;
   final String? errorText;
 
   @override
@@ -41,15 +49,17 @@ class PhoneNumberTextField extends StatelessWidget {
             controller: controller,
             onChanged: onChanged,
             textInputAction: TextInputAction.done,
-            inputFormatters: [PhoneNumberInputFormatter(maxDigits: maxDigits)],
+            inputFormatters: [
+              BasePhoneNumberInputFormatter(maxDigits: maxDigits),
+            ],
             autocorrect: false,
             keyboardType: TextInputType.phone,
             decoration: InputDecoration(
-              labelText: context.l10n.profileEditPhoneNumberLabel,
+              labelText: labelText,
               prefixIcon: const Icon(Icons.phone),
               prefix: dialCode == null
                   ? const SizedBox.shrink()
-                  : CountryDialCodePrefixButton(
+                  : BaseCountryDialCodePrefixButton(
                       dialCode: dialCode!,
                       onTap: onCountryCodeTap,
                     ),
@@ -73,7 +83,7 @@ class PhoneNumberTextField extends StatelessWidget {
                       ),
                       const SizedBox(width: DesignSpacing.xxs),
                       Text(
-                        context.l10n.profileEditPhoneVerified,
+                        verifiedLabel ?? '',
                         style: context.textTheme.bodySmall?.copyWith(
                           color: context.colorScheme.primary,
                           fontWeight: FontWeight.bold,
@@ -82,7 +92,7 @@ class PhoneNumberTextField extends StatelessWidget {
                     ],
                     if (showVerificationPrompt) ...[
                       Text(
-                        context.l10n.profileEditPhoneVerificationPrompt,
+                        verificationPromptLabel ?? '',
                         style: context.textTheme.bodySmall,
                       ),
                       const SizedBox(width: DesignSpacing.xxs),
@@ -94,7 +104,7 @@ class PhoneNumberTextField extends StatelessWidget {
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         ),
                         child: Text(
-                          context.l10n.profileEditVerifyNow,
+                          verifyActionLabel ?? '',
                           style: context.textTheme.bodySmall?.copyWith(
                             color: context.colorScheme.primary,
                             fontWeight: FontWeight.bold,

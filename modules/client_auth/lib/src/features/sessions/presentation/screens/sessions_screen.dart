@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:design_system/design_system.dart';
 import 'package:core/core.dart';
-import 'package:client_auth/src/common/client_auth_context_x.dart';
+import 'package:client_auth/gen/l10n/client_auth_localizations.dart';
 import 'package:client_auth/src/features/sessions/domain/entities/session.dart';
 import 'package:client_auth/src/features/sessions/presentation/blocs/sessions/sessions_bloc.dart';
 import 'package:client_auth/src/features/sessions/presentation/widgets/session_list_item.dart';
@@ -47,7 +47,9 @@ class SessionsScreen extends StatelessWidget
             state.listStatus is ErrorStateStatus && state.sessions.isEmpty;
 
         return Scaffold(
-          appBar: AppBar(title: Text(context.l10n.sessionsTitle)),
+          appBar: AppBar(
+            title: Text(ClientAuthLocalizations.of(context).sessionsTitle),
+          ),
           body: RefreshIndicator.adaptive(
             onRefresh: () => _refresh(context),
             child: ListView.separated(
@@ -75,20 +77,24 @@ class SessionsScreen extends StatelessWidget
                       onPressed: () => context.read<SessionsBloc>().add(
                         const SessionsEvent.refreshed(),
                       ),
-                      label: context.l10n.sessionsRetry,
+                      label: ClientAuthLocalizations.of(context).sessionsRetry,
                     ),
                   );
                 }
                 if (sessions.isEmpty) {
                   return AppItemCard(
                     margin: EdgeInsets.zero,
-                    title: context.l10n.sessionsListEmptyTitle,
+                    title: ClientAuthLocalizations.of(
+                      context,
+                    ).sessionsListEmptyTitle,
                   );
                 }
                 if (index == sessions.length) {
                   return AppItemCard(
                     margin: EdgeInsets.zero,
-                    title: context.l10n.revokeAllSessions,
+                    title: ClientAuthLocalizations.of(
+                      context,
+                    ).revokeAllSessions,
                     foregroundColor: context.colorScheme.error,
                     onTap: state.revokingAll
                         ? null
@@ -104,7 +110,9 @@ class SessionsScreen extends StatelessWidget
                 return SessionListItem(
                   key: ValueKey(session.id),
                   title: _sessionTitle(session),
-                  subtitle: context.l10n.sessionsSessionLastActive(formatted),
+                  subtitle: ClientAuthLocalizations.of(
+                    context,
+                  ).sessionsSessionLastActive(formatted),
                   onRevoke: state.revokingAll || state.revokingSessionId != null
                       ? null
                       : () => _confirmRevokeSession(context, session.id),
@@ -156,10 +164,12 @@ class SessionsScreen extends StatelessWidget
     final bloc = context.read<SessionsBloc>();
     await BaseDialog.show<void>(
       context,
-      title: context.l10n.revokeSessionDialogTitle,
-      description: context.l10n.revokeSessionDialogMessage,
-      primaryLabel: context.l10n.revokeSession,
-      secondaryLabel: context.l10n.dismiss,
+      title: ClientAuthLocalizations.of(context).revokeSessionDialogTitle,
+      description: ClientAuthLocalizations.of(
+        context,
+      ).revokeSessionDialogMessage,
+      primaryLabel: ClientAuthLocalizations.of(context).revokeSession,
+      secondaryLabel: ClientAuthLocalizations.of(context).dismiss,
       onPrimary: () =>
           bloc.add(SessionsEvent.sessionRevokeRequested(sessionId)),
       primaryFirst: true,
@@ -170,10 +180,12 @@ class SessionsScreen extends StatelessWidget
     final bloc = context.read<SessionsBloc>();
     await BaseDialog.show<void>(
       context,
-      title: context.l10n.revokeAllSessionsDialogTitle,
-      description: context.l10n.revokeAllSessionsDialogMessage,
-      primaryLabel: context.l10n.revokeAllSessions,
-      secondaryLabel: context.l10n.dismiss,
+      title: ClientAuthLocalizations.of(context).revokeAllSessionsDialogTitle,
+      description: ClientAuthLocalizations.of(
+        context,
+      ).revokeAllSessionsDialogMessage,
+      primaryLabel: ClientAuthLocalizations.of(context).revokeAllSessions,
+      secondaryLabel: ClientAuthLocalizations.of(context).dismiss,
       onPrimary: () => bloc.add(const SessionsEvent.revokeAllRequested()),
       primaryFirst: true,
     );

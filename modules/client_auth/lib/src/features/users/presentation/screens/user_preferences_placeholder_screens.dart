@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:client_auth/src/common/client_auth_context_x.dart';
+import 'package:client_auth/gen/l10n/client_auth_localizations.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
@@ -9,7 +9,11 @@ class UserPreferencesNotificationsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
-      title: Text(context.l10n.profilePreferencesNotificationsAndSounds),
+      title: Text(
+        ClientAuthLocalizations.of(
+          context,
+        ).profilePreferencesNotificationsAndSounds,
+      ),
     ),
     body: const SizedBox.shrink(),
   );
@@ -21,7 +25,11 @@ class UserPreferencesAppearanceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: Text(context.l10n.profilePreferencesAppearance)),
+    appBar: AppBar(
+      title: Text(
+        ClientAuthLocalizations.of(context).profilePreferencesAppearance,
+      ),
+    ),
     body: const SizedBox.shrink(),
   );
 }
@@ -32,7 +40,11 @@ class UserPreferencesLocaleScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: Text(context.l10n.profilePreferencesLanguage)),
+    appBar: AppBar(
+      title: Text(
+        ClientAuthLocalizations.of(context).profilePreferencesLanguage,
+      ),
+    ),
     body: const SizedBox.shrink(),
   );
 }

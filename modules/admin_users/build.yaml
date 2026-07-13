@@ -9,7 +9,7 @@ targets:
         generate_for:
           - lib/src/features/**/domain/entities/**.dart
           - lib/src/features/**/presentation/blocs/**.dart
-          - lib/src/di/**.dart
+          - lib/src/common/config/di/**.dart
         options:
           to_json: false
           from_json: false
@@ -35,4 +35,4 @@ targets:
 
       auto_route_generator:auto_router_generator:
         generate_for:
-          - lib/src/router/admin_users_routes.dart
+          - lib/src/common/config/router/admin_users_router.dart

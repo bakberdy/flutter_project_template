@@ -1,4 +1,4 @@
-import 'package:client_auth/src/common/client_auth_context_x.dart';
+import 'package:client_auth/gen/l10n/client_auth_localizations.dart';
 import 'package:flutter/widgets.dart';
 
 const userProfilePhoneNumberInvalidFormatError = 'phone_number_invalid_format';
@@ -24,7 +24,9 @@ class UserProfilePhoneNumberValidation {
 
 String? mapPhoneNumberErrorText(BuildContext context, String? errorText) {
   if (errorText == userProfilePhoneNumberInvalidFormatError) {
-    return context.l10n.profileEditPhoneNumberInvalidFormatMessage;
+    return ClientAuthLocalizations.of(
+      context,
+    ).profileEditPhoneNumberInvalidFormatMessage;
   }
   return errorText;
 }

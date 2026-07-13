@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 
-class PhoneNumberInputFormatter extends TextInputFormatter {
-  const PhoneNumberInputFormatter({this.maxDigits = 10});
+class BasePhoneNumberInputFormatter extends TextInputFormatter {
+  const BasePhoneNumberInputFormatter({this.maxDigits = 10});
 
   final int maxDigits;
 

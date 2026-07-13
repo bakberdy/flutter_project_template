@@ -8,7 +8,7 @@
 // ignore_for_file: type=lint
 // coverage:ignore-file
 
-part of 'admin_users_routes.dart';
+part of 'admin_users_router.dart';
 
 /// generated route for
 /// [UserScreen]

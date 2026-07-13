@@ -1,6 +1,6 @@
 import 'package:design_system/design_system.dart';
 import 'package:client_auth/src/features/users/presentation/widgets/user_avatar_initials.dart';
-import 'package:client_auth/src/common/widgets/app_cached_network_image.dart';
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 
 enum UserAvatarFormat { circle, square }
@@ -50,8 +50,9 @@ class UserAvatar extends StatelessWidget {
                 ),
                 child: avatarUrl == null || avatarUrl!.trim().isEmpty
                     ? UserAvatarInitials(initials: initials)
-                    : AppCachedNetworkImage(
+                    : BaseCachedNetworkImage(
                         imageUrl: avatarUrl!,
+                        baseUrl: context.di<CoreAppConfig>().baseUrl,
                         fit: BoxFit.cover,
                         placeholder: (context, url) => SizedBox.square(
                           dimension: radius,

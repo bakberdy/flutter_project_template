@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:core/core_navigation/core_navigation_bloc.dart';
 import 'package:design_system/design_system.dart';
-import 'package:client_auth/src/common/client_auth_context_x.dart';
+import 'package:client_auth/gen/l10n/client_auth_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,13 +26,15 @@ class UserDeletionRequestedScreen extends StatelessWidget {
               ),
               const SizedBox(height: DesignSpacing.lg),
               Text(
-                context.l10n.userDeletionRequestedTitle,
+                ClientAuthLocalizations.of(context).userDeletionRequestedTitle,
                 textAlign: TextAlign.center,
                 style: context.textTheme.headlineSmall,
               ),
               const SizedBox(height: DesignSpacing.sm),
               Text(
-                context.l10n.userDeletionRequestedMessage,
+                ClientAuthLocalizations.of(
+                  context,
+                ).userDeletionRequestedMessage,
                 textAlign: TextAlign.center,
                 style: context.textTheme.bodyMedium,
               ),
@@ -41,7 +43,7 @@ class UserDeletionRequestedScreen extends StatelessWidget {
                 onPressed: () => context.read<CoreNavigationBloc>().add(
                   const CoreNavigationEvent.unAuthenticated(),
                 ),
-                label: context.l10n.continueToLogin,
+                label: ClientAuthLocalizations.of(context).continueToLogin,
               ),
             ],
           ),

@@ -1,5 +1,5 @@
 import 'package:design_system/design_system.dart';
-import 'package:client_auth/src/common/client_auth_context_x.dart';
+import 'package:client_auth/gen/l10n/client_auth_localizations.dart';
 import 'package:flutter/material.dart';
 
 class UserPreferencesItemsList extends StatelessWidget {
@@ -19,7 +19,9 @@ class UserPreferencesItemsList extends StatelessWidget {
       delegate: SliverChildListDelegate([
         AppItemCard(
           onTap: onNotificationsTap,
-          title: context.l10n.profilePreferencesNotificationsAndSounds,
+          title: ClientAuthLocalizations.of(
+            context,
+          ).profilePreferencesNotificationsAndSounds,
           leading: const Icon(Icons.notifications),
           disableBottomRadius: true,
           trailing: const Icon(Icons.chevron_right),
@@ -33,7 +35,9 @@ class UserPreferencesItemsList extends StatelessWidget {
           disableTopRadius: true,
           disableBottomRadius: true,
           onTap: onAppearanceTap,
-          title: context.l10n.profilePreferencesAppearance,
+          title: ClientAuthLocalizations.of(
+            context,
+          ).profilePreferencesAppearance,
           leading: const Icon(Icons.palette),
           trailing: const Icon(Icons.chevron_right),
         ),
@@ -45,7 +49,7 @@ class UserPreferencesItemsList extends StatelessWidget {
         AppItemCard(
           disableTopRadius: true,
           onTap: onLanguageTap,
-          title: context.l10n.profilePreferencesLanguage,
+          title: ClientAuthLocalizations.of(context).profilePreferencesLanguage,
           leading: const Icon(Icons.language),
           trailing: const Icon(Icons.chevron_right),
         ),

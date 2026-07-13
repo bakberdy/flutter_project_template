@@ -10,8 +10,9 @@ import 'package:client_auth/src/features/users/presentation/screens/user_data_re
 import 'package:client_auth/src/features/users/presentation/screens/user_preferences_placeholder_screens.dart';
 import 'package:client_auth/src/features/users/presentation/screens/user_profile_edit_screen.dart';
 import 'package:client_auth/src/features/users/presentation/screens/user_profile_screen.dart';
+import 'package:client_auth/src/common/config/router/client_auth_navigation_paths.dart';
 
-part 'client_auth_routes.gr.dart';
+part 'client_auth_router.gr.dart';
 
 const clientAuthShellRoute = EmptyShellRoute('ClientAuthShellRoute');
 
@@ -21,37 +22,66 @@ class ClientAuthRouter extends RootStackRouter {
   List<AutoRoute> get routes => [
     AutoRoute(
       page: clientAuthShellRoute.page,
-      path: '/client-auth',
-      children: clientAuthRoutes,
+      path: ClientAuthNavigationPaths.shell,
+      children: clientAuthRouter,
     ),
   ];
 }
 
-final List<AutoRoute> clientAuthRoutes = [
+final List<AutoRoute> clientAuthRouter = [
   AutoRoute(
     page: AuthWrapperRoute.page,
-    path: 'auth',
+    path: ClientAuthNavigationPaths.auth,
     children: [
-      AutoRoute(page: AuthEmailRoute.page, path: 'email', initial: true),
-      AutoRoute(page: AuthOtpRoute.page, path: 'otp'),
+      AutoRoute(
+        page: AuthEmailRoute.page,
+        path: ClientAuthNavigationPaths.email,
+        initial: true,
+      ),
+      AutoRoute(page: AuthOtpRoute.page, path: ClientAuthNavigationPaths.otp),
     ],
   ),
-  AutoRoute(page: UserDataRegistrationRoute.page, path: 'register'),
-  AutoRoute(page: UserBlockedRoute.page, path: 'blocked'),
-  AutoRoute(page: UserDeletionRequestedRoute.page, path: 'deletion-requested'),
+  AutoRoute(
+    page: UserDataRegistrationRoute.page,
+    path: ClientAuthNavigationPaths.register,
+  ),
+  AutoRoute(
+    page: UserBlockedRoute.page,
+    path: ClientAuthNavigationPaths.blocked,
+  ),
+  AutoRoute(
+    page: UserDeletionRequestedRoute.page,
+    path: ClientAuthNavigationPaths.deletionRequested,
+  ),
   AutoRoute(
     page: ProfileTabShellRoute.page,
-    path: 'profile',
+    path: ClientAuthNavigationPaths.profile,
     children: [
-      AutoRoute(page: UserProfileRoute.page, path: '', initial: true),
-      AutoRoute(page: UserProfileEditRoute.page, path: 'edit'),
+      AutoRoute(
+        page: UserProfileRoute.page,
+        path: ClientAuthNavigationPaths.profileRoot,
+        initial: true,
+      ),
+      AutoRoute(
+        page: UserProfileEditRoute.page,
+        path: ClientAuthNavigationPaths.profileEdit,
+      ),
       AutoRoute(
         page: UserPreferencesNotificationsRoute.page,
-        path: 'notifications',
+        path: ClientAuthNavigationPaths.notifications,
       ),
-      AutoRoute(page: UserPreferencesAppearanceRoute.page, path: 'appearance'),
-      AutoRoute(page: UserPreferencesLocaleRoute.page, path: 'locale'),
-      AutoRoute(page: SessionsRoute.page, path: 'devices'),
+      AutoRoute(
+        page: UserPreferencesAppearanceRoute.page,
+        path: ClientAuthNavigationPaths.appearance,
+      ),
+      AutoRoute(
+        page: UserPreferencesLocaleRoute.page,
+        path: ClientAuthNavigationPaths.locale,
+      ),
+      AutoRoute(
+        page: SessionsRoute.page,
+        path: ClientAuthNavigationPaths.devices,
+      ),
     ],
   ),
 ];

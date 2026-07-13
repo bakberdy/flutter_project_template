@@ -1,16 +1,16 @@
-import 'package:design_system/design_system.dart';
-import 'package:client_auth/src/common/client_auth_context_x.dart';
-import 'package:core/core.dart';
+import 'package:design_system/src/extensions/build_context_design_x.dart';
+import 'package:design_system/src/inputs/phone/country_dial_code_option.dart';
+import 'package:design_system/src/tokens/design_spacing.dart';
 import 'package:flutter/material.dart';
 
-class CountryDialCodePrefixButton extends StatelessWidget {
-  const CountryDialCodePrefixButton({
+class BaseCountryDialCodePrefixButton extends StatelessWidget {
+  const BaseCountryDialCodePrefixButton({
     super.key,
     required this.dialCode,
     required this.onTap,
   });
 
-  final CountryDialCode dialCode;
+  final CountryDialCodeOption dialCode;
   final VoidCallback onTap;
 
   @override
@@ -21,7 +21,7 @@ class CountryDialCodePrefixButton extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _countryFlag(context, dialCode),
+          countryDialCodeFlag(context, dialCode),
           const SizedBox(width: DesignSpacing.xs),
           Text('${dialCode.dialCode} '),
         ],
@@ -30,8 +30,11 @@ class CountryDialCodePrefixButton extends StatelessWidget {
   }
 }
 
-Widget _countryFlag(BuildContext context, CountryDialCode dialCode) {
-  final flags = context.assets.icons.countryFlags;
+Widget countryDialCodeFlag(
+  BuildContext context,
+  CountryDialCodeOption dialCode,
+) {
+  final flags = context.designAssets.icons.countryFlags;
   return switch (dialCode.countryCode) {
     'KZ' => flags.kazakhstan.image(
       width: 24,
