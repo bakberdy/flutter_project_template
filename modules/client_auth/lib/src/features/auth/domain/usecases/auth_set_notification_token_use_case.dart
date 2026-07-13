@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:core/core.dart';
 import 'package:client_auth/src/features/auth/domain/analytics/authorization_events.dart';
 import 'package:client_auth/src/features/auth/domain/repositories/auth_repository.dart';
+import 'package:injectable/injectable.dart';
 
+@lazySingleton
 class AuthSetNotificationTokenUseCase
     extends UseCase<void, AuthSetNotificationTokenParams> {
   final AuthRepository _repository;

@@ -1,4 +1,5 @@
 import 'package:client_auth/client_auth.dart';
+import 'package:client_profile/client_profile.dart';
 import 'package:client_preferences/client_preferences.dart';
 import 'package:core/core.dart' show ApiClientFactory, sl;
 import 'package:core/di/injection.module.dart';
@@ -10,6 +11,7 @@ import 'di.config.dart';
   externalPackageModulesBefore: [
     ExternalModule(CorePackageModule),
     ExternalModule(ClientAuthPackageModule),
+    ExternalModule(ClientProfilePackageModule),
     ExternalModule(ClientPreferencesPackageModule),
   ],
 )

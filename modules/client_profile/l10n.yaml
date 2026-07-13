@@ -1,0 +1,6 @@
+arb-dir: lib/l10n
+template-arb-file: client_profile_en.arb
+output-dir: lib/gen/l10n
+output-localization-file: client_profile_localizations.dart
+output-class: ClientProfileLocalizations
+nullable-getter: false

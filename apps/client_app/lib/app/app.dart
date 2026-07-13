@@ -2,6 +2,7 @@ import 'package:client_app/app/theme/app_theme_scope.dart';
 import 'package:client_app/src/common/config/localization/app_localization_config.dart';
 import 'package:client_app/src/common/config/router/client_app_router.dart';
 import 'package:client_auth/client_auth.dart';
+import 'package:client_profile/client_profile.dart';
 import 'package:client_preferences/client_preferences.dart';
 import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';

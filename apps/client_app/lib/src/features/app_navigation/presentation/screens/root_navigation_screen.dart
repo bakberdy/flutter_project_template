@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:client_app/src/common/config/router/client_app_router.dart';
 import 'package:client_auth/client_auth.dart';
+import 'package:client_profile/client_profile.dart';
 import 'package:core/core.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

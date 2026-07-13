@@ -14,6 +14,7 @@ import 'package:client_app/src/common/config/router/client_app_router.dart'
     as _i594;
 import 'package:client_auth/client_auth.dart' as _i798;
 import 'package:client_preferences/client_preferences.dart' as _i344;
+import 'package:client_profile/client_profile.dart' as _i559;
 import 'package:core/core.dart' as _i494;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
@@ -27,6 +28,7 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     await _i494.CorePackageModule().init(gh);
     await _i798.ClientAuthPackageModule().init(gh);
+    await _i559.ClientProfilePackageModule().init(gh);
     await _i344.ClientPreferencesPackageModule().init(gh);
     final clientAppModule = _$ClientAppModule();
     gh.singleton<_i594.ClientAppRouter>(() => clientAppModule.appRouter);

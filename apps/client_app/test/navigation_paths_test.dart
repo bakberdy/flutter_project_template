@@ -1,6 +1,6 @@
 import 'package:client_app/src/common/config/router/client_app_navigation_paths.dart';
 import 'package:client_app/src/common/config/router/client_app_router.dart';
-import 'package:client_auth/client_auth.dart';
+import 'package:client_profile/client_profile.dart';
 import 'package:client_preferences/client_preferences.dart';
 import 'package:flutter_test/flutter_test.dart';
 

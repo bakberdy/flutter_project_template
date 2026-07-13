@@ -5,6 +5,7 @@ import 'package:client_app/src/features/app_navigation/presentation/screens/root
 import 'package:client_app/src/features/app_navigation/presentation/screens/splash_screen.dart';
 import 'package:client_app/src/features/app_navigation/presentation/screens/user_profile_screen.dart';
 import 'package:client_auth/client_auth.dart';
+import 'package:client_profile/client_profile.dart';
 import 'package:client_preferences/client_preferences.dart';
 
 part 'client_app_router.gr.dart';
@@ -20,6 +21,7 @@ class ClientAppRouter extends RootStackRouter {
       children: [
         AutoRoute(page: SplashRoute.page, path: 'splash'),
         ...clientAuthRoutes,
+        ...clientProfileRootRoutes,
         AutoRoute(
           page: MainNavigationRoute.page,
           path: 'home',

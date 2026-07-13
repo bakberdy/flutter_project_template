@@ -13,6 +13,7 @@ workspace:
   - modules/admin_users
   - modules/admin_auth
   - modules/client_auth
+  - modules/client_profile
   - modules/client_preferences
 
 dev_dependencies:
