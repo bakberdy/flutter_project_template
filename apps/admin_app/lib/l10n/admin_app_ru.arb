@@ -11,11 +11,8 @@
   "logoutTitle": "Выйти?",
   "logoutMessage": "Для доступа к панели администратора потребуется войти снова.",
   "cancel": "Отмена",
-  "authEmailLabel": "Электронная почта",
-  "authSubmitEmail": "Продолжить",
-  "authSubmitOtp": "Подтвердить",
-  "authTitle": "Вход",
   "devTalkerOpen": "Открыть Talker",
   "devTalkerDockLeft": "Переместить Talker вправо",
-  "devTalkerDockRight": "Переместить Talker влево"
+  "devTalkerDockRight": "Переместить Talker влево",
+  "adminAccessRequired": "Войти могут только администраторы."
 }

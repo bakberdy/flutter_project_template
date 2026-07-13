@@ -1,11 +1,9 @@
-import 'dart:async';
-
+import 'package:admin_auth/admin_auth.dart';
 import 'package:admin_app/app/theme/app_theme_scope.dart';
 import 'package:admin_app/src/common/config/localization/app_localization_config.dart';
 import 'package:admin_app/src/common/config/router/admin_app_router.dart';
 import 'package:admin_app/src/features/app_navigation/presentation/widgets/talker_dock_control.dart';
 import 'package:admin_preferences/admin_preferences.dart';
-import 'package:admin_profile/admin_profile.dart';
 import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/foundation.dart';
@@ -25,9 +23,8 @@ class _AppState extends State<App> {
   final ValueNotifier<bool> _dockRight = ValueNotifier<bool>(true);
   late final CoreNavigationBloc _navigationBloc = sl<CoreNavigationBloc>();
   late final AdminAppRouter _appRouter = sl<AdminAppRouter>();
-  late final UserBloc _userBloc = sl<UserBloc>()..add(const UserStartedEvent());
-  late final UserProfileBloc _userProfileBloc = sl<UserProfileBloc>()
-    ..add(const UserProfileEvent.started());
+  late final AdminSessionBloc _sessionBloc = sl<AdminSessionBloc>()
+    ..add(const AdminSessionStarted());
   late final LocaleBloc _localeBloc = sl<LocaleBloc>()
     ..add(
       LocaleEvent.started(
@@ -41,8 +38,7 @@ class _AppState extends State<App> {
     _showTalkerDock.dispose();
     _dockRight.dispose();
     _navigationBloc.close();
-    _userBloc.close();
-    _userProfileBloc.close();
+    _sessionBloc.close();
     _localeBloc.close();
     _appRouter.dispose();
     super.dispose();
@@ -52,8 +48,7 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) => MultiBlocProvider(
     providers: [
       BlocProvider.value(value: _navigationBloc),
-      BlocProvider.value(value: _userBloc),
-      BlocProvider.value(value: _userProfileBloc),
+      BlocProvider.value(value: _sessionBloc),
       BlocProvider.value(value: _localeBloc),
     ],
     child: AppThemeScope(
@@ -155,16 +150,10 @@ class _AppState extends State<App> {
   }
 
   void _refreshUser() {
-    _userBloc.add(const UserStartedEvent());
-    _userProfileBloc.add(const UserProfileEvent.started());
+    _sessionBloc.add(const AdminSessionStarted());
   }
 
   void _logout() {
-    unawaited(_clearSessionAndRefresh());
-  }
-
-  Future<void> _clearSessionAndRefresh() async {
-    await sl<TokenStorage>().clearTokens();
-    _refreshUser();
+    _sessionBloc.add(const AdminSessionLogoutRequested());
   }
 }

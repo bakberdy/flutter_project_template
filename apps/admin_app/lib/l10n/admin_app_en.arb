@@ -11,11 +11,8 @@
   "logoutTitle": "Log out?",
   "logoutMessage": "You will need to sign in again to access the admin panel.",
   "cancel": "Cancel",
-  "authEmailLabel": "Email",
-  "authSubmitEmail": "Continue",
-  "authSubmitOtp": "Verify",
-  "authTitle": "Sign in",
   "devTalkerOpen": "Open Talker",
   "devTalkerDockLeft": "Move Talker control to the right",
-  "devTalkerDockRight": "Move Talker control to the left"
+  "devTalkerDockRight": "Move Talker control to the left",
+  "adminAccessRequired": "Only administrators can sign in."
 }

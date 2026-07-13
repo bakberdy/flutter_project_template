@@ -12,17 +12,11 @@ part of 'user_profile_bloc.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$UserProfileEvent implements DiagnosticableTreeMixin {
+mixin _$UserProfileEvent {
 
 
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'UserProfileEvent'))
-    ;
-}
 
 @override
 bool operator ==(Object other) {
@@ -34,7 +28,7 @@ bool operator ==(Object other) {
 int get hashCode => runtimeType.hashCode;
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+String toString() {
   return 'UserProfileEvent()';
 }
 
@@ -51,7 +45,7 @@ $UserProfileEventCopyWith(UserProfileEvent _, $Res Function(UserProfileEvent) __
 /// @nodoc
 
 
-class UserProfileStarted with DiagnosticableTreeMixin implements UserProfileEvent {
+class UserProfileStarted implements UserProfileEvent {
   const UserProfileStarted();
   
 
@@ -59,12 +53,6 @@ class UserProfileStarted with DiagnosticableTreeMixin implements UserProfileEven
 
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'UserProfileEvent.started'))
-    ;
-}
 
 @override
 bool operator ==(Object other) {
@@ -76,7 +64,7 @@ bool operator ==(Object other) {
 int get hashCode => runtimeType.hashCode;
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+String toString() {
   return 'UserProfileEvent.started()';
 }
 
@@ -89,7 +77,7 @@ String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
 /// @nodoc
 
 
-class UserProfileProfileLoaded with DiagnosticableTreeMixin implements UserProfileEvent {
+class UserProfileProfileLoaded implements UserProfileEvent {
   const UserProfileProfileLoaded();
   
 
@@ -97,12 +85,6 @@ class UserProfileProfileLoaded with DiagnosticableTreeMixin implements UserProfi
 
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'UserProfileEvent.profileLoaded'))
-    ;
-}
 
 @override
 bool operator ==(Object other) {
@@ -114,7 +96,7 @@ bool operator ==(Object other) {
 int get hashCode => runtimeType.hashCode;
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+String toString() {
   return 'UserProfileEvent.profileLoaded()';
 }
 
@@ -127,7 +109,7 @@ String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
 /// @nodoc
 
 
-class UserProfileAvatarUploadRequested with DiagnosticableTreeMixin implements UserProfileEvent {
+class UserProfileAvatarUploadRequested implements UserProfileEvent {
   const UserProfileAvatarUploadRequested(this.avatar);
   
 
@@ -140,12 +122,6 @@ class UserProfileAvatarUploadRequested with DiagnosticableTreeMixin implements U
 $UserProfileAvatarUploadRequestedCopyWith<UserProfileAvatarUploadRequested> get copyWith => _$UserProfileAvatarUploadRequestedCopyWithImpl<UserProfileAvatarUploadRequested>(this, _$identity);
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'UserProfileEvent.avatarUploadRequested'))
-    ..add(DiagnosticsProperty('avatar', avatar));
-}
 
 @override
 bool operator ==(Object other) {
@@ -157,7 +133,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,avatar);
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+String toString() {
   return 'UserProfileEvent.avatarUploadRequested(avatar: $avatar)';
 }
 
@@ -199,7 +175,7 @@ as UserAvatarUpload,
 /// @nodoc
 
 
-class UserProfileAvatarRemoveRequested with DiagnosticableTreeMixin implements UserProfileEvent {
+class UserProfileAvatarRemoveRequested implements UserProfileEvent {
   const UserProfileAvatarRemoveRequested();
   
 
@@ -207,12 +183,6 @@ class UserProfileAvatarRemoveRequested with DiagnosticableTreeMixin implements U
 
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'UserProfileEvent.avatarRemoveRequested'))
-    ;
-}
 
 @override
 bool operator ==(Object other) {
@@ -224,7 +194,7 @@ bool operator ==(Object other) {
 int get hashCode => runtimeType.hashCode;
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+String toString() {
   return 'UserProfileEvent.avatarRemoveRequested()';
 }
 
@@ -237,7 +207,7 @@ String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
 /// @nodoc
 
 
-class UserProfileAvatarStatusReset with DiagnosticableTreeMixin implements UserProfileEvent {
+class UserProfileAvatarStatusReset implements UserProfileEvent {
   const UserProfileAvatarStatusReset();
   
 
@@ -245,12 +215,6 @@ class UserProfileAvatarStatusReset with DiagnosticableTreeMixin implements UserP
 
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'UserProfileEvent.avatarStatusReset'))
-    ;
-}
 
 @override
 bool operator ==(Object other) {
@@ -262,7 +226,7 @@ bool operator ==(Object other) {
 int get hashCode => runtimeType.hashCode;
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+String toString() {
   return 'UserProfileEvent.avatarStatusReset()';
 }
 
@@ -275,7 +239,7 @@ String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
 /// @nodoc
 
 
-class UserProfileAccountDeletionRequested with DiagnosticableTreeMixin implements UserProfileEvent {
+class UserProfileAccountDeletionRequested implements UserProfileEvent {
   const UserProfileAccountDeletionRequested();
   
 
@@ -283,12 +247,6 @@ class UserProfileAccountDeletionRequested with DiagnosticableTreeMixin implement
 
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'UserProfileEvent.accountDeletionRequested'))
-    ;
-}
 
 @override
 bool operator ==(Object other) {
@@ -300,7 +258,7 @@ bool operator ==(Object other) {
 int get hashCode => runtimeType.hashCode;
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+String toString() {
   return 'UserProfileEvent.accountDeletionRequested()';
 }
 
@@ -313,7 +271,7 @@ String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
 /// @nodoc
 
 
-class UserProfileAccountDeletionStatusReset with DiagnosticableTreeMixin implements UserProfileEvent {
+class UserProfileAccountDeletionStatusReset implements UserProfileEvent {
   const UserProfileAccountDeletionStatusReset();
   
 
@@ -321,12 +279,6 @@ class UserProfileAccountDeletionStatusReset with DiagnosticableTreeMixin impleme
 
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'UserProfileEvent.accountDeletionStatusReset'))
-    ;
-}
 
 @override
 bool operator ==(Object other) {
@@ -338,7 +290,7 @@ bool operator ==(Object other) {
 int get hashCode => runtimeType.hashCode;
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+String toString() {
   return 'UserProfileEvent.accountDeletionStatusReset()';
 }
 
@@ -349,9 +301,9 @@ String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
 
 
 /// @nodoc
-mixin _$UserProfileState implements DiagnosticableTreeMixin {
+mixin _$UserProfileState {
 
- AppInfo? get appInfo; User? get user; UserProfile? get profile; bool get showAppBuildDetails; StateStatus get status; StateStatus get profileStatus; StateStatus get avatarStatus; StateStatus get accountDeletionStatus; double? get avatarUploadProgress; UserProfileAvatarAction? get avatarAction;
+ UserProfile? get profile; StateStatus get profileStatus; StateStatus get avatarStatus; StateStatus get accountDeletionStatus; double? get avatarUploadProgress; UserProfileAvatarAction? get avatarAction;
 /// Create a copy of UserProfileState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -359,25 +311,19 @@ mixin _$UserProfileState implements DiagnosticableTreeMixin {
 $UserProfileStateCopyWith<UserProfileState> get copyWith => _$UserProfileStateCopyWithImpl<UserProfileState>(this as UserProfileState, _$identity);
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'UserProfileState'))
-    ..add(DiagnosticsProperty('appInfo', appInfo))..add(DiagnosticsProperty('user', user))..add(DiagnosticsProperty('profile', profile))..add(DiagnosticsProperty('showAppBuildDetails', showAppBuildDetails))..add(DiagnosticsProperty('status', status))..add(DiagnosticsProperty('profileStatus', profileStatus))..add(DiagnosticsProperty('avatarStatus', avatarStatus))..add(DiagnosticsProperty('accountDeletionStatus', accountDeletionStatus))..add(DiagnosticsProperty('avatarUploadProgress', avatarUploadProgress))..add(DiagnosticsProperty('avatarAction', avatarAction));
-}
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserProfileState&&(identical(other.appInfo, appInfo) || other.appInfo == appInfo)&&(identical(other.user, user) || other.user == user)&&(identical(other.profile, profile) || other.profile == profile)&&(identical(other.showAppBuildDetails, showAppBuildDetails) || other.showAppBuildDetails == showAppBuildDetails)&&(identical(other.status, status) || other.status == status)&&(identical(other.profileStatus, profileStatus) || other.profileStatus == profileStatus)&&(identical(other.avatarStatus, avatarStatus) || other.avatarStatus == avatarStatus)&&(identical(other.accountDeletionStatus, accountDeletionStatus) || other.accountDeletionStatus == accountDeletionStatus)&&(identical(other.avatarUploadProgress, avatarUploadProgress) || other.avatarUploadProgress == avatarUploadProgress)&&(identical(other.avatarAction, avatarAction) || other.avatarAction == avatarAction));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserProfileState&&(identical(other.profile, profile) || other.profile == profile)&&(identical(other.profileStatus, profileStatus) || other.profileStatus == profileStatus)&&(identical(other.avatarStatus, avatarStatus) || other.avatarStatus == avatarStatus)&&(identical(other.accountDeletionStatus, accountDeletionStatus) || other.accountDeletionStatus == accountDeletionStatus)&&(identical(other.avatarUploadProgress, avatarUploadProgress) || other.avatarUploadProgress == avatarUploadProgress)&&(identical(other.avatarAction, avatarAction) || other.avatarAction == avatarAction));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,appInfo,user,profile,showAppBuildDetails,status,profileStatus,avatarStatus,accountDeletionStatus,avatarUploadProgress,avatarAction);
+int get hashCode => Object.hash(runtimeType,profile,profileStatus,avatarStatus,accountDeletionStatus,avatarUploadProgress,avatarAction);
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'UserProfileState(appInfo: $appInfo, user: $user, profile: $profile, showAppBuildDetails: $showAppBuildDetails, status: $status, profileStatus: $profileStatus, avatarStatus: $avatarStatus, accountDeletionStatus: $accountDeletionStatus, avatarUploadProgress: $avatarUploadProgress, avatarAction: $avatarAction)';
+String toString() {
+  return 'UserProfileState(profile: $profile, profileStatus: $profileStatus, avatarStatus: $avatarStatus, accountDeletionStatus: $accountDeletionStatus, avatarUploadProgress: $avatarUploadProgress, avatarAction: $avatarAction)';
 }
 
 
@@ -388,11 +334,11 @@ abstract mixin class $UserProfileStateCopyWith<$Res>  {
   factory $UserProfileStateCopyWith(UserProfileState value, $Res Function(UserProfileState) _then) = _$UserProfileStateCopyWithImpl;
 @useResult
 $Res call({
- AppInfo? appInfo, User? user, UserProfile? profile, bool showAppBuildDetails, StateStatus status, StateStatus profileStatus, StateStatus avatarStatus, StateStatus accountDeletionStatus, double? avatarUploadProgress, UserProfileAvatarAction? avatarAction
+ UserProfile? profile, StateStatus profileStatus, StateStatus avatarStatus, StateStatus accountDeletionStatus, double? avatarUploadProgress, UserProfileAvatarAction? avatarAction
 });
 
 
-$StateStatusCopyWith<$Res> get status;$StateStatusCopyWith<$Res> get profileStatus;$StateStatusCopyWith<$Res> get avatarStatus;$StateStatusCopyWith<$Res> get accountDeletionStatus;
+$StateStatusCopyWith<$Res> get profileStatus;$StateStatusCopyWith<$Res> get avatarStatus;$StateStatusCopyWith<$Res> get accountDeletionStatus;
 
 }
 /// @nodoc
@@ -405,14 +351,10 @@ class _$UserProfileStateCopyWithImpl<$Res>
 
 /// Create a copy of UserProfileState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? appInfo = freezed,Object? user = freezed,Object? profile = freezed,Object? showAppBuildDetails = null,Object? status = null,Object? profileStatus = null,Object? avatarStatus = null,Object? accountDeletionStatus = null,Object? avatarUploadProgress = freezed,Object? avatarAction = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? profile = freezed,Object? profileStatus = null,Object? avatarStatus = null,Object? accountDeletionStatus = null,Object? avatarUploadProgress = freezed,Object? avatarAction = freezed,}) {
   return _then(_self.copyWith(
-appInfo: freezed == appInfo ? _self.appInfo : appInfo // ignore: cast_nullable_to_non_nullable
-as AppInfo?,user: freezed == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
-as User?,profile: freezed == profile ? _self.profile : profile // ignore: cast_nullable_to_non_nullable
-as UserProfile?,showAppBuildDetails: null == showAppBuildDetails ? _self.showAppBuildDetails : showAppBuildDetails // ignore: cast_nullable_to_non_nullable
-as bool,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as StateStatus,profileStatus: null == profileStatus ? _self.profileStatus : profileStatus // ignore: cast_nullable_to_non_nullable
+profile: freezed == profile ? _self.profile : profile // ignore: cast_nullable_to_non_nullable
+as UserProfile?,profileStatus: null == profileStatus ? _self.profileStatus : profileStatus // ignore: cast_nullable_to_non_nullable
 as StateStatus,avatarStatus: null == avatarStatus ? _self.avatarStatus : avatarStatus // ignore: cast_nullable_to_non_nullable
 as StateStatus,accountDeletionStatus: null == accountDeletionStatus ? _self.accountDeletionStatus : accountDeletionStatus // ignore: cast_nullable_to_non_nullable
 as StateStatus,avatarUploadProgress: freezed == avatarUploadProgress ? _self.avatarUploadProgress : avatarUploadProgress // ignore: cast_nullable_to_non_nullable
@@ -421,15 +363,6 @@ as UserProfileAvatarAction?,
   ));
 }
 /// Create a copy of UserProfileState
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$StateStatusCopyWith<$Res> get status {
-  
-  return $StateStatusCopyWith<$Res>(_self.status, (value) {
-    return _then(_self.copyWith(status: value));
-  });
-}/// Create a copy of UserProfileState
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -464,15 +397,11 @@ $StateStatusCopyWith<$Res> get accountDeletionStatus {
 /// @nodoc
 
 
-class _UserProfileState with DiagnosticableTreeMixin implements UserProfileState {
-  const _UserProfileState({this.appInfo, this.user, this.profile, this.showAppBuildDetails = false, this.status = const StateStatus.initial(), this.profileStatus = const StateStatus.initial(), this.avatarStatus = const StateStatus.initial(), this.accountDeletionStatus = const StateStatus.initial(), this.avatarUploadProgress, this.avatarAction});
+class _UserProfileState implements UserProfileState {
+  const _UserProfileState({this.profile, this.profileStatus = const StateStatus.initial(), this.avatarStatus = const StateStatus.initial(), this.accountDeletionStatus = const StateStatus.initial(), this.avatarUploadProgress, this.avatarAction});
   
 
-@override final  AppInfo? appInfo;
-@override final  User? user;
 @override final  UserProfile? profile;
-@override@JsonKey() final  bool showAppBuildDetails;
-@override@JsonKey() final  StateStatus status;
 @override@JsonKey() final  StateStatus profileStatus;
 @override@JsonKey() final  StateStatus avatarStatus;
 @override@JsonKey() final  StateStatus accountDeletionStatus;
@@ -486,25 +415,19 @@ class _UserProfileState with DiagnosticableTreeMixin implements UserProfileState
 _$UserProfileStateCopyWith<_UserProfileState> get copyWith => __$UserProfileStateCopyWithImpl<_UserProfileState>(this, _$identity);
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'UserProfileState'))
-    ..add(DiagnosticsProperty('appInfo', appInfo))..add(DiagnosticsProperty('user', user))..add(DiagnosticsProperty('profile', profile))..add(DiagnosticsProperty('showAppBuildDetails', showAppBuildDetails))..add(DiagnosticsProperty('status', status))..add(DiagnosticsProperty('profileStatus', profileStatus))..add(DiagnosticsProperty('avatarStatus', avatarStatus))..add(DiagnosticsProperty('accountDeletionStatus', accountDeletionStatus))..add(DiagnosticsProperty('avatarUploadProgress', avatarUploadProgress))..add(DiagnosticsProperty('avatarAction', avatarAction));
-}
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserProfileState&&(identical(other.appInfo, appInfo) || other.appInfo == appInfo)&&(identical(other.user, user) || other.user == user)&&(identical(other.profile, profile) || other.profile == profile)&&(identical(other.showAppBuildDetails, showAppBuildDetails) || other.showAppBuildDetails == showAppBuildDetails)&&(identical(other.status, status) || other.status == status)&&(identical(other.profileStatus, profileStatus) || other.profileStatus == profileStatus)&&(identical(other.avatarStatus, avatarStatus) || other.avatarStatus == avatarStatus)&&(identical(other.accountDeletionStatus, accountDeletionStatus) || other.accountDeletionStatus == accountDeletionStatus)&&(identical(other.avatarUploadProgress, avatarUploadProgress) || other.avatarUploadProgress == avatarUploadProgress)&&(identical(other.avatarAction, avatarAction) || other.avatarAction == avatarAction));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserProfileState&&(identical(other.profile, profile) || other.profile == profile)&&(identical(other.profileStatus, profileStatus) || other.profileStatus == profileStatus)&&(identical(other.avatarStatus, avatarStatus) || other.avatarStatus == avatarStatus)&&(identical(other.accountDeletionStatus, accountDeletionStatus) || other.accountDeletionStatus == accountDeletionStatus)&&(identical(other.avatarUploadProgress, avatarUploadProgress) || other.avatarUploadProgress == avatarUploadProgress)&&(identical(other.avatarAction, avatarAction) || other.avatarAction == avatarAction));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,appInfo,user,profile,showAppBuildDetails,status,profileStatus,avatarStatus,accountDeletionStatus,avatarUploadProgress,avatarAction);
+int get hashCode => Object.hash(runtimeType,profile,profileStatus,avatarStatus,accountDeletionStatus,avatarUploadProgress,avatarAction);
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'UserProfileState(appInfo: $appInfo, user: $user, profile: $profile, showAppBuildDetails: $showAppBuildDetails, status: $status, profileStatus: $profileStatus, avatarStatus: $avatarStatus, accountDeletionStatus: $accountDeletionStatus, avatarUploadProgress: $avatarUploadProgress, avatarAction: $avatarAction)';
+String toString() {
+  return 'UserProfileState(profile: $profile, profileStatus: $profileStatus, avatarStatus: $avatarStatus, accountDeletionStatus: $accountDeletionStatus, avatarUploadProgress: $avatarUploadProgress, avatarAction: $avatarAction)';
 }
 
 
@@ -515,11 +438,11 @@ abstract mixin class _$UserProfileStateCopyWith<$Res> implements $UserProfileSta
   factory _$UserProfileStateCopyWith(_UserProfileState value, $Res Function(_UserProfileState) _then) = __$UserProfileStateCopyWithImpl;
 @override @useResult
 $Res call({
- AppInfo? appInfo, User? user, UserProfile? profile, bool showAppBuildDetails, StateStatus status, StateStatus profileStatus, StateStatus avatarStatus, StateStatus accountDeletionStatus, double? avatarUploadProgress, UserProfileAvatarAction? avatarAction
+ UserProfile? profile, StateStatus profileStatus, StateStatus avatarStatus, StateStatus accountDeletionStatus, double? avatarUploadProgress, UserProfileAvatarAction? avatarAction
 });
 
 
-@override $StateStatusCopyWith<$Res> get status;@override $StateStatusCopyWith<$Res> get profileStatus;@override $StateStatusCopyWith<$Res> get avatarStatus;@override $StateStatusCopyWith<$Res> get accountDeletionStatus;
+@override $StateStatusCopyWith<$Res> get profileStatus;@override $StateStatusCopyWith<$Res> get avatarStatus;@override $StateStatusCopyWith<$Res> get accountDeletionStatus;
 
 }
 /// @nodoc
@@ -532,14 +455,10 @@ class __$UserProfileStateCopyWithImpl<$Res>
 
 /// Create a copy of UserProfileState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? appInfo = freezed,Object? user = freezed,Object? profile = freezed,Object? showAppBuildDetails = null,Object? status = null,Object? profileStatus = null,Object? avatarStatus = null,Object? accountDeletionStatus = null,Object? avatarUploadProgress = freezed,Object? avatarAction = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? profile = freezed,Object? profileStatus = null,Object? avatarStatus = null,Object? accountDeletionStatus = null,Object? avatarUploadProgress = freezed,Object? avatarAction = freezed,}) {
   return _then(_UserProfileState(
-appInfo: freezed == appInfo ? _self.appInfo : appInfo // ignore: cast_nullable_to_non_nullable
-as AppInfo?,user: freezed == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
-as User?,profile: freezed == profile ? _self.profile : profile // ignore: cast_nullable_to_non_nullable
-as UserProfile?,showAppBuildDetails: null == showAppBuildDetails ? _self.showAppBuildDetails : showAppBuildDetails // ignore: cast_nullable_to_non_nullable
-as bool,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as StateStatus,profileStatus: null == profileStatus ? _self.profileStatus : profileStatus // ignore: cast_nullable_to_non_nullable
+profile: freezed == profile ? _self.profile : profile // ignore: cast_nullable_to_non_nullable
+as UserProfile?,profileStatus: null == profileStatus ? _self.profileStatus : profileStatus // ignore: cast_nullable_to_non_nullable
 as StateStatus,avatarStatus: null == avatarStatus ? _self.avatarStatus : avatarStatus // ignore: cast_nullable_to_non_nullable
 as StateStatus,accountDeletionStatus: null == accountDeletionStatus ? _self.accountDeletionStatus : accountDeletionStatus // ignore: cast_nullable_to_non_nullable
 as StateStatus,avatarUploadProgress: freezed == avatarUploadProgress ? _self.avatarUploadProgress : avatarUploadProgress // ignore: cast_nullable_to_non_nullable
@@ -549,15 +468,6 @@ as UserProfileAvatarAction?,
 }
 
 /// Create a copy of UserProfileState
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$StateStatusCopyWith<$Res> get status {
-  
-  return $StateStatusCopyWith<$Res>(_self.status, (value) {
-    return _then(_self.copyWith(status: value));
-  });
-}/// Create a copy of UserProfileState
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')

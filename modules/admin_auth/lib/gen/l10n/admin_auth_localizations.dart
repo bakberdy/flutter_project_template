@@ -102,6 +102,30 @@ abstract class AdminAuthLocalizations {
     Locale('kk'),
     Locale('ru'),
   ];
+
+  /// No description provided for @authEmailLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get authEmailLabel;
+
+  /// No description provided for @authSubmitEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get authSubmitEmail;
+
+  /// No description provided for @authSubmitOtp.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify'**
+  String get authSubmitOtp;
+
+  /// No description provided for @authTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get authTitle;
 }
 
 class _AdminAuthLocalizationsDelegate

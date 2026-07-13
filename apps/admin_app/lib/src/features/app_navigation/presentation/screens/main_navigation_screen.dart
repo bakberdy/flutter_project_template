@@ -2,6 +2,7 @@ import 'package:admin_app/src/common/admin_app_localization_x.dart';
 import 'package:admin_app/src/common/config/router/admin_app_router.dart';
 import 'package:admin_app/src/features/app_navigation/presentation/widgets/sidebar.dart';
 import 'package:admin_app/src/features/app_navigation/presentation/widgets/sidebar_item.dart';
+import 'package:admin_auth/admin_auth.dart';
 import 'package:admin_preferences/admin_preferences.dart';
 import 'package:admin_profile/admin_profile.dart';
 import 'package:admin_users/admin_users.dart';
@@ -12,15 +13,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
-class MainNavigationScreen extends StatelessWidget {
+class MainNavigationScreen extends StatelessWidget implements AutoRouteWrapper {
   const MainNavigationScreen({super.key});
+
+  @override
+  Widget wrappedRoute(BuildContext context) => BlocProvider(
+    create: (context) =>
+        context.di<UserProfileBloc>()..add(const UserProfileEvent.started()),
+    child: this,
+  );
 
   @override
   Widget build(BuildContext context) => AutoTabsRouter(
     routes: [const AdminDashboardRoute(), adminUsersShellRoute()],
     builder: (context, child) {
       final tabsRouter = context.tabsRouter;
-      final userEmail = context.select<UserBloc, String?>(
+      final userEmail = context.select<AdminSessionBloc, String?>(
         (bloc) => bloc.state.user?.email,
       );
       final profile = context.select<UserProfileBloc, UserProfile?>(
@@ -102,17 +110,7 @@ class MainNavigationScreen extends StatelessWidget {
       title: context.l10n.editProfile,
       width: 600,
       height: 650,
-      body: MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (context) =>
-                context.di<UserProfileBloc>()
-                  ..add(const UserProfileEvent.started()),
-          ),
-          BlocProvider(create: (context) => context.di<UserProfileEditBloc>()),
-        ],
-        child: const UserProfileEditView(),
-      ),
+      body: const UserProfileEditView(),
     );
     if (context.mounted) {
       context.read<UserProfileBloc>().add(const UserProfileEvent.started());

@@ -8,14 +8,32 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class UserProfileEditView extends StatefulWidget {
+class UserProfileEditView extends StatelessWidget {
   const UserProfileEditView({super.key});
 
   @override
-  State<UserProfileEditView> createState() => _UserProfileEditViewState();
+  Widget build(BuildContext context) => MultiBlocProvider(
+    providers: [
+      BlocProvider(
+        create: (context) =>
+            context.di<UserProfileBloc>()
+              ..add(const UserProfileEvent.started()),
+      ),
+      BlocProvider(create: (context) => context.di<UserProfileEditBloc>()),
+    ],
+    child: const _UserProfileEditContent(),
+  );
 }
 
-class _UserProfileEditViewState extends State<UserProfileEditView>
+class _UserProfileEditContent extends StatefulWidget {
+  const _UserProfileEditContent();
+
+  @override
+  State<_UserProfileEditContent> createState() =>
+      _UserProfileEditContentState();
+}
+
+class _UserProfileEditContentState extends State<_UserProfileEditContent>
     with UiFailureHandlerMixin {
   final phoneFieldLayerLink = LayerLink();
   final fullNameController = TextEditingController();

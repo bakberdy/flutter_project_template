@@ -43,18 +43,6 @@ class AdminAppLocalizationsRu extends AdminAppLocalizations {
   String get cancel => 'Отмена';
 
   @override
-  String get authEmailLabel => 'Электронная почта';
-
-  @override
-  String get authSubmitEmail => 'Продолжить';
-
-  @override
-  String get authSubmitOtp => 'Подтвердить';
-
-  @override
-  String get authTitle => 'Вход';
-
-  @override
   String get devTalkerOpen => 'Открыть Talker';
 
   @override
@@ -62,4 +50,7 @@ class AdminAppLocalizationsRu extends AdminAppLocalizations {
 
   @override
   String get devTalkerDockRight => 'Переместить Talker влево';
+
+  @override
+  String get adminAccessRequired => 'Войти могут только администраторы.';
 }

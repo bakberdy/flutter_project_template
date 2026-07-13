@@ -17,6 +17,18 @@ class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(this._remoteDataSource, this._tokenStorage);
 
   @override
+  Future<bool> hasSession() => _tokenStorage.containsRefreshToken();
+
+  @override
+  FutureEither<User> getCurrentUser() async {
+    try {
+      return Right(await _remoteDataSource.getCurrentUser());
+    } on Exception catch (e) {
+      return Left(await e.toFailure(source: '$runtimeType.getCurrentUser'));
+    }
+  }
+
+  @override
   FutureEither<LoginResponse> login(String email) async {
     try {
       final device = AuthDeviceInfo(
@@ -68,12 +80,16 @@ class AuthRepositoryImpl implements AuthRepository {
   FutureEither<void> logOut() async {
     try {
       await _remoteDataSource.logOut();
-      await _tokenStorage.clearTokens();
       return const Right(null);
     } on Exception catch (e) {
       return Left(await e.toFailure(source: '$runtimeType.logOut'));
+    } finally {
+      await _tokenStorage.clearTokens();
     }
   }
+
+  @override
+  Future<void> clearSession() => _tokenStorage.clearTokens();
 
   @override
   FutureEither<void> setNotificationToken(String token, String provider) async {

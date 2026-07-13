@@ -31,7 +31,7 @@ class ApiClientFactory {
         baseUrl: config.baseUrl,
         connectTimeout: config.connectTimeout,
         receiveTimeout: config.receiveTimeout,
-        sendTimeout: config.sendTimeout,
+        sendTimeout: kIsWeb ? null : config.sendTimeout,
         headers: config.defaultHeaders,
       ),
     );

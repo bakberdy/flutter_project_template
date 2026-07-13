@@ -169,30 +169,6 @@ abstract class AdminAppLocalizations {
   /// **'Cancel'**
   String get cancel;
 
-  /// No description provided for @authEmailLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Email'**
-  String get authEmailLabel;
-
-  /// No description provided for @authSubmitEmail.
-  ///
-  /// In en, this message translates to:
-  /// **'Continue'**
-  String get authSubmitEmail;
-
-  /// No description provided for @authSubmitOtp.
-  ///
-  /// In en, this message translates to:
-  /// **'Verify'**
-  String get authSubmitOtp;
-
-  /// No description provided for @authTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign in'**
-  String get authTitle;
-
   /// No description provided for @devTalkerOpen.
   ///
   /// In en, this message translates to:
@@ -210,6 +186,12 @@ abstract class AdminAppLocalizations {
   /// In en, this message translates to:
   /// **'Move Talker control to the left'**
   String get devTalkerDockRight;
+
+  /// No description provided for @adminAccessRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Only administrators can sign in.'**
+  String get adminAccessRequired;
 }
 
 class _AdminAppLocalizationsDelegate

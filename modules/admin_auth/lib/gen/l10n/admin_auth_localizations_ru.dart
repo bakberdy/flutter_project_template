@@ -7,4 +7,16 @@ import 'admin_auth_localizations.dart';
 /// The translations for Russian (`ru`).
 class AdminAuthLocalizationsRu extends AdminAuthLocalizations {
   AdminAuthLocalizationsRu([String locale = 'ru']) : super(locale);
+
+  @override
+  String get authEmailLabel => 'Электронная почта';
+
+  @override
+  String get authSubmitEmail => 'Продолжить';
+
+  @override
+  String get authSubmitOtp => 'Подтвердить';
+
+  @override
+  String get authTitle => 'Вход';
 }

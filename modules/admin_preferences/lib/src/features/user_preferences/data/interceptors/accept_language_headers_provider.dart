@@ -2,7 +2,7 @@ import 'package:core/core.dart';
 import 'package:admin_preferences/src/common/config/admin_preferences_constants.dart';
 import 'package:injectable/injectable.dart';
 
-@lazySingleton
+@LazySingleton(as: ApiRequestHeadersProvider)
 class AcceptLanguageHeadersProvider implements ApiRequestHeadersProvider {
   AcceptLanguageHeadersProvider(this._localStorage);
 

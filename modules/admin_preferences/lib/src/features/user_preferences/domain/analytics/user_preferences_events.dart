@@ -71,39 +71,3 @@ final class SetAppLocaleUseCaseEvent extends AnalyticsEvent {
     properties: properties,
   );
 }
-
-final class SetEnvironmentUseCaseEvent extends AnalyticsEvent {
-  const SetEnvironmentUseCaseEvent({required super.name, super.properties});
-
-  factory SetEnvironmentUseCaseEvent.success({
-    Map<String, dynamic>? properties,
-  }) => SetEnvironmentUseCaseEvent(
-    name: 'set_environment_use_case_success',
-    properties: properties,
-  );
-
-  factory SetEnvironmentUseCaseEvent.failure({
-    required Map<String, dynamic> properties,
-  }) => SetEnvironmentUseCaseEvent(
-    name: 'set_environment_use_case_failure',
-    properties: properties,
-  );
-}
-
-final class GetEnvironmentUseCaseEvent extends AnalyticsEvent {
-  const GetEnvironmentUseCaseEvent({required super.name, super.properties});
-
-  factory GetEnvironmentUseCaseEvent.success({
-    Map<String, dynamic>? properties,
-  }) => GetEnvironmentUseCaseEvent(
-    name: 'get_environment_use_case_success',
-    properties: properties,
-  );
-
-  factory GetEnvironmentUseCaseEvent.failure({
-    required Map<String, dynamic> properties,
-  }) => GetEnvironmentUseCaseEvent(
-    name: 'get_environment_use_case_failure',
-    properties: properties,
-  );
-}

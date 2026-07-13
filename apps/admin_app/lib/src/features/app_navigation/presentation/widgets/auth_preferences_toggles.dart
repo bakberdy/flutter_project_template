@@ -37,18 +37,14 @@ class AuthPreferencesToggles extends StatelessWidget
           },
         ),
       ],
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: context.designColors.surfaceContainerLow,
-          border: Border.all(color: context.designColors.outlineVariant),
+      child: Material(
+        color: context.designColors.surfaceContainerLow,
+        elevation: 4,
+        shadowColor: context.designColors.shadow.withValues(alpha: 0.08),
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: context.designColors.outlineVariant),
           borderRadius: BorderRadius.circular(DesignRadii.lg),
-          boxShadow: [
-            BoxShadow(
-              color: context.designColors.shadow.withValues(alpha: 0.08),
-              blurRadius: 16,
-              offset: const Offset(0, 4),
-            ),
-          ],
         ),
         child: Padding(
           padding: const EdgeInsets.all(DesignSpacing.xxs),

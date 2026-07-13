@@ -1,6 +1,6 @@
 import 'package:core/core.dart';
 import 'package:admin_auth/src/common/config/admin_auth_api_endpoints.dart';
-import 'package:admin_auth/src/features/auth/data/models/authorization_login_request_json.dart';
+import 'package:admin_auth/src/features/auth/data/models/auth_login_request_model/auth_login_request_model.dart';
 import 'package:admin_auth/src/features/auth/data/models/authorization_login_response_model/authorization_login_response_model.dart';
 import 'package:admin_auth/src/features/auth/data/models/authorization_verify_request_model/authorization_verify_request_model.dart';
 import 'package:admin_auth/src/features/auth/data/models/authorization_verify_response_model/authorization_verify_response_model.dart';
@@ -8,6 +8,7 @@ import 'package:admin_auth/src/features/auth/domain/entities/auth_login_request.
 import 'package:injectable/injectable.dart';
 
 abstract class AuthRemoteDataSource {
+  Future<UserModel> getCurrentUser();
   Future<LoginResponseModel> login(AuthLoginRequest request);
   Future<VerifyResponseModel> verify(VerifyRequestModel request);
   Future<VerifyResponseModel> refreshToken(String refreshToken);
@@ -29,10 +30,18 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   );
 
   @override
+  Future<UserModel> getCurrentUser() async {
+    final response = await _protectedApiClient.get<Map<String, dynamic>>(
+      AdminAuthApiEndpoints.currentUser,
+    );
+    return UserModel.fromJson(response.data!);
+  }
+
+  @override
   Future<LoginResponseModel> login(AuthLoginRequest request) async {
     final response = await _publicApiClient.post<Map<String, dynamic>>(
       AdminAuthApiEndpoints.login,
-      data: AuthLoginRequestJson.toMap(request),
+      data: AuthLoginRequestModel.fromEntity(request).toJson(),
     );
     return LoginResponseModel.fromJson(response.data!);
   }

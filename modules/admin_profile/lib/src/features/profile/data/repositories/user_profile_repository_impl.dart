@@ -11,20 +11,6 @@ class UserProfileRepositoryImpl implements UserProfileRepository {
   UserProfileRepositoryImpl(this._remoteDataSource);
 
   @override
-  FutureEither<User> getCurrentUser({ApiCancelToken? cancelToken}) async {
-    try {
-      return Right(
-        await _remoteDataSource.getCurrentUser(cancelToken: cancelToken),
-      );
-    } on Exception catch (e) {
-      if (e is ApiException && e.type == ApiExceptionType.cancel) {
-        return Left(Failure.requestCancelled('$runtimeType.getCurrentUser'));
-      }
-      return Left(await e.toFailure(source: '$runtimeType.getCurrentUser'));
-    }
-  }
-
-  @override
   FutureEither<UserProfile> getCurrentProfile() async {
     try {
       return Right(await _remoteDataSource.getCurrentProfile());

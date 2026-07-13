@@ -43,18 +43,6 @@ class AdminAppLocalizationsKk extends AdminAppLocalizations {
   String get cancel => 'Бас тарту';
 
   @override
-  String get authEmailLabel => 'Электрондық пошта';
-
-  @override
-  String get authSubmitEmail => 'Жалғастыру';
-
-  @override
-  String get authSubmitOtp => 'Растау';
-
-  @override
-  String get authTitle => 'Кіру';
-
-  @override
   String get devTalkerOpen => 'Talker ашу';
 
   @override
@@ -62,4 +50,7 @@ class AdminAppLocalizationsKk extends AdminAppLocalizations {
 
   @override
   String get devTalkerDockRight => 'Talker басқаруын солға жылжыту';
+
+  @override
+  String get adminAccessRequired => 'Тек әкімшілер кіре алады.';
 }

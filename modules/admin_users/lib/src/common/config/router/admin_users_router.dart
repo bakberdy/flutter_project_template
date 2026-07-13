@@ -8,24 +8,26 @@ part 'admin_users_router.gr.dart';
 
 const adminUsersShellRoute = EmptyShellRoute('AdminUsersShellRoute');
 
+final List<AutoRoute> adminUsersRoutes = [
+  AutoRoute(
+    page: adminUsersShellRoute.page,
+    path: AdminUsersNavigationPaths.shell,
+    children: [
+      AutoRoute(
+        page: UsersRoute.page,
+        path: AdminUsersNavigationPaths.users,
+        initial: true,
+      ),
+      AutoRoute(
+        page: UserRoute.page,
+        path: AdminUsersNavigationPaths.userDetails,
+      ),
+    ],
+  ),
+];
+
 @AutoRouterConfig(replaceInRouteName: 'Screen,Route')
 class AdminUsersRouter extends RootStackRouter {
   @override
-  List<AutoRoute> get routes => [
-    AutoRoute(
-      page: adminUsersShellRoute.page,
-      path: AdminUsersNavigationPaths.shell,
-      children: [
-        AutoRoute(
-          page: UsersRoute.page,
-          path: AdminUsersNavigationPaths.users,
-          initial: true,
-        ),
-        AutoRoute(
-          page: UserRoute.page,
-          path: AdminUsersNavigationPaths.userDetails,
-        ),
-      ],
-    ),
-  ];
+  List<AutoRoute> get routes => adminUsersRoutes;
 }

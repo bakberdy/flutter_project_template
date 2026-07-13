@@ -12,8 +12,12 @@ dependencies:
   flutter:
     sdk: flutter
 
+  auto_route: ^11.1.0
+  bloc_concurrency: ^0.3.0
   core:
     path: ../core
+  design_system:
+    path: ../design_system
   dartz: ^0.10.1
   equatable: ^2.0.8
   flutter_bloc: ^9.1.1
@@ -23,6 +27,7 @@ dependencies:
   json_annotation: ^4.12.0
 
 dev_dependencies:
+  auto_route_generator: ^10.5.0
   build_runner: ^2.13.0
   flutter_gen_runner: ^5.13.0+1
   flutter_test:

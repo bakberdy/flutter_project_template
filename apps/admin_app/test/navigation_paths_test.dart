@@ -1,7 +1,8 @@
 import 'package:admin_app/src/common/config/router/admin_app_navigation_paths.dart';
 import 'package:admin_app/src/common/config/router/admin_app_router.dart';
-import 'package:admin_users/admin_users.dart';
+import 'package:admin_auth/admin_auth.dart';
 import 'package:admin_profile/admin_profile.dart';
+import 'package:admin_users/admin_users.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -11,15 +12,14 @@ void main() {
   tearDown(() => router.dispose());
 
   final cases = <String, String>{
-    AdminAppNavigationPaths.signIn: AdminSignInRoute.name,
-    AdminAppNavigationPaths.otp: AdminOtpRoute.name,
+    '/sign-in': AdminSignInRoute.name,
+    '/sign-in/otp': AdminOtpRoute.name,
     AdminAppNavigationPaths.home: AdminDashboardRoute.name,
     AdminAppNavigationPaths.users: UsersRoute.name,
     AdminAppNavigationPaths.user('user-1'): UserRoute.name,
-    '/${AdminProfileNavigationPaths.register}': UserDataRegistrationRoute.name,
-    '/${AdminProfileNavigationPaths.blocked}': UserBlockedRoute.name,
-    '/${AdminProfileNavigationPaths.deletionRequested}':
-        UserDeletionRequestedRoute.name,
+    '/register': UserDataRegistrationRoute.name,
+    '/blocked': UserBlockedRoute.name,
+    '/deletion-requested': UserDeletionRequestedRoute.name,
   };
 
   for (final MapEntry(key: path, value: routeName) in cases.entries) {

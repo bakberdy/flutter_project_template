@@ -11,11 +11,8 @@
   "logoutTitle": "Шығу керек пе?",
   "logoutMessage": "Әкімші панеліне кіру үшін қайта авторизациядан өту қажет.",
   "cancel": "Бас тарту",
-  "authEmailLabel": "Электрондық пошта",
-  "authSubmitEmail": "Жалғастыру",
-  "authSubmitOtp": "Растау",
-  "authTitle": "Кіру",
   "devTalkerOpen": "Talker ашу",
   "devTalkerDockLeft": "Talker басқаруын оңға жылжыту",
-  "devTalkerDockRight": "Talker басқаруын солға жылжыту"
+  "devTalkerDockRight": "Talker басқаруын солға жылжыту",
+  "adminAccessRequired": "Тек әкімшілер кіре алады."
 }

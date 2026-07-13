@@ -32,27 +32,10 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   final GetUserProfileUseCase _getUserProfileUseCase;
   final ChangeUserStatusUseCase _changeUserStatusUseCase;
   final ApproveUserDeletionRequestUseCase _approveUserDeletionRequestUseCase;
-  ApiCancelToken? _userCancelToken;
-  ApiCancelToken? _profileCancelToken;
-
   Future<void> _onStarted(_Started event, Emitter<UserState> emit) async {
-    _userCancelToken?.cancel();
-    _profileCancelToken?.cancel();
-    final userCancelToken = ApiCancelToken();
-    final profileCancelToken = ApiCancelToken();
-    _userCancelToken = userCancelToken;
-    _profileCancelToken = profileCancelToken;
-
     emit(const UserState(status: StateStatus.loading()));
 
-    final userResult = await _getUserUseCase((
-      userId: event.userId,
-      cancelToken: userCancelToken,
-    ));
-
-    if (identical(_userCancelToken, userCancelToken)) {
-      _userCancelToken = null;
-    }
+    final userResult = await _getUserUseCase(event.userId);
 
     await userResult.fold<Future<void>>(
       (failure) async {
@@ -63,8 +46,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       },
       (loadedUser) async {
         if (!loadedUser.isUserDataUploaded) {
-          _profileCancelToken?.cancel();
-          _profileCancelToken = null;
           emit(
             state.copyWith(
               status: const StateStatus.success(),
@@ -74,14 +55,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           return;
         }
 
-        final profileResult = await _getUserProfileUseCase((
-          userId: event.userId,
-          cancelToken: profileCancelToken,
-        ));
-
-        if (identical(_profileCancelToken, profileCancelToken)) {
-          _profileCancelToken = null;
-        }
+        final profileResult = await _getUserProfileUseCase(event.userId);
 
         profileResult.fold(
           (failure) {
@@ -144,12 +118,5 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         state.copyWith(user: user, actionStatus: const StateStatus.success()),
       ),
     );
-  }
-
-  @override
-  Future<void> close() {
-    _userCancelToken?.cancel();
-    _profileCancelToken?.cancel();
-    return super.close();
   }
 }

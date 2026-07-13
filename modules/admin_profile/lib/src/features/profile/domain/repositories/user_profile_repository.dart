@@ -2,8 +2,6 @@ import 'package:core/core.dart';
 import 'package:admin_profile/src/features/profile/domain/entities/user_avatar_upload.dart';
 
 abstract class UserProfileRepository {
-  FutureEither<User> getCurrentUser({ApiCancelToken? cancelToken});
-
   FutureEither<UserProfile> getCurrentProfile();
 
   FutureEither<UserProfile> createProfile({

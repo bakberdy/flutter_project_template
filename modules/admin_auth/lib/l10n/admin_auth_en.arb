@@ -1,3 +1,7 @@
 {
-  "@@locale": "en"
+  "@@locale": "en",
+  "authEmailLabel": "Email",
+  "authSubmitEmail": "Continue",
+  "authSubmitOtp": "Verify",
+  "authTitle": "Sign in"
 }

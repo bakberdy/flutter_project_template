@@ -34,7 +34,6 @@ class UsersListBloc extends Bloc<UsersListEvent, UsersListState> {
   }
 
   final GetUsersUseCase _getUsersUseCase;
-  ApiCancelToken? _cancelToken;
 
   Future<void> _onStarted(_Started event, Emitter<UsersListState> emit) =>
       _load(state.query, emit);
@@ -192,18 +191,9 @@ class UsersListBloc extends Bloc<UsersListEvent, UsersListState> {
   }
 
   Future<void> _load(UsersQuery query, Emitter<UsersListState> emit) async {
-    _cancelToken?.cancel();
-    final cancelToken = ApiCancelToken();
-    _cancelToken = cancelToken;
     emit(state.copyWith(status: const StateStatus.loading(), query: query));
 
-    final result = await _getUsersUseCase((
-      query: query,
-      cancelToken: cancelToken,
-    ));
-    if (identical(_cancelToken, cancelToken)) {
-      _cancelToken = null;
-    }
+    final result = await _getUsersUseCase(query);
     result.fold(
       (failure) {
         if (failure.details?.type == FailureType.silent) {
@@ -219,11 +209,5 @@ class UsersListBloc extends Bloc<UsersListEvent, UsersListState> {
         ),
       ),
     );
-  }
-
-  @override
-  Future<void> close() {
-    _cancelToken?.cancel();
-    return super.close();
   }
 }

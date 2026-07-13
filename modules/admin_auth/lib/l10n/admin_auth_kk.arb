@@ -1,3 +1,7 @@
 {
-  "@@locale": "kk"
+  "@@locale": "kk",
+  "authEmailLabel": "Электрондық пошта",
+  "authSubmitEmail": "Жалғастыру",
+  "authSubmitOtp": "Растау",
+  "authTitle": "Кіру"
 }

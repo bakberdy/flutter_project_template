@@ -11,22 +11,6 @@
 part of 'admin_app_router.dart';
 
 /// generated route for
-/// [AdminAuthWrapperScreen]
-class AdminAuthWrapperRoute extends PageRouteInfo<void> {
-  const AdminAuthWrapperRoute({List<PageRouteInfo>? children})
-    : super(AdminAuthWrapperRoute.name, initialChildren: children);
-
-  static const String name = 'AdminAuthWrapperRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return WrappedRoute(child: const AdminAuthWrapperScreen());
-    },
-  );
-}
-
-/// generated route for
 /// [AdminDashboardScreen]
 class AdminDashboardRoute extends PageRouteInfo<void> {
   const AdminDashboardRoute({List<PageRouteInfo>? children})
@@ -43,38 +27,6 @@ class AdminDashboardRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [AdminOtpScreen]
-class AdminOtpRoute extends PageRouteInfo<void> {
-  const AdminOtpRoute({List<PageRouteInfo>? children})
-    : super(AdminOtpRoute.name, initialChildren: children);
-
-  static const String name = 'AdminOtpRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const AdminOtpScreen();
-    },
-  );
-}
-
-/// generated route for
-/// [AdminSignInScreen]
-class AdminSignInRoute extends PageRouteInfo<void> {
-  const AdminSignInRoute({List<PageRouteInfo>? children})
-    : super(AdminSignInRoute.name, initialChildren: children);
-
-  static const String name = 'AdminSignInRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const AdminSignInScreen();
-    },
-  );
-}
-
-/// generated route for
 /// [MainNavigationScreen]
 class MainNavigationRoute extends PageRouteInfo<void> {
   const MainNavigationRoute({List<PageRouteInfo>? children})
@@ -85,7 +37,7 @@ class MainNavigationRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const MainNavigationScreen();
+      return WrappedRoute(child: const MainNavigationScreen());
     },
   );
 }

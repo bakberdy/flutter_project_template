@@ -1,12 +1,9 @@
 import 'package:core/core.dart';
 import 'package:admin_profile/src/features/profile/domain/entities/user_avatar_upload.dart';
-import 'package:admin_profile/src/features/profile/domain/usecases/get_app_info_use_case.dart';
 import 'package:admin_profile/src/features/profile/domain/usecases/get_current_user_profile_use_case.dart';
-import 'package:admin_profile/src/features/profile/domain/usecases/get_current_user_use_case.dart';
 import 'package:admin_profile/src/features/profile/domain/usecases/remove_user_avatar_use_case.dart';
 import 'package:admin_profile/src/features/profile/domain/usecases/request_account_deletion_use_case.dart';
 import 'package:admin_profile/src/features/profile/domain/usecases/update_user_avatar_use_case.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -19,22 +16,16 @@ enum UserProfileAvatarAction { upload, remove }
 
 @Injectable()
 class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
-  final GetAppInfoUseCase _getAppInfoUseCase;
-  final GetCurrentUserUseCase _getCurrentUserUseCase;
   final GetCurrentUserProfileUseCase _getCurrentUserProfileUseCase;
   final UpdateUserAvatarUseCase _updateUserAvatarUseCase;
   final RemoveUserAvatarUseCase _removeUserAvatarUseCase;
   final RequestAccountDeletionUseCase _requestAccountDeletionUseCase;
-  final CoreAppConfig _appConfig;
 
   UserProfileBloc(
-    this._getAppInfoUseCase,
-    this._getCurrentUserUseCase,
     this._getCurrentUserProfileUseCase,
     this._updateUserAvatarUseCase,
     this._removeUserAvatarUseCase,
     this._requestAccountDeletionUseCase,
-    this._appConfig,
   ) : super(const UserProfileState()) {
     on<UserProfileStarted>(_onStarted);
     on<UserProfileProfileLoaded>(_onProfileLoaded);
@@ -49,27 +40,6 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
     UserProfileStarted event,
     Emitter<UserProfileState> emit,
   ) async {
-    emit(state.copyWith(status: const StateStatus.loading()));
-
-    final result = await _getAppInfoUseCase(const NoParams());
-    result.fold(
-      (failure) => emit(state.copyWith(status: StateStatus.error(failure))),
-      (appInfo) => emit(
-        state.copyWith(
-          appInfo: appInfo,
-          showAppBuildDetails:
-              kDebugMode || _appConfig.environment == 'development',
-          status: const StateStatus.success(),
-        ),
-      ),
-    );
-
-    final userResult = await _getCurrentUserUseCase((
-      cancelToken: null,
-      timeout: null,
-    ));
-    userResult.fold((_) {}, (user) => emit(state.copyWith(user: user)));
-
     emit(state.copyWith(profileStatus: const StateStatus.loading()));
     final profileResult = await _getCurrentUserProfileUseCase(null);
     profileResult.fold(

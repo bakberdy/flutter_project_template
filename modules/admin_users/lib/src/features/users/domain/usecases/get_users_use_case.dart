@@ -4,16 +4,14 @@ import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
 import 'package:admin_users/src/features/users/domain/entities/users_query.dart';
 import 'package:admin_users/src/features/users/domain/repositories/users_repository.dart';
 
-typedef GetUsersParams = ({UsersQuery query, ApiCancelToken? cancelToken});
-
 @lazySingleton
 class GetUsersUseCase
-    extends UseCase<PaginatedResponse<AdminUser>, GetUsersParams> {
+    extends UseCase<PaginatedResponse<AdminUser>, UsersQuery> {
   GetUsersUseCase(this._repository);
 
   final UsersRepository _repository;
 
   @override
-  FutureEither<PaginatedResponse<AdminUser>> call(GetUsersParams params) =>
-      _repository.getUsers(params.query, cancelToken: params.cancelToken);
+  FutureEither<PaginatedResponse<AdminUser>> call(UsersQuery params) =>
+      _repository.getUsers(params);
 }

@@ -9,9 +9,7 @@ part 'admin_profile_router.gr.dart';
 @AutoRouterConfig(replaceInRouteName: 'Screen,Route')
 class AdminProfileRouter extends RootStackRouter {
   @override
-  List<AutoRoute> get routes => [
-    ...adminProfileRootRoutes,
-  ];
+  List<AutoRoute> get routes => [...adminProfileRootRoutes];
 }
 
 final List<AutoRoute> adminProfileRootRoutes = [

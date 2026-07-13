@@ -43,18 +43,6 @@ class AdminAppLocalizationsEn extends AdminAppLocalizations {
   String get cancel => 'Cancel';
 
   @override
-  String get authEmailLabel => 'Email';
-
-  @override
-  String get authSubmitEmail => 'Continue';
-
-  @override
-  String get authSubmitOtp => 'Verify';
-
-  @override
-  String get authTitle => 'Sign in';
-
-  @override
   String get devTalkerOpen => 'Open Talker';
 
   @override
@@ -62,4 +50,7 @@ class AdminAppLocalizationsEn extends AdminAppLocalizations {
 
   @override
   String get devTalkerDockRight => 'Move Talker control to the left';
+
+  @override
+  String get adminAccessRequired => 'Only administrators can sign in.';
 }

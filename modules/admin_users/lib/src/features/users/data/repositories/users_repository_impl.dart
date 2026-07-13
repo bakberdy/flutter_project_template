@@ -15,37 +15,27 @@ class UsersRepositoryImpl implements UsersRepository {
   final UsersRepositoryRequestHandler _handler;
 
   @override
-  FutureEither<PaginatedResponse<AdminUser>> getUsers(
-    UsersQuery query, {
-    ApiCancelToken? cancelToken,
-  }) => _handler.execute(() async {
-    final response = await _remoteDataSource.getUsers(
-      query,
-      cancelToken: cancelToken,
-    );
-    return PaginatedResponse<AdminUser>(
-      items: response.items,
-      pagination: response.pagination,
-    );
-  }, source: '$runtimeType.getUsers');
+  FutureEither<PaginatedResponse<AdminUser>> getUsers(UsersQuery query) =>
+      _handler.execute(() async {
+        final response = await _remoteDataSource.getUsers(query);
+        return PaginatedResponse<AdminUser>(
+          items: response.items,
+          pagination: response.pagination,
+        );
+      }, source: '$runtimeType.getUsers');
 
   @override
-  FutureEither<AdminUser> getUser(
-    String userId, {
-    ApiCancelToken? cancelToken,
-  }) => _handler.execute(
-    () => _remoteDataSource.getUser(userId, cancelToken: cancelToken),
+  FutureEither<AdminUser> getUser(String userId) => _handler.execute(
+    () => _remoteDataSource.getUser(userId),
     source: '$runtimeType.getUser',
   );
 
   @override
-  FutureEither<AdminUserProfile> getUserProfile(
-    String userId, {
-    ApiCancelToken? cancelToken,
-  }) => _handler.execute(
-    () => _remoteDataSource.getUserProfile(userId, cancelToken: cancelToken),
-    source: '$runtimeType.getUserProfile',
-  );
+  FutureEither<AdminUserProfile> getUserProfile(String userId) =>
+      _handler.execute(
+        () => _remoteDataSource.getUserProfile(userId),
+        source: '$runtimeType.getUserProfile',
+      );
 
   @override
   FutureEither<AdminUser> changeUserStatus(

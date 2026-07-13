@@ -1,3 +1,7 @@
 {
-  "@@locale": "ru"
+  "@@locale": "ru",
+  "authEmailLabel": "Электронная почта",
+  "authSubmitEmail": "Продолжить",
+  "authSubmitOtp": "Подтвердить",
+  "authTitle": "Вход"
 }

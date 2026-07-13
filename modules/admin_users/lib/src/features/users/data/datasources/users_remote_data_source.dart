@@ -4,12 +4,11 @@ import 'package:admin_users/src/common/config/admin_users_api_endpoints.dart';
 import 'package:admin_users/src/features/users/data/mappers/users_api_mapper.dart';
 import 'package:admin_users/src/features/users/data/models/admin_user_model/admin_user_model.dart';
 import 'package:admin_users/src/features/users/data/models/admin_user_profile_model/admin_user_profile_model.dart';
-import 'package:admin_users/src/features/users/data/models/admin_users_page_model/admin_users_page_model.dart';
 import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
 import 'package:admin_users/src/features/users/domain/entities/users_query.dart';
 
 abstract class UsersRemoteDataSource {
-  Future<AdminUsersPageModel> getUsers(
+  Future<PaginatedResponseModel<AdminUserModel>> getUsers(
     UsersQuery query, {
     ApiCancelToken? cancelToken,
   });
@@ -38,7 +37,7 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
   final ApiClient _apiClient;
 
   @override
-  Future<AdminUsersPageModel> getUsers(
+  Future<PaginatedResponseModel<AdminUserModel>> getUsers(
     UsersQuery query, {
     ApiCancelToken? cancelToken,
   }) async {
@@ -63,7 +62,10 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
     if (data == null) {
       throw const FormatException('Missing users response data');
     }
-    return AdminUsersPageModel.fromJson(data);
+    return PaginatedResponseModel.fromJson(
+      data,
+      (json) => AdminUserModel.fromJson(json! as Map<String, dynamic>),
+    );
   }
 
   @override

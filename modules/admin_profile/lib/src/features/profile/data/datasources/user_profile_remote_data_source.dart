@@ -4,8 +4,6 @@ import 'package:admin_profile/src/features/profile/domain/entities/user_avatar_u
 import 'package:injectable/injectable.dart';
 
 abstract class UserProfileRemoteDataSource {
-  Future<UserModel> getCurrentUser({ApiCancelToken? cancelToken});
-
   Future<UserProfileModel> getCurrentProfile();
 
   Future<UserProfileModel> createProfile({
@@ -33,15 +31,6 @@ class UserProfileRemoteDataSourceImpl implements UserProfileRemoteDataSource {
   final ApiClient _apiClient;
 
   UserProfileRemoteDataSourceImpl(@Named('protectedApiClient') this._apiClient);
-
-  @override
-  Future<UserModel> getCurrentUser({ApiCancelToken? cancelToken}) async {
-    final response = await _apiClient.get<Map<String, dynamic>>(
-      AdminProfileApiEndpoints.me,
-      cancelToken: cancelToken,
-    );
-    return UserModel.fromJson(response.data!);
-  }
 
   @override
   Future<UserProfileModel> getCurrentProfile() async {

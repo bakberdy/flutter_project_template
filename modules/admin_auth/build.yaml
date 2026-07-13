@@ -24,3 +24,11 @@ targets:
         options:
           output: lib/gen/
           line_length: 80
+
+      auto_route_generator:auto_route_generator:
+        generate_for:
+          - lib/src/features/**/presentation/screens/**.dart
+
+      auto_route_generator:auto_router_generator:
+        generate_for:
+          - lib/src/common/config/router/admin_auth_router.dart

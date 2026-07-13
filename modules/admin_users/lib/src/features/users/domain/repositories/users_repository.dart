@@ -4,17 +4,11 @@ import 'package:admin_users/src/features/users/domain/entities/admin_user_profil
 import 'package:admin_users/src/features/users/domain/entities/users_query.dart';
 
 abstract class UsersRepository {
-  FutureEither<PaginatedResponse<AdminUser>> getUsers(
-    UsersQuery query, {
-    ApiCancelToken? cancelToken,
-  });
+  FutureEither<PaginatedResponse<AdminUser>> getUsers(UsersQuery query);
 
-  FutureEither<AdminUser> getUser(String userId, {ApiCancelToken? cancelToken});
+  FutureEither<AdminUser> getUser(String userId);
 
-  FutureEither<AdminUserProfile> getUserProfile(
-    String userId, {
-    ApiCancelToken? cancelToken,
-  });
+  FutureEither<AdminUserProfile> getUserProfile(String userId);
 
   FutureEither<AdminUser> changeUserStatus(
     String userId,

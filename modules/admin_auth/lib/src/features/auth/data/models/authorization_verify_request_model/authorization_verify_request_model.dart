@@ -1,10 +1,14 @@
 import 'package:admin_auth/src/features/auth/domain/entities/verify_request.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-class VerifyRequestModel extends VerifyRequest {
+part 'authorization_verify_request_model.g.dart';
+
+@JsonSerializable(createFactory: false, fieldRename: FieldRename.snake)
+class VerifyRequestModel {
   const VerifyRequestModel({
-    required super.loginRequestId,
-    required super.email,
-    required super.code,
+    required this.loginRequestId,
+    required this.email,
+    required this.code,
   });
 
   factory VerifyRequestModel.fromEntity(VerifyRequest request) =>
@@ -14,9 +18,9 @@ class VerifyRequestModel extends VerifyRequest {
         code: request.code,
       );
 
-  Map<String, dynamic> toJson() => {
-    'login_request_id': loginRequestId,
-    'email': email,
-    'code': code,
-  };
+  final String loginRequestId;
+  final String email;
+  final String code;
+
+  Map<String, dynamic> toJson() => _$VerifyRequestModelToJson(this);
 }
