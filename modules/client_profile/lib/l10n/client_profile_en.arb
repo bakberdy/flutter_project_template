@@ -63,5 +63,7 @@
   "userBlockedMessage": "Your account is blocked. Contact support if you think this is a mistake.",
   "userBlockedTitle": "Account blocked",
   "userDeletionRequestedMessage": "Your account deletion request is being processed. You cannot access the app while deletion is pending.",
-  "userDeletionRequestedTitle": "Deletion requested"
+  "userDeletionRequestedTitle": "Deletion requested",
+  "userDeletedTitle": "Your account has been deleted",
+  "userDeletedMessage": "This account has been permanently deleted. Sign in with another account to continue."
 }

@@ -360,6 +360,18 @@ abstract class ClientProfileLocalizations {
   /// In en, this message translates to:
   /// **'Deletion requested'**
   String get userDeletionRequestedTitle;
+
+  /// No description provided for @userDeletedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account has been deleted'**
+  String get userDeletedTitle;
+
+  /// No description provided for @userDeletedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'This account has been permanently deleted. Sign in with another account to continue.'**
+  String get userDeletedMessage;
 }
 
 class _ClientProfileLocalizationsDelegate

@@ -18,6 +18,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   UserBloc(this.getUserUseCase) : super(UserState()) {
     on<UserStartedEvent>((event, emit) => _getCurrentUser(emit));
+    on<UserLoggedOutEvent>(
+      (event, emit) => emit(UserState(status: StateStatus.success())),
+    );
   }
 
   ApiCancelToken? _getCurrentUserCancelToken;

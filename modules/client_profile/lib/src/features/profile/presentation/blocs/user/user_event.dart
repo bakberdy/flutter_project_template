@@ -7,3 +7,7 @@ sealed class UserEvent {
 final class UserStartedEvent extends UserEvent {
   const UserStartedEvent();
 }
+
+final class UserLoggedOutEvent extends UserEvent {
+  const UserLoggedOutEvent();
+}

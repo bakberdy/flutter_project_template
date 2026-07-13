@@ -153,4 +153,11 @@ class ClientProfileLocalizationsKk extends ClientProfileLocalizations {
 
   @override
   String get userDeletionRequestedTitle => 'Жою сұралды';
+
+  @override
+  String get userDeletedTitle => 'Аккаунтыңыз жойылды';
+
+  @override
+  String get userDeletedMessage =>
+      'Бұл аккаунт біржола жойылды. Жалғастыру үшін басқа аккаунтпен кіріңіз.';
 }

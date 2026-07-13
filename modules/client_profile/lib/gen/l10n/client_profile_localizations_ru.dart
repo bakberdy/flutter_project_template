@@ -153,4 +153,11 @@ class ClientProfileLocalizationsRu extends ClientProfileLocalizations {
 
   @override
   String get userDeletionRequestedTitle => 'Запрошено удаление';
+
+  @override
+  String get userDeletedTitle => 'Ваш аккаунт удалён';
+
+  @override
+  String get userDeletedMessage =>
+      'Этот аккаунт был окончательно удалён. Чтобы продолжить, войдите в другой аккаунт.';
 }

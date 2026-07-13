@@ -7,7 +7,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class UserDeletionRequestedScreen extends StatelessWidget {
-  const UserDeletionRequestedScreen({super.key});
+  const UserDeletionRequestedScreen({this.isDeleted = false, super.key});
+
+  final bool isDeleted;
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +28,17 @@ class UserDeletionRequestedScreen extends StatelessWidget {
               ),
               const SizedBox(height: DesignSpacing.lg),
               Text(
-                context.l10n.userDeletionRequestedTitle,
+                isDeleted
+                    ? context.l10n.userDeletedTitle
+                    : context.l10n.userDeletionRequestedTitle,
                 textAlign: TextAlign.center,
                 style: context.designTextTheme.headlineSmall,
               ),
               const SizedBox(height: DesignSpacing.sm),
               Text(
-                context.l10n.userDeletionRequestedMessage,
+                isDeleted
+                    ? context.l10n.userDeletedMessage
+                    : context.l10n.userDeletionRequestedMessage,
                 textAlign: TextAlign.center,
                 style: context.designTextTheme.bodyMedium,
               ),

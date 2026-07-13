@@ -122,7 +122,15 @@ class CollapsedTitle extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 12),
         child: fullName == null
             ? const SizedBox.shrink()
-            : Text(fullName!, style: context.designTextTheme.titleLarge),
+            : SizedBox(
+                width: 200,
+                child: Text(
+                  fullName!,
+                  style: context.designTextTheme.titleLarge?.copyWith(
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ),
       ),
     );
   }
@@ -152,48 +160,51 @@ class ExpandedHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 70, bottom: 12),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          UserAvatar(
-            fullName: fullName ?? '',
-            avatarUrl: avatarUrl,
-            baseUrl: context.di<CoreAppConfig>().baseUrl,
-            radius: 70,
-            loading: avatarLoading,
-            loadingProgress: avatarLoadingProgress,
-            onTap: onAvatarTap,
-          ),
-          const SizedBox(height: 8),
-          if (fullName != null)
-            Flexible(
-              child: Text(
-                fullName!,
-                style: context.designTextTheme.titleLarge?.copyWith(
-                  overflow: TextOverflow.ellipsis,
+      child: FittedBox(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            UserAvatar(
+              fullName: fullName ?? '',
+              avatarUrl: avatarUrl,
+              baseUrl: context.di<CoreAppConfig>().baseUrl,
+              radius: 70,
+              loading: avatarLoading,
+              loadingProgress: avatarLoadingProgress,
+              onTap: onAvatarTap,
+            ),
+            const SizedBox(height: 8),
+            if (fullName != null)
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 200),
+                child: Text(
+                  fullName!,
+                  style: context.designTextTheme.titleLarge?.copyWith(
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  maxLines: 1,
                 ),
-                maxLines: 1,
               ),
-            ),
-          if (email != null) ...[
-            const SizedBox(height: 4),
-            Text(
-              email!,
-              style: context.designTextTheme.bodyMedium?.copyWith(
-                color: context.designColors.onSurfaceVariant,
+            if (email != null) ...[
+              const SizedBox(height: 4),
+              Text(
+                email!,
+                style: context.designTextTheme.bodyMedium?.copyWith(
+                  color: context.designColors.onSurfaceVariant,
+                ),
               ),
-            ),
+            ],
+            if (phoneNumber != null) ...[
+              const SizedBox(height: 4),
+              Text(
+                phoneNumber!,
+                style: context.designTextTheme.bodyMedium?.copyWith(
+                  color: context.designColors.onSurfaceVariant,
+                ),
+              ),
+            ],
           ],
-          if (phoneNumber != null) ...[
-            const SizedBox(height: 4),
-            Text(
-              phoneNumber!,
-              style: context.designTextTheme.bodyMedium?.copyWith(
-                color: context.designColors.onSurfaceVariant,
-              ),
-            ),
-          ],
-        ],
+        ),
       ),
     );
   }

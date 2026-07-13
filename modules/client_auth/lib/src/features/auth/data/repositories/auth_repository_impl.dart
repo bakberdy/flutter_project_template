@@ -73,10 +73,11 @@ class AuthRepositoryImpl implements AuthRepository {
   FutureEither<void> logOut() async {
     try {
       await _remoteDataSource.logOut();
-      await _tokenStorage.clearTokens();
       return const Right(null);
     } on Exception catch (e) {
       return Left(await e.toFailure(source: '$runtimeType.logOut'));
+    } finally {
+      await _tokenStorage.clearTokens();
     }
   }
 }

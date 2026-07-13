@@ -63,5 +63,7 @@
   "userBlockedMessage": "Аккаунтыңыз бұғатталған. Бұл қате деп ойласаңыз, қолдау қызметіне хабарласыңыз.",
   "userBlockedTitle": "Аккаунт бұғатталған",
   "userDeletionRequestedMessage": "Аккаунтты жою сұрауы өңделіп жатыр. Жою аяқталғанша қолданбаға кіру мүмкін емес.",
-  "userDeletionRequestedTitle": "Жою сұралды"
+  "userDeletionRequestedTitle": "Жою сұралды",
+  "userDeletedTitle": "Аккаунтыңыз жойылды",
+  "userDeletedMessage": "Бұл аккаунт біржола жойылды. Жалғастыру үшін басқа аккаунтпен кіріңіз."
 }

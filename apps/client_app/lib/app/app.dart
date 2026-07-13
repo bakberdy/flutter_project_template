@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:client_app/app/theme/app_theme_scope.dart';
 import 'package:client_app/src/common/config/localization/app_localization_config.dart';
 import 'package:client_app/src/common/config/router/client_app_router.dart';
@@ -54,11 +56,7 @@ class _AppState extends State<App> {
               onAuthenticated: () {
                 _userBloc.add(const UserStartedEvent());
               },
-              onUnauthenticated: () {
-                _navigationBloc.add(
-                  CoreNavigationEvent.replaceAll([AuthWrapperRoute()]),
-                );
-              },
+              onUnauthenticated: _logout,
               onRefreshUser: () {
                 _userBloc.add(const UserStartedEvent());
               },
@@ -116,5 +114,14 @@ class _AppState extends State<App> {
       }
     }
     return AppLocalizationConfig.defaultLocale;
+  }
+
+  void _logout() {
+    unawaited(_logoutAndRefreshSession());
+  }
+
+  Future<void> _logoutAndRefreshSession() async {
+    await sl<AuthLogOutUseCase>()(const NoParams());
+    _userBloc.add(const UserLoggedOutEvent());
   }
 }

@@ -151,4 +151,11 @@ class ClientProfileLocalizationsEn extends ClientProfileLocalizations {
 
   @override
   String get userDeletionRequestedTitle => 'Deletion requested';
+
+  @override
+  String get userDeletedTitle => 'Your account has been deleted';
+
+  @override
+  String get userDeletedMessage =>
+      'This account has been permanently deleted. Sign in with another account to continue.';
 }

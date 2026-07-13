@@ -76,18 +76,55 @@ class UserDataRegistrationRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [UserDeletionRequestedScreen]
-class UserDeletionRequestedRoute extends PageRouteInfo<void> {
-  const UserDeletionRequestedRoute({List<PageRouteInfo>? children})
-    : super(UserDeletionRequestedRoute.name, initialChildren: children);
+class UserDeletionRequestedRoute
+    extends PageRouteInfo<UserDeletionRequestedRouteArgs> {
+  UserDeletionRequestedRoute({
+    bool isDeleted = false,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+         UserDeletionRequestedRoute.name,
+         args: UserDeletionRequestedRouteArgs(isDeleted: isDeleted, key: key),
+         initialChildren: children,
+       );
 
   static const String name = 'UserDeletionRequestedRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const UserDeletionRequestedScreen();
+      final args = data.argsAs<UserDeletionRequestedRouteArgs>(
+        orElse: () => const UserDeletionRequestedRouteArgs(),
+      );
+      return UserDeletionRequestedScreen(
+        isDeleted: args.isDeleted,
+        key: args.key,
+      );
     },
   );
+}
+
+class UserDeletionRequestedRouteArgs {
+  const UserDeletionRequestedRouteArgs({this.isDeleted = false, this.key});
+
+  final bool isDeleted;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'UserDeletionRequestedRouteArgs{isDeleted: $isDeleted, key: $key}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! UserDeletionRequestedRouteArgs) return false;
+    return isDeleted == other.isDeleted && key == other.key;
+  }
+
+  @override
+  int get hashCode => isDeleted.hashCode ^ key.hashCode;
 }
 
 /// generated route for

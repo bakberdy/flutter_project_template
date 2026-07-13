@@ -28,8 +28,8 @@ class RootNavigationScreen extends StatelessWidget {
 
     return switch (user.status) {
       UserStatus.blocked => const UserBlockedRoute(),
-      UserStatus.deletionRequested ||
-      UserStatus.deleted => const UserDeletionRequestedRoute(),
+      UserStatus.deletionRequested => UserDeletionRequestedRoute(),
+      UserStatus.deleted => UserDeletionRequestedRoute(isDeleted: true),
       UserStatus.active =>
         user.isUserDataUploaded
             ? const MainNavigationRoute()
