@@ -126,7 +126,7 @@ class UserDeletionRequestedRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [UserProfileEditScreen]
+/// [UserProfileEditView]
 class UserProfileEditRoute extends PageRouteInfo<UserProfileEditRouteArgs> {
   UserProfileEditRoute({
     Key? key,
@@ -152,7 +152,7 @@ class UserProfileEditRoute extends PageRouteInfo<UserProfileEditRouteArgs> {
         orElse: () => const UserProfileEditRouteArgs(),
       );
       return WrappedRoute(
-        child: UserProfileEditScreen(
+        child: UserProfileEditView(
           key: args.key,
           showAppBar: args.showAppBar,
           showLogoutAction: args.showLogoutAction,

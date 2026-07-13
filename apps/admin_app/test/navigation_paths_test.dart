@@ -16,8 +16,6 @@ void main() {
     AdminAppNavigationPaths.home: AdminDashboardRoute.name,
     AdminAppNavigationPaths.users: UsersRoute.name,
     AdminAppNavigationPaths.user('user-1'): UserRoute.name,
-    AdminAppNavigationPaths.innerOne: AdminInnerOneRoute.name,
-    AdminAppNavigationPaths.innerTwo: AdminInnerTwoRoute.name,
     '/${AdminProfileNavigationPaths.register}': UserDataRegistrationRoute.name,
     '/${AdminProfileNavigationPaths.blocked}': UserBlockedRoute.name,
     '/${AdminProfileNavigationPaths.deletionRequested}':

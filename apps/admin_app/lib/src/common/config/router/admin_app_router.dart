@@ -1,10 +1,7 @@
-import 'package:admin_app/src/common/config/router/admin_app_navigation_paths.dart';
 import 'package:admin_app/src/features/app_navigation/presentation/screens/admin_dashboard_screen.dart';
 import 'package:admin_app/src/features/app_navigation/presentation/screens/admin_auth_wrapper_screen.dart';
-import 'package:admin_app/src/features/app_navigation/presentation/screens/admin_inner_screen.dart';
 import 'package:admin_app/src/features/app_navigation/presentation/screens/admin_sign_in_screen.dart';
 import 'package:admin_app/src/features/app_navigation/presentation/screens/admin_otp_screen.dart';
-import 'package:admin_app/src/features/app_navigation/presentation/screens/admin_settings_screen.dart';
 import 'package:admin_app/src/features/app_navigation/presentation/screens/main_navigation_screen.dart';
 import 'package:admin_app/src/features/app_navigation/presentation/screens/root_navigation_screen.dart';
 import 'package:admin_app/src/features/app_navigation/presentation/screens/splash_screen.dart';
@@ -39,14 +36,6 @@ class AdminAppRouter extends RootStackRouter {
           children: [
             AutoRoute(page: AdminDashboardRoute.page, path: '', initial: true),
             ...AdminUsersRouter().routes,
-            AutoRoute(
-              page: AdminInnerOneRoute.page,
-              path: AdminAppNavigationPaths.innerOneSegment,
-            ),
-            AutoRoute(
-              page: AdminInnerTwoRoute.page,
-              path: AdminAppNavigationPaths.innerTwoSegment,
-            ),
           ],
         ),
       ],

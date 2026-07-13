@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:core/core.dart';
 import 'package:admin_profile/src/common/admin_profile_context_x.dart';
 import 'package:admin_profile/src/common/config/admin_profile_constants.dart';
@@ -9,30 +8,14 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-@RoutePage()
-class UserProfileEditScreen extends StatefulWidget implements AutoRouteWrapper {
-  const UserProfileEditScreen({
-    super.key,
-    this.showAppBar = true,
-    this.showLogoutAction = true,
-  });
-
-  final bool showAppBar;
-  final bool showLogoutAction;
+class UserProfileEditView extends StatefulWidget {
+  const UserProfileEditView({super.key});
 
   @override
-  Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(
-      create: (context) => context.di<UserProfileEditBloc>(),
-      child: this,
-    );
-  }
-
-  @override
-  State<UserProfileEditScreen> createState() => _UserProfileEditScreenState();
+  State<UserProfileEditView> createState() => _UserProfileEditViewState();
 }
 
-class _UserProfileEditScreenState extends State<UserProfileEditScreen>
+class _UserProfileEditViewState extends State<UserProfileEditView>
     with UiFailureHandlerMixin {
   final phoneFieldLayerLink = LayerLink();
   final fullNameController = TextEditingController();
@@ -86,7 +69,6 @@ class _UserProfileEditScreenState extends State<UserProfileEditScreen>
         canSaveChanges: editState.canSaveChanges,
         accountDeletionStatus: profileState.accountDeletionStatus,
         avatarUrl: profileState.profile?.avatarUrl,
-        showAppBar: widget.showAppBar,
         showPhoneVerificationPrompt:
             false, //editState.showPhoneVerificationPrompt,
         showPhoneVerified: false, //editState.showPhoneVerified,
@@ -102,7 +84,6 @@ class _UserProfileEditScreenState extends State<UserProfileEditScreen>
         onPhoneNumberChanged: _onPhoneNumberChanged,
         onCountryCodeTap: _showCountryCodeOverlay,
         onSavePressed: _onSavePressed,
-        onLogoutPressed: widget.showLogoutAction ? _onLogoutPressed : null,
         onRemoveAccountPressed: _onRemoveAccountPressed,
         onVerifyPhonePressed: () => _onVerifyPhonePressed(editState),
         onPopDiscardRequested: _showDiscardChangesDialog,
@@ -201,25 +182,6 @@ class _UserProfileEditScreenState extends State<UserProfileEditScreen>
     context.read<UserProfileEditBloc>().add(
       const UserProfileEditEvent.saveChangesRequested(),
     );
-  }
-
-  Future<void> _onLogoutPressed() async {
-    final accepted = await BaseDialog.show<bool>(
-      context,
-      title: context.l10n.profileEditLogoutDialogTitle,
-      description: context.l10n.profileEditLogoutDialogMessage,
-      primaryLabel: context.l10n.profileEditLogout,
-      secondaryLabel: context.l10n.dismiss,
-      primaryValue: true,
-      secondaryValue: false,
-      primaryFirst: true,
-    );
-    if (accepted == true && mounted) {
-      Navigator.of(context).pop();
-      context.read<CoreNavigationBloc>().add(
-        const CoreNavigationEvent.unAuthenticated(),
-      );
-    }
   }
 
   Future<void> _onRemoveAccountPressed() async {

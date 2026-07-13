@@ -43,38 +43,6 @@ class AdminDashboardRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [AdminInnerOneScreen]
-class AdminInnerOneRoute extends PageRouteInfo<void> {
-  const AdminInnerOneRoute({List<PageRouteInfo>? children})
-    : super(AdminInnerOneRoute.name, initialChildren: children);
-
-  static const String name = 'AdminInnerOneRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const AdminInnerOneScreen();
-    },
-  );
-}
-
-/// generated route for
-/// [AdminInnerTwoScreen]
-class AdminInnerTwoRoute extends PageRouteInfo<void> {
-  const AdminInnerTwoRoute({List<PageRouteInfo>? children})
-    : super(AdminInnerTwoRoute.name, initialChildren: children);
-
-  static const String name = 'AdminInnerTwoRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const AdminInnerTwoScreen();
-    },
-  );
-}
-
-/// generated route for
 /// [AdminOtpScreen]
 class AdminOtpRoute extends PageRouteInfo<void> {
   const AdminOtpRoute({List<PageRouteInfo>? children})
@@ -86,22 +54,6 @@ class AdminOtpRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const AdminOtpScreen();
-    },
-  );
-}
-
-/// generated route for
-/// [AdminSettingsScreen]
-class AdminSettingsRoute extends PageRouteInfo<void> {
-  const AdminSettingsRoute({List<PageRouteInfo>? children})
-    : super(AdminSettingsRoute.name, initialChildren: children);
-
-  static const String name = 'AdminSettingsRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const AdminSettingsScreen();
     },
   );
 }

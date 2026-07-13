@@ -7,6 +7,10 @@ class AdminDashboardScreen extends StatelessWidget {
   const AdminDashboardScreen({super.key});
 
   @override
-  Widget build(BuildContext context) =>
-      Scaffold(body: Center(child: Text(context.l10n.dashboard)));
+  Widget build(BuildContext context) => Center(
+    child: Text(
+      context.l10n.dashboard,
+      style: Theme.of(context).textTheme.headlineMedium,
+    ),
+  );
 }

@@ -18,6 +18,7 @@ class BaseDialog {
     bool primaryFirst = false,
     bool barrierDismissible = true,
     double? width,
+    double? height,
     VoidCallback? onPop,
   }) {
     return showDialog<T>(
@@ -29,9 +30,9 @@ class BaseDialog {
             horizontal: DesignSpacing.lg,
             vertical: DesignSpacing.lg,
           ),
-          constraints: width == null
+          constraints: width == null && height == null
               ? null
-              : BoxConstraints.tightFor(width: width),
+              : BoxConstraints.tightFor(width: width, height: height),
           title: title == null
               ? null
               : Row(

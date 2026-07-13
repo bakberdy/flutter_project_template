@@ -103,12 +103,6 @@ abstract class AdminAppLocalizations {
     Locale('ru'),
   ];
 
-  /// No description provided for @adminPanel.
-  ///
-  /// In en, this message translates to:
-  /// **'Admin Panel'**
-  String get adminPanel;
-
   /// No description provided for @dashboard.
   ///
   /// In en, this message translates to:
@@ -121,107 +115,11 @@ abstract class AdminAppLocalizations {
   /// **'Users'**
   String get users;
 
-  /// No description provided for @settings.
-  ///
-  /// In en, this message translates to:
-  /// **'Settings'**
-  String get settings;
-
   /// No description provided for @logout.
   ///
   /// In en, this message translates to:
   /// **'Log out'**
   String get logout;
-
-  /// No description provided for @signInTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign in to Admin Panel'**
-  String get signInTitle;
-
-  /// No description provided for @signInHero.
-  ///
-  /// In en, this message translates to:
-  /// **'Manage your product from one secure workspace.'**
-  String get signInHero;
-
-  /// No description provided for @signInEmailDescription.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter your administrator email to continue.'**
-  String get signInEmailDescription;
-
-  /// No description provided for @signInOtpDescription.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter the verification code sent to {email}.'**
-  String signInOtpDescription(String email);
-
-  /// No description provided for @email.
-  ///
-  /// In en, this message translates to:
-  /// **'Email'**
-  String get email;
-
-  /// No description provided for @continueLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Continue'**
-  String get continueLabel;
-
-  /// No description provided for @signIn.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign in'**
-  String get signIn;
-
-  /// No description provided for @backToEmail.
-  ///
-  /// In en, this message translates to:
-  /// **'Use another email'**
-  String get backToEmail;
-
-  /// No description provided for @usersCardDescription.
-  ///
-  /// In en, this message translates to:
-  /// **'Review accounts, roles and access states.'**
-  String get usersCardDescription;
-
-  /// No description provided for @security.
-  ///
-  /// In en, this message translates to:
-  /// **'Security'**
-  String get security;
-
-  /// No description provided for @securityCardDescription.
-  ///
-  /// In en, this message translates to:
-  /// **'Monitor administrator access and sessions.'**
-  String get securityCardDescription;
-
-  /// No description provided for @systemStatus.
-  ///
-  /// In en, this message translates to:
-  /// **'System status'**
-  String get systemStatus;
-
-  /// No description provided for @systemStatusCardDescription.
-  ///
-  /// In en, this message translates to:
-  /// **'Track the health of connected services.'**
-  String get systemStatusCardDescription;
-
-  /// No description provided for @language.
-  ///
-  /// In en, this message translates to:
-  /// **'Language'**
-  String get language;
-
-  /// No description provided for @languageDescription.
-  ///
-  /// In en, this message translates to:
-  /// **'The interface follows your saved language preference.'**
-  String get languageDescription;
 
   /// No description provided for @editProfile.
   ///
@@ -247,29 +145,11 @@ abstract class AdminAppLocalizations {
   /// **'Devices'**
   String get devices;
 
-  /// No description provided for @appearance.
+  /// No description provided for @language.
   ///
   /// In en, this message translates to:
-  /// **'Appearance'**
-  String get appearance;
-
-  /// No description provided for @moreExamples.
-  ///
-  /// In en, this message translates to:
-  /// **'More examples'**
-  String get moreExamples;
-
-  /// No description provided for @innerItemOne.
-  ///
-  /// In en, this message translates to:
-  /// **'Inner item 1'**
-  String get innerItemOne;
-
-  /// No description provided for @innerItemTwo.
-  ///
-  /// In en, this message translates to:
-  /// **'Inner item 2'**
-  String get innerItemTwo;
+  /// **'Language'**
+  String get language;
 
   /// No description provided for @logoutTitle.
   ///

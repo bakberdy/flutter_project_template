@@ -12,7 +12,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-  auto_route: ^11.1.0
   core:
     path: ../core
   design_system:
@@ -27,7 +26,6 @@ dependencies:
   json_annotation: ^4.12.0
 
 dev_dependencies:
-  auto_route_generator: ^10.5.0
   build_runner: ^2.13.0
   flutter_gen_runner: ^5.13.0+1
   flutter_test:

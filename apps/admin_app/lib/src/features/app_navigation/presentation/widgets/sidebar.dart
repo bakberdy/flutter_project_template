@@ -7,27 +7,27 @@ import 'package:flutter/material.dart';
 class Sidebar extends StatelessWidget {
   const Sidebar({
     required this.pages,
+    required this.onLogout,
+    required this.onPageChanged,
+    required this.onEditProfileTapped,
+    required this.onNotificationsTapped,
+    required this.onPreferencesTapped,
+    required this.onDevicesTapped,
     super.key,
-    this.onLogout,
     this.selectedRoutePath,
-    this.onPageChanged,
-    this.onEditProfileTapped,
-    this.onNotificationsTapped,
-    this.onPreferencesTapped,
-    this.onDevicesTapped,
     this.userEmail,
     this.userFullName,
     this.userAvatarUrl,
   });
 
   final List<SidebarItem> pages;
-  final VoidCallback? onLogout;
-  final void Function(String routePath)? onPageChanged;
+  final VoidCallback onLogout;
+  final ValueChanged<String> onPageChanged;
   final String? selectedRoutePath;
-  final VoidCallback? onEditProfileTapped;
-  final VoidCallback? onNotificationsTapped;
-  final VoidCallback? onPreferencesTapped;
-  final VoidCallback? onDevicesTapped;
+  final VoidCallback onEditProfileTapped;
+  final VoidCallback onNotificationsTapped;
+  final VoidCallback onPreferencesTapped;
+  final VoidCallback onDevicesTapped;
   final String? userEmail;
   final String? userFullName;
   final String? userAvatarUrl;
@@ -43,39 +43,8 @@ class Sidebar extends StatelessWidget {
             itemCount: pages.length,
             itemBuilder: (context, index) {
               final page = pages[index];
-              final subItems = page.subItems;
               final isSelected = selectedRoutePath == page.routePath;
-              if (subItems == null) {
-                return ListTile(
-                  shape: Border(
-                    left: BorderSide(
-                      color: isSelected
-                          ? context.designColors.primary
-                          : Colors.transparent,
-                      width: 4,
-                    ),
-                  ),
-                  title: Text(
-                    page.name,
-                    style: context.designTextTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: isSelected
-                          ? context.designColors.primary
-                          : context.designColors.onSurface,
-                    ),
-                  ),
-                  leading: page.icon,
-                  selected: isSelected,
-                  onTap: () {
-                    final routePath = page.routePath;
-                    if (routePath != null) {
-                      onPageChanged?.call(routePath);
-                    }
-                  },
-                );
-              }
-
-              return ExpansionTile(
+              return ListTile(
                 shape: Border(
                   left: BorderSide(
                     color: isSelected
@@ -84,7 +53,6 @@ class Sidebar extends StatelessWidget {
                     width: 4,
                   ),
                 ),
-                leading: page.icon,
                 title: Text(
                   page.name,
                   style: context.designTextTheme.titleMedium?.copyWith(
@@ -94,23 +62,9 @@ class Sidebar extends StatelessWidget {
                         : context.designColors.onSurface,
                   ),
                 ),
-                children: subItems
-                    .map(
-                      (subPage) => Padding(
-                        padding: const EdgeInsets.only(left: 40),
-                        child: ListTile(
-                          title: Text(subPage.name),
-                          leading: subPage.icon,
-                          onTap: () {
-                            final routePath = subPage.routePath;
-                            if (routePath != null) {
-                              onPageChanged?.call(routePath);
-                            }
-                          },
-                        ),
-                      ),
-                    )
-                    .toList(growable: false),
+                leading: page.icon,
+                selected: isSelected,
+                onTap: () => onPageChanged(page.routePath),
               );
             },
           ),

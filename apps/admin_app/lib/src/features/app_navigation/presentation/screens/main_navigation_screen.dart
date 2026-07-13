@@ -12,183 +12,114 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
-class MainNavigationScreen extends StatefulWidget {
+class MainNavigationScreen extends StatelessWidget {
   const MainNavigationScreen({super.key});
 
   @override
-  State<MainNavigationScreen> createState() => _MainNavigationScreenState();
-}
+  Widget build(BuildContext context) => AutoTabsRouter(
+    routes: [const AdminDashboardRoute(), adminUsersShellRoute()],
+    builder: (context, child) {
+      final tabsRouter = context.tabsRouter;
+      final userEmail = context.select<UserBloc, String?>(
+        (bloc) => bloc.state.user?.email,
+      );
+      final profile = context.select<UserProfileBloc, UserProfile?>(
+        (bloc) => bloc.state.profile,
+      );
 
-class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  late final List<PageRouteInfo<dynamic>> _tabPageRoutes = [
-    const AdminDashboardRoute(),
-    adminUsersShellRoute(),
-    const AdminInnerOneRoute(),
-    const AdminInnerTwoRoute(),
-  ];
-
-  late final List<SidebarItem> _tabRoutes = [
-    SidebarItem(
-      name: context.l10n.dashboard,
-      icon: const Icon(Icons.home_outlined),
-      routePath: 'home',
-    ),
-    SidebarItem(
-      name: context.l10n.users,
-      icon: const Icon(Icons.people_outline),
-      routePath: 'users',
-    ),
-    SidebarItem(
-      name: context.l10n.moreExamples,
-      icon: const Icon(Icons.home_outlined),
-      subItems: [
-        SidebarItem(
-          name: context.l10n.innerItemOne,
-          icon: const Icon(Icons.home_outlined),
-          routePath: 'inner1',
-        ),
-        SidebarItem(
-          name: context.l10n.innerItemTwo,
-          icon: const Icon(Icons.home_outlined),
-          routePath: 'inner2',
-        ),
-      ],
-    ),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    return AutoTabsRouter(
-      routes: _tabPageRoutes,
-      builder: (context, child) {
-        final tabsRouter = context.tabsRouter;
-        final userEmail = context.select<UserBloc, String?>(
-          (bloc) => bloc.state.user?.email,
-        );
-        final profile = context.select<UserProfileBloc, UserProfile?>(
-          (bloc) => bloc.state.profile,
-        );
-
-        return Material(
-          child: Row(
-            children: [
-              Expanded(
-                flex: 1,
-                child: Sidebar(
-                  userEmail: userEmail,
-                  userFullName: profile?.fullName,
-                  userAvatarUrl: profile?.avatarUrl,
-                  onEditProfileTapped: () async {
-                    await BaseDialog.show<void>(
-                      context,
-                      title: l10n.editProfile,
-                      width: 600,
-                      body: SizedBox(
-                        height: 650,
-                        width: 600,
-                        child: MultiBlocProvider(
-                          providers: [
-                            BlocProvider(
-                              create: (context) =>
-                                  context.di<UserProfileBloc>()
-                                    ..add(const UserProfileEvent.started()),
-                            ),
-                            BlocProvider(
-                              create: (context) =>
-                                  context.di<UserProfileEditBloc>(),
-                            ),
-                          ],
-                          child: const UserProfileEditDialogView(),
-                        ),
-                      ),
-                    );
-                    if (context.mounted) {
-                      context.read<UserProfileBloc>().add(
-                        const UserProfileEvent.started(),
-                      );
-                    }
-                  },
-                  onNotificationsTapped: () => BaseDialog.show<void>(
-                    context,
-                    title: l10n.notifications,
-                    width: 600,
-                    body: const SizedBox(
-                      height: 650,
-                      width: 600,
-                      child: NotificationsDialogView(),
-                    ),
-                  ),
-                  onPreferencesTapped: () => BaseDialog.show<void>(
-                    context,
-                    title: l10n.preferences,
-                    width: 600,
-                    body: const SizedBox(
-                      height: 650,
-                      width: 600,
-                      child: PreferencesDialogView(),
-                    ),
-                  ),
-                  onDevicesTapped: () => BaseDialog.show<void>(
-                    context,
-                    title: l10n.devices,
-                    width: 600,
-                    body: const SizedBox(
-                      height: 650,
-                      width: 600,
-                      child: DevicesDialogView(),
-                    ),
-                  ),
-                  pages: _tabRoutes,
-                  onPageChanged: (routePath) {
-                    final index = _tabIndexForRoutePath(routePath);
-                    if (index != null) {
-                      tabsRouter.setActiveIndex(index);
-                    }
-                  },
-                  selectedRoutePath: _routePathForTabIndex(
-                    tabsRouter.activeIndex,
-                  ),
-                  onLogout: () => _onLogoutPressed(context),
+      return Scaffold(
+        body: Row(
+          children: [
+            SizedBox(
+              width: 280,
+              child: Sidebar(
+                userEmail: userEmail,
+                userFullName: profile?.fullName,
+                userAvatarUrl: profile?.avatarUrl,
+                onEditProfileTapped: () => _showEditProfileDialog(context),
+                onNotificationsTapped: () => BaseDialog.show<void>(
+                  context,
+                  title: context.l10n.notifications,
+                  width: 600,
+                  height: 650,
+                  body: const NotificationsDialogView(),
                 ),
-              ),
-              VerticalDivider(width: 1, color: context.designColors.outline),
-              Expanded(
-                flex: 5,
-                child: Scaffold(
-                  appBar: AppBar(
-                    title: Text('main -> ${tabsRouter.current.path}'),
-                    shape: Border(
-                      bottom: BorderSide(color: context.designColors.outline),
-                    ),
-                  ),
-                  body: child,
+                onPreferencesTapped: () => BaseDialog.show<void>(
+                  context,
+                  title: context.l10n.preferences,
+                  width: 600,
+                  height: 650,
+                  body: const PreferencesDialogView(),
                 ),
+                onDevicesTapped: () => BaseDialog.show<void>(
+                  context,
+                  title: context.l10n.devices,
+                  width: 600,
+                  height: 650,
+                  body: const DevicesDialogView(),
+                ),
+                pages: [
+                  SidebarItem(
+                    name: context.l10n.dashboard,
+                    icon: const Icon(Icons.home_outlined),
+                    routePath: 'home',
+                  ),
+                  SidebarItem(
+                    name: context.l10n.users,
+                    icon: const Icon(Icons.people_outline),
+                    routePath: 'users',
+                  ),
+                ],
+                onPageChanged: (routePath) {
+                  final index = switch (routePath) {
+                    'home' => 0,
+                    'users' => 1,
+                    _ => null,
+                  };
+                  if (index != null) {
+                    tabsRouter.setActiveIndex(index);
+                  }
+                },
+                selectedRoutePath: switch (tabsRouter.activeIndex) {
+                  0 => 'home',
+                  1 => 'users',
+                  _ => null,
+                },
+                onLogout: () => _showLogoutDialog(context),
               ),
-            ],
+            ),
+            VerticalDivider(width: 1, color: context.designColors.outline),
+            Expanded(child: child),
+          ],
+        ),
+      );
+    },
+  );
+
+  Future<void> _showEditProfileDialog(BuildContext context) async {
+    await BaseDialog.show<void>(
+      context,
+      title: context.l10n.editProfile,
+      width: 600,
+      height: 650,
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) =>
+                context.di<UserProfileBloc>()
+                  ..add(const UserProfileEvent.started()),
           ),
-        );
-      },
+          BlocProvider(create: (context) => context.di<UserProfileEditBloc>()),
+        ],
+        child: const UserProfileEditView(),
+      ),
     );
+    if (context.mounted) {
+      context.read<UserProfileBloc>().add(const UserProfileEvent.started());
+    }
   }
 
-  int? _tabIndexForRoutePath(String routePath) => switch (routePath) {
-    'home' => 0,
-    'users' => 1,
-    'inner1' => 2,
-    'inner2' => 3,
-    _ => null,
-  };
-
-  String? _routePathForTabIndex(int index) => switch (index) {
-    0 => 'home',
-    1 => 'users',
-    2 => 'inner1',
-    3 => 'inner2',
-    _ => null,
-  };
-
-  Future<void> _onLogoutPressed(BuildContext context) async {
+  Future<void> _showLogoutDialog(BuildContext context) async {
     final accepted = await BaseDialog.show<bool>(
       context,
       title: context.l10n.logoutTitle,

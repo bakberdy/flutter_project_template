@@ -31,7 +31,6 @@ class UserProfileEditForm extends StatelessWidget {
     this.showPhoneVerified = false,
     this.isInitialLoading = false,
     this.avatarUrl,
-    this.showAppBar = true,
   });
 
   final FieldState<String> fullName;
@@ -57,17 +56,124 @@ class UserProfileEditForm extends StatelessWidget {
   final Future<bool?> Function() onPopDiscardRequested;
   final bool isInitialLoading;
   final String? avatarUrl;
-  final bool showAppBar;
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
     if (isInitialLoading && fullNameController.text.isEmpty) {
-      return showAppBar
-          ? const Scaffold(body: Center(child: CircularProgressIndicator()))
-          : const Center(child: CircularProgressIndicator());
+      return const Center(child: CircularProgressIndicator());
     }
+
+    final body = Stack(
+      children: [
+        Positioned.fill(
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () {
+              FocusScope.of(context).unfocus();
+              onDismissOverlay();
+            },
+            child: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      top: DesignSpacing.xl,
+                      bottom: DesignSpacing.lg,
+                    ),
+                    child: Center(
+                      child: UserAvatar(
+                        fullName: fullName.value,
+                        avatarUrl: avatarUrl,
+                        baseUrl: context.di<CoreAppConfig>().baseUrl,
+                        radius: 44,
+                      ),
+                    ),
+                  ),
+                ),
+                SliverPadding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: DesignSpacing.md,
+                  ),
+                  sliver: SliverList(
+                    delegate: SliverChildListDelegate([
+                      Text(
+                        l10n.profileEditFullNameLabel,
+                        style: context.designTextTheme.labelLarge,
+                      ),
+                      const SizedBox(height: DesignSpacing.xs),
+                      UserProfileFullNameTextField(
+                        controller: fullNameController,
+                        errorText: fullName.error,
+                        onChanged: onFullNameChanged,
+                      ),
+                      const SizedBox(height: DesignSpacing.md),
+                      Text(
+                        l10n.profileEditPhoneNumberLabel,
+                        style: context.designTextTheme.labelLarge,
+                      ),
+                      const SizedBox(height: DesignSpacing.xs),
+                      BasePhoneNumberTextField(
+                        labelText: l10n.profileEditPhoneNumberLabel,
+                        showVerificationPrompt: showPhoneVerificationPrompt,
+                        showVerified: showPhoneVerified,
+                        verifiedLabel: l10n.profileEditPhoneVerified,
+                        verificationPromptLabel:
+                            l10n.profileEditPhoneVerificationPrompt,
+                        verifyActionLabel: l10n.profileEditVerifyNow,
+                        errorText: mapPhoneNumberErrorText(
+                          context,
+                          phoneNumber.error,
+                        ),
+                        onVerifyTap: onVerifyPhonePressed,
+                        controller: phoneNumberController,
+                        onChanged: onPhoneNumberChanged,
+                        layerLink: phoneFieldLayerLink,
+                        dialCode: dialCode,
+                        onCountryCodeTap: onCountryCodeTap,
+                      ),
+                      if (onLogoutPressed != null ||
+                          onRemoveAccountPressed != null) ...[
+                        const SizedBox(height: DesignSpacing.xl),
+                        if (onLogoutPressed != null)
+                          BaseButton.secondary(
+                            onPressed: onLogoutPressed,
+                            label: l10n.profileEditLogout,
+                            leadingIcon: const Icon(Icons.logout),
+                          ),
+                        if (onLogoutPressed != null &&
+                            onRemoveAccountPressed != null)
+                          const SizedBox(height: DesignSpacing.sm),
+                        if (onRemoveAccountPressed != null)
+                          BaseButton.destructive(
+                            onPressed: onRemoveAccountPressed,
+                            label: l10n.profileEditRemoveAccount,
+                            leadingIcon: const Icon(Icons.delete_outline),
+                            loading: accountDeletionStatus.isLoading,
+                          ),
+                      ],
+                      const SizedBox(height: 96),
+                    ]),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Positioned(
+          left: DesignSpacing.md,
+          right: DesignSpacing.md,
+          bottom: DesignSpacing.md,
+          child: BaseButton.primary(
+            onPressed: onSavePressed,
+            disabled: !canSaveChanges,
+            loading: saveStatus.isLoading,
+            label: l10n.profileEditSaveChanges,
+          ),
+        ),
+      ],
+    );
 
     return PopScope(
       canPop: !hasUnsavedChanges,
@@ -84,111 +190,7 @@ class UserProfileEditForm extends StatelessWidget {
           Navigator.of(context).pop();
         }
       },
-      child: Scaffold(
-        appBar: showAppBar ? AppBar(title: Text(l10n.profileEditTitle)) : null,
-        body: GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () {
-            FocusScope.of(context).unfocus();
-            onDismissOverlay();
-          },
-          child: CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    top: DesignSpacing.xl,
-                    bottom: DesignSpacing.lg,
-                  ),
-                  child: Center(
-                    child: UserAvatar(
-                      fullName: fullName.value,
-                      avatarUrl: avatarUrl,
-                      baseUrl: context.di<CoreAppConfig>().baseUrl,
-                      radius: 44,
-                    ),
-                  ),
-                ),
-              ),
-              SliverPadding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: DesignSpacing.md,
-                ),
-                sliver: SliverList(
-                  delegate: SliverChildListDelegate([
-                    Text(
-                      l10n.profileEditFullNameLabel,
-                      style: context.designTextTheme.labelLarge,
-                    ),
-                    const SizedBox(height: DesignSpacing.xs),
-                    UserProfileFullNameTextField(
-                      controller: fullNameController,
-                      errorText: fullName.error,
-                      onChanged: onFullNameChanged,
-                    ),
-                    const SizedBox(height: DesignSpacing.md),
-                    Text(
-                      l10n.profileEditPhoneNumberLabel,
-                      style: context.designTextTheme.labelLarge,
-                    ),
-                    const SizedBox(height: DesignSpacing.xs),
-                    BasePhoneNumberTextField(
-                      labelText: l10n.profileEditPhoneNumberLabel,
-                      showVerificationPrompt: showPhoneVerificationPrompt,
-                      showVerified: showPhoneVerified,
-                      verifiedLabel: l10n.profileEditPhoneVerified,
-                      verificationPromptLabel:
-                          l10n.profileEditPhoneVerificationPrompt,
-                      verifyActionLabel: l10n.profileEditVerifyNow,
-                      errorText: mapPhoneNumberErrorText(
-                        context,
-                        phoneNumber.error,
-                      ),
-                      onVerifyTap: onVerifyPhonePressed,
-                      controller: phoneNumberController,
-                      onChanged: onPhoneNumberChanged,
-                      layerLink: phoneFieldLayerLink,
-                      dialCode: dialCode,
-                      onCountryCodeTap: onCountryCodeTap,
-                    ),
-                    if (onLogoutPressed != null ||
-                        onRemoveAccountPressed != null) ...[
-                      const SizedBox(height: DesignSpacing.xl),
-                      if (onLogoutPressed != null)
-                        BaseButton.secondary(
-                          onPressed: onLogoutPressed,
-                          label: l10n.profileEditLogout,
-                          leadingIcon: const Icon(Icons.logout),
-                        ),
-                      if (onLogoutPressed != null &&
-                          onRemoveAccountPressed != null)
-                        const SizedBox(height: DesignSpacing.sm),
-                      if (onRemoveAccountPressed != null)
-                        BaseButton.destructive(
-                          onPressed: onRemoveAccountPressed,
-                          label: l10n.profileEditRemoveAccount,
-                          leadingIcon: const Icon(Icons.delete_outline),
-                          loading: accountDeletionStatus.isLoading,
-                        ),
-                    ],
-                    const SizedBox(height: 96),
-                  ]),
-                ),
-              ),
-            ],
-          ),
-        ),
-        floatingActionButton: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: DesignSpacing.md),
-          child: BaseButton.primary(
-            onPressed: onSavePressed,
-            disabled: !canSaveChanges,
-            loading: saveStatus.isLoading,
-            label: l10n.profileEditSaveChanges,
-          ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      ),
+      child: body,
     );
   }
 }
