@@ -11,6 +11,7 @@ class CoreNavigationBloc
     extends Bloc<CoreNavigationEvent, CoreNavigationState> {
   CoreNavigationBloc() : super(const CoreNavigationState()) {
     on<_PushRequested>(_onPushRequested);
+    on<_NavigatePathRequested>(_onNavigatePathRequested);
     on<_ReplaceRequested>(_onReplaceRequested);
     on<_ReplaceAllRequested>(_onReplaceAllRequested);
     on<_PopRequested>(_onPopRequested);
@@ -37,6 +38,24 @@ class CoreNavigationBloc
           CoreNavigationCommand.push(
             id: _createCommandId(),
             route: event.route,
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _onNavigatePathRequested(
+    _NavigatePathRequested event,
+    Emitter<CoreNavigationState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        pendingCommands: [
+          ...state.pendingCommands,
+          CoreNavigationCommand.navigatePath(
+            id: _createCommandId(),
+            path: event.path,
+            includePrefixMatches: event.includePrefixMatches,
           ),
         ],
       ),

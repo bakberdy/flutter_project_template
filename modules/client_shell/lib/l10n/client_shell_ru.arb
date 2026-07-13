@@ -1,0 +1,11 @@
+{
+  "@@locale": "ru",
+  "home": "Главная",
+  "profile": "Профиль",
+  "homeItem": "Элемент {number}",
+  "@homeItem": {
+    "placeholders": {
+      "number": {"type": "int"}
+    }
+  }
+}

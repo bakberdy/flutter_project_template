@@ -45,6 +45,13 @@ class CoreNavigationListener extends StatelessWidget {
     switch (command) {
       case PushNavigationCommand(:final route):
         unawaited(router.push(route));
+      case NavigatePathNavigationCommand(
+        :final path,
+        :final includePrefixMatches,
+      ):
+        unawaited(
+          router.navigatePath(path, includePrefixMatches: includePrefixMatches),
+        );
       case ReplaceNavigationCommand(:final route):
         unawaited(router.popAndPush(route));
       case ReplaceAllNavigationCommand(:final routes):

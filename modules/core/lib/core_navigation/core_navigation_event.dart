@@ -5,6 +5,11 @@ sealed class CoreNavigationEvent with _$CoreNavigationEvent {
   const factory CoreNavigationEvent.push(PageRouteInfo<dynamic> route) =
       _PushRequested;
 
+  const factory CoreNavigationEvent.navigatePath(
+    String path, {
+    @Default(false) bool includePrefixMatches,
+  }) = _NavigatePathRequested;
+
   const factory CoreNavigationEvent.replace(PageRouteInfo<dynamic> route) =
       _ReplaceRequested;
 

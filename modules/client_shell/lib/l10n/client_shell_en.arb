@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "home": "Home",
+  "profile": "Profile",
+  "homeItem": "Home item {number}",
+  "@homeItem": {
+    "placeholders": {
+      "number": {"type": "int"}
+    }
+  }
+}

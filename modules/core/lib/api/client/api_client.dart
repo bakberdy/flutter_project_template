@@ -11,6 +11,7 @@ import '../models/api_progress_callback.dart';
 import '../models/api_response.dart';
 import '../storage/token_storage.dart';
 import 'api_config.dart';
+import 'api_request_headers_provider.dart';
 
 part 'api_client_factory.dart';
 

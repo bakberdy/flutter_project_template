@@ -1,0 +1,11 @@
+{
+  "@@locale": "kk",
+  "home": "Басты бет",
+  "profile": "Профиль",
+  "homeItem": "Элемент {number}",
+  "@homeItem": {
+    "placeholders": {
+      "number": {"type": "int"}
+    }
+  }
+}

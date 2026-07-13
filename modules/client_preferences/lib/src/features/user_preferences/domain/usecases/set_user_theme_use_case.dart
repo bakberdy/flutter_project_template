@@ -1,0 +1,47 @@
+import 'dart:async';
+
+import 'package:core/core.dart';
+import 'package:client_preferences/src/features/user_preferences/domain/analytics/user_preferences_events.dart';
+import 'package:client_preferences/src/features/user_preferences/domain/entities/user_preferences.dart';
+import 'package:client_preferences/src/features/user_preferences/domain/repositories/user_preferences_repository.dart';
+import 'package:injectable/injectable.dart';
+
+class SetUserThemeUseCaseParams {
+  final UserTheme theme;
+
+  const SetUserThemeUseCaseParams({required this.theme});
+}
+
+@LazySingleton()
+class SetUserThemeUseCase extends UseCase<void, SetUserThemeUseCaseParams> {
+  final UserPreferencesRepository _repo;
+
+  SetUserThemeUseCase(this._repo);
+
+  @override
+  FutureEither<void> call(SetUserThemeUseCaseParams params) => _repo
+      .setTheme(params.theme)
+      .then(
+        (result) => result.fold(
+          (failure) {
+            unawaited(
+              Analytics.track(
+                SetUserThemeUseCaseEvent.failure(
+                  properties: {
+                    AnalyticsPropertyKeys.failureMessage: failure.message,
+                    AnalyticsPropertyKeys.failureType:
+                        failure.details?.type.name,
+                    AnalyticsPropertyKeys.failureSource: failure.source,
+                  },
+                ),
+              ),
+            );
+            return result;
+          },
+          (_) {
+            unawaited(Analytics.track(SetUserThemeUseCaseEvent.success()));
+            return result;
+          },
+        ),
+      );
+}

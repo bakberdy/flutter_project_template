@@ -1,10 +1,18 @@
 part of 'api_client.dart';
 
 class ApiClientFactory {
-  const ApiClientFactory({required this.tokenStorage, required this.talker});
+  ApiClientFactory({required this.tokenStorage, required this.talker});
 
   final TokenStorage tokenStorage;
   final Talker talker;
+  final List<ApiRequestHeadersProvider> _headersProviders = [];
+
+  void registerHeadersProvider(ApiRequestHeadersProvider provider) {
+    if (_headersProviders.any((item) => identical(item, provider))) {
+      return;
+    }
+    _headersProviders.add(provider);
+  }
 
   ApiClient createPublic({required ApiConfig config}) {
     return ApiClient._(_createDio(config: config));
@@ -25,6 +33,16 @@ class ApiClientFactory {
         receiveTimeout: config.receiveTimeout,
         sendTimeout: config.sendTimeout,
         headers: config.defaultHeaders,
+      ),
+    );
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) async {
+          for (final provider in _headersProviders) {
+            options.headers.addAll(await provider.headers());
+          }
+          handler.next(options);
+        },
       ),
     );
     dio.interceptors.add(

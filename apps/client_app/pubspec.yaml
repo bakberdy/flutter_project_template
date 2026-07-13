@@ -22,6 +22,8 @@ dependencies:
   core: ^0.1.0
   design_system: ^0.1.0
   client_auth: ^0.1.0
+  client_preferences: ^0.1.0
+  client_shell: ^0.1.0
   talker_flutter: ^5.1.17
 
 

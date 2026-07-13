@@ -9,6 +9,12 @@ sealed class CoreNavigationCommand with _$CoreNavigationCommand {
     required PageRouteInfo<dynamic> route,
   }) = PushNavigationCommand;
 
+  const factory CoreNavigationCommand.navigatePath({
+    required int id,
+    required String path,
+    required bool includePrefixMatches,
+  }) = NavigatePathNavigationCommand;
+
   const factory CoreNavigationCommand.replace({
     required int id,
     required PageRouteInfo<dynamic> route,

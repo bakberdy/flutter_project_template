@@ -144,6 +144,76 @@ as PageRouteInfo<dynamic>,
 /// @nodoc
 
 
+class NavigatePathNavigationCommand extends CoreNavigationCommand {
+  const NavigatePathNavigationCommand({required this.id, required this.path, required this.includePrefixMatches}): super._();
+
+
+@override final  int id;
+ final  String path;
+ final  bool includePrefixMatches;
+
+/// Create a copy of CoreNavigationCommand
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$NavigatePathNavigationCommandCopyWith<NavigatePathNavigationCommand> get copyWith => _$NavigatePathNavigationCommandCopyWithImpl<NavigatePathNavigationCommand>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NavigatePathNavigationCommand&&(identical(other.id, id) || other.id == id)&&(identical(other.path, path) || other.path == path)&&(identical(other.includePrefixMatches, includePrefixMatches) || other.includePrefixMatches == includePrefixMatches));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,id,path,includePrefixMatches);
+
+@override
+String toString() {
+  return 'CoreNavigationCommand.navigatePath(id: $id, path: $path, includePrefixMatches: $includePrefixMatches)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $NavigatePathNavigationCommandCopyWith<$Res> implements $CoreNavigationCommandCopyWith<$Res> {
+  factory $NavigatePathNavigationCommandCopyWith(NavigatePathNavigationCommand value, $Res Function(NavigatePathNavigationCommand) _then) = _$NavigatePathNavigationCommandCopyWithImpl;
+@override @useResult
+$Res call({
+ int id, String path, bool includePrefixMatches
+});
+
+
+
+
+}
+/// @nodoc
+class _$NavigatePathNavigationCommandCopyWithImpl<$Res>
+    implements $NavigatePathNavigationCommandCopyWith<$Res> {
+  _$NavigatePathNavigationCommandCopyWithImpl(this._self, this._then);
+
+  final NavigatePathNavigationCommand _self;
+  final $Res Function(NavigatePathNavigationCommand) _then;
+
+/// Create a copy of CoreNavigationCommand
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? path = null,Object? includePrefixMatches = null,}) {
+  return _then(NavigatePathNavigationCommand(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,path: null == path ? _self.path : path // ignore: cast_nullable_to_non_nullable
+as String,includePrefixMatches: null == includePrefixMatches ? _self.includePrefixMatches : includePrefixMatches // ignore: cast_nullable_to_non_nullable
+as bool,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
 class ReplaceNavigationCommand extends CoreNavigationCommand {
   const ReplaceNavigationCommand({required this.id, required this.route}): super._();
   
@@ -775,6 +845,74 @@ class __$PushRequestedCopyWithImpl<$Res>
   return _then(_PushRequested(
 null == route ? _self.route : route // ignore: cast_nullable_to_non_nullable
 as PageRouteInfo<dynamic>,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _NavigatePathRequested implements CoreNavigationEvent {
+  const _NavigatePathRequested(this.path, {this.includePrefixMatches = false});
+
+
+ final  String path;
+@JsonKey() final  bool includePrefixMatches;
+
+/// Create a copy of CoreNavigationEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$NavigatePathRequestedCopyWith<_NavigatePathRequested> get copyWith => __$NavigatePathRequestedCopyWithImpl<_NavigatePathRequested>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NavigatePathRequested&&(identical(other.path, path) || other.path == path)&&(identical(other.includePrefixMatches, includePrefixMatches) || other.includePrefixMatches == includePrefixMatches));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,path,includePrefixMatches);
+
+@override
+String toString() {
+  return 'CoreNavigationEvent.navigatePath(path: $path, includePrefixMatches: $includePrefixMatches)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$NavigatePathRequestedCopyWith<$Res> implements $CoreNavigationEventCopyWith<$Res> {
+  factory _$NavigatePathRequestedCopyWith(_NavigatePathRequested value, $Res Function(_NavigatePathRequested) _then) = __$NavigatePathRequestedCopyWithImpl;
+@useResult
+$Res call({
+ String path, bool includePrefixMatches
+});
+
+
+
+
+}
+/// @nodoc
+class __$NavigatePathRequestedCopyWithImpl<$Res>
+    implements _$NavigatePathRequestedCopyWith<$Res> {
+  __$NavigatePathRequestedCopyWithImpl(this._self, this._then);
+
+  final _NavigatePathRequested _self;
+  final $Res Function(_NavigatePathRequested) _then;
+
+/// Create a copy of CoreNavigationEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? path = null,Object? includePrefixMatches = null,}) {
+  return _then(_NavigatePathRequested(
+null == path ? _self.path : path // ignore: cast_nullable_to_non_nullable
+as String,includePrefixMatches: null == includePrefixMatches ? _self.includePrefixMatches : includePrefixMatches // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

@@ -7,7 +7,6 @@ import 'package:client_auth/src/features/auth/presentation/screens/user_deletion
 import 'package:client_auth/src/features/sessions/presentation/screens/sessions_screen.dart';
 import 'package:client_auth/src/features/users/presentation/screens/profile_tab_shell_screen.dart';
 import 'package:client_auth/src/features/users/presentation/screens/user_data_registration_screen.dart';
-import 'package:client_auth/src/features/users/presentation/screens/user_preferences_placeholder_screens.dart';
 import 'package:client_auth/src/features/users/presentation/screens/user_profile_edit_screen.dart';
 import 'package:client_auth/src/features/users/presentation/screens/user_profile_screen.dart';
 import 'package:client_auth/src/common/config/router/client_auth_navigation_paths.dart';
@@ -52,36 +51,5 @@ final List<AutoRoute> clientAuthRouter = [
   AutoRoute(
     page: UserDeletionRequestedRoute.page,
     path: ClientAuthNavigationPaths.deletionRequested,
-  ),
-  AutoRoute(
-    page: ProfileTabShellRoute.page,
-    path: ClientAuthNavigationPaths.profile,
-    children: [
-      AutoRoute(
-        page: UserProfileRoute.page,
-        path: ClientAuthNavigationPaths.profileRoot,
-        initial: true,
-      ),
-      AutoRoute(
-        page: UserProfileEditRoute.page,
-        path: ClientAuthNavigationPaths.profileEdit,
-      ),
-      AutoRoute(
-        page: UserPreferencesNotificationsRoute.page,
-        path: ClientAuthNavigationPaths.notifications,
-      ),
-      AutoRoute(
-        page: UserPreferencesAppearanceRoute.page,
-        path: ClientAuthNavigationPaths.appearance,
-      ),
-      AutoRoute(
-        page: UserPreferencesLocaleRoute.page,
-        path: ClientAuthNavigationPaths.locale,
-      ),
-      AutoRoute(
-        page: SessionsRoute.page,
-        path: ClientAuthNavigationPaths.devices,
-      ),
-    ],
   ),
 ];

@@ -32,6 +32,35 @@ void main() {
       await bloc.close();
     });
 
+    test('navigatePath queues a path navigation command', () async {
+      final bloc = CoreNavigationBloc();
+
+      bloc.add(
+        const CoreNavigationEvent.navigatePath(
+          '/home/profile/edit',
+          includePrefixMatches: true,
+        ),
+      );
+      await expectLater(
+        bloc.stream,
+        emits(
+          isA<CoreNavigationState>().having(
+            (state) => state.nextCommand,
+            'nextCommand',
+            isA<NavigatePathNavigationCommand>()
+                .having((command) => command.path, 'path', '/home/profile/edit')
+                .having(
+                  (command) => command.includePrefixMatches,
+                  'includePrefixMatches',
+                  isTrue,
+                ),
+          ),
+        ),
+      );
+
+      await bloc.close();
+    });
+
     test('commandHandled removes the acknowledged pending command', () async {
       final bloc = CoreNavigationBloc();
 

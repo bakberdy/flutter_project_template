@@ -44,9 +44,9 @@ class UserProfileScreen extends StatelessWidget
                   avatarLoading: state.avatarStatus.isLoading,
                   avatarLoadingProgress: state.avatarUploadProgress,
                   onShare: () {},
-                  onEdit: () async {
-                    await context.router.push(const UserProfileEditRoute());
-                  },
+                  onEdit: () => context.read<CoreNavigationBloc>().add(
+                    const CoreNavigationEvent.push(UserProfileEditRoute()),
+                  ),
                   onViewAvatar: avatarUrl == null || avatarUrl.trim().isEmpty
                       ? null
                       : () =>
@@ -62,19 +62,24 @@ class UserProfileScreen extends StatelessWidget
 
             const SliverToBoxAdapter(child: SizedBox(height: DesignSpacing.xl)),
             UserPreferencesItemsList(
-              onNotificationsTap: () async {
-                await context.router.push(
-                  const UserPreferencesNotificationsRoute(),
-                );
-              },
-              onAppearanceTap: () async {
-                await context.router.push(
-                  const UserPreferencesAppearanceRoute(),
-                );
-              },
-              onLanguageTap: () async {
-                await context.router.push(const UserPreferencesLocaleRoute());
-              },
+              onNotificationsTap: () => context.read<CoreNavigationBloc>().add(
+                const CoreNavigationEvent.navigatePath(
+                  AppNavigationPaths.profileNotifications,
+                  includePrefixMatches: true,
+                ),
+              ),
+              onAppearanceTap: () => context.read<CoreNavigationBloc>().add(
+                const CoreNavigationEvent.navigatePath(
+                  AppNavigationPaths.profileAppearance,
+                  includePrefixMatches: true,
+                ),
+              ),
+              onLanguageTap: () => context.read<CoreNavigationBloc>().add(
+                const CoreNavigationEvent.navigatePath(
+                  AppNavigationPaths.profileLanguage,
+                  includePrefixMatches: true,
+                ),
+              ),
             ),
             const SliverToBoxAdapter(child: SizedBox(height: DesignSpacing.md)),
             SliverToBoxAdapter(
@@ -84,9 +89,12 @@ class UserProfileScreen extends StatelessWidget
                 title: ClientAuthLocalizations.of(
                   context,
                 ).profilePreferencesDevices,
-                onTap: () async {
-                  await context.router.push(const SessionsRoute());
-                },
+                onTap: () => context.read<CoreNavigationBloc>().add(
+                  const CoreNavigationEvent.navigatePath(
+                    AppNavigationPaths.profileDevices,
+                    includePrefixMatches: true,
+                  ),
+                ),
               ),
             ),
             const SliverToBoxAdapter(child: SizedBox(height: DesignSpacing.md)),
