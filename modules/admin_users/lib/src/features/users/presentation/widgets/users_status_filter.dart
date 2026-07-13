@@ -21,7 +21,7 @@ class UsersStatusFilter extends StatelessWidget {
     final l10n = context.l10n;
     final selectedLabel =
         value?.localizedName(l10n) ?? l10n.usersStatusFilterAll;
-    final colorScheme = context.colorScheme;
+    final colorScheme = context.designColors;
     final borderColor = !enabled
         ? colorScheme.outlineVariant
         : value == null
@@ -76,7 +76,7 @@ class UsersStatusFilter extends StatelessWidget {
                   selectedLabel,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: context.textTheme.bodyMedium?.copyWith(
+                  style: context.designTextTheme.bodyMedium?.copyWith(
                     color: foregroundColor,
                     fontWeight: FontWeight.w600,
                   ),

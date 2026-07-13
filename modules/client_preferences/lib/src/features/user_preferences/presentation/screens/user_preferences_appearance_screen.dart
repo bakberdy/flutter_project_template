@@ -49,7 +49,7 @@ class UserPreferencesAppearanceScreen extends StatelessWidget
                       icon: selectedThemeMode == UserTheme.system
                           ? Icon(
                               Icons.check,
-                              color: context.colorScheme.primary,
+                              color: context.designColors.primary,
                             )
                           : null,
                       loading:
@@ -69,7 +69,7 @@ class UserPreferencesAppearanceScreen extends StatelessWidget
                       icon: selectedThemeMode == UserTheme.light
                           ? Icon(
                               Icons.check,
-                              color: context.colorScheme.primary,
+                              color: context.designColors.primary,
                             )
                           : null,
                       loading:
@@ -88,7 +88,7 @@ class UserPreferencesAppearanceScreen extends StatelessWidget
                       icon: selectedThemeMode == UserTheme.dark
                           ? Icon(
                               Icons.check,
-                              color: context.colorScheme.primary,
+                              color: context.designColors.primary,
                             )
                           : null,
                       loading:

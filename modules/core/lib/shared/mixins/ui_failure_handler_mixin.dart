@@ -61,14 +61,9 @@ mixin UiFailureHandlerMixin {
   }
 
   Future<void> _showFullscreen(BuildContext context, String message) {
-    final barrierColor = Theme.of(
-      context,
-    ).colorScheme.scrim.withValues(alpha: 0.54);
-
     return showGeneralDialog<void>(
       context: context,
       barrierDismissible: false,
-      barrierColor: barrierColor,
       transitionDuration: const Duration(milliseconds: 200),
       transitionBuilder: (_, animation, _, child) => FadeTransition(
         opacity: CurvedAnimation(parent: animation, curve: Curves.easeOut),

@@ -78,7 +78,7 @@ class BaseCountryDialCodeSelector extends StatelessWidget {
               offset: const Offset(0, 50),
               child: Container(
                 decoration: BoxDecoration(
-                  color: context.colorScheme.surface,
+                  color: context.designColors.surface,
                   borderRadius: BorderRadius.circular(DesignRadii.sm),
                 ),
                 height: 200,
@@ -101,7 +101,7 @@ class BaseCountryDialCodeSelector extends StatelessWidget {
                                 const SizedBox(width: DesignSpacing.xs),
                                 Text(
                                   '${dialCode.dialCode} (${dialCode.countryCode})',
-                                  style: context.textTheme.bodyLarge,
+                                  style: context.designTextTheme.bodyLarge,
                                 ),
                               ],
                             ),

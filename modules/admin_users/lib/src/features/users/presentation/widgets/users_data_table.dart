@@ -29,7 +29,7 @@ class UsersDataTable extends StatelessWidget {
     final dateFormat = DateFormat.yMd(l10n.localeName).add_Hm();
     return DataTable(
       showCheckboxColumn: false,
-      headingTextStyle: context.textTheme.titleMedium?.copyWith(
+      headingTextStyle: context.designTextTheme.titleMedium?.copyWith(
         fontWeight: FontWeight.bold,
       ),
       sortColumnIndex: switch (query.sortField) {
@@ -129,7 +129,7 @@ class UsersDataTable extends StatelessWidget {
                 DataCell(
                   Text(
                     user.email,
-                    style: context.textTheme.bodyMedium?.copyWith(
+                    style: context.designTextTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),

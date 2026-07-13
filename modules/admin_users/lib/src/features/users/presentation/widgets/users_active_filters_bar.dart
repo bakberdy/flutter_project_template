@@ -93,7 +93,7 @@ class _FilterChip extends StatelessWidget {
       onDeleted: onDeleted,
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       visualDensity: VisualDensity.compact,
-      side: BorderSide(color: context.colorScheme.outlineVariant),
+      side: BorderSide(color: context.designColors.outlineVariant),
     );
   }
 }

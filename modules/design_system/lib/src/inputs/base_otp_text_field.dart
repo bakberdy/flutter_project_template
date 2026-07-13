@@ -1,3 +1,4 @@
+import 'package:design_system/src/extensions/build_context_design_x.dart';
 import 'package:design_system/src/tokens/design_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -79,8 +80,8 @@ class BaseOtpTextField extends StatelessWidget {
             padding: const EdgeInsets.only(top: DesignSpacing.xs),
             child: Text(
               error,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Theme.of(context).colorScheme.error,
+              style: context.designTextTheme.bodySmall?.copyWith(
+                color: context.designColors.error,
               ),
             ),
           ),
@@ -101,15 +102,12 @@ class _OtpDigitSlot extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         border: Border(
-          bottom: BorderSide(
-            width: 2,
-            color: Theme.of(context).colorScheme.outline,
-          ),
+          bottom: BorderSide(width: 2, color: context.designColors.outline),
         ),
       ),
       child: Text(
         digit,
-        style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+        style: context.designTextTheme.headlineLarge?.copyWith(
           fontWeight: FontWeight.w600,
           fontFeatures: const [FontFeature.tabularFigures()],
         ),

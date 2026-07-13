@@ -1,3 +1,4 @@
+import 'package:design_system/src/extensions/build_context_design_x.dart';
 import 'package:design_system/src/tokens/design_radii.dart';
 import 'package:design_system/src/tokens/design_spacing.dart';
 import 'package:flutter/material.dart';
@@ -54,9 +55,9 @@ class BaseSnackbar {
               Expanded(
                 child: Text(
                   message,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyMedium?.copyWith(color: resolvedFg),
+                  style: context.designTextTheme.bodyMedium?.copyWith(
+                    color: resolvedFg,
+                  ),
                 ),
               ),
             ],
@@ -139,7 +140,7 @@ class BaseSnackbar {
     BuildContext context,
     BaseSnackbarType type,
   ) {
-    final cs = Theme.of(context).colorScheme;
+    final cs = context.designColors;
 
     return switch (type) {
       BaseSnackbarType.success => _SnackbarColors(

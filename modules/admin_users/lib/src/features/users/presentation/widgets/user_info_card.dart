@@ -13,7 +13,7 @@ class UserInfoCard extends StatelessWidget {
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppRadii.sm),
-        side: BorderSide(color: context.colorScheme.outlineVariant),
+        side: BorderSide(color: context.designColors.outlineVariant),
       ),
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.lg),
@@ -23,7 +23,7 @@ class UserInfoCard extends StatelessWidget {
           children: [
             Text(
               title,
-              style: context.textTheme.titleMedium?.copyWith(
+              style: context.designTextTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w700,
               ),
             ),

@@ -1,4 +1,5 @@
 import 'package:design_system/src/buttons/base_button_progress.dart';
+import 'package:design_system/src/extensions/build_context_design_x.dart';
 import 'package:design_system/src/tokens/design_radii.dart';
 import 'package:design_system/src/tokens/design_spacing.dart';
 import 'package:flutter/material.dart';
@@ -116,7 +117,7 @@ class BaseButton extends StatelessWidget {
       (loading || disabled) ? null : onPressed;
 
   Color _progressColor(BuildContext context) {
-    final s = Theme.of(context).colorScheme;
+    final s = context.designColors;
     final foregroundColor = this.foregroundColor;
     return switch (_variant) {
       _BaseButtonVariant.primary => foregroundColor ?? s.onPrimary,
@@ -196,7 +197,7 @@ class BaseButton extends StatelessWidget {
   }
 
   ButtonStyle _destructiveStyle(BuildContext context) {
-    final s = Theme.of(context).colorScheme;
+    final s = context.designColors;
     return ButtonStyle(
       foregroundColor: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.disabled)) {
@@ -233,7 +234,7 @@ class BaseButton extends StatelessWidget {
     if (backgroundColor == null) {
       return null;
     }
-    final s = Theme.of(context).colorScheme;
+    final s = context.designColors;
     return WidgetStateProperty.resolveWith((states) {
       if (states.contains(WidgetState.disabled)) {
         return s.onSurface.withValues(alpha: 0.12);
@@ -247,7 +248,7 @@ class BaseButton extends StatelessWidget {
     if (foregroundColor == null) {
       return null;
     }
-    final s = Theme.of(context).colorScheme;
+    final s = context.designColors;
     return WidgetStateProperty.resolveWith((states) {
       if (states.contains(WidgetState.disabled)) {
         return s.onSurface.withValues(alpha: 0.38);

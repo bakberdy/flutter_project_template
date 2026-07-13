@@ -97,7 +97,7 @@ class UserProfileEditForm extends StatelessWidget {
                     const SizedBox(height: DesignSpacing.xl),
                     Text(
                       l10n.profileEditFullNameLabel,
-                      style: context.textTheme.labelLarge,
+                      style: context.designTextTheme.labelLarge,
                     ),
                     const SizedBox(height: DesignSpacing.xs),
                     UserProfileFullNameTextField(
@@ -108,7 +108,7 @@ class UserProfileEditForm extends StatelessWidget {
                     const SizedBox(height: DesignSpacing.md),
                     Text(
                       l10n.profileEditPhoneNumberLabel,
-                      style: context.textTheme.labelLarge,
+                      style: context.designTextTheme.labelLarge,
                     ),
                     const SizedBox(height: DesignSpacing.xs),
                     BasePhoneNumberTextField(

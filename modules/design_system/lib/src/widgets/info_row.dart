@@ -1,3 +1,4 @@
+import 'package:design_system/src/extensions/build_context_design_x.dart';
 import 'package:design_system/src/tokens/design_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,8 +21,8 @@ class InfoRow extends StatelessWidget {
       children: [
         Text(
           label,
-          style: Theme.of(context).textTheme.labelLarge?.copyWith(
-            color: Theme.of(context).colorScheme.onSurface,
+          style: context.designTextTheme.labelLarge?.copyWith(
+            color: context.designColors.onSurface,
             fontWeight: FontWeight.w600,
             height: 1.2,
           ),
@@ -30,7 +31,7 @@ class InfoRow extends StatelessWidget {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SelectableText(value, style: Theme.of(context).textTheme.bodyLarge),
+            SelectableText(value, style: context.designTextTheme.bodyLarge),
             if (showCopyIcon) ...[
               SizedBox(width: DesignSpacing.xs),
               InkWell(
@@ -38,7 +39,7 @@ class InfoRow extends StatelessWidget {
                 child: Icon(
                   Icons.copy_outlined,
                   size: 16,
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  color: context.designColors.onSurfaceVariant,
                 ),
               ),
             ],

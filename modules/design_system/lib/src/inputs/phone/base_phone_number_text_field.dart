@@ -63,7 +63,7 @@ class BasePhoneNumberTextField extends StatelessWidget {
                       dialCode: dialCode!,
                       onTap: onCountryCodeTap,
                     ),
-              prefixStyle: context.textTheme.bodyLarge?.copyWith(),
+              prefixStyle: context.designTextTheme.bodyLarge?.copyWith(),
               errorText: errorText,
             ),
           ),
@@ -79,13 +79,13 @@ class BasePhoneNumberTextField extends StatelessWidget {
                       Icon(
                         Icons.verified,
                         size: 16,
-                        color: context.colorScheme.primary,
+                        color: context.designColors.primary,
                       ),
                       const SizedBox(width: DesignSpacing.xxs),
                       Text(
                         verifiedLabel ?? '',
-                        style: context.textTheme.bodySmall?.copyWith(
-                          color: context.colorScheme.primary,
+                        style: context.designTextTheme.bodySmall?.copyWith(
+                          color: context.designColors.primary,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -93,7 +93,7 @@ class BasePhoneNumberTextField extends StatelessWidget {
                     if (showVerificationPrompt) ...[
                       Text(
                         verificationPromptLabel ?? '',
-                        style: context.textTheme.bodySmall,
+                        style: context.designTextTheme.bodySmall,
                       ),
                       const SizedBox(width: DesignSpacing.xxs),
                       TextButton(
@@ -105,8 +105,8 @@ class BasePhoneNumberTextField extends StatelessWidget {
                         ),
                         child: Text(
                           verifyActionLabel ?? '',
-                          style: context.textTheme.bodySmall?.copyWith(
-                            color: context.colorScheme.primary,
+                          style: context.designTextTheme.bodySmall?.copyWith(
+                            color: context.designColors.primary,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

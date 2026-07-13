@@ -22,19 +22,19 @@ class UserDeletionRequestedScreen extends StatelessWidget {
               Icon(
                 Icons.delete_outline,
                 size: 56,
-                color: context.colorScheme.error,
+                color: context.designColors.error,
               ),
               const SizedBox(height: DesignSpacing.lg),
               Text(
                 context.l10n.userDeletionRequestedTitle,
                 textAlign: TextAlign.center,
-                style: context.textTheme.headlineSmall,
+                style: context.designTextTheme.headlineSmall,
               ),
               const SizedBox(height: DesignSpacing.sm),
               Text(
                 context.l10n.userDeletionRequestedMessage,
                 textAlign: TextAlign.center,
-                style: context.textTheme.bodyMedium,
+                style: context.designTextTheme.bodyMedium,
               ),
               const SizedBox(height: DesignSpacing.xl),
               BaseButton.primary(

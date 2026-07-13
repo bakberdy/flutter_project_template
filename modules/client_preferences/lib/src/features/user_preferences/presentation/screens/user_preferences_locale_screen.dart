@@ -56,7 +56,7 @@ class UserPreferencesLocaleScreen extends StatelessWidget
                               ClientPreferencesConstants.kazakh.languageCode
                           ? Icon(
                               Icons.check,
-                              color: context.colorScheme.primary,
+                              color: context.designColors.primary,
                             )
                           : null,
                       loading:
@@ -80,7 +80,7 @@ class UserPreferencesLocaleScreen extends StatelessWidget
                               ClientPreferencesConstants.russian.languageCode
                           ? Icon(
                               Icons.check,
-                              color: context.colorScheme.primary,
+                              color: context.designColors.primary,
                             )
                           : null,
                       loading:
@@ -103,7 +103,7 @@ class UserPreferencesLocaleScreen extends StatelessWidget
                               ClientPreferencesConstants.english.languageCode
                           ? Icon(
                               Icons.check,
-                              color: context.colorScheme.primary,
+                              color: context.designColors.primary,
                             )
                           : null,
                       loading:

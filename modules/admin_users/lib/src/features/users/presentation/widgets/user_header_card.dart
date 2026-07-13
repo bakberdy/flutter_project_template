@@ -24,7 +24,7 @@ class UserHeaderCard extends StatelessWidget {
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppRadii.sm),
-        side: BorderSide(color: context.colorScheme.outlineVariant),
+        side: BorderSide(color: context.designColors.outlineVariant),
       ),
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.lg),
@@ -43,15 +43,15 @@ class UserHeaderCard extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: context.textTheme.headlineSmall?.copyWith(
+                    style: context.designTextTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.w700,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.xs),
                   SelectableText(
                     user.email,
-                    style: context.textTheme.bodyLarge?.copyWith(
-                      color: context.colorScheme.onSurfaceVariant,
+                    style: context.designTextTheme.bodyLarge?.copyWith(
+                      color: context.designColors.onSurfaceVariant,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.sm),

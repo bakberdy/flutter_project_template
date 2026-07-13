@@ -1,3 +1,4 @@
+import 'package:design_system/src/extensions/build_context_design_x.dart';
 import 'package:design_system/src/images/base_cached_network_image.dart';
 import 'package:design_system/src/tokens/design_spacing.dart';
 import 'package:flutter/material.dart';
@@ -48,8 +49,7 @@ class UserAvatar extends StatelessWidget {
                       ? BoxShape.circle
                       : BoxShape.rectangle,
                   color:
-                      backgroundColor ??
-                      Theme.of(context).colorScheme.primaryContainer,
+                      backgroundColor ?? context.designColors.primaryContainer,
                 ),
                 child: _hasAvatar
                     ? BaseCachedNetworkImage(
@@ -110,8 +110,8 @@ class _AvatarInitials extends StatelessWidget {
     return Center(
       child: Text(
         initials,
-        style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-          color: Theme.of(context).colorScheme.onPrimaryContainer,
+        style: context.designTextTheme.headlineLarge?.copyWith(
+          color: context.designColors.onPrimaryContainer,
           fontWeight: FontWeight.bold,
         ),
       ),

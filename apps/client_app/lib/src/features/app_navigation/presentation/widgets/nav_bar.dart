@@ -1,4 +1,5 @@
 import 'package:client_app/src/features/app_navigation/presentation/widgets/nav_bar_item.dart';
+import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
 class NavBar extends StatefulWidget {
@@ -56,7 +57,7 @@ class _NavBarState extends State<NavBar> {
     final indicatorLeft = _dragLeft ?? _currentPage * slotWidth;
     final indicatorRight = totalWidth - indicatorLeft - widget.itemWidth;
     final isRtl = Directionality.of(context) == TextDirection.rtl;
-    final theme = Theme.of(context);
+    final theme = context.designTheme;
     final sliderColor = widget.sliderColor ?? theme.colorScheme.surface;
 
     return SafeArea(

@@ -57,7 +57,7 @@ class _UsersSearchBarState extends State<UsersSearchBar> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final colorScheme = context.colorScheme;
+    final colorScheme = context.designColors;
     return SizedBox(
       height: 40,
       child: Row(
@@ -147,7 +147,7 @@ class _SearchBarActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = context.colorScheme;
+    final colorScheme = context.designColors;
     return Align(
       alignment: Alignment.center,
       child: SizedBox(

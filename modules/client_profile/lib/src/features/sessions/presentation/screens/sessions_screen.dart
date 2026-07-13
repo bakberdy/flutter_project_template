@@ -89,7 +89,7 @@ class SessionsScreen extends StatelessWidget
                   return BaseListTile(
                     margin: EdgeInsets.zero,
                     title: context.l10n.revokeAllSessions,
-                    foregroundColor: context.colorScheme.error,
+                    foregroundColor: context.designColors.error,
                     onTap: state.revokingAll
                         ? null
                         : () => _confirmRevokeAllSessions(context),

@@ -2,10 +2,13 @@ import 'package:design_system/gen/assets.gen.dart' as ds_assets;
 import 'package:flutter/material.dart';
 
 extension BuildContextDesignX on BuildContext {
-  ColorScheme get designColors => Theme.of(this).colorScheme;
-  TextTheme get designTextTheme => Theme.of(this).textTheme;
-  ColorScheme get colorScheme => designColors;
-  TextTheme get textTheme => designTextTheme;
+  ThemeData get designTheme => Theme.of(this);
+  ColorScheme get designColors => designTheme.colorScheme;
+  TextTheme get designTextTheme => designTheme.textTheme;
+  BottomSheetThemeData get designBottomSheetTheme =>
+      designTheme.bottomSheetTheme;
+  BottomNavigationBarThemeData get designBottomNavigationBarTheme =>
+      designTheme.bottomNavigationBarTheme;
   DsContextAssets get designAssets => const DsContextAssets();
 }
 

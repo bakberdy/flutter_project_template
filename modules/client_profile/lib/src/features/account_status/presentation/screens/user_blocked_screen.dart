@@ -19,18 +19,18 @@ class UserBlockedScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Icon(Icons.block, size: 56, color: context.colorScheme.error),
+              Icon(Icons.block, size: 56, color: context.designColors.error),
               const SizedBox(height: DesignSpacing.lg),
               Text(
                 context.l10n.userBlockedTitle,
                 textAlign: TextAlign.center,
-                style: context.textTheme.headlineSmall,
+                style: context.designTextTheme.headlineSmall,
               ),
               const SizedBox(height: DesignSpacing.sm),
               Text(
                 context.l10n.userBlockedMessage,
                 textAlign: TextAlign.center,
-                style: context.textTheme.bodyMedium,
+                style: context.designTextTheme.bodyMedium,
               ),
               const SizedBox(height: DesignSpacing.xl),
               BaseButton.primary(

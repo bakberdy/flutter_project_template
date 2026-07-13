@@ -1,6 +1,7 @@
 import 'package:admin_app/app_flow/bloc/user_bloc.dart';
 import 'package:admin_app/navigation/admin_app_router.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -188,7 +189,7 @@ class _UserStateScaffold extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(title, style: Theme.of(context).textTheme.headlineMedium),
+              Text(title, style: context.designTextTheme.headlineMedium),
               const SizedBox(height: 12),
               Text(description),
               const SizedBox(height: 24),

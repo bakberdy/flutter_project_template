@@ -33,7 +33,7 @@ class UsersListView extends StatelessWidget {
                   Expanded(
                     child: Text(
                       l10n.usersTitle,
-                      style: context.textTheme.headlineMedium,
+                      style: context.designTextTheme.headlineMedium,
                     ),
                   ),
                   IconButton(
@@ -95,8 +95,8 @@ class UsersListView extends StatelessWidget {
                 const SizedBox(height: AppSpacing.xs),
                 Text(
                   l10n.usersSearchResults(search),
-                  style: context.textTheme.bodyMedium?.copyWith(
-                    color: context.colorScheme.onSurfaceVariant,
+                  style: context.designTextTheme.bodyMedium?.copyWith(
+                    color: context.designColors.onSurfaceVariant,
                   ),
                 ),
               ],

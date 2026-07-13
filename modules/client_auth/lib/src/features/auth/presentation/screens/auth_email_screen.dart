@@ -74,7 +74,7 @@ class _AuthEmailScreenState extends State<AuthEmailScreen>
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 TextField(
-                  style: context.textTheme.bodyMedium,
+                  style: context.designTextTheme.bodyMedium,
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(

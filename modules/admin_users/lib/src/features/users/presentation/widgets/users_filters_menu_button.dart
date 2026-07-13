@@ -22,7 +22,7 @@ class UsersFiltersMenuButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final active = query.hasFilters;
-    final colorScheme = context.colorScheme;
+    final colorScheme = context.designColors;
     final borderColor = !enabled
         ? colorScheme.outlineVariant
         : active
@@ -59,7 +59,7 @@ class UsersFiltersMenuButton extends StatelessWidget {
                 l10n.usersFiltersLabel,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: context.textTheme.bodyMedium?.copyWith(
+                style: context.designTextTheme.bodyMedium?.copyWith(
                   color: foregroundColor,
                   fontWeight: FontWeight.w600,
                 ),
@@ -298,7 +298,7 @@ class _CreatedAtRangeTile extends StatelessWidget {
     final active = from != null || to != null;
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: context.colorScheme.outlineVariant),
+        border: Border.all(color: context.designColors.outlineVariant),
         borderRadius: BorderRadius.circular(AppRadii.md),
       ),
       child: ListTile(

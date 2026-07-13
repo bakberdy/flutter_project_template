@@ -1,3 +1,4 @@
+import 'package:design_system/src/extensions/build_context_design_x.dart';
 import 'package:flutter/material.dart';
 
 class BottomSheetList extends StatefulWidget {
@@ -27,7 +28,7 @@ class _BottomSheetListState extends State<BottomSheetList> {
       children: [
         const SizedBox(height: 20),
         if (widget.title != null) ...[
-          Text(widget.title!, style: Theme.of(context).textTheme.titleMedium),
+          Text(widget.title!, style: context.designTextTheme.titleMedium),
           const SizedBox(height: 10),
         ],
         ListView.separated(

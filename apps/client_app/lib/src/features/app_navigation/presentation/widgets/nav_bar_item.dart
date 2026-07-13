@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -85,7 +86,7 @@ class _NavBarEntryState extends State<NavBarEntry>
 
   @override
   Widget build(BuildContext context) {
-    final bottomTheme = BottomNavigationBarTheme.of(context);
+    final bottomTheme = context.designBottomNavigationBarTheme;
     final bool showLabel = widget.label != null
         ? widget.isSelected
               ? (bottomTheme.showSelectedLabels ?? true)

@@ -7,14 +7,14 @@ class DebugOverlay extends StatelessWidget {
     required this.showTalkerDock,
     required this.onOpenTalker,
     required this.child,
-    this.bannerColor,
+    required this.bannerColor,
     super.key,
   });
 
   final ValueNotifier<bool> showTalkerDock;
   final VoidCallback onOpenTalker;
   final Widget child;
-  final Color? bannerColor;
+  final Color bannerColor;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class DebugOverlay extends StatelessWidget {
           child: Banner(
             message: AppConfig.instance.environment,
             location: BannerLocation.topEnd,
-            color: bannerColor ?? Theme.of(context).colorScheme.primary,
+            color: bannerColor,
           ),
         ),
       ],

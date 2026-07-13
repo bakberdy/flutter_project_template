@@ -1,3 +1,4 @@
+import 'package:design_system/src/extensions/build_context_design_x.dart';
 import 'package:design_system/src/tokens/design_radii.dart';
 import 'package:design_system/src/tokens/design_spacing.dart';
 import 'package:flutter/material.dart';
@@ -62,23 +63,24 @@ class BaseListTile extends StatelessWidget {
                           Text(
                             softWrap: true,
                             title,
-                            style: Theme.of(context).textTheme.titleMedium
+                            style: context.designTextTheme.titleMedium
                                 ?.copyWith(color: foregroundColor),
                           ),
                           Text(
                             softWrap: true,
                             subtitle!,
-                            style: Theme.of(context).textTheme.bodySmall
-                                ?.copyWith(color: foregroundColor),
+                            style: context.designTextTheme.bodySmall?.copyWith(
+                              color: foregroundColor,
+                            ),
                           ),
                         ],
                       ),
                     )
                   : Text(
                       title,
-                      style: Theme.of(
-                        context,
-                      ).textTheme.titleMedium?.copyWith(color: foregroundColor),
+                      style: context.designTextTheme.titleMedium?.copyWith(
+                        color: foregroundColor,
+                      ),
                     ),
               const Spacer(),
               ?trailing,

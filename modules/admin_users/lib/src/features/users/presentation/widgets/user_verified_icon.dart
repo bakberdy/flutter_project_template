@@ -11,8 +11,8 @@ class UserVerifiedIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final color = verified
-        ? context.colorScheme.primary
-        : context.colorScheme.onSurfaceVariant;
+        ? context.designColors.primary
+        : context.designColors.onSurfaceVariant;
 
     return Tooltip(
       message: verified ? l10n.usersYes : l10n.usersNo,

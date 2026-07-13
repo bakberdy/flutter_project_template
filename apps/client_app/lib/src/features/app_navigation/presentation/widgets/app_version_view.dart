@@ -20,7 +20,7 @@ class AppVersionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = context.textTheme.bodyMedium;
+    final textStyle = context.designTextTheme.bodyMedium;
     final version = this.version;
     final buildNumber = this.buildNumber;
     return SliverFillRemaining(
