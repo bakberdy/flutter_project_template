@@ -41,16 +41,6 @@ class AdminProfileLocalizationsEn extends AdminProfileLocalizations {
       'That code is not valid. Check it and try again.';
 
   @override
-  String get profileEditLogout => 'Log out';
-
-  @override
-  String get profileEditLogoutDialogMessage =>
-      'You will need to sign in again to access your account.';
-
-  @override
-  String get profileEditLogoutDialogTitle => 'Log out?';
-
-  @override
   String profileEditOtpBottomSheetDescription(String phoneNumber) {
     return 'We sent a 6-digit code to $phoneNumber. Enter it to confirm your number.';
   }
@@ -94,9 +84,6 @@ class AdminProfileLocalizationsEn extends AdminProfileLocalizations {
 
   @override
   String get profileEditSaveChanges => 'Save changes';
-
-  @override
-  String get profileEditTitle => 'Edit Profile';
 
   @override
   String get profileEditVerifyNow => 'Verify';

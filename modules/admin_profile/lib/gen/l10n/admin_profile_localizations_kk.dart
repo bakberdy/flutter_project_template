@@ -41,16 +41,6 @@ class AdminProfileLocalizationsKk extends AdminProfileLocalizations {
       'Код сәйкес келмеді. Тексеріп, қайта енгізіңіз.';
 
   @override
-  String get profileEditLogout => 'Шығу';
-
-  @override
-  String get profileEditLogoutDialogMessage =>
-      'Аккаунтқа қайта кіру үшін қайта авторизациядан өту қажет болады.';
-
-  @override
-  String get profileEditLogoutDialogTitle => 'Шығу керек пе?';
-
-  @override
   String profileEditOtpBottomSheetDescription(String phoneNumber) {
     return '$phoneNumber нөміріне 6 таңбалы код жібердік. Нөмірді растау үшін сол кодты енгізіңіз.';
   }
@@ -95,9 +85,6 @@ class AdminProfileLocalizationsKk extends AdminProfileLocalizations {
 
   @override
   String get profileEditSaveChanges => 'Өзгерістерді сақтау';
-
-  @override
-  String get profileEditTitle => 'Профильді өңдеу';
 
   @override
   String get profileEditVerifyNow => 'Растау';

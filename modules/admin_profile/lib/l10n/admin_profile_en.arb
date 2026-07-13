@@ -10,9 +10,6 @@
   "profileEditDiscardChangesMessage": "Your profile changes have not been saved.",
   "profileEditDiscardChangesTitle": "Leave without saving?",
   "profileEditInvalidOtpMessage": "That code is not valid. Check it and try again.",
-  "profileEditLogout": "Log out",
-  "profileEditLogoutDialogMessage": "You will need to sign in again to access your account.",
-  "profileEditLogoutDialogTitle": "Log out?",
   "profileEditOtpBottomSheetDescription": "We sent a 6-digit code to {phoneNumber}. Enter it to confirm your number.",
   "@profileEditOtpBottomSheetDescription": {
     "placeholders": {
@@ -40,7 +37,6 @@
   "profileEditRemoveAccountDialogMessage": "This will request account deletion and sign you out.",
   "profileEditRemoveAccountDialogTitle": "Remove account?",
   "profileEditSaveChanges": "Save changes",
-  "profileEditTitle": "Edit Profile",
   "profileEditVerifyNow": "Verify",
   "profileSavedSuccessMessage": "Profile saved successfully",
   "revokeAllSessions": "Revoke all",

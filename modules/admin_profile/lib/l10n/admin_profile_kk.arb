@@ -10,9 +10,6 @@
   "profileEditDiscardChangesMessage": "Профильдегі өзгерістер әлі сақталған жоқ.",
   "profileEditDiscardChangesTitle": "Сақтамай шығасыз ба?",
   "profileEditInvalidOtpMessage": "Код сәйкес келмеді. Тексеріп, қайта енгізіңіз.",
-  "profileEditLogout": "Шығу",
-  "profileEditLogoutDialogMessage": "Аккаунтқа қайта кіру үшін қайта авторизациядан өту қажет болады.",
-  "profileEditLogoutDialogTitle": "Шығу керек пе?",
   "profileEditOtpBottomSheetDescription": "{phoneNumber} нөміріне 6 таңбалы код жібердік. Нөмірді растау үшін сол кодты енгізіңіз.",
   "@profileEditOtpBottomSheetDescription": {
     "placeholders": {
@@ -40,7 +37,6 @@
   "profileEditRemoveAccountDialogMessage": "Аккаунтты жоюға сұрау жіберіледі, содан кейін жүйеден шығасыз.",
   "profileEditRemoveAccountDialogTitle": "Аккаунтты жою керек пе?",
   "profileEditSaveChanges": "Өзгерістерді сақтау",
-  "profileEditTitle": "Профильді өңдеу",
   "profileEditVerifyNow": "Растау",
   "profileSavedSuccessMessage": "Профиль сәтті сақталды",
   "revokeAllSessions": "Барлық сеанстарды алып тастау",

@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/widgets.dart';
 import 'package:admin_profile/src/common/config/admin_profile_navigation_paths.dart';
 import 'package:admin_profile/src/features/account_status/presentation/screens/user_blocked_screen.dart';
 import 'package:admin_profile/src/features/account_status/presentation/screens/user_deletion_requested_screen.dart';

@@ -41,16 +41,6 @@ class AdminProfileLocalizationsRu extends AdminProfileLocalizations {
       'Код не подошёл. Проверьте его и попробуйте ещё раз.';
 
   @override
-  String get profileEditLogout => 'Выйти';
-
-  @override
-  String get profileEditLogoutDialogMessage =>
-      'Чтобы снова получить доступ к аккаунту, потребуется войти.';
-
-  @override
-  String get profileEditLogoutDialogTitle => 'Выйти?';
-
-  @override
   String profileEditOtpBottomSheetDescription(String phoneNumber) {
     return 'Мы отправили 6-значный код на номер $phoneNumber. Введите его, чтобы подтвердить номер.';
   }
@@ -96,9 +86,6 @@ class AdminProfileLocalizationsRu extends AdminProfileLocalizations {
 
   @override
   String get profileEditSaveChanges => 'Сохранить изменения';
-
-  @override
-  String get profileEditTitle => 'Редактировать профиль';
 
   @override
   String get profileEditVerifyNow => 'Подтвердить';

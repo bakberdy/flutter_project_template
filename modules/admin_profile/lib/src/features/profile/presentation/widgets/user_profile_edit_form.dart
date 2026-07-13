@@ -23,7 +23,6 @@ class UserProfileEditForm extends StatelessWidget {
     required this.onPhoneNumberChanged,
     required this.onCountryCodeTap,
     required this.onSavePressed,
-    this.onLogoutPressed,
     this.onRemoveAccountPressed,
     this.onVerifyPhonePressed,
     required this.onPopDiscardRequested,
@@ -50,7 +49,6 @@ class UserProfileEditForm extends StatelessWidget {
   final ValueChanged<String> onPhoneNumberChanged;
   final VoidCallback onCountryCodeTap;
   final VoidCallback onSavePressed;
-  final VoidCallback? onLogoutPressed;
   final VoidCallback? onRemoveAccountPressed;
   final VoidCallback? onVerifyPhonePressed;
   final Future<bool?> Function() onPopDiscardRequested;
@@ -133,25 +131,14 @@ class UserProfileEditForm extends StatelessWidget {
                         dialCode: dialCode,
                         onCountryCodeTap: onCountryCodeTap,
                       ),
-                      if (onLogoutPressed != null ||
-                          onRemoveAccountPressed != null) ...[
+                      if (onRemoveAccountPressed != null) ...[
                         const SizedBox(height: DesignSpacing.xl),
-                        if (onLogoutPressed != null)
-                          BaseButton.secondary(
-                            onPressed: onLogoutPressed,
-                            label: l10n.profileEditLogout,
-                            leadingIcon: const Icon(Icons.logout),
-                          ),
-                        if (onLogoutPressed != null &&
-                            onRemoveAccountPressed != null)
-                          const SizedBox(height: DesignSpacing.sm),
-                        if (onRemoveAccountPressed != null)
-                          BaseButton.destructive(
-                            onPressed: onRemoveAccountPressed,
-                            label: l10n.profileEditRemoveAccount,
-                            leadingIcon: const Icon(Icons.delete_outline),
-                            loading: accountDeletionStatus.isLoading,
-                          ),
+                        BaseButton.destructive(
+                          onPressed: onRemoveAccountPressed,
+                          label: l10n.profileEditRemoveAccount,
+                          leadingIcon: const Icon(Icons.delete_outline),
+                          loading: accountDeletionStatus.isLoading,
+                        ),
                       ],
                       const SizedBox(height: 96),
                     ]),
