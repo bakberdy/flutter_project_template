@@ -40,5 +40,48 @@ void main() {
       expect(failure.details?.statusCode, 401);
       expect(failure.details?.type, FailureType.inline);
     });
+
+    test('maps refused backend connections to service unavailable', () async {
+      const exception = ApiException(
+        type: ApiExceptionType.connectionError,
+        error: 'SocketException: Connection refused',
+      );
+
+      final failure = await exception.toFailure(source: 'auth.login');
+
+      expect(failure.message, 'Service unavailable');
+      expect(failure.details?.statusCode, 503);
+      expect(failure.details?.type, FailureType.snackbar);
+    });
+
+    test('keeps internet connection error for host lookup failures', () async {
+      const exception = ApiException(
+        type: ApiExceptionType.connectionError,
+        error: 'SocketException: Failed host lookup',
+      );
+
+      final failure = await exception.toFailure(source: 'auth.login');
+
+      expect(failure.message, 'No internet connection');
+      expect(failure.details?.statusCode, 0);
+      expect(failure.details?.type, FailureType.snackbar);
+    });
+
+    test('maps http 503 responses to service unavailable', () async {
+      const exception = ApiException(
+        type: ApiExceptionType.badResponse,
+        response: ApiResponse<String>(
+          data: '<html>503 Service Unavailable</html>',
+          statusCode: 503,
+          statusMessage: 'Service Unavailable',
+        ),
+      );
+
+      final failure = await exception.toFailure(source: 'auth.login');
+
+      expect(failure.message, 'Service unavailable');
+      expect(failure.details?.statusCode, 503);
+      expect(failure.details?.type, FailureType.snackbar);
+    });
   });
 }

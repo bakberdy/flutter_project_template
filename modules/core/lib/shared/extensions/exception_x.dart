@@ -37,13 +37,22 @@ extension ExceptionX on Exception {
 
   Failure? _clientApiFailure(ApiException e, String source) {
     return switch (e.type) {
-      ApiExceptionType.connectionError ||
-      ApiExceptionType.connectionTimeout ||
-      ApiExceptionType.receiveTimeout ||
-      ApiExceptionType.sendTimeout => Failure(
+      ApiExceptionType.connectionError when e.isServiceUnavailable => Failure(
+        message: _FailureMessages.serviceUnavailable,
+        source: source,
+        details: const FailureDetails(statusCode: 503),
+      ),
+      ApiExceptionType.connectionError => Failure(
         message: _FailureMessages.internetConnection,
         source: source,
         details: const FailureDetails(statusCode: 0),
+      ),
+      ApiExceptionType.connectionTimeout ||
+      ApiExceptionType.receiveTimeout ||
+      ApiExceptionType.sendTimeout => Failure(
+        message: _FailureMessages.serviceUnavailable,
+        source: source,
+        details: const FailureDetails(statusCode: 503),
       ),
       ApiExceptionType.badCertificate => Failure(
         message: _FailureMessages.secureConnection,
@@ -53,14 +62,32 @@ extension ExceptionX on Exception {
         message: _FailureMessages.unexpected,
         source: source,
       ),
+      ApiExceptionType.badResponse when e.response?.statusCode == 503 =>
+        Failure(
+          message: _FailureMessages.serviceUnavailable,
+          source: source,
+          details: const FailureDetails(statusCode: 503),
+        ),
       ApiExceptionType.cancel || ApiExceptionType.badResponse => null,
     };
+  }
+}
+
+extension _ApiExceptionServiceUnavailableX on ApiException {
+  bool get isServiceUnavailable {
+    final description = error.toString().toLowerCase();
+    return description.contains('connection refused') ||
+        description.contains('connection reset') ||
+        description.contains('connection aborted') ||
+        description.contains('connection closed') ||
+        description.contains('http status error [503]');
   }
 }
 
 abstract final class _FailureMessages {
   static const String internetConnection = 'No internet connection';
   static const String requestError = 'Request failed';
+  static const String serviceUnavailable = 'Service unavailable';
   static const String secureConnection = 'Secure connection failed';
   static const String responseParse = 'Failed to parse response';
   static const String unexpected = 'Unexpected error';
