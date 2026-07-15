@@ -3,7 +3,7 @@ import 'package:talker/talker.dart';
 import '../analytics.dart';
 import '../analytics_events.dart';
 
-/// Talker-backed analytics provider for development/debugging.
+/// Talker-backed analytics provider.
 class TalkerAnalyticsProvider implements AnalyticsProvider {
   const TalkerAnalyticsProvider(this._talker);
 
@@ -11,19 +11,27 @@ class TalkerAnalyticsProvider implements AnalyticsProvider {
 
   @override
   Future<void> track(AnalyticsEvent event) async {
-    _talker.info('Analytics event tracked: ${event.name}');
-    if (event.properties != null) {
-      _talker.debug('Analytics properties: ${event.properties}');
-    }
+    final properties = event.properties;
+    _log(
+      properties == null
+          ? 'Event tracked: ${event.name}'
+          : 'Event tracked: ${event.name}; properties: $properties',
+    );
   }
 
   @override
   Future<void> setUserId(String? userId) async {
-    _talker.info('Analytics user ID set: $userId');
+    _log('User ID set: $userId');
   }
 
   @override
   Future<void> setUserProperty(Map<String, dynamic> properties) async {
-    _talker.info('Analytics user property set: $properties');
+    _log('User properties set: $properties');
+  }
+
+  void _log(String message) {
+    _talker.logCustom(
+      TalkerLog(message, title: 'Analytics', logLevel: LogLevel.info),
+    );
   }
 }

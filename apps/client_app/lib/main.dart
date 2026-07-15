@@ -6,13 +6,14 @@ import 'package:client_app/src/common/config/app_config.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 
-Future<void> main() async {
+Future<void> main() => AppErrorHandler.run(() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AppConfig.load();
   await configureDependencies();
+  initializeCoreMonitoring(sl<Talker>());
 
   unawaited(
     Analytics.track(const AnalyticsEvent(name: AnalyticsEventNames.appOpened)),
   );
   runApp(App());
-}
+});

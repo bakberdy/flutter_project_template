@@ -32,23 +32,37 @@ class TalkerCrashProvider implements CrashlyticsProvider {
         ? 'Crash recorded: $exception'
         : 'Crash recorded: $exception (${parts.join(', ')})';
 
-    _talker.error(message, exception, stackTrace);
+    _talker.logCustom(
+      TalkerLog(
+        message,
+        title: 'Crash',
+        logLevel: LogLevel.error,
+        exception: exception,
+        stackTrace: stackTrace,
+      ),
+    );
   }
 
   @override
   Future<void> log(String message) async {
-    _talker.info('Crashlytics: $message');
+    _logInfo(message);
   }
 
   @override
   Future<void> setUserId(String userId) async {
     _userId = userId;
-    _talker.info('Crashlytics user set: $userId');
+    _logInfo('User set: $userId');
   }
 
   @override
   Future<void> clearUserId() async {
     _userId = null;
-    _talker.info('Crashlytics user cleared');
+    _logInfo('User cleared');
+  }
+
+  void _logInfo(String message) {
+    _talker.logCustom(
+      TalkerLog(message, title: 'Crash', logLevel: LogLevel.info),
+    );
   }
 }
