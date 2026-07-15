@@ -50,6 +50,8 @@ index_generator:
   exclude:
     - "**.freezed.dart"
     - "**.g.dart"
+    - "api/internal/**.dart"
+    - "**/api/internal/**.dart"
     - "api/client/api_client_factory.dart"
     - "core_navigation/core_navigation_command.dart"
     - "core_navigation/core_navigation_event.dart"

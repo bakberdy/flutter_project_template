@@ -66,6 +66,7 @@ class _AppState extends State<App> {
                   showTalkerDock: _showTalkerDock,
                   onOpenTalker: () => _openTalker(context),
                   bannerColor: context.designColors.primary,
+                  environment: context.di<CoreAppConfig>().environment,
                   child: child ?? const SizedBox.shrink(),
                 ),
                 debugShowCheckedModeBanner: false,

@@ -34,6 +34,8 @@ class Sidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final baseUrl = context.di<CoreAppConfig>().baseUrl;
+
     return Column(
       children: [
         const SizedBox(height: DesignSpacing.xl),
@@ -101,7 +103,7 @@ class Sidebar extends StatelessWidget {
                     UserAvatar(
                       fullName: userFullName,
                       avatarUrl: userAvatarUrl,
-                      baseUrl: AppConfig.instance.baseUrl,
+                      baseUrl: baseUrl,
                       radius: 24,
                     ),
                     const SizedBox(width: DesignSpacing.sm),
@@ -188,7 +190,7 @@ class Sidebar extends StatelessWidget {
                 leading: UserAvatar(
                   fullName: userFullName,
                   avatarUrl: userAvatarUrl,
-                  baseUrl: AppConfig.instance.baseUrl,
+                  baseUrl: baseUrl,
                   radius: 18,
                 ),
                 title: Text(

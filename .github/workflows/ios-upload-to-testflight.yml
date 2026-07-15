@@ -82,11 +82,44 @@ jobs:
           IOS_PROVISIONING_PROFILE_NAME_PRODUCTION: ${{ secrets.IOS_PROVISIONING_PROFILE_NAME_PRODUCTION }}
           DEVELOPMENT_API_URL: ${{ secrets.DEVELOPMENT_API_URL }}
           DEVELOPMENT_ENVIRONMENT: ${{ secrets.DEVELOPMENT_ENVIRONMENT }}
+          DEVELOPMENT_ENABLE_LOGGING: ${{ secrets.DEVELOPMENT_ENABLE_LOGGING }}
+          DEVELOPMENT_ENABLE_ANALYTICS: ${{ secrets.DEVELOPMENT_ENABLE_ANALYTICS }}
+          DEVELOPMENT_ENABLE_CRASHLYTICS: ${{ secrets.DEVELOPMENT_ENABLE_CRASHLYTICS }}
+          DEVELOPMENT_CONNECT_TIMEOUT_SECONDS: ${{ secrets.DEVELOPMENT_CONNECT_TIMEOUT_SECONDS }}
+          DEVELOPMENT_RECEIVE_TIMEOUT_SECONDS: ${{ secrets.DEVELOPMENT_RECEIVE_TIMEOUT_SECONDS }}
+          DEVELOPMENT_SEND_TIMEOUT_SECONDS: ${{ secrets.DEVELOPMENT_SEND_TIMEOUT_SECONDS }}
           PRODUCTION_API_URL: ${{ secrets.PRODUCTION_API_URL }}
           PRODUCTION_ENVIRONMENT: ${{ secrets.PRODUCTION_ENVIRONMENT }}
+          PRODUCTION_ENABLE_LOGGING: ${{ secrets.PRODUCTION_ENABLE_LOGGING }}
+          PRODUCTION_ENABLE_ANALYTICS: ${{ secrets.PRODUCTION_ENABLE_ANALYTICS }}
+          PRODUCTION_ENABLE_CRASHLYTICS: ${{ secrets.PRODUCTION_ENABLE_CRASHLYTICS }}
+          PRODUCTION_CONNECT_TIMEOUT_SECONDS: ${{ secrets.PRODUCTION_CONNECT_TIMEOUT_SECONDS }}
+          PRODUCTION_RECEIVE_TIMEOUT_SECONDS: ${{ secrets.PRODUCTION_RECEIVE_TIMEOUT_SECONDS }}
+          PRODUCTION_SEND_TIMEOUT_SECONDS: ${{ secrets.PRODUCTION_SEND_TIMEOUT_SECONDS }}
         run: |
           set -euo pipefail
           rc=0
+          config_keys=(
+            API_URL
+            ENVIRONMENT
+            ENABLE_LOGGING
+            ENABLE_ANALYTICS
+            ENABLE_CRASHLYTICS
+            CONNECT_TIMEOUT_SECONDS
+            RECEIVE_TIMEOUT_SECONDS
+            SEND_TIMEOUT_SECONDS
+          )
+          check_build_config() {
+            local prefix="$1"
+            local flavor="$2"
+            for key in "${config_keys[@]}"; do
+              local name="${prefix}_${key}"
+              if [ -z "${!name}" ]; then
+                echo "::error::For flavor ${flavor}, secret ${name} is required (build config; see config/config.example.json)."
+                rc=1
+              fi
+            done
+          }
           if [ -z "${APP_STORE_CONNECT_KEY_ID}" ]; then echo "::error::Secret APP_STORE_CONNECT_KEY_ID is missing or empty."; rc=1; fi
           if [ -z "${APP_STORE_CONNECT_ISSUER_ID}" ]; then echo "::error::Secret APP_STORE_CONNECT_ISSUER_ID is missing or empty."; rc=1; fi
           if [ -z "${APP_STORE_CONNECT_API_KEY}" ]; then echo "::error::Secret APP_STORE_CONNECT_API_KEY is missing or empty (App Store Connect API .p8 contents or Base64 of that file)."; rc=1; fi
@@ -97,14 +130,12 @@ jobs:
             production)
               if [ -z "${IOS_BUILD_PROVISION_PROFILE_BASE64_PRODUCTION}" ]; then echo "::error::For flavor production, secret IOS_BUILD_PROVISION_PROFILE_BASE64_PRODUCTION is required."; rc=1; fi
               if [ -z "${IOS_PROVISIONING_PROFILE_NAME_PRODUCTION}" ]; then echo "::error::For flavor production, secret IOS_PROVISIONING_PROFILE_NAME_PRODUCTION is required."; rc=1; fi
-              if [ -z "${PRODUCTION_API_URL}" ]; then echo "::error::For flavor production, secret PRODUCTION_API_URL is required (build config; see config/run/config.example.json)."; rc=1; fi
-              if [ -z "${PRODUCTION_ENVIRONMENT}" ]; then echo "::error::For flavor production, secret PRODUCTION_ENVIRONMENT is required (build config; see config/run/config.example.json)."; rc=1; fi
+              check_build_config PRODUCTION production
               ;;
             development)
               if [ -z "${IOS_BUILD_PROVISION_PROFILE_BASE64_DEVELOPMENT}" ]; then echo "::error::For flavor development, secret IOS_BUILD_PROVISION_PROFILE_BASE64_DEVELOPMENT is required."; rc=1; fi
               if [ -z "${IOS_PROVISIONING_PROFILE_NAME_DEVELOPMENT}" ]; then echo "::error::For flavor development, secret IOS_PROVISIONING_PROFILE_NAME_DEVELOPMENT is required."; rc=1; fi
-              if [ -z "${DEVELOPMENT_API_URL}" ]; then echo "::error::For flavor development, secret DEVELOPMENT_API_URL is required (build config; see config/run/config.example.json)."; rc=1; fi
-              if [ -z "${DEVELOPMENT_ENVIRONMENT}" ]; then echo "::error::For flavor development, secret DEVELOPMENT_ENVIRONMENT is required (build config; see config/run/config.example.json)."; rc=1; fi
+              check_build_config DEVELOPMENT development
               ;;
             *)
               echo "::error::Invalid flavor '${FLAVOR}'. Use development or production."
@@ -208,8 +239,20 @@ jobs:
           IOS_PROVISIONING_PROFILE_NAME_PRODUCTION: ${{ secrets.IOS_PROVISIONING_PROFILE_NAME_PRODUCTION }}
           DEVELOPMENT_API_URL: ${{ secrets.DEVELOPMENT_API_URL }}
           DEVELOPMENT_ENVIRONMENT: ${{ secrets.DEVELOPMENT_ENVIRONMENT }}
+          DEVELOPMENT_ENABLE_LOGGING: ${{ secrets.DEVELOPMENT_ENABLE_LOGGING }}
+          DEVELOPMENT_ENABLE_ANALYTICS: ${{ secrets.DEVELOPMENT_ENABLE_ANALYTICS }}
+          DEVELOPMENT_ENABLE_CRASHLYTICS: ${{ secrets.DEVELOPMENT_ENABLE_CRASHLYTICS }}
+          DEVELOPMENT_CONNECT_TIMEOUT_SECONDS: ${{ secrets.DEVELOPMENT_CONNECT_TIMEOUT_SECONDS }}
+          DEVELOPMENT_RECEIVE_TIMEOUT_SECONDS: ${{ secrets.DEVELOPMENT_RECEIVE_TIMEOUT_SECONDS }}
+          DEVELOPMENT_SEND_TIMEOUT_SECONDS: ${{ secrets.DEVELOPMENT_SEND_TIMEOUT_SECONDS }}
           PRODUCTION_API_URL: ${{ secrets.PRODUCTION_API_URL }}
           PRODUCTION_ENVIRONMENT: ${{ secrets.PRODUCTION_ENVIRONMENT }}
+          PRODUCTION_ENABLE_LOGGING: ${{ secrets.PRODUCTION_ENABLE_LOGGING }}
+          PRODUCTION_ENABLE_ANALYTICS: ${{ secrets.PRODUCTION_ENABLE_ANALYTICS }}
+          PRODUCTION_ENABLE_CRASHLYTICS: ${{ secrets.PRODUCTION_ENABLE_CRASHLYTICS }}
+          PRODUCTION_CONNECT_TIMEOUT_SECONDS: ${{ secrets.PRODUCTION_CONNECT_TIMEOUT_SECONDS }}
+          PRODUCTION_RECEIVE_TIMEOUT_SECONDS: ${{ secrets.PRODUCTION_RECEIVE_TIMEOUT_SECONDS }}
+          PRODUCTION_SEND_TIMEOUT_SECONDS: ${{ secrets.PRODUCTION_SEND_TIMEOUT_SECONDS }}
         run: |
           set -euo pipefail
           cd apps/client_app/ios

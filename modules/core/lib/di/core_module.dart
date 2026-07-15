@@ -1,4 +1,3 @@
-import 'package:core/config/app_config.dart';
 import 'package:core/config/core_app_config.dart';
 import 'package:core/api/api.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -8,12 +7,6 @@ import 'package:talker_flutter/talker_flutter.dart';
 
 @module
 abstract class CoreModule {
-  @singleton
-  AppConfig get appConfig => AppConfig.instance;
-
-  @singleton
-  CoreAppConfig get coreAppConfig => AppConfig.instance;
-
   @preResolve
   @singleton
   Future<SharedPreferences> get sharedPreferences async =>
@@ -32,7 +25,7 @@ abstract class CoreModule {
   @Named('protectedApiClient')
   @lazySingleton
   ApiClient protectedApiClient(
-    AppConfig appConfig,
+    CoreAppConfig appConfig,
     ApiClientFactory apiClientFactory,
   ) {
     return apiClientFactory.createProtected(
@@ -52,7 +45,7 @@ abstract class CoreModule {
   @Named('publicApiClient')
   @lazySingleton
   ApiClient publicApiClient(
-    AppConfig appConfig,
+    CoreAppConfig appConfig,
     ApiClientFactory apiClientFactory,
   ) {
     return apiClientFactory.createPublic(

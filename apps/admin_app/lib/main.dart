@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:admin_app/app/app.dart';
 import 'package:admin_app/di/di.dart';
+import 'package:admin_app/src/common/config/app_config.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 

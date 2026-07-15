@@ -87,15 +87,27 @@ base64 -i apps/client_app/ios/keys/profiles/clientappproductionprofile.mobilepro
 
 If your filenames differ, only change the path after `-i` (match `IOS_BUILD_PROVISION_PROFILE_PATH_DEVELOPMENT` etc.). On Linux, use `base64 -w0 file | xclip -selection clipboard` (or `wl-copy`) instead of `tr … | pbcopy`.
 
-**Build config (flavor-scoped, not iOS-only):** same JSON keys as `config/run/config.example.json` (`API_URL`, `ENVIRONMENT`, …). **Secret name = `<FLAVOR>_<KEY>`** with **FLAVOR** uppercase: `DEVELOPMENT` | `PRODUCTION` (matches Fastlane `env_suffix`). The secret **value** is the same string as in the matching `config/run/config.<flavor>.json` for that key. Local builds still use those files; CI passes `--dart-define` from these secrets.
+**Build config (flavor-scoped, not iOS-only):** same JSON keys as `config/config.example.json` (`API_URL`, `ENVIRONMENT`, …). **Secret name = `<FLAVOR>_<KEY>`** with **FLAVOR** uppercase: `DEVELOPMENT` | `PRODUCTION` (matches Fastlane `env_suffix`). The secret **value** is the same string as in the matching `config/config.<flavor>.json` for that key. Local builds still use those files; CI passes `--dart-define` from these secrets.
 
 
-| Secret                    | JSON field in that flavor’s `config.*.json` |
-| ------------------------- | ------------------------------------------- |
-| `DEVELOPMENT_API_URL`     | `API_URL`                                   |
-| `DEVELOPMENT_ENVIRONMENT` | `ENVIRONMENT`                               |
-| `PRODUCTION_API_URL`      | `API_URL`                                   |
-| `PRODUCTION_ENVIRONMENT`  | `ENVIRONMENT`                               |
+| Secret                                  | JSON field in that flavor’s `config.*.json` |
+| --------------------------------------- | ------------------------------------------- |
+| `DEVELOPMENT_API_URL`                   | `API_URL`                                   |
+| `DEVELOPMENT_ENVIRONMENT`               | `ENVIRONMENT`                               |
+| `DEVELOPMENT_ENABLE_LOGGING`            | `ENABLE_LOGGING`                            |
+| `DEVELOPMENT_ENABLE_ANALYTICS`          | `ENABLE_ANALYTICS`                          |
+| `DEVELOPMENT_ENABLE_CRASHLYTICS`        | `ENABLE_CRASHLYTICS`                        |
+| `DEVELOPMENT_CONNECT_TIMEOUT_SECONDS`   | `CONNECT_TIMEOUT_SECONDS`                   |
+| `DEVELOPMENT_RECEIVE_TIMEOUT_SECONDS`   | `RECEIVE_TIMEOUT_SECONDS`                   |
+| `DEVELOPMENT_SEND_TIMEOUT_SECONDS`      | `SEND_TIMEOUT_SECONDS`                      |
+| `PRODUCTION_API_URL`                    | `API_URL`                                   |
+| `PRODUCTION_ENVIRONMENT`                | `ENVIRONMENT`                               |
+| `PRODUCTION_ENABLE_LOGGING`             | `ENABLE_LOGGING`                            |
+| `PRODUCTION_ENABLE_ANALYTICS`           | `ENABLE_ANALYTICS`                          |
+| `PRODUCTION_ENABLE_CRASHLYTICS`         | `ENABLE_CRASHLYTICS`                        |
+| `PRODUCTION_CONNECT_TIMEOUT_SECONDS`    | `CONNECT_TIMEOUT_SECONDS`                   |
+| `PRODUCTION_RECEIVE_TIMEOUT_SECONDS`    | `RECEIVE_TIMEOUT_SECONDS`                   |
+| `PRODUCTION_SEND_TIMEOUT_SECONDS`       | `SEND_TIMEOUT_SECONDS`                      |
 
 
 For a given workflow run, the workflow `inputs.flavor` must have its profile pair, the build-config pair for that flavor, and all shared rows above.
@@ -112,8 +124,8 @@ For a given workflow run, the workflow `inputs.flavor` must have its profile pai
 
 | Flutter flavor | Bundle ID                             | Config JSON (local / `dart-define-from-file`) |
 | -------------- | ------------------------------------- | --------------------------------------------- |
-| `development`  | `com.example.clientApp.development` | `config/run/config.development.json`          |
-| `production`   | `com.example.clientApp`             | `config/run/config.production.json`           |
+| `development`  | `com.example.clientApp.development` | `config/config.development.json`          |
+| `production`   | `com.example.clientApp`             | `config/config.production.json`           |
 
 
 
@@ -123,6 +135,6 @@ For a given workflow run, the workflow `inputs.flavor` must have its profile pai
 | `beta_production`  | production  |
 
 
-**Dart / compile-time defines:** `API_URL` and `ENVIRONMENT` come from `modules/core/lib/config/app_config.dart`. **Local:** `config/run/*.json`. **CI:** secrets `<FLAVOR>_<KEY>` (see Step 6). New key: add to `config.example.json` + `DART_DEFINE_KEYS` in `ios/fastlane/helpers.rb` + `String.fromEnvironment` in Dart, then add e.g. `DEVELOPMENT_NEWKEY`, `PRODUCTION_NEWKEY` in GitHub and in the workflow `env` for the iOS job.
+**Dart / compile-time defines:** app-owned `AppConfig` reads required values with `String.fromEnvironment(...)` from `apps/client_app/lib/src/common/config/app_config.dart`. **Local:** `config/*.json`. **CI:** secrets `<FLAVOR>_<KEY>` (see Step 6). New key: add to `config.example.json`, `DART_DEFINE_KEYS` in `ios/fastlane/helpers.rb`, `String.fromEnvironment(...)` in Dart, and the workflow `env` for the iOS job.
 
 **Android CI:** [.github/docs/android.md](android.md)

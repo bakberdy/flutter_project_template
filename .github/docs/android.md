@@ -8,7 +8,7 @@ The same upload keystore is used both locally and in CI. Set up local first; CI 
 
 Use this path when you build a release AAB on your machine and either drag-drop it into Play Console yourself, or push it via your own CLI. This is also the fallback when CI is broken.
 
-> **Where to run the commands:** Steps **A1–A4** are written for **repo root** (paths are relative to the project: `apps/client_app/android/...`, `config/run/...`, `build/...`).
+> **Where to run the commands:** Steps **A1–A4** are written for **repo root** (paths are relative to the project: `apps/client_app/android/...`, `apps/client_app/config/...`, `build/...`).
 
 ## Step A1 — Generate the upload keystore (one per flavor)
 
@@ -101,7 +101,7 @@ Bump `apps/client_app/pubspec.yaml` first (`version: <name>+<buildNumber>`). The
 cd apps/client_app
 flutter clean && cd ../.. && flutter pub get && cd apps/client_app
 flutter build appbundle --release --flavor production \
-  --dart-define-from-file=config/run/config.production.json
+  --dart-define-from-file=config/config.production.json
 # Output: apps/client_app/build/app/outputs/bundle/productionRelease/app-production-release.aab
 ```
 
@@ -111,7 +111,7 @@ flutter build appbundle --release --flavor production \
 cd apps/client_app
 flutter clean && cd ../.. && flutter pub get && cd apps/client_app
 flutter build appbundle --release --flavor development \
-  --dart-define-from-file=config/run/config.development.json
+  --dart-define-from-file=config/config.development.json
 # Output: apps/client_app/build/app/outputs/bundle/developmentRelease/app-development-release.aab
 ```
 
@@ -302,15 +302,27 @@ If the alias prints, the secret value will work in CI.
 
 ### B3.3 Build config (flavor-scoped — same as iOS)
 
-Same JSON keys as `config/run/config.example.json` (`API_URL`, `ENVIRONMENT`, …). **Secret name = `<FLAVOR>_<KEY>`** with **FLAVOR** uppercase: `DEVELOPMENT` | `PRODUCTION`. Local builds still read `config/run/config.<flavor>.json`; CI passes `--dart-define` from these secrets.
+Same JSON keys as `config/config.example.json` (`API_URL`, `ENVIRONMENT`, …). **Secret name = `<FLAVOR>_<KEY>`** with **FLAVOR** uppercase: `DEVELOPMENT` | `PRODUCTION`. Local builds still read `config/config.<flavor>.json`; CI passes `--dart-define` from these secrets.
 
 
-| Secret                    | JSON field in that flavor's `config.*.json` |
-| ------------------------- | ------------------------------------------- |
-| `DEVELOPMENT_API_URL`     | `API_URL`                                   |
-| `DEVELOPMENT_ENVIRONMENT` | `ENVIRONMENT`                               |
-| `PRODUCTION_API_URL`      | `API_URL`                                   |
-| `PRODUCTION_ENVIRONMENT`  | `ENVIRONMENT`                               |
+| Secret                                  | JSON field in that flavor's `config.*.json` |
+| --------------------------------------- | ------------------------------------------- |
+| `DEVELOPMENT_API_URL`                   | `API_URL`                                   |
+| `DEVELOPMENT_ENVIRONMENT`               | `ENVIRONMENT`                               |
+| `DEVELOPMENT_ENABLE_LOGGING`            | `ENABLE_LOGGING`                            |
+| `DEVELOPMENT_ENABLE_ANALYTICS`          | `ENABLE_ANALYTICS`                          |
+| `DEVELOPMENT_ENABLE_CRASHLYTICS`        | `ENABLE_CRASHLYTICS`                        |
+| `DEVELOPMENT_CONNECT_TIMEOUT_SECONDS`   | `CONNECT_TIMEOUT_SECONDS`                   |
+| `DEVELOPMENT_RECEIVE_TIMEOUT_SECONDS`   | `RECEIVE_TIMEOUT_SECONDS`                   |
+| `DEVELOPMENT_SEND_TIMEOUT_SECONDS`      | `SEND_TIMEOUT_SECONDS`                      |
+| `PRODUCTION_API_URL`                    | `API_URL`                                   |
+| `PRODUCTION_ENVIRONMENT`                | `ENVIRONMENT`                               |
+| `PRODUCTION_ENABLE_LOGGING`             | `ENABLE_LOGGING`                            |
+| `PRODUCTION_ENABLE_ANALYTICS`           | `ENABLE_ANALYTICS`                          |
+| `PRODUCTION_ENABLE_CRASHLYTICS`         | `ENABLE_CRASHLYTICS`                        |
+| `PRODUCTION_CONNECT_TIMEOUT_SECONDS`    | `CONNECT_TIMEOUT_SECONDS`                   |
+| `PRODUCTION_RECEIVE_TIMEOUT_SECONDS`    | `RECEIVE_TIMEOUT_SECONDS`                   |
+| `PRODUCTION_SEND_TIMEOUT_SECONDS`       | `SEND_TIMEOUT_SECONDS`                      |
 
 
 For a given workflow run, the workflow `inputs.flavor` must have its keystore quartet (B3.1) **and** its build-config pair (B3.3), plus the shared Play row (B3.2). Tag-based release uses the **flavor in the tag prefix** (see Step B4).
@@ -331,7 +343,7 @@ The App needs **Repository permissions → Contents = Read and write**, must be 
 
 ## Step B4 — What CI runs and how
 
-- **Workflow:** `.github/workflows/android-upload-to-play.yml` (reusable). It checks out the chosen `ref`, validates secrets per flavor, decodes the keystore from base64 to `${RUNNER_TEMP}/upload.jks`, writes `apps/client_app/android/key.<flavor>.properties` with that path so Gradle picks the matching per-flavor signing config, runs `flutter build appbundle --release --flavor <flavor>` with `--build-number` set to the **last five decimal digits** of `GITHUB_RUN_ID` (i.e. `run_id % 100000`, with `0` mapped to `1` so the value is always a valid positive `versionCode` under the [Play maximum](https://developer.android.com/studio/publish/versioning.html)), then `--dart-define=API_URL=... --dart-define=ENVIRONMENT=...`, and uploads the AAB via `r0adkll/upload-google-play@v1`. iOS TestFlight builds use the same rule in `ios/fastlane` for a matching Flutter build number.
+- **Workflow:** `.github/workflows/android-upload-to-play.yml` (reusable). It checks out the chosen `ref`, validates secrets per flavor, decodes the keystore from base64 to `${RUNNER_TEMP}/upload.jks`, writes `apps/client_app/android/key.<flavor>.properties` with that path so Gradle picks the matching per-flavor signing config, runs `flutter build appbundle --release --flavor <flavor>` with `--build-number` set to the **last five decimal digits** of `GITHUB_RUN_ID` (i.e. `run_id % 100000`, with `0` mapped to `1` so the value is always a valid positive `versionCode` under the [Play maximum](https://developer.android.com/studio/publish/versioning.html)), passes every required build-config key as `--dart-define`, and uploads the AAB via `r0adkll/upload-google-play@v1`. iOS TestFlight builds use the same rule in `ios/fastlane` for a matching Flutter build number.
 - **Inputs:**
   - `flavor` — `development` | `production` (default `production`)
   - `track` — `internal` | `alpha` | `beta` | `production` (default `internal`)
@@ -349,8 +361,8 @@ The App needs **Repository permissions → Contents = Read and write**, must be 
 
 | Flutter flavor | applicationId / Play `packageName`    | Config JSON (local / `dart-define-from-file`) |
 | -------------- | ------------------------------------- | --------------------------------------------- |
-| `development`  | `com.example.client_app.development` | `config/run/config.development.json`          |
-| `production`   | `com.example.client_app`             | `config/run/config.production.json`           |
+| `development`  | `com.example.client_app.development` | `config/config.development.json`          |
+| `production`   | `com.example.client_app`             | `config/config.production.json`           |
 
 
 
@@ -375,6 +387,6 @@ The App needs **Repository permissions → Contents = Read and write**, must be 
 | `development-MAJOR.MINOR.PATCH` | `development`   |
 
 
-**Dart / compile-time defines:** `API_URL` and `ENVIRONMENT` come from `modules/core/lib/config/app_config.dart`. **Local:** `config/run/*.json`. **CI:** secrets `<FLAVOR>_<KEY>` (see Step B3.3). New key: add to `config.example.json` + `String.fromEnvironment(...)` in Dart, then add `DEVELOPMENT_NEWKEY` and `PRODUCTION_NEWKEY` in GitHub Actions secrets and add `--dart-define=NEWKEY="$NEWKEY"` to the `Build AAB` step in `.github/workflows/android-upload-to-play.yml` (and a matching `<FLAVOR>_NEWKEY` env entry).
+**Dart / compile-time defines:** app-owned `AppConfig` reads required values with `String.fromEnvironment(...)` from `apps/client_app/lib/src/common/config/app_config.dart`. **Local:** `config/*.json`. **CI:** secrets `<FLAVOR>_<KEY>` (see Step B3.3). New key: add to `config.example.json`, `String.fromEnvironment(...)` in Dart, Fastlane `DART_DEFINE_KEYS`, and `.github/workflows/android-upload-to-play.yml`.
 
 **iOS CI:** [.github/docs/ios.md](ios.md)

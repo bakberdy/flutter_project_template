@@ -1,4 +1,3 @@
-import 'package:core/config/app_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +7,7 @@ class DebugOverlay extends StatelessWidget {
     required this.onOpenTalker,
     required this.child,
     required this.bannerColor,
+    required this.environment,
     super.key,
   });
 
@@ -15,10 +15,11 @@ class DebugOverlay extends StatelessWidget {
   final VoidCallback onOpenTalker;
   final Widget child;
   final Color bannerColor;
+  final String environment;
 
   @override
   Widget build(BuildContext context) {
-    if (AppConfig.instance.environment == 'production' && !kDebugMode) {
+    if (environment == 'production' && !kDebugMode) {
       return child;
     }
 
@@ -43,7 +44,7 @@ class DebugOverlay extends StatelessWidget {
         Align(
           alignment: Alignment.topRight,
           child: Banner(
-            message: AppConfig.instance.environment,
+            message: environment,
             location: BannerLocation.topEnd,
             color: bannerColor,
           ),

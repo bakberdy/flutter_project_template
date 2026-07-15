@@ -19,7 +19,6 @@ export 'api/storage/token_storage.dart';
 export 'api/storage/token_storage_impl.dart';
 export 'bloc/field_state/field_state.dart';
 export 'bloc/state_status/state_status.dart';
-export 'config/app_config.dart';
 export 'config/core_app_config.dart';
 export 'core_navigation/core_navigation_bloc.dart';
 export 'core_navigation/core_navigation_listener.dart';

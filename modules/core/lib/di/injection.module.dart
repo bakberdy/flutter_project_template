@@ -8,7 +8,6 @@ import 'dart:async' as _i687;
 import 'package:core/api/api.dart' as _i229;
 import 'package:core/api/storage/token_storage.dart' as _i610;
 import 'package:core/api/storage/token_storage_impl.dart' as _i511;
-import 'package:core/config/app_config.dart' as _i776;
 import 'package:core/config/core_app_config.dart' as _i283;
 import 'package:core/di/core_module.dart' as _i674;
 import 'package:core/shared/services/device_info_service.dart' as _i19;
@@ -26,8 +25,6 @@ class CorePackageModule extends _i526.MicroPackageModule {
   @override
   _i687.FutureOr<void> init(_i526.GetItHelper gh) async {
     final coreModule = _$CoreModule();
-    gh.singleton<_i776.AppConfig>(() => coreModule.appConfig);
-    gh.singleton<_i283.CoreAppConfig>(() => coreModule.coreAppConfig);
     await gh.singletonAsync<_i460.SharedPreferences>(
       () => coreModule.sharedPreferences,
       preResolve: true,
@@ -46,18 +43,18 @@ class CorePackageModule extends _i526.MicroPackageModule {
     gh.singleton<_i2.LocalStorage>(
         () => _i862.SharedPreferencesStorage(gh<_i460.SharedPreferences>()));
     gh.lazySingleton<_i229.ApiClient>(
-      () => coreModule.protectedApiClient(
-        gh<_i776.AppConfig>(),
-        gh<_i229.ApiClientFactory>(),
-      ),
-      instanceName: 'protectedApiClient',
-    );
-    gh.lazySingleton<_i229.ApiClient>(
       () => coreModule.publicApiClient(
-        gh<_i776.AppConfig>(),
+        gh<_i283.CoreAppConfig>(),
         gh<_i229.ApiClientFactory>(),
       ),
       instanceName: 'publicApiClient',
+    );
+    gh.lazySingleton<_i229.ApiClient>(
+      () => coreModule.protectedApiClient(
+        gh<_i283.CoreAppConfig>(),
+        gh<_i229.ApiClientFactory>(),
+      ),
+      instanceName: 'protectedApiClient',
     );
   }
 }

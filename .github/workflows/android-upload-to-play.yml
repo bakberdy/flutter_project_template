@@ -99,11 +99,45 @@ jobs:
           ANDROID_KEY_PASSWORD_PRODUCTION: ${{ secrets.ANDROID_KEY_PASSWORD_PRODUCTION }}
           DEVELOPMENT_API_URL: ${{ secrets.DEVELOPMENT_API_URL }}
           DEVELOPMENT_ENVIRONMENT: ${{ secrets.DEVELOPMENT_ENVIRONMENT }}
+          DEVELOPMENT_ENABLE_LOGGING: ${{ secrets.DEVELOPMENT_ENABLE_LOGGING }}
+          DEVELOPMENT_ENABLE_ANALYTICS: ${{ secrets.DEVELOPMENT_ENABLE_ANALYTICS }}
+          DEVELOPMENT_ENABLE_CRASHLYTICS: ${{ secrets.DEVELOPMENT_ENABLE_CRASHLYTICS }}
+          DEVELOPMENT_CONNECT_TIMEOUT_SECONDS: ${{ secrets.DEVELOPMENT_CONNECT_TIMEOUT_SECONDS }}
+          DEVELOPMENT_RECEIVE_TIMEOUT_SECONDS: ${{ secrets.DEVELOPMENT_RECEIVE_TIMEOUT_SECONDS }}
+          DEVELOPMENT_SEND_TIMEOUT_SECONDS: ${{ secrets.DEVELOPMENT_SEND_TIMEOUT_SECONDS }}
           PRODUCTION_API_URL: ${{ secrets.PRODUCTION_API_URL }}
           PRODUCTION_ENVIRONMENT: ${{ secrets.PRODUCTION_ENVIRONMENT }}
+          PRODUCTION_ENABLE_LOGGING: ${{ secrets.PRODUCTION_ENABLE_LOGGING }}
+          PRODUCTION_ENABLE_ANALYTICS: ${{ secrets.PRODUCTION_ENABLE_ANALYTICS }}
+          PRODUCTION_ENABLE_CRASHLYTICS: ${{ secrets.PRODUCTION_ENABLE_CRASHLYTICS }}
+          PRODUCTION_CONNECT_TIMEOUT_SECONDS: ${{ secrets.PRODUCTION_CONNECT_TIMEOUT_SECONDS }}
+          PRODUCTION_RECEIVE_TIMEOUT_SECONDS: ${{ secrets.PRODUCTION_RECEIVE_TIMEOUT_SECONDS }}
+          PRODUCTION_SEND_TIMEOUT_SECONDS: ${{ secrets.PRODUCTION_SEND_TIMEOUT_SECONDS }}
         run: |
           set -euo pipefail
           rc=0
+          config_keys=(
+            API_URL
+            ENVIRONMENT
+            ENABLE_LOGGING
+            ENABLE_ANALYTICS
+            ENABLE_CRASHLYTICS
+            CONNECT_TIMEOUT_SECONDS
+            RECEIVE_TIMEOUT_SECONDS
+            SEND_TIMEOUT_SECONDS
+          )
+
+          check_build_config() {
+            local prefix="$1"
+            local flavor="$2"
+            for key in "${config_keys[@]}"; do
+              local name="${prefix}_${key}"
+              if [ -z "${!name}" ]; then
+                echo "::error::For flavor ${flavor}, secret ${name} is required (build config; see config/config.example.json)."
+                rc=1
+              fi
+            done
+          }
 
           case "${TRACK}" in
             internal|alpha|beta|production) ;;
@@ -121,16 +155,14 @@ jobs:
               if [ -z "${ANDROID_KEYSTORE_PASSWORD_PRODUCTION}" ]; then echo "::error::For flavor production, secret ANDROID_KEYSTORE_PASSWORD_PRODUCTION is required."; rc=1; fi
               if [ -z "${ANDROID_KEY_ALIAS_PRODUCTION}" ]; then echo "::error::For flavor production, secret ANDROID_KEY_ALIAS_PRODUCTION is required."; rc=1; fi
               if [ -z "${ANDROID_KEY_PASSWORD_PRODUCTION}" ]; then echo "::error::For flavor production, secret ANDROID_KEY_PASSWORD_PRODUCTION is required."; rc=1; fi
-              if [ -z "${PRODUCTION_API_URL}" ]; then echo "::error::For flavor production, secret PRODUCTION_API_URL is required (build config; see config/run/config.example.json)."; rc=1; fi
-              if [ -z "${PRODUCTION_ENVIRONMENT}" ]; then echo "::error::For flavor production, secret PRODUCTION_ENVIRONMENT is required (build config; see config/run/config.example.json)."; rc=1; fi
+              check_build_config PRODUCTION production
               ;;
             development)
               if [ -z "${ANDROID_KEYSTORE_BASE64_DEVELOPMENT}" ]; then echo "::error::For flavor development, secret ANDROID_KEYSTORE_BASE64_DEVELOPMENT is required (Base64 of upload keystore .jks)."; rc=1; fi
               if [ -z "${ANDROID_KEYSTORE_PASSWORD_DEVELOPMENT}" ]; then echo "::error::For flavor development, secret ANDROID_KEYSTORE_PASSWORD_DEVELOPMENT is required."; rc=1; fi
               if [ -z "${ANDROID_KEY_ALIAS_DEVELOPMENT}" ]; then echo "::error::For flavor development, secret ANDROID_KEY_ALIAS_DEVELOPMENT is required."; rc=1; fi
               if [ -z "${ANDROID_KEY_PASSWORD_DEVELOPMENT}" ]; then echo "::error::For flavor development, secret ANDROID_KEY_PASSWORD_DEVELOPMENT is required."; rc=1; fi
-              if [ -z "${DEVELOPMENT_API_URL}" ]; then echo "::error::For flavor development, secret DEVELOPMENT_API_URL is required (build config; see config/run/config.example.json)."; rc=1; fi
-              if [ -z "${DEVELOPMENT_ENVIRONMENT}" ]; then echo "::error::For flavor development, secret DEVELOPMENT_ENVIRONMENT is required (build config; see config/run/config.example.json)."; rc=1; fi
+              check_build_config DEVELOPMENT development
               ;;
             *)
               echo "::error::Invalid flavor '${FLAVOR}'. Use development or production."
@@ -240,20 +272,45 @@ jobs:
           FLAVOR: ${{ inputs.flavor }}
           DEVELOPMENT_API_URL: ${{ secrets.DEVELOPMENT_API_URL }}
           DEVELOPMENT_ENVIRONMENT: ${{ secrets.DEVELOPMENT_ENVIRONMENT }}
+          DEVELOPMENT_ENABLE_LOGGING: ${{ secrets.DEVELOPMENT_ENABLE_LOGGING }}
+          DEVELOPMENT_ENABLE_ANALYTICS: ${{ secrets.DEVELOPMENT_ENABLE_ANALYTICS }}
+          DEVELOPMENT_ENABLE_CRASHLYTICS: ${{ secrets.DEVELOPMENT_ENABLE_CRASHLYTICS }}
+          DEVELOPMENT_CONNECT_TIMEOUT_SECONDS: ${{ secrets.DEVELOPMENT_CONNECT_TIMEOUT_SECONDS }}
+          DEVELOPMENT_RECEIVE_TIMEOUT_SECONDS: ${{ secrets.DEVELOPMENT_RECEIVE_TIMEOUT_SECONDS }}
+          DEVELOPMENT_SEND_TIMEOUT_SECONDS: ${{ secrets.DEVELOPMENT_SEND_TIMEOUT_SECONDS }}
           PRODUCTION_API_URL: ${{ secrets.PRODUCTION_API_URL }}
           PRODUCTION_ENVIRONMENT: ${{ secrets.PRODUCTION_ENVIRONMENT }}
+          PRODUCTION_ENABLE_LOGGING: ${{ secrets.PRODUCTION_ENABLE_LOGGING }}
+          PRODUCTION_ENABLE_ANALYTICS: ${{ secrets.PRODUCTION_ENABLE_ANALYTICS }}
+          PRODUCTION_ENABLE_CRASHLYTICS: ${{ secrets.PRODUCTION_ENABLE_CRASHLYTICS }}
+          PRODUCTION_CONNECT_TIMEOUT_SECONDS: ${{ secrets.PRODUCTION_CONNECT_TIMEOUT_SECONDS }}
+          PRODUCTION_RECEIVE_TIMEOUT_SECONDS: ${{ secrets.PRODUCTION_RECEIVE_TIMEOUT_SECONDS }}
+          PRODUCTION_SEND_TIMEOUT_SECONDS: ${{ secrets.PRODUCTION_SEND_TIMEOUT_SECONDS }}
         run: |
           set -euo pipefail
+          config_keys=(
+            API_URL
+            ENVIRONMENT
+            ENABLE_LOGGING
+            ENABLE_ANALYTICS
+            ENABLE_CRASHLYTICS
+            CONNECT_TIMEOUT_SECONDS
+            RECEIVE_TIMEOUT_SECONDS
+            SEND_TIMEOUT_SECONDS
+          )
           case "${FLAVOR}" in
             production)
-              CFG_API_URL="${PRODUCTION_API_URL}"
-              CFG_ENVIRONMENT="${PRODUCTION_ENVIRONMENT}"
+              CFG_PREFIX="PRODUCTION"
               ;;
             development)
-              CFG_API_URL="${DEVELOPMENT_API_URL}"
-              CFG_ENVIRONMENT="${DEVELOPMENT_ENVIRONMENT}"
+              CFG_PREFIX="DEVELOPMENT"
               ;;
           esac
+          dart_defines=()
+          for key in "${config_keys[@]}"; do
+            env_name="${CFG_PREFIX}_${key}"
+            dart_defines+=(--dart-define="${key}=${!env_name}")
+          done
           # Android versionCode must be <= 2100000000; GITHUB_RUN_ID can be larger. Last 5 decimal digits.
           RID="${GITHUB_RUN_ID:-0}"
           BN=$(( RID % 100000 ))
@@ -261,8 +318,7 @@ jobs:
           cd apps/client_app
           flutter build appbundle --release --flavor "${FLAVOR}" \
             --build-number "${BN}" \
-            --dart-define=API_URL="${CFG_API_URL}" \
-            --dart-define=ENVIRONMENT="${CFG_ENVIRONMENT}"
+            "${dart_defines[@]}"
 
       - name: Locate AAB
         id: aab

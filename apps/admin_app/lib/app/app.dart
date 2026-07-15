@@ -61,8 +61,8 @@ class _AppState extends State<App> {
               router: _appRouter,
               child: MaterialApp.router(
                 builder: (context, child) {
-                  if (AppConfig.instance.environment == 'production' &&
-                      !kDebugMode) {
+                  final appConfig = context.di<CoreAppConfig>();
+                  if (appConfig.environment == 'production' && !kDebugMode) {
                     return child ?? const SizedBox.shrink();
                   }
                   return Stack(
@@ -90,7 +90,7 @@ class _AppState extends State<App> {
                       Align(
                         alignment: Alignment.topRight,
                         child: Banner(
-                          message: AppConfig.instance.environment,
+                          message: appConfig.environment,
                           location: BannerLocation.topEnd,
                           color: context.designColors.primary,
                         ),

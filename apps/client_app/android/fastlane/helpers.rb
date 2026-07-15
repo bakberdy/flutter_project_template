@@ -4,17 +4,26 @@ require "fileutils"
 FLAVORS = {
   "development" => {
     package_name:     "com.example.client_app.development",
-    dart_define_file: "config/run/config.development.json",
+    dart_define_file: "config/config.development.json",
     env_suffix:       "DEVELOPMENT",
   },
   "production" => {
     package_name:     "com.example.client_app",
-    dart_define_file: "config/run/config.production.json",
+    dart_define_file: "config/config.production.json",
     env_suffix:       "PRODUCTION",
   },
 }.freeze
 
-DART_DEFINE_KEYS = %w[API_URL ENVIRONMENT].freeze
+DART_DEFINE_KEYS = %w[
+  API_URL
+  ENVIRONMENT
+  ENABLE_LOGGING
+  ENABLE_ANALYTICS
+  ENABLE_CRASHLYTICS
+  CONNECT_TIMEOUT_SECONDS
+  RECEIVE_TIMEOUT_SECONDS
+  SEND_TIMEOUT_SECONDS
+].freeze
 
 DEFAULT_PLAY_TRACK = "internal".freeze
 
@@ -81,7 +90,7 @@ def flutter_dart_define_args(flavor)
       val = ENV[env_name].to_s
       if val.empty?
         UI.user_error!(
-          "Set repository secret #{env_name} for CI (same value as \"#{key}\" in #{cfg[:dart_define_file]}; see config/run/config.example.json). " \
+          "Set repository secret #{env_name} for CI (same value as \"#{key}\" in #{cfg[:dart_define_file]}; see config/config.example.json). " \
           "Locally, unset CI and use --dart-define-from-file instead.",
         )
       end

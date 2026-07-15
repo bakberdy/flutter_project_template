@@ -12,7 +12,7 @@
             "toolArgs": [
                 "--web-browser-flag",
                 "--disable-web-security",
-                "--dart-define-from-file=config/run/config.development.json"
+                "--dart-define-from-file=config/config.development.json"
             ]
         },
         {
@@ -23,7 +23,7 @@
             "toolArgs": [
                 "--web-browser-flag",
                 "--disable-web-security",
-                "--dart-define-from-file=config/run/config.production.json"
+                "--dart-define-from-file=config/config.production.json"
             ]
         },
         {
@@ -32,7 +32,7 @@
             "request": "launch",
             "type": "dart",
             "toolArgs": [
-                "--dart-define-from-file=config/run/config.development.json"
+                "--dart-define-from-file=config/config.development.json"
             ]
         },
         {
@@ -41,7 +41,7 @@
             "request": "launch",
             "type": "dart",
             "toolArgs": [
-                "--dart-define-from-file=config/run/config.production.json"
+                "--dart-define-from-file=config/config.production.json"
             ]
         },
     ]

@@ -9,10 +9,10 @@
 CLIENT_APP := apps/client_app
 ADMIN_APP := apps/admin_app
 
-CLIENT_CONFIG_DEVELOPMENT := config/run/config.development.json
-CLIENT_CONFIG_PRODUCTION := config/run/config.production.json
-ADMIN_CONFIG_DEVELOPMENT := config/run/config.development.json
-ADMIN_CONFIG_PRODUCTION := config/run/config.production.json
+CLIENT_CONFIG_DEVELOPMENT := config/config.development.json
+CLIENT_CONFIG_PRODUCTION := config/config.production.json
+ADMIN_CONFIG_DEVELOPMENT := config/config.development.json
+ADMIN_CONFIG_PRODUCTION := config/config.production.json
 
 help:
 	@echo "Flutter project template commands"
