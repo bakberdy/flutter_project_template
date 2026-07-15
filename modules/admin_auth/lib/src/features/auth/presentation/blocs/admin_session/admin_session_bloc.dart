@@ -14,6 +14,9 @@ class AdminSessionBloc extends Bloc<AdminSessionEvent, AdminSessionState> {
     : super(const AdminSessionState()) {
     on<AdminSessionStarted>(_onStarted);
     on<AdminSessionLogoutRequested>(_onLogoutRequested);
+    on<AdminSessionInvalidated>(
+      (_, emit) => emit(const AdminSessionState(status: StateStatus.success())),
+    );
     on<AdminSessionFailureAcknowledged>(
       (_, emit) => emit(state.copyWith(clearLaunchFailure: true)),
     );

@@ -6,6 +6,7 @@ class ApiClientFactory {
   final TokenStorage tokenStorage;
   final Talker talker;
   final List<ApiRequestHeadersProvider> _headersProviders = [];
+  Future<void> Function()? _unauthorizedHandler;
 
   void registerHeadersProvider(ApiRequestHeadersProvider provider) {
     if (_headersProviders.any((item) => identical(item, provider))) {
@@ -14,15 +15,31 @@ class ApiClientFactory {
     _headersProviders.add(provider);
   }
 
+  void registerUnauthorizedHandler(Future<void> Function() handler) {
+    _unauthorizedHandler = handler;
+  }
+
+  void unregisterUnauthorizedHandler(Future<void> Function() handler) {
+    if (identical(_unauthorizedHandler, handler)) {
+      _unauthorizedHandler = null;
+    }
+  }
+
   ApiClient createPublic({required ApiConfig config}) {
     return ApiClient._(_createDio(config: config));
   }
 
   ApiClient createProtected({required ApiConfig config}) {
     final dio = _createDio(config: config);
-    dio.interceptors.add(AuthInterceptor(dio, tokenStorage));
+    dio.interceptors.add(
+      AuthInterceptor(dio, tokenStorage, onUnauthorized: _notifyUnauthorized),
+    );
 
     return ApiClient._(dio);
+  }
+
+  Future<void> _notifyUnauthorized() async {
+    await _unauthorizedHandler?.call();
   }
 
   Dio _createDio({required ApiConfig config}) {

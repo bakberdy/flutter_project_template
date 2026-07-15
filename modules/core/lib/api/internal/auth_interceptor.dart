@@ -4,10 +4,11 @@ import '../../utils/constants/api_constants.dart';
 import '../storage/token_storage.dart';
 
 class AuthInterceptor extends Interceptor {
-  AuthInterceptor(this._dio, this._tokenStorage);
+  AuthInterceptor(this._dio, this._tokenStorage, {this.onUnauthorized});
 
   final Dio _dio;
   final TokenStorage _tokenStorage;
+  final Future<void> Function()? onUnauthorized;
 
   static const _refreshPath = '/auth/refresh';
 
@@ -128,6 +129,7 @@ class AuthInterceptor extends Interceptor {
 
   Future<void> _handleUnauthorized() async {
     await _tokenStorage.clearTokens();
+    await onUnauthorized?.call();
   }
 
   DioException _toUnauthorizedError(DioException source) {

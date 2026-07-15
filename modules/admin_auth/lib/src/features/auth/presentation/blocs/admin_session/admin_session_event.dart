@@ -12,6 +12,10 @@ final class AdminSessionLogoutRequested extends AdminSessionEvent {
   const AdminSessionLogoutRequested();
 }
 
+final class AdminSessionInvalidated extends AdminSessionEvent {
+  const AdminSessionInvalidated();
+}
+
 final class AdminSessionFailureAcknowledged extends AdminSessionEvent {
   const AdminSessionFailureAcknowledged();
 }

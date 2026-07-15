@@ -22,6 +22,8 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   final ValueNotifier<bool> _showTalkerDock = ValueNotifier<bool>(true);
+  late final ApiClientFactory _apiClientFactory = sl<ApiClientFactory>();
+  late final Future<void> Function() _unauthorizedHandler = _handleUnauthorized;
   late final CoreNavigationBloc _navigationBloc = sl<CoreNavigationBloc>();
   late final ClientAppRouter _appRouter = sl<ClientAppRouter>();
   late final UserBloc _userBloc = sl<UserBloc>()..add(const UserStartedEvent());
@@ -34,7 +36,14 @@ class _AppState extends State<App> {
     );
 
   @override
+  void initState() {
+    super.initState();
+    _apiClientFactory.registerUnauthorizedHandler(_unauthorizedHandler);
+  }
+
+  @override
   void dispose() {
+    _apiClientFactory.unregisterUnauthorizedHandler(_unauthorizedHandler);
     _showTalkerDock.dispose();
     _navigationBloc.close();
     _userBloc.close();
@@ -125,5 +134,11 @@ class _AppState extends State<App> {
   Future<void> _logoutAndRefreshSession() async {
     await sl<AuthLogOutUseCase>()(const NoParams());
     _userBloc.add(const UserLoggedOutEvent());
+  }
+
+  Future<void> _handleUnauthorized() async {
+    if (mounted) {
+      _userBloc.add(const UserLoggedOutEvent());
+    }
   }
 }
