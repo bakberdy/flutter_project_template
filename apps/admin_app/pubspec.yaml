@@ -23,6 +23,7 @@ dependencies:
   #modules
   core: ^0.1.0
   design_system: ^0.1.0
+  shared: ^0.1.0
   admin_auth: ^0.1.0
   admin_users: ^0.1.0
   admin_profile: ^0.1.0

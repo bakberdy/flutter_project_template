@@ -1,5 +1,6 @@
 import 'package:admin_auth/src/features/auth/domain/repositories/auth_repository.dart';
 import 'package:core/core.dart';
+import 'package:shared/shared.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 

@@ -1,6 +1,6 @@
 import 'package:core/api/models/api_cancel_token.dart';
 import 'package:core/bloc/state_status/state_status.dart';
-import 'package:core/shared/entities/auth/user.dart';
+import 'package:shared/shared.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:client_profile/src/features/profile/domain/usecases/get_current_user_use_case.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

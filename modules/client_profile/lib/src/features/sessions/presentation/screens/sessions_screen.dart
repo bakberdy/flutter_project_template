@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:design_system/design_system.dart';
 import 'package:core/core.dart';
+import 'package:shared/shared.dart';
 import 'package:client_profile/src/common/client_profile_context_x.dart';
 import 'package:client_profile/src/features/sessions/domain/entities/session.dart';
 import 'package:client_profile/src/features/sessions/presentation/blocs/sessions/sessions_bloc.dart';

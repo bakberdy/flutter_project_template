@@ -1,4 +1,5 @@
 import 'package:core/core.dart';
+import 'package:shared/shared.dart';
 import 'package:admin_auth/src/common/config/admin_auth_api_endpoints.dart';
 import 'package:admin_auth/src/features/auth/data/models/auth_login_request_model/auth_login_request_model.dart';
 import 'package:admin_auth/src/features/auth/data/models/authorization_login_response_model/authorization_login_response_model.dart';

@@ -1,45 +1,30 @@
-import 'package:core/shared/entities/failure.dart';
-import 'package:core/shared/extensions/failure_x.dart';
+import 'package:core/core.dart';
+import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/src/mappers/ui_failure_mapper.dart';
 
 mixin UiFailureHandlerMixin {
   Future<void> handleFailure(Failure failure, BuildContext context) async {
-    final message = failure.message ?? failure.defaultMessage;
+    final message = UiFailureMapper.message(failure);
 
     switch (failure.details?.type) {
       case FailureType.alert:
-        await showDialog<void>(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text(message),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text('OK'),
-              ),
-            ],
-          ),
+        await BaseDialog.show<void>(
+          context,
+          title: message,
+          primaryLabel: 'OK',
         );
-        break;
       case FailureType.snackbar:
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(message), behavior: SnackBarBehavior.floating),
-        );
-        break;
+        BaseSnackbar.error(context, message: message);
       case FailureType.banner:
         _showBanner(context, message);
-        break;
       case FailureType.fullScreen:
         await _showFullscreen(context, message);
-        break;
       case FailureType.inline:
       case FailureType.silent:
         break;
       case null:
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(message), behavior: SnackBarBehavior.floating),
-        );
-        break;
+        BaseSnackbar.error(context, message: message);
     }
   }
 

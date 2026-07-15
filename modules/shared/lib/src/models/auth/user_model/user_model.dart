@@ -1,7 +1,7 @@
-import 'package:core/shared/entities/auth/user.dart';
-import 'package:core/shared/entities/auth/user_role.dart';
-import 'package:core/shared/entities/auth/user_status.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:shared/src/entities/auth/user.dart';
+import 'package:shared/src/entities/auth/user_role.dart';
+import 'package:shared/src/entities/auth/user_status.dart';
 
 part 'user_model.g.dart';
 

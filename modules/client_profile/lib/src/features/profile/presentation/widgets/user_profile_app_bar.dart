@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:client_profile/src/common/client_profile_context_x.dart';
 import 'package:core/core.dart';
+import 'package:shared/shared.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 

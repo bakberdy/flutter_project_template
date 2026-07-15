@@ -7,6 +7,7 @@ import 'package:admin_auth/admin_auth.dart';
 import 'package:admin_profile/admin_profile.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:core/core.dart';
+import 'package:shared/shared.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

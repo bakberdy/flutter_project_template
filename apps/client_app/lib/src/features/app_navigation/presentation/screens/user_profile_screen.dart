@@ -6,6 +6,7 @@ import 'package:client_app/src/features/app_navigation/presentation/widgets/user
 import 'package:client_profile/client_profile.dart';
 import 'package:client_preferences/client_preferences.dart';
 import 'package:core/core.dart';
+import 'package:shared/shared.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

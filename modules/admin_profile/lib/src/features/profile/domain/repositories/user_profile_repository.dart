@@ -1,4 +1,5 @@
 import 'package:core/core.dart';
+import 'package:shared/shared.dart';
 import 'package:admin_profile/src/features/profile/domain/entities/user_avatar_upload.dart';
 
 abstract class UserProfileRepository {

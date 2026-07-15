@@ -2,6 +2,7 @@ import 'package:admin_auth/src/common/admin_auth_context_x.dart';
 import 'package:admin_auth/src/features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:core/core.dart';
+import 'package:shared/shared.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

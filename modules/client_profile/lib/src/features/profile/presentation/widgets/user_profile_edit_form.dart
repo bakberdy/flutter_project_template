@@ -1,5 +1,6 @@
 import 'package:design_system/design_system.dart';
 import 'package:core/core.dart';
+import 'package:shared/shared.dart';
 import 'package:client_profile/src/common/client_profile_context_x.dart';
 import 'package:client_profile/src/features/profile/presentation/helpers/user_profile_phone_number_validation.dart';
 import 'package:client_profile/src/features/profile/presentation/widgets/user_profile_full_name_text_field.dart';

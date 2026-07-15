@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
-
-import 'user_phone_number.dart';
+import 'package:shared/src/entities/auth/user_phone_number.dart';
 
 class UserProfile extends Equatable {
   final String userId;

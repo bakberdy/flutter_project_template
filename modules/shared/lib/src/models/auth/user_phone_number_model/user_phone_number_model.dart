@@ -1,5 +1,5 @@
-import 'package:core/shared/entities/auth/user_phone_number.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:shared/src/entities/auth/user_phone_number.dart';
 
 part 'user_phone_number_model.g.dart';
 

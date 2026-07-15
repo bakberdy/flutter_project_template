@@ -10,6 +10,7 @@ workspace:
   - apps/admin_app
   - modules/core
   - modules/design_system
+  - modules/shared
   - modules/admin_users
   - modules/admin_auth
   - modules/admin_profile

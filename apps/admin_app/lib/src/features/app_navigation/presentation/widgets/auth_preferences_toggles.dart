@@ -1,6 +1,7 @@
 import 'package:admin_app/src/common/admin_app_localization_x.dart';
 import 'package:admin_preferences/admin_preferences.dart';
 import 'package:core/core.dart';
+import 'package:shared/shared.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

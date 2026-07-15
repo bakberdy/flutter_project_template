@@ -1,6 +1,6 @@
-import 'package:core/shared/entities/auth/user_role.dart';
-import 'package:core/shared/entities/auth/user_status.dart';
 import 'package:equatable/equatable.dart';
+import 'package:shared/src/entities/auth/user_role.dart';
+import 'package:shared/src/entities/auth/user_status.dart';
 
 class User extends Equatable {
   final String id;

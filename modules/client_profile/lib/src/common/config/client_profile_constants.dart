@@ -1,4 +1,4 @@
-import 'package:core/core.dart';
+import 'package:shared/shared.dart';
 
 abstract final class ClientProfileConstants {
   static const int phoneNumberDigitsRequired = 10;

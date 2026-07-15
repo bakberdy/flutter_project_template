@@ -1,4 +1,5 @@
 import 'package:core/core.dart';
+import 'package:shared/shared.dart';
 import 'package:client_profile/src/features/profile/domain/entities/user_avatar_upload.dart';
 import 'package:client_profile/src/features/profile/domain/usecases/get_app_info_use_case.dart';
 import 'package:client_profile/src/features/profile/domain/usecases/get_current_user_profile_use_case.dart';

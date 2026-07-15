@@ -11,9 +11,9 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
   email: json['email'] as String,
   role: $enumDecode(_$UserRoleEnumMap, json['role']),
   status: $enumDecode(_$UserStatusEnumMap, json['status']),
-  isVerified: json['is_verified'] as bool,
-  createdAt: DateTime.parse(json['created_at'] as String),
-  isUserDataUploaded: json['is_user_data_uploaded'] as bool,
+  isVerified: json['isVerified'] as bool,
+  createdAt: DateTime.parse(json['createdAt'] as String),
+  isUserDataUploaded: json['isUserDataUploaded'] as bool,
 );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
@@ -21,9 +21,9 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
   'email': instance.email,
   'role': _$UserRoleEnumMap[instance.role]!,
   'status': _$UserStatusEnumMap[instance.status]!,
-  'is_verified': instance.isVerified,
-  'created_at': instance.createdAt.toIso8601String(),
-  'is_user_data_uploaded': instance.isUserDataUploaded,
+  'isVerified': instance.isVerified,
+  'createdAt': instance.createdAt.toIso8601String(),
+  'isUserDataUploaded': instance.isUserDataUploaded,
 };
 
 const _$UserRoleEnumMap = {

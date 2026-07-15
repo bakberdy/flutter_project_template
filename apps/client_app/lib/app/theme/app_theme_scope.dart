@@ -1,7 +1,7 @@
-import 'package:core/core.dart';
 import 'package:client_preferences/client_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared/shared.dart';
 
 typedef AppThemeScopeBuilder =
     Widget Function(BuildContext context, ThemeMode themeMode, Widget? child);
@@ -13,68 +13,46 @@ class AppThemeScope extends StatelessWidget {
   const AppThemeScope({required this.builder, this.child, super.key});
 
   @override
-  Widget build(BuildContext context) => BlocProvider(
+  Widget build(BuildContext context) => BlocProvider<ThemeBloc>(
     create: (context) => context.di<ThemeBloc>(),
     child: _AppThemeScopeBody(builder: builder, child: child),
   );
 }
 
 class _AppThemeScopeBody extends StatefulWidget {
+  const _AppThemeScopeBody({required this.builder, this.child});
+
   final AppThemeScopeBuilder builder;
   final Widget? child;
-
-  const _AppThemeScopeBody({required this.builder, this.child});
 
   @override
   State<_AppThemeScopeBody> createState() => _AppThemeScopeBodyState();
 }
 
-class _AppThemeScopeBodyState extends State<_AppThemeScopeBody>
-    with WidgetsBindingObserver {
+class _AppThemeScopeBodyState extends State<_AppThemeScopeBody> {
   late final ThemeBloc _themeBloc;
-
-  UserTheme _readSystemThemeMode() {
-    final brightness =
-        WidgetsBinding.instance.platformDispatcher.platformBrightness;
-    return brightness == Brightness.dark ? UserTheme.dark : UserTheme.light;
-  }
-
-  void _syncSystemThemeMode() {
-    _themeBloc.applySystemThemeMode(_readSystemThemeMode());
-  }
 
   @override
   void initState() {
     super.initState();
     _themeBloc = context.read<ThemeBloc>();
-    WidgetsBinding.instance.addObserver(this);
-    _themeBloc.start(systemThemeMode: _readSystemThemeMode());
   }
 
-  @override
-  void didChangePlatformBrightness() {
-    _syncSystemThemeMode();
-  }
+  UserTheme _toUserTheme(Brightness brightness) =>
+      brightness == Brightness.dark ? UserTheme.dark : UserTheme.light;
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      _syncSystemThemeMode();
-    }
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) => BlocBuilder<ThemeBloc, ThemeState>(
-    builder: (context, themeState) => widget.builder(
-      context,
-      _toThemeMode(themeState.appliedThemeMode ?? UserTheme.system),
-      widget.child,
+  Widget build(BuildContext context) => SystemBrightnessObserver(
+    onInitialBrightness: (brightness) =>
+        _themeBloc.start(systemThemeMode: _toUserTheme(brightness)),
+    onBrightnessChanged: (brightness) =>
+        _themeBloc.applySystemThemeMode(_toUserTheme(brightness)),
+    child: BlocBuilder<ThemeBloc, ThemeState>(
+      builder: (context, themeState) => widget.builder(
+        context,
+        _toThemeMode(themeState.appliedThemeMode ?? UserTheme.system),
+        widget.child,
+      ),
     ),
   );
 

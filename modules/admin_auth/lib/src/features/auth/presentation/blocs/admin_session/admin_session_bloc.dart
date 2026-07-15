@@ -1,6 +1,7 @@
 import 'package:admin_auth/src/features/auth/domain/usecases/auth_log_out_use_case.dart';
 import 'package:admin_auth/src/features/auth/domain/usecases/get_admin_session_use_case.dart';
 import 'package:core/core.dart';
+import 'package:shared/shared.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 

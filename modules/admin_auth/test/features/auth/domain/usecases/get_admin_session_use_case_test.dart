@@ -4,6 +4,7 @@ import 'package:admin_auth/src/features/auth/domain/entities/verify_response.dar
 import 'package:admin_auth/src/features/auth/domain/repositories/auth_repository.dart';
 import 'package:admin_auth/src/features/auth/domain/usecases/get_admin_session_use_case.dart';
 import 'package:core/core.dart';
+import 'package:shared/shared.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 

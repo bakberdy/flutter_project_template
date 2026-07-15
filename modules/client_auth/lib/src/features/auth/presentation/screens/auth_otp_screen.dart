@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:design_system/design_system.dart';
 import 'package:core/core.dart';
+import 'package:shared/shared.dart';
 import 'package:client_auth/src/common/client_auth_context_x.dart';
 import 'package:client_auth/src/features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:flutter/material.dart';

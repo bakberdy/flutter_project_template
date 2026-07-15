@@ -1,6 +1,6 @@
-import 'package:core/shared/entities/auth/user_profile.dart';
-import 'package:core/shared/models/auth/user_phone_number_model/user_phone_number_model.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:shared/src/entities/auth/user_profile.dart';
+import 'package:shared/src/models/auth/user_phone_number_model/user_phone_number_model.dart';
 
 part 'user_profile_model.g.dart';
 
@@ -18,9 +18,9 @@ class UserProfileModel extends UserProfile {
     required super.updatedAt,
     super.completedAt,
   }) : super(phoneNumber: phoneNumberDto);
-  factory UserProfileModel.fromJson(Map<String, dynamic> json) {
-    return _$UserProfileModelFromJson(json);
-  }
+
+  factory UserProfileModel.fromJson(Map<String, dynamic> json) =>
+      _$UserProfileModelFromJson(json);
 
   factory UserProfileModel.fromEntity(UserProfile profile) => UserProfileModel(
     userId: profile.userId,
