@@ -159,7 +159,7 @@ class _PreferencesDialogViewState extends State<PreferencesDialogView>
                         _LanguageTile(
                           state: state,
                           selectedLanguageCode: selectedLanguageCode,
-                          title: 'Қазақ',
+                          title: context.l10n.languageKazakhNative,
                           subtitle: context.l10n.languageKazakh,
                           languageCode:
                               AdminPreferencesConstants.kazakh.languageCode,
@@ -173,7 +173,7 @@ class _PreferencesDialogViewState extends State<PreferencesDialogView>
                         _LanguageTile(
                           state: state,
                           selectedLanguageCode: selectedLanguageCode,
-                          title: 'Русский',
+                          title: context.l10n.languageRussianNative,
                           subtitle: context.l10n.languageRussian,
                           languageCode:
                               AdminPreferencesConstants.russian.languageCode,
@@ -188,7 +188,7 @@ class _PreferencesDialogViewState extends State<PreferencesDialogView>
                         _LanguageTile(
                           state: state,
                           selectedLanguageCode: selectedLanguageCode,
-                          title: 'English',
+                          title: context.l10n.languageEnglishNative,
                           subtitle: context.l10n.languageEnglish,
                           languageCode:
                               AdminPreferencesConstants.english.languageCode,

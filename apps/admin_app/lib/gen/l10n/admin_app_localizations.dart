@@ -103,6 +103,12 @@ abstract class AdminAppLocalizations {
     Locale('ru'),
   ];
 
+  /// No description provided for @adminAppTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin Panel'**
+  String get adminAppTitle;
+
   /// No description provided for @dashboard.
   ///
   /// In en, this message translates to:
@@ -150,6 +156,24 @@ abstract class AdminAppLocalizations {
   /// In en, this message translates to:
   /// **'Language'**
   String get language;
+
+  /// No description provided for @languageEnglishNative.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get languageEnglishNative;
+
+  /// No description provided for @languageRussianNative.
+  ///
+  /// In en, this message translates to:
+  /// **'Русский'**
+  String get languageRussianNative;
+
+  /// No description provided for @languageKazakhNative.
+  ///
+  /// In en, this message translates to:
+  /// **'Қазақ'**
+  String get languageKazakhNative;
 
   /// No description provided for @logoutTitle.
   ///

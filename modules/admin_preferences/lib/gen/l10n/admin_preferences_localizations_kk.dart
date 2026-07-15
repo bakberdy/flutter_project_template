@@ -43,4 +43,13 @@ class AdminPreferencesLocalizationsKk extends AdminPreferencesLocalizations {
 
   @override
   String get languageEnglish => 'Ағылшынша';
+
+  @override
+  String get languageEnglishNative => 'English';
+
+  @override
+  String get languageRussianNative => 'Русский';
+
+  @override
+  String get languageKazakhNative => 'Қазақ';
 }

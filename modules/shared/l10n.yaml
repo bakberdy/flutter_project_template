@@ -1,0 +1,6 @@
+arb-dir: lib/l10n
+template-arb-file: shared_en.arb
+output-dir: lib/gen/l10n
+output-localization-file: shared_localizations.dart
+output-class: SharedLocalizations
+nullable-getter: false

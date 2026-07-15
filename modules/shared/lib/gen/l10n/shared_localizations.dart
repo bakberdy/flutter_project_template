@@ -5,25 +5,25 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
-import 'admin_preferences_localizations_en.dart';
-import 'admin_preferences_localizations_kk.dart';
-import 'admin_preferences_localizations_ru.dart';
+import 'shared_localizations_en.dart';
+import 'shared_localizations_kk.dart';
+import 'shared_localizations_ru.dart';
 
 // ignore_for_file: type=lint
 
-/// Callers can lookup localized strings with an instance of AdminPreferencesLocalizations
-/// returned by `AdminPreferencesLocalizations.of(context)`.
+/// Callers can lookup localized strings with an instance of SharedLocalizations
+/// returned by `SharedLocalizations.of(context)`.
 ///
-/// Applications need to include `AdminPreferencesLocalizations.delegate()` in their app's
+/// Applications need to include `SharedLocalizations.delegate()` in their app's
 /// `localizationDelegates` list, and the locales they support in the app's
 /// `supportedLocales` list. For example:
 ///
 /// ```dart
-/// import 'l10n/admin_preferences_localizations.dart';
+/// import 'l10n/shared_localizations.dart';
 ///
 /// return MaterialApp(
-///   localizationsDelegates: AdminPreferencesLocalizations.localizationsDelegates,
-///   supportedLocales: AdminPreferencesLocalizations.supportedLocales,
+///   localizationsDelegates: SharedLocalizations.localizationsDelegates,
+///   supportedLocales: SharedLocalizations.supportedLocales,
 ///   home: MyApplicationHome(),
 /// );
 /// ```
@@ -60,23 +60,20 @@ import 'admin_preferences_localizations_ru.dart';
 /// Select and expand the newly-created Localizations item then, for each
 /// locale your application supports, add a new item and select the locale
 /// you wish to add from the pop-up menu in the Value field. This list should
-/// be consistent with the languages listed in the AdminPreferencesLocalizations.supportedLocales
+/// be consistent with the languages listed in the SharedLocalizations.supportedLocales
 /// property.
-abstract class AdminPreferencesLocalizations {
-  AdminPreferencesLocalizations(String locale)
+abstract class SharedLocalizations {
+  SharedLocalizations(String locale)
     : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
-  static AdminPreferencesLocalizations of(BuildContext context) {
-    return Localizations.of<AdminPreferencesLocalizations>(
-      context,
-      AdminPreferencesLocalizations,
-    )!;
+  static SharedLocalizations of(BuildContext context) {
+    return Localizations.of<SharedLocalizations>(context, SharedLocalizations)!;
   }
 
-  static const LocalizationsDelegate<AdminPreferencesLocalizations> delegate =
-      _AdminPreferencesLocalizationsDelegate();
+  static const LocalizationsDelegate<SharedLocalizations> delegate =
+      _SharedLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -103,105 +100,75 @@ abstract class AdminPreferencesLocalizations {
     Locale('ru'),
   ];
 
-  /// No description provided for @notificationsTitle.
+  /// No description provided for @commonOk.
   ///
   /// In en, this message translates to:
-  /// **'Notifications and sounds'**
-  String get notificationsTitle;
+  /// **'OK'**
+  String get commonOk;
 
-  /// No description provided for @pushNotifications.
+  /// No description provided for @commonDismiss.
   ///
   /// In en, this message translates to:
-  /// **'Push notifications'**
-  String get pushNotifications;
+  /// **'Dismiss'**
+  String get commonDismiss;
 
-  /// No description provided for @emailNotifications.
+  /// No description provided for @errorNoConnection.
   ///
   /// In en, this message translates to:
-  /// **'Email notifications'**
-  String get emailNotifications;
+  /// **'No internet connection'**
+  String get errorNoConnection;
 
-  /// No description provided for @marketingNotifications.
+  /// No description provided for @errorTimeout.
   ///
   /// In en, this message translates to:
-  /// **'Marketing notifications'**
-  String get marketingNotifications;
+  /// **'The server did not respond. Try again.'**
+  String get errorTimeout;
 
-  /// No description provided for @appearanceTitle.
+  /// No description provided for @errorServiceUnavailable.
   ///
   /// In en, this message translates to:
-  /// **'Appearance'**
-  String get appearanceTitle;
+  /// **'The service is temporarily unavailable. Try again later.'**
+  String get errorServiceUnavailable;
 
-  /// No description provided for @themeSystem.
+  /// No description provided for @errorSecureConnection.
   ///
   /// In en, this message translates to:
-  /// **'System'**
-  String get themeSystem;
+  /// **'A secure connection could not be established.'**
+  String get errorSecureConnection;
 
-  /// No description provided for @themeLight.
+  /// No description provided for @errorInvalidResponse.
   ///
   /// In en, this message translates to:
-  /// **'Light'**
-  String get themeLight;
+  /// **'The server response could not be processed.'**
+  String get errorInvalidResponse;
 
-  /// No description provided for @themeDark.
+  /// No description provided for @errorRequestFailed.
   ///
   /// In en, this message translates to:
-  /// **'Dark'**
-  String get themeDark;
+  /// **'The request could not be completed. Try again.'**
+  String get errorRequestFailed;
 
-  /// No description provided for @languageTitle.
+  /// No description provided for @errorUnauthorized.
   ///
   /// In en, this message translates to:
-  /// **'Language'**
-  String get languageTitle;
+  /// **'Your session has expired. Sign in again.'**
+  String get errorUnauthorized;
 
-  /// No description provided for @languageKazakh.
+  /// No description provided for @errorUnknown.
   ///
   /// In en, this message translates to:
-  /// **'Kazakh'**
-  String get languageKazakh;
-
-  /// No description provided for @languageRussian.
-  ///
-  /// In en, this message translates to:
-  /// **'Russian'**
-  String get languageRussian;
-
-  /// No description provided for @languageEnglish.
-  ///
-  /// In en, this message translates to:
-  /// **'English'**
-  String get languageEnglish;
-
-  /// No description provided for @languageEnglishNative.
-  ///
-  /// In en, this message translates to:
-  /// **'English'**
-  String get languageEnglishNative;
-
-  /// No description provided for @languageRussianNative.
-  ///
-  /// In en, this message translates to:
-  /// **'Русский'**
-  String get languageRussianNative;
-
-  /// No description provided for @languageKazakhNative.
-  ///
-  /// In en, this message translates to:
-  /// **'Қазақ'**
-  String get languageKazakhNative;
+  /// **'Something went wrong. Try again.'**
+  String get errorUnknown;
 }
 
-class _AdminPreferencesLocalizationsDelegate
-    extends LocalizationsDelegate<AdminPreferencesLocalizations> {
-  const _AdminPreferencesLocalizationsDelegate();
+class _SharedLocalizationsDelegate
+    extends LocalizationsDelegate<SharedLocalizations> {
+  const _SharedLocalizationsDelegate();
 
   @override
-  Future<AdminPreferencesLocalizations> load(Locale locale) {
-    return SynchronousFuture<AdminPreferencesLocalizations>(
-      lookupAdminPreferencesLocalizations(locale),
+  Future<SharedLocalizations> load(Locale locale) {
+    return SynchronousFuture<SharedLocalizations>(
+      lookupSharedLocalizations(locale),
     );
   }
 
@@ -210,24 +177,22 @@ class _AdminPreferencesLocalizationsDelegate
       <String>['en', 'kk', 'ru'].contains(locale.languageCode);
 
   @override
-  bool shouldReload(_AdminPreferencesLocalizationsDelegate old) => false;
+  bool shouldReload(_SharedLocalizationsDelegate old) => false;
 }
 
-AdminPreferencesLocalizations lookupAdminPreferencesLocalizations(
-  Locale locale,
-) {
+SharedLocalizations lookupSharedLocalizations(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'en':
-      return AdminPreferencesLocalizationsEn();
+      return SharedLocalizationsEn();
     case 'kk':
-      return AdminPreferencesLocalizationsKk();
+      return SharedLocalizationsKk();
     case 'ru':
-      return AdminPreferencesLocalizationsRu();
+      return SharedLocalizationsRu();
   }
 
   throw FlutterError(
-    'AdminPreferencesLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'SharedLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
     'an issue with the localizations generation tool. Please file an issue '
     'on GitHub with a reproducible sample app and the gen-l10n configuration '
     'that was used.',

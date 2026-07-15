@@ -24,48 +24,45 @@ extension ExceptionX on Exception {
       }
       return error?.toFailure(source) ??
           Failure(
-            message: _FailureMessages.requestError,
             source: source,
+            reason: FailureReason.requestFailed,
             details: FailureDetails(statusCode: e.response?.statusCode ?? 0),
           );
     }
     if (e is FormatException || e is TypeError) {
-      return Failure(message: _FailureMessages.responseParse, source: source);
+      return Failure(source: source, reason: FailureReason.invalidResponse);
     }
-    return Failure(message: _FailureMessages.unexpected, source: source);
+    return Failure(source: source);
   }
 
   Failure? _clientApiFailure(ApiException e, String source) {
     return switch (e.type) {
       ApiExceptionType.connectionError when e.isServiceUnavailable => Failure(
-        message: _FailureMessages.serviceUnavailable,
         source: source,
+        reason: FailureReason.serviceUnavailable,
         details: const FailureDetails(statusCode: 503),
       ),
       ApiExceptionType.connectionError => Failure(
-        message: _FailureMessages.internetConnection,
         source: source,
+        reason: FailureReason.noConnection,
         details: const FailureDetails(statusCode: 0),
       ),
       ApiExceptionType.connectionTimeout ||
       ApiExceptionType.receiveTimeout ||
       ApiExceptionType.sendTimeout => Failure(
-        message: _FailureMessages.serviceUnavailable,
         source: source,
+        reason: FailureReason.timeout,
         details: const FailureDetails(statusCode: 503),
       ),
       ApiExceptionType.badCertificate => Failure(
-        message: _FailureMessages.secureConnection,
         source: source,
+        reason: FailureReason.secureConnection,
       ),
-      ApiExceptionType.unknown => Failure(
-        message: _FailureMessages.unexpected,
-        source: source,
-      ),
+      ApiExceptionType.unknown => Failure(source: source),
       ApiExceptionType.badResponse when e.response?.statusCode == 503 =>
         Failure(
-          message: _FailureMessages.serviceUnavailable,
           source: source,
+          reason: FailureReason.serviceUnavailable,
           details: const FailureDetails(statusCode: 503),
         ),
       ApiExceptionType.cancel || ApiExceptionType.badResponse => null,
@@ -82,13 +79,4 @@ extension _ApiExceptionServiceUnavailableX on ApiException {
         description.contains('connection closed') ||
         description.contains('http status error [503]');
   }
-}
-
-abstract final class _FailureMessages {
-  static const String internetConnection = 'No internet connection';
-  static const String requestError = 'Request failed';
-  static const String serviceUnavailable = 'Service unavailable';
-  static const String secureConnection = 'Secure connection failed';
-  static const String responseParse = 'Failed to parse response';
-  static const String unexpected = 'Unexpected error';
 }

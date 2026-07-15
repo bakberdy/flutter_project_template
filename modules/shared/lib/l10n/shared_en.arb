@@ -1,0 +1,13 @@
+{
+  "@@locale": "en",
+  "commonOk": "OK",
+  "commonDismiss": "Dismiss",
+  "errorNoConnection": "No internet connection",
+  "errorTimeout": "The server did not respond. Try again.",
+  "errorServiceUnavailable": "The service is temporarily unavailable. Try again later.",
+  "errorSecureConnection": "A secure connection could not be established.",
+  "errorInvalidResponse": "The server response could not be processed.",
+  "errorRequestFailed": "The request could not be completed. Try again.",
+  "errorUnauthorized": "Your session has expired. Sign in again.",
+  "errorUnknown": "Something went wrong. Try again."
+}

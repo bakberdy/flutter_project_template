@@ -6,6 +6,7 @@ import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared/shared.dart';
 
 @RoutePage()
 class RootNavigationScreen extends StatelessWidget {
@@ -25,8 +26,7 @@ class RootNavigationScreen extends StatelessWidget {
             Positioned.fill(
               child: BaseRetryErrorView(
                 title: context.l10n.sessionLoadFailureTitle,
-                message:
-                    failure.message ?? context.l10n.sessionLoadFailureMessage,
+                message: failure.messageTextOrDefault(context),
                 retryLabel: context.l10n.retry,
                 onRetry: () =>
                     context.read<UserBloc>().add(const UserStartedEvent()),

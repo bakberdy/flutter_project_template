@@ -33,37 +33,52 @@ import 'package:core/core.dart' as _i494;
 import 'package:injectable/injectable.dart' as _i526;
 
 class AdminUsersPackageModule extends _i526.MicroPackageModule {
-// initializes the registration of main-scope dependencies inside of GetIt
+  // initializes the registration of main-scope dependencies inside of GetIt
   @override
   _i687.FutureOr<void> init(_i526.GetItHelper gh) {
     gh.lazySingleton<_i166.UsersRepositoryRequestHandler>(
-        () => const _i166.UsersRepositoryRequestHandler());
-    gh.singleton<_i30.UsersRemoteDataSource>(() =>
-        _i30.UsersRemoteDataSourceImpl(
-            gh<_i494.ApiClient>(instanceName: 'protectedApiClient')));
-    gh.singleton<_i523.UsersRepository>(() => _i67.UsersRepositoryImpl(
-          gh<_i30.UsersRemoteDataSource>(),
-          gh<_i166.UsersRepositoryRequestHandler>(),
-        ));
-    gh.lazySingleton<_i600.ApproveUserDeletionRequestUseCase>(() =>
-        _i600.ApproveUserDeletionRequestUseCase(gh<_i523.UsersRepository>()));
+      () => const _i166.UsersRepositoryRequestHandler(),
+    );
+    gh.singleton<_i30.UsersRemoteDataSource>(
+      () => _i30.UsersRemoteDataSourceImpl(
+        gh<_i494.ApiClient>(instanceName: 'protectedApiClient'),
+      ),
+    );
+    gh.singleton<_i523.UsersRepository>(
+      () => _i67.UsersRepositoryImpl(
+        gh<_i30.UsersRemoteDataSource>(),
+        gh<_i166.UsersRepositoryRequestHandler>(),
+      ),
+    );
+    gh.lazySingleton<_i600.ApproveUserDeletionRequestUseCase>(
+      () =>
+          _i600.ApproveUserDeletionRequestUseCase(gh<_i523.UsersRepository>()),
+    );
     gh.lazySingleton<_i771.ChangeUserRoleUseCase>(
-        () => _i771.ChangeUserRoleUseCase(gh<_i523.UsersRepository>()));
+      () => _i771.ChangeUserRoleUseCase(gh<_i523.UsersRepository>()),
+    );
     gh.lazySingleton<_i735.ChangeUserStatusUseCase>(
-        () => _i735.ChangeUserStatusUseCase(gh<_i523.UsersRepository>()));
+      () => _i735.ChangeUserStatusUseCase(gh<_i523.UsersRepository>()),
+    );
     gh.lazySingleton<_i704.GetUserProfileUseCase>(
-        () => _i704.GetUserProfileUseCase(gh<_i523.UsersRepository>()));
+      () => _i704.GetUserProfileUseCase(gh<_i523.UsersRepository>()),
+    );
     gh.lazySingleton<_i53.GetUserUseCase>(
-        () => _i53.GetUserUseCase(gh<_i523.UsersRepository>()));
+      () => _i53.GetUserUseCase(gh<_i523.UsersRepository>()),
+    );
     gh.lazySingleton<_i183.GetUsersUseCase>(
-        () => _i183.GetUsersUseCase(gh<_i523.UsersRepository>()));
-    gh.factory<_i422.UserBloc>(() => _i422.UserBloc(
-          gh<_i53.GetUserUseCase>(),
-          gh<_i704.GetUserProfileUseCase>(),
-          gh<_i735.ChangeUserStatusUseCase>(),
-          gh<_i600.ApproveUserDeletionRequestUseCase>(),
-        ));
+      () => _i183.GetUsersUseCase(gh<_i523.UsersRepository>()),
+    );
+    gh.factory<_i422.UserBloc>(
+      () => _i422.UserBloc(
+        gh<_i53.GetUserUseCase>(),
+        gh<_i704.GetUserProfileUseCase>(),
+        gh<_i735.ChangeUserStatusUseCase>(),
+        gh<_i600.ApproveUserDeletionRequestUseCase>(),
+      ),
+    );
     gh.factory<_i501.UsersListBloc>(
-        () => _i501.UsersListBloc(gh<_i183.GetUsersUseCase>()));
+      () => _i501.UsersListBloc(gh<_i183.GetUsersUseCase>()),
+    );
   }
 }

@@ -8,16 +8,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class AuthLocaleMenu extends StatelessWidget {
   const AuthLocaleMenu({super.key});
 
-  static const _languages = <String, String>{
-    'en': 'English',
-    'ru': 'Русский',
-    'kk': 'Қазақ',
-  };
-
   @override
   Widget build(BuildContext context) {
     final state = context.watch<LocaleBloc>().state;
     final languageCode = state.languageCode ?? 'en';
+    final languages = [
+      (code: 'en', name: context.l10n.languageEnglishNative),
+      (code: 'ru', name: context.l10n.languageRussianNative),
+      (code: 'kk', name: context.l10n.languageKazakhNative),
+    ];
 
     return PopupMenuButton<String>(
       initialValue: languageCode,
@@ -29,16 +28,16 @@ class AuthLocaleMenu extends StatelessWidget {
         borderRadius: BorderRadius.circular(DesignRadii.md),
       ),
       onSelected: context.read<LocaleBloc>().setLocale,
-      itemBuilder: (context) => _languages.entries
+      itemBuilder: (context) => languages
           .map(
             (language) => PopupMenuItem(
-              value: language.key,
+              value: language.code,
               child: SizedBox(
                 width: 150,
                 child: Row(
                   children: [
-                    Expanded(child: Text(language.value)),
-                    if (languageCode == language.key)
+                    Expanded(child: Text(language.name)),
+                    if (languageCode == language.code)
                       Icon(
                         Icons.check_rounded,
                         color: context.designColors.primary,
@@ -66,7 +65,12 @@ class AuthLocaleMenu extends StatelessWidget {
               ),
               const SizedBox(width: DesignSpacing.xs),
               Text(
-                _languages[languageCode] ?? _languages['en']!,
+                languages
+                    .firstWhere(
+                      (language) => language.code == languageCode,
+                      orElse: () => languages.first,
+                    )
+                    .name,
                 style: context.designTextTheme.labelLarge,
               ),
               const SizedBox(width: DesignSpacing.xxs),

@@ -15,7 +15,8 @@ void main() {
 
       final failure = await exception.toFailure(source: 'auth.login');
 
-      expect(failure.message, 'Request failed');
+      expect(failure.message, isNull);
+      expect(failure.reason, FailureReason.requestFailed);
       expect(failure.source, 'auth.login');
       expect(failure.details?.statusCode, 301);
       expect(failure.details?.type, FailureType.snackbar);
@@ -37,6 +38,7 @@ void main() {
       final failure = await exception.toFailure(source: 'auth.login');
 
       expect(failure.message, 'Invalid credentials');
+      expect(failure.reason, FailureReason.backend);
       expect(failure.details?.statusCode, 401);
       expect(failure.details?.type, FailureType.inline);
     });
@@ -49,7 +51,8 @@ void main() {
 
       final failure = await exception.toFailure(source: 'auth.login');
 
-      expect(failure.message, 'Service unavailable');
+      expect(failure.message, isNull);
+      expect(failure.reason, FailureReason.serviceUnavailable);
       expect(failure.details?.statusCode, 503);
       expect(failure.details?.type, FailureType.snackbar);
     });
@@ -62,7 +65,8 @@ void main() {
 
       final failure = await exception.toFailure(source: 'auth.login');
 
-      expect(failure.message, 'No internet connection');
+      expect(failure.message, isNull);
+      expect(failure.reason, FailureReason.noConnection);
       expect(failure.details?.statusCode, 0);
       expect(failure.details?.type, FailureType.snackbar);
     });
@@ -79,7 +83,8 @@ void main() {
 
       final failure = await exception.toFailure(source: 'auth.login');
 
-      expect(failure.message, 'Service unavailable');
+      expect(failure.message, isNull);
+      expect(failure.reason, FailureReason.serviceUnavailable);
       expect(failure.details?.statusCode, 503);
       expect(failure.details?.type, FailureType.snackbar);
     });

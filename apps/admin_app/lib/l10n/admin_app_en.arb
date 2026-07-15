@@ -1,5 +1,6 @@
 {
   "@@locale": "en",
+  "adminAppTitle": "Admin Panel",
   "dashboard": "Dashboard",
   "users": "Users",
   "logout": "Log out",
@@ -8,6 +9,9 @@
   "preferences": "Preferences",
   "devices": "Devices",
   "language": "Language",
+  "languageEnglishNative": "English",
+  "languageRussianNative": "Русский",
+  "languageKazakhNative": "Қазақ",
   "logoutTitle": "Log out?",
   "logoutMessage": "You will need to sign in again to access the admin panel.",
   "cancel": "Cancel",

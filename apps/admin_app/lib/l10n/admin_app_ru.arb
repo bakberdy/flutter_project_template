@@ -1,5 +1,6 @@
 {
   "@@locale": "ru",
+  "adminAppTitle": "Панель администратора",
   "dashboard": "Главная",
   "users": "Пользователи",
   "logout": "Выйти",
@@ -8,6 +9,9 @@
   "preferences": "Предпочтения",
   "devices": "Устройства",
   "language": "Язык",
+  "languageEnglishNative": "English",
+  "languageRussianNative": "Русский",
+  "languageKazakhNative": "Қазақ",
   "logoutTitle": "Выйти?",
   "logoutMessage": "Для доступа к панели администратора потребуется войти снова.",
   "cancel": "Отмена",

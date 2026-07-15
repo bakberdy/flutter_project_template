@@ -1,5 +1,6 @@
 import 'package:admin_auth/admin_auth.dart';
 import 'package:admin_app/app/theme/app_theme_scope.dart';
+import 'package:admin_app/src/common/admin_app_localization_x.dart';
 import 'package:admin_app/src/common/config/localization/app_localization_config.dart';
 import 'package:admin_app/src/common/config/router/admin_app_router.dart';
 import 'package:admin_app/src/features/app_navigation/presentation/widgets/admin_debug_overlay.dart';
@@ -79,7 +80,7 @@ class _AppState extends State<App> {
                   );
                 },
                 debugShowCheckedModeBanner: false,
-                title: 'Admin Panel',
+                onGenerateTitle: (context) => context.l10n.adminAppTitle,
                 routerConfig: _appRouter.config(
                   includePrefixMatches: true,
                   rebuildStackOnDeepLink: true,

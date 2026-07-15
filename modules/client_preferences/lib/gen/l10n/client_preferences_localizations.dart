@@ -174,6 +174,24 @@ abstract class ClientPreferencesLocalizations {
   /// In en, this message translates to:
   /// **'English'**
   String get languageEnglish;
+
+  /// No description provided for @languageEnglishNative.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get languageEnglishNative;
+
+  /// No description provided for @languageRussianNative.
+  ///
+  /// In en, this message translates to:
+  /// **'Русский'**
+  String get languageRussianNative;
+
+  /// No description provided for @languageKazakhNative.
+  ///
+  /// In en, this message translates to:
+  /// **'Қазақ'**
+  String get languageKazakhNative;
 }
 
 class _ClientPreferencesLocalizationsDelegate

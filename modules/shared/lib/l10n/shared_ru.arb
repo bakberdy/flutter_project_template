@@ -1,0 +1,13 @@
+{
+  "@@locale": "ru",
+  "commonOk": "ОК",
+  "commonDismiss": "Закрыть",
+  "errorNoConnection": "Нет подключения к интернету",
+  "errorTimeout": "Сервер не ответил. Попробуйте ещё раз.",
+  "errorServiceUnavailable": "Сервис временно недоступен. Попробуйте позже.",
+  "errorSecureConnection": "Не удалось установить безопасное соединение.",
+  "errorInvalidResponse": "Не удалось обработать ответ сервера.",
+  "errorRequestFailed": "Не удалось выполнить запрос. Попробуйте ещё раз.",
+  "errorUnauthorized": "Сессия истекла. Войдите снова.",
+  "errorUnknown": "Что-то пошло не так. Попробуйте ещё раз."
+}

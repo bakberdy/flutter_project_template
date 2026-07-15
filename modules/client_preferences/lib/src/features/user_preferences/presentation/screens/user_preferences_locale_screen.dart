@@ -13,10 +13,6 @@ class UserPreferencesLocaleScreen extends StatelessWidget
     with UiFailureHandlerMixin {
   const UserPreferencesLocaleScreen({super.key});
 
-  static const _kazakhTitle = 'Қазақ';
-  static const _russianTitle = 'Русский';
-  static const _englishTitle = 'English';
-
   @override
   Widget build(BuildContext context) {
     final selectedLanguageCode = context.select<LocaleBloc, String?>(
@@ -49,7 +45,7 @@ class UserPreferencesLocaleScreen extends StatelessWidget
                   children: [
                     BaseRadioListTile<String>(
                       disableBottomRadius: true,
-                      title: _kazakhTitle,
+                      title: context.l10n.languageKazakhNative,
                       subtitle: context.l10n.languageKazakh,
                       value: ClientPreferencesConstants.kazakh.languageCode,
                       icon:
@@ -73,7 +69,7 @@ class UserPreferencesLocaleScreen extends StatelessWidget
                     BaseRadioListTile<String>(
                       disableBottomRadius: true,
                       disableTopRadius: true,
-                      title: _russianTitle,
+                      title: context.l10n.languageRussianNative,
                       subtitle: context.l10n.languageRussian,
                       value: ClientPreferencesConstants.russian.languageCode,
                       icon:
@@ -96,7 +92,7 @@ class UserPreferencesLocaleScreen extends StatelessWidget
                     ),
                     BaseRadioListTile<String>(
                       disableTopRadius: true,
-                      title: _englishTitle,
+                      title: context.l10n.languageEnglishNative,
                       subtitle: context.l10n.languageEnglish,
                       value: ClientPreferencesConstants.english.languageCode,
                       icon:

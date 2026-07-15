@@ -1,0 +1,13 @@
+{
+  "@@locale": "kk",
+  "commonOk": "ОК",
+  "commonDismiss": "Жабу",
+  "errorNoConnection": "Интернет байланысы жоқ",
+  "errorTimeout": "Сервер жауап бермеді. Қайталап көріңіз.",
+  "errorServiceUnavailable": "Қызмет уақытша қолжетімсіз. Кейінірек қайталап көріңіз.",
+  "errorSecureConnection": "Қауіпсіз байланыс орнату мүмкін болмады.",
+  "errorInvalidResponse": "Сервер жауабын өңдеу мүмкін болмады.",
+  "errorRequestFailed": "Сұрауды орындау мүмкін болмады. Қайталап көріңіз.",
+  "errorUnauthorized": "Сессия аяқталды. Қайта кіріңіз.",
+  "errorUnknown": "Бірдеңе дұрыс болмады. Қайталап көріңіз."
+}

@@ -1,4 +1,5 @@
 .PHONY: help \
+	check-hardcoded-ui \
 	client-dev client-prod client-apk-dev client-apk-prod client-ios-dev client-ios-prod \
 	client-android-deploy-dev client-android-deploy-prod \
 	client-ios-deploy-dev client-ios-deploy-prod \
@@ -16,6 +17,9 @@ ADMIN_CONFIG_PRODUCTION := config/config.production.json
 
 help:
 	@echo "Flutter project template commands"
+	@echo ""
+	@echo "Quality"
+	@echo "  make check-hardcoded-ui  Reject user-facing string literals in UI code"
 	@echo ""
 	@echo "Client"
 	@echo "  make client-dev       Run client app with development config"
@@ -66,3 +70,6 @@ admin-dev:
 
 admin-prod:
 	cd $(ADMIN_APP) && flutter run --dart-define-from-file=$(ADMIN_CONFIG_PRODUCTION)
+
+check-hardcoded-ui:
+	dart run tool/check_hardcoded_ui_strings.dart

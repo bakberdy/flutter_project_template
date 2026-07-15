@@ -3,6 +3,7 @@ import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared/shared.dart';
 import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
 import 'package:admin_users/src/features/users/presentation/blocs/user/user_bloc.dart';
 import 'package:admin_users/src/features/users/presentation/widgets/user_details_view.dart';
@@ -85,7 +86,7 @@ class _UserScreenState extends State<UserScreen> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(error.message ?? l10n.userLoadFailed),
+                          Text(error.messageTextOrDefault(context)),
                           const SizedBox(height: AppSpacing.md),
                           BaseButton.secondary(
                             onPressed: () => context.read<UserBloc>().add(
@@ -138,9 +139,6 @@ class _UserScreenState extends State<UserScreen> {
     if (!context.mounted) {
       return;
     }
-    BaseSnackbar.error(
-      context,
-      message: failure.message ?? context.l10n.userLoadFailed,
-    );
+    BaseSnackbar.error(context, message: failure.messageTextOrDefault(context));
   }
 }

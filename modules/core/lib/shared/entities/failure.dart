@@ -4,20 +4,40 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 class Failure extends Equatable {
   final String? message;
   final String source;
+  final FailureReason reason;
   final FailureDetails? details;
 
-  const Failure({this.message, required this.source, this.details});
+  const Failure({
+    this.message,
+    required this.source,
+    this.reason = FailureReason.unknown,
+    this.details,
+  });
 
   factory Failure.requestCancelled(String source) {
     return Failure(
       message: null,
       source: source,
+      reason: FailureReason.cancelled,
       details: const FailureDetails(statusCode: 0, type: FailureType.silent),
     );
   }
 
   @override
-  List<Object?> get props => [message, source, details];
+  List<Object?> get props => [message, source, reason, details];
+}
+
+enum FailureReason {
+  backend,
+  noConnection,
+  timeout,
+  serviceUnavailable,
+  secureConnection,
+  invalidResponse,
+  requestFailed,
+  unauthorized,
+  cancelled,
+  unknown,
 }
 
 class FieldFailure {

@@ -29,6 +29,7 @@ class GetCurrentUserUseCase extends UseCase<User, GetCurrentUserParams> {
             onTimeout: () => const Left(
               Failure(
                 source: 'GetCurrentUserUseCase.timeout',
+                reason: FailureReason.timeout,
                 details: FailureDetails(statusCode: 0),
               ),
             ),

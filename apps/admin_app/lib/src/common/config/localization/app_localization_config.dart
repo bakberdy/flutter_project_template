@@ -6,6 +6,7 @@ import 'package:admin_users/admin_users.dart';
 import 'package:design_system/gen/l10n/design_system_localizations.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:shared/shared.dart';
 
 final class AppLocalizationConfig {
   static const defaultLocale = AdminPreferencesLocalizationConfig.defaultLocale;
@@ -22,6 +23,7 @@ final class AppLocalizationConfig {
         AdminPreferencesLocalizations.delegate,
         AdminUsersLocalizations.delegate,
         DesignSystemLocalizations.delegate,
+        SharedLocalizations.delegate,
         AdminAppLocalizations.delegate,
       ];
 }

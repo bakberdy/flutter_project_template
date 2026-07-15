@@ -11,5 +11,8 @@
   "languageTitle": "Тіл",
   "languageKazakh": "Қазақша",
   "languageRussian": "Орысша",
-  "languageEnglish": "Ағылшынша"
+  "languageEnglish": "Ағылшынша",
+  "languageEnglishNative": "English",
+  "languageRussianNative": "Русский",
+  "languageKazakhNative": "Қазақ"
 }

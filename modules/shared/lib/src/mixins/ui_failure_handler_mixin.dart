@@ -1,23 +1,25 @@
 import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
-import 'package:shared/src/mappers/ui_failure_mapper.dart';
+import 'package:shared/src/extensions/failure_ui_x.dart';
+import 'package:shared/src/localization/shared_localization_context_x.dart';
 
 mixin UiFailureHandlerMixin {
   Future<void> handleFailure(Failure failure, BuildContext context) async {
-    final message = UiFailureMapper.message(failure);
+    final l10n = context.l10n;
+    final message = failure.messageTextOrDefault(context);
 
     switch (failure.details?.type) {
       case FailureType.alert:
         await BaseDialog.show<void>(
           context,
           title: message,
-          primaryLabel: 'OK',
+          primaryLabel: l10n.commonOk,
         );
       case FailureType.snackbar:
         BaseSnackbar.error(context, message: message);
       case FailureType.banner:
-        _showBanner(context, message);
+        _showBanner(context, message, l10n.commonDismiss);
       case FailureType.fullScreen:
         await _showFullscreen(context, message);
       case FailureType.inline:
@@ -28,7 +30,7 @@ mixin UiFailureHandlerMixin {
     }
   }
 
-  void _showBanner(BuildContext context, String message) {
+  void _showBanner(BuildContext context, String message, String dismissLabel) {
     final messenger = ScaffoldMessenger.of(context);
     messenger
       ..hideCurrentMaterialBanner()
@@ -38,7 +40,7 @@ mixin UiFailureHandlerMixin {
           actions: [
             TextButton(
               onPressed: messenger.hideCurrentMaterialBanner,
-              child: const Text('Dismiss'),
+              child: Text(dismissLabel),
             ),
           ],
         ),

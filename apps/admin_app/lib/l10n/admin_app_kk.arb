@@ -1,5 +1,6 @@
 {
   "@@locale": "kk",
+  "adminAppTitle": "Әкімші панелі",
   "dashboard": "Басты бет",
   "users": "Пайдаланушылар",
   "logout": "Шығу",
@@ -8,6 +9,9 @@
   "preferences": "Қалаулар",
   "devices": "Құрылғылар",
   "language": "Тіл",
+  "languageEnglishNative": "English",
+  "languageRussianNative": "Русский",
+  "languageKazakhNative": "Қазақ",
   "logoutTitle": "Шығу керек пе?",
   "logoutMessage": "Әкімші панеліне кіру үшін қайта авторизациядан өту қажет.",
   "cancel": "Бас тарту",

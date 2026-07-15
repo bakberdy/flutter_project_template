@@ -9,6 +9,9 @@ class AdminAppLocalizationsEn extends AdminAppLocalizations {
   AdminAppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
+  String get adminAppTitle => 'Admin Panel';
+
+  @override
   String get dashboard => 'Dashboard';
 
   @override
@@ -31,6 +34,15 @@ class AdminAppLocalizationsEn extends AdminAppLocalizations {
 
   @override
   String get language => 'Language';
+
+  @override
+  String get languageEnglishNative => 'English';
+
+  @override
+  String get languageRussianNative => 'Русский';
+
+  @override
+  String get languageKazakhNative => 'Қазақ';
 
   @override
   String get logoutTitle => 'Log out?';

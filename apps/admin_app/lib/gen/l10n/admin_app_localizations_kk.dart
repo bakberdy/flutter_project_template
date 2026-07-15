@@ -9,6 +9,9 @@ class AdminAppLocalizationsKk extends AdminAppLocalizations {
   AdminAppLocalizationsKk([String locale = 'kk']) : super(locale);
 
   @override
+  String get adminAppTitle => 'Әкімші панелі';
+
+  @override
   String get dashboard => 'Басты бет';
 
   @override
@@ -31,6 +34,15 @@ class AdminAppLocalizationsKk extends AdminAppLocalizations {
 
   @override
   String get language => 'Тіл';
+
+  @override
+  String get languageEnglishNative => 'English';
+
+  @override
+  String get languageRussianNative => 'Русский';
+
+  @override
+  String get languageKazakhNative => 'Қазақ';
 
   @override
   String get logoutTitle => 'Шығу керек пе?';

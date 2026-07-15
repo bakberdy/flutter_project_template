@@ -353,7 +353,6 @@ jobs:
           releaseFiles: ${{ steps.aab.outputs.path }}
           track: ${{ inputs.track }}
           status: ${{ inputs.release_status }}
-          whatsNewDirectory: ${{ env.PLAY_WHATS_NEW_DIR }}
 
       - name: Upload AAB artifact
         if: success()

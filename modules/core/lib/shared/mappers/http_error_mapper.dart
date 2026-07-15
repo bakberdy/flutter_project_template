@@ -13,6 +13,11 @@ extension HttpErrorMapper on HttpErrorModel {
       fieldErrors: fieldErrors,
     );
 
-    return Failure(message: message, source: source, details: failureDetails);
+    return Failure(
+      message: message,
+      source: source,
+      reason: FailureReason.backend,
+      details: failureDetails,
+    );
   }
 }

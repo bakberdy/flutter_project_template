@@ -43,4 +43,13 @@ class ClientPreferencesLocalizationsEn extends ClientPreferencesLocalizations {
 
   @override
   String get languageEnglish => 'English';
+
+  @override
+  String get languageEnglishNative => 'English';
+
+  @override
+  String get languageRussianNative => 'Русский';
+
+  @override
+  String get languageKazakhNative => 'Қазақ';
 }
