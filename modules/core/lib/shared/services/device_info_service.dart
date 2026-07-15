@@ -1,3 +1,4 @@
+import 'package:core/shared/entities/app_device_info.dart';
 import 'package:core/shared/entities/app_info.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart'
@@ -96,23 +97,4 @@ class DeviceInfoService {
       appInfo: appInfo,
     );
   }
-}
-
-class AppDeviceInfo {
-  const AppDeviceInfo({
-    required this.deviceId,
-    required this.os,
-    required this.osVersion,
-    required this.model,
-    required this.appInfo,
-  });
-
-  final String deviceId;
-  final String os;
-  final String osVersion;
-  final String model;
-  final AppInfo appInfo;
-
-  String get appVersion => appInfo.version;
-  String get appBuildNumber => appInfo.buildNumber;
 }

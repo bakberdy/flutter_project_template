@@ -4,6 +4,7 @@ import 'package:talker/talker.dart';
 import 'package:talker_dio_logger/talker_dio_logger.dart';
 
 import '../internal/auth_interceptor.dart';
+import '../internal/auth_token_refresher.dart';
 import '../internal/extensions.dart';
 import '../models/api_cancel_token.dart';
 import '../models/api_form_data.dart';

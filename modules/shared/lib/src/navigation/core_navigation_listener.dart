@@ -13,6 +13,7 @@ class CoreNavigationListener extends StatelessWidget {
     this.onAuthenticated,
     this.onUnauthenticated,
     this.onRefreshUser,
+    this.onNavigationError,
   });
 
   final StackRouter router;
@@ -21,6 +22,7 @@ class CoreNavigationListener extends StatelessWidget {
   final VoidCallback? onAuthenticated;
   final VoidCallback? onUnauthenticated;
   final VoidCallback? onRefreshUser;
+  final void Function(Object error, StackTrace stackTrace)? onNavigationError;
 
   @override
   Widget build(BuildContext context) {
@@ -41,32 +43,39 @@ class CoreNavigationListener extends StatelessWidget {
       return;
     }
 
-    switch (command) {
-      case PushNavigationCommand(:final route):
-        unawaited(router.push(route));
-      case NavigatePathNavigationCommand(
-        :final path,
-        :final includePrefixMatches,
-      ):
-        unawaited(
-          router.navigatePath(path, includePrefixMatches: includePrefixMatches),
-        );
-      case ReplaceNavigationCommand(:final route):
-        unawaited(router.popAndPush(route));
-      case ReplaceAllNavigationCommand(:final routes):
-        unawaited(router.replaceAll(routes));
-      case PopNavigationCommand(:final result):
-        await router.maybePopTop(result);
-      case PopUntilNavigationCommand(:final route):
-        router.popUntilRouteWithName(route.routeName, scoped: false);
-      case OpenDeepLinkNavigationCommand(:final uri):
-        unawaited(router.pushPath(uri.toString()));
-      case UnAuthenticatedNavigationCommand():
-        onUnauthenticated?.call();
-      case RefreshUserNavigationCommand():
-        onRefreshUser?.call();
-      case AuthenticatedNavigationCommand():
-        onAuthenticated?.call();
+    try {
+      switch (command) {
+        case PushNavigationCommand(:final route):
+          _dispatch(router.push(route));
+        case NavigatePathNavigationCommand(
+          :final path,
+          :final includePrefixMatches,
+        ):
+          _dispatch(
+            router.navigatePath(
+              path,
+              includePrefixMatches: includePrefixMatches,
+            ),
+          );
+        case ReplaceNavigationCommand(:final route):
+          _dispatch(router.popAndPush(route));
+        case ReplaceAllNavigationCommand(:final routes):
+          _dispatch(router.replaceAll(routes));
+        case PopNavigationCommand(:final result):
+          await router.maybePopTop(result);
+        case PopUntilNavigationCommand(:final route):
+          router.popUntilRouteWithName(route.routeName, scoped: false);
+        case OpenDeepLinkNavigationCommand(:final uri):
+          _dispatch(router.pushPath(uri.toString()));
+        case UnAuthenticatedNavigationCommand():
+          onUnauthenticated?.call();
+        case RefreshUserNavigationCommand():
+          onRefreshUser?.call();
+        case AuthenticatedNavigationCommand():
+          onAuthenticated?.call();
+      }
+    } on Object catch (error, stackTrace) {
+      onNavigationError?.call(error, stackTrace);
     }
 
     if (!context.mounted) {
@@ -74,6 +83,16 @@ class CoreNavigationListener extends StatelessWidget {
     }
     context.read<CoreNavigationBloc>().add(
       CoreNavigationEvent.commandHandled(command.id),
+    );
+  }
+
+  void _dispatch(Future<dynamic> operation) {
+    unawaited(
+      operation.then<void>((_) {}).onError((error, stackTrace) {
+        if (error != null) {
+          onNavigationError?.call(error, stackTrace);
+        }
+      }),
     );
   }
 }

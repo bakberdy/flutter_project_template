@@ -1,3 +1,4 @@
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:core/api/models/api_cancel_token.dart';
 import 'package:core/bloc/state_status/state_status.dart';
 import 'package:shared/shared.dart';
@@ -17,13 +18,23 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   final GetCurrentUserUseCase getUserUseCase;
 
   UserBloc(this.getUserUseCase) : super(UserState()) {
-    on<UserStartedEvent>((event, emit) => _getCurrentUser(emit));
-    on<UserLoggedOutEvent>(
-      (event, emit) => emit(UserState(status: StateStatus.success())),
-    );
+    on<UserEvent>(_onEvent, transformer: restartable());
   }
 
   ApiCancelToken? _getCurrentUserCancelToken;
+
+  Future<void> _onEvent(UserEvent event, Emitter<UserState> emit) async {
+    switch (event) {
+      case UserStartedEvent():
+        await _getCurrentUser(emit);
+        return;
+      case UserLoggedOutEvent():
+        _getCurrentUserCancelToken?.cancel();
+        _getCurrentUserCancelToken = null;
+        emit(UserState(status: StateStatus.success()));
+        return;
+    }
+  }
 
   Future<void> _getCurrentUser(Emitter<UserState> emit) async {
     _getCurrentUserCancelToken?.cancel();

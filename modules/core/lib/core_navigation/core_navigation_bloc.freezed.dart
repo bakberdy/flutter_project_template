@@ -78,7 +78,7 @@ as int,
 
 class PushNavigationCommand extends CoreNavigationCommand {
   const PushNavigationCommand({required this.id, required this.route}): super._();
-  
+
 
 @override final  int id;
  final  PageRouteInfo<dynamic> route;

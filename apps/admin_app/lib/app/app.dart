@@ -2,12 +2,11 @@ import 'package:admin_auth/admin_auth.dart';
 import 'package:admin_app/app/theme/app_theme_scope.dart';
 import 'package:admin_app/src/common/config/localization/app_localization_config.dart';
 import 'package:admin_app/src/common/config/router/admin_app_router.dart';
-import 'package:admin_app/src/features/app_navigation/presentation/widgets/talker_dock_control.dart';
+import 'package:admin_app/src/features/app_navigation/presentation/widgets/admin_debug_overlay.dart';
 import 'package:admin_preferences/admin_preferences.dart';
 import 'package:core/core.dart';
 import 'package:shared/shared.dart';
 import 'package:design_system/design_system.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:talker_flutter/talker_flutter.dart';
@@ -21,11 +20,10 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   final ValueNotifier<bool> _showTalkerDock = ValueNotifier<bool>(true);
-  final ValueNotifier<bool> _dockRight = ValueNotifier<bool>(true);
   late final ApiClientFactory _apiClientFactory = sl<ApiClientFactory>();
   late final Future<void> Function() _unauthorizedHandler = _handleUnauthorized;
-  late final CoreNavigationBloc _navigationBloc = sl<CoreNavigationBloc>();
-  late final AdminAppRouter _appRouter = sl<AdminAppRouter>();
+  late final CoreNavigationBloc _navigationBloc = CoreNavigationBloc();
+  late final AdminAppRouter _appRouter = AdminAppRouter();
   late final AdminSessionBloc _sessionBloc = sl<AdminSessionBloc>()
     ..add(const AdminSessionStarted());
   late final LocaleBloc _localeBloc = sl<LocaleBloc>()
@@ -46,7 +44,6 @@ class _AppState extends State<App> {
   void dispose() {
     _apiClientFactory.unregisterUnauthorizedHandler(_unauthorizedHandler);
     _showTalkerDock.dispose();
-    _dockRight.dispose();
     _navigationBloc.close();
     _sessionBloc.close();
     _localeBloc.close();
@@ -68,44 +65,17 @@ class _AppState extends State<App> {
               onAuthenticated: _refreshUser,
               onUnauthenticated: _logout,
               onRefreshUser: _refreshUser,
+              onNavigationError: _handleNavigationError,
               router: _appRouter,
               child: MaterialApp.router(
                 builder: (context, child) {
                   final appConfig = context.di<CoreAppConfig>();
-                  if (appConfig.environment == 'production' && !kDebugMode) {
-                    return child ?? const SizedBox.shrink();
-                  }
-                  return Stack(
-                    children: [
-                      ?child,
-                      ValueListenableBuilder<bool>(
-                        valueListenable: _showTalkerDock,
-                        builder: (context, showTalkerDock, _) {
-                          if (!showTalkerDock) {
-                            return const SizedBox.shrink();
-                          }
-                          return ValueListenableBuilder<bool>(
-                            valueListenable: _dockRight,
-                            builder: (context, dockRight, child) =>
-                                TalkerDockControl(
-                                  dockRight: dockRight,
-                                  onSwapDockSide: () {
-                                    _dockRight.value = !_dockRight.value;
-                                  },
-                                  openTalker: () => _openTalker(context),
-                                ),
-                          );
-                        },
-                      ),
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: Banner(
-                          message: appConfig.environment,
-                          location: BannerLocation.topEnd,
-                          color: context.designColors.primary,
-                        ),
-                      ),
-                    ],
+                  return AdminDebugOverlay(
+                    environment: appConfig.environment,
+                    bannerColor: context.designColors.primary,
+                    showTalkerDock: _showTalkerDock,
+                    onOpenTalker: () => _openTalker(context),
+                    child: child ?? const SizedBox.shrink(),
                   );
                 },
                 debugShowCheckedModeBanner: false,
@@ -126,7 +96,12 @@ class _AppState extends State<App> {
                 locale: localeState.languageCode == null
                     ? null
                     : Locale(localeState.languageCode!),
-                localeResolutionCallback: _localeResolutionCallback,
+                localeResolutionCallback: (deviceLocale, supportedLocales) =>
+                    resolveSupportedLocale(
+                      deviceLocale,
+                      supportedLocales,
+                      fallback: AppLocalizationConfig.defaultLocale,
+                    ),
               ),
             ),
           ),
@@ -147,18 +122,6 @@ class _AppState extends State<App> {
     }
   }
 
-  Locale _localeResolutionCallback(
-    Locale? deviceLocale,
-    Iterable<Locale> supportedLocales,
-  ) {
-    for (final locale in supportedLocales) {
-      if (locale.languageCode == deviceLocale?.languageCode) {
-        return locale;
-      }
-    }
-    return AppLocalizationConfig.defaultLocale;
-  }
-
   void _refreshUser() {
     _sessionBloc.add(const AdminSessionStarted());
   }
@@ -171,5 +134,9 @@ class _AppState extends State<App> {
     if (mounted) {
       _sessionBloc.add(const AdminSessionInvalidated());
     }
+  }
+
+  void _handleNavigationError(Object error, StackTrace stackTrace) {
+    sl<Talker>().error('Navigation command failed', error, stackTrace);
   }
 }

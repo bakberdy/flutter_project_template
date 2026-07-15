@@ -9,9 +9,6 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:admin_app/di/admin_app_module.dart' as _i843;
-import 'package:admin_app/src/common/config/router/admin_app_router.dart'
-    as _i441;
 import 'package:admin_auth/admin_auth.dart' as _i243;
 import 'package:admin_preferences/admin_preferences.dart' as _i107;
 import 'package:admin_profile/admin_profile.dart' as _i125;
@@ -32,11 +29,6 @@ extension GetItInjectableX on _i174.GetIt {
     await _i125.AdminProfilePackageModule().init(gh);
     await _i107.AdminPreferencesPackageModule().init(gh);
     await _i736.AdminUsersPackageModule().init(gh);
-    final adminAppModule = _$AdminAppModule();
-    gh.singleton<_i441.AdminAppRouter>(() => adminAppModule.appRouter);
-    gh.singleton<_i494.CoreNavigationBloc>(() => adminAppModule.navigationBloc);
     return this;
   }
 }
-
-class _$AdminAppModule extends _i843.AdminAppModule {}

@@ -2,18 +2,25 @@ import 'package:dio/dio.dart';
 
 import '../../utils/constants/api_constants.dart';
 import '../storage/token_storage.dart';
+import 'auth_token_refresher.dart';
 
-class AuthInterceptor extends Interceptor {
-  AuthInterceptor(this._dio, this._tokenStorage, {this.onUnauthorized});
+class AuthInterceptor extends QueuedInterceptor {
+  AuthInterceptor(
+    this._dio,
+    this._tokenRefresher,
+    this._tokenStorage, {
+    this.onUnauthorized,
+  });
 
   final Dio _dio;
+  final AuthTokenRefresher _tokenRefresher;
   final TokenStorage _tokenStorage;
   final Future<void> Function()? onUnauthorized;
 
-  static const _refreshPath = '/auth/refresh';
-
   bool _isRefreshing = false;
   Future<void>? _refreshFuture;
+  Future<void>? _unauthorizedFuture;
+  bool _sessionInvalidated = false;
 
   @override
   Future<void> onRequest(
@@ -23,6 +30,7 @@ class AuthInterceptor extends Interceptor {
     try {
       final token = await _tokenStorage.getAccessToken();
       if (token != null) {
+        _sessionInvalidated = false;
         options.headers[ApiConstants.authorizationHeader] =
             '${ApiConstants.bearerPrefix} $token';
       }
@@ -39,7 +47,8 @@ class AuthInterceptor extends Interceptor {
     if (err.response?.statusCode != 401) return handler.next(err);
 
     final path = err.requestOptions.path;
-    if (path.contains(_refreshPath) || path.contains('refresh')) {
+    if (path.contains(AuthTokenRefresher.refreshPath) ||
+        path.contains('refresh')) {
       await _handleUnauthorized();
       return handler.reject(_toUnauthorizedError(err));
     }
@@ -53,7 +62,9 @@ class AuthInterceptor extends Interceptor {
     try {
       if (!_isRefreshing) {
         _isRefreshing = true;
-        _refreshFuture = _doRefresh().whenComplete(() => _isRefreshing = false);
+        _refreshFuture = _tokenRefresher.refresh().whenComplete(
+          () => _isRefreshing = false,
+        );
       }
       await _refreshFuture;
 
@@ -63,34 +74,6 @@ class AuthInterceptor extends Interceptor {
       await _handleUnauthorized();
       return handler.reject(_toUnauthorizedError(err));
     }
-  }
-
-  Future<void> _doRefresh() async {
-    final refreshToken = await _tokenStorage.getRefreshToken();
-    if (refreshToken == null) throw Exception('No refresh token');
-
-    final response = await _dio.post<Map<String, dynamic>>(
-      _refreshPath,
-      data: {'refresh_token': refreshToken},
-      options: Options(
-        headers: {
-          ApiConstants.authorizationHeader:
-              '${ApiConstants.bearerPrefix} $refreshToken',
-        },
-      ),
-    );
-
-    if (response.statusCode != 200 || response.data == null) {
-      throw Exception('Token refresh failed');
-    }
-
-    final newAccess = response.data!['access_token'] as String?;
-    final newRefresh = response.data!['refresh_token'] as String?;
-
-    if (newAccess == null) throw Exception('Missing access_token in response');
-
-    await _tokenStorage.saveAccessToken(newAccess);
-    if (newRefresh != null) await _tokenStorage.saveRefreshToken(newRefresh);
   }
 
   Future<Response<dynamic>> _retry(RequestOptions original) async {
@@ -127,7 +110,27 @@ class AuthInterceptor extends Interceptor {
     );
   }
 
-  Future<void> _handleUnauthorized() async {
+  Future<void> _handleUnauthorized() {
+    if (_sessionInvalidated) {
+      return Future<void>.value();
+    }
+
+    final activeCleanup = _unauthorizedFuture;
+    if (activeCleanup != null) {
+      return activeCleanup;
+    }
+
+    final cleanup = _clearUnauthorizedSession();
+    _sessionInvalidated = true;
+    _unauthorizedFuture = cleanup;
+    return cleanup.whenComplete(() {
+      if (identical(_unauthorizedFuture, cleanup)) {
+        _unauthorizedFuture = null;
+      }
+    });
+  }
+
+  Future<void> _clearUnauthorizedSession() async {
     await _tokenStorage.clearTokens();
     await onUnauthorized?.call();
   }

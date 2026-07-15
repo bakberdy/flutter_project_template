@@ -8,6 +8,7 @@ export 'src/entities/auth/user_status.dart';
 export 'src/entities/auth/country_dial_code.dart';
 export 'src/extensions/di_context_x.dart';
 export 'src/extensions/string_x.dart';
+export 'src/localization/supported_locale_resolver.dart';
 export 'src/mappers/ui_failure_mapper.dart';
 export 'src/mixins/ui_failure_handler_mixin.dart';
 export 'src/models/auth/user_model/user_model.dart';

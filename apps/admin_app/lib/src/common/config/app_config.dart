@@ -1,5 +1,7 @@
 import 'package:core/core.dart';
 
+export 'package:core/core.dart' show AppConfigException;
+
 class AppConfig implements CoreAppConfig {
   static const String _baseUrl = String.fromEnvironment('API_URL');
   static const String _environment = String.fromEnvironment('ENVIRONMENT');
@@ -109,31 +111,4 @@ class AppConfig implements CoreAppConfig {
     }
     return Duration(seconds: seconds);
   }
-}
-
-class AppConfigException implements Exception {
-  const AppConfigException._(this.message);
-
-  final String message;
-
-  factory AppConfigException.missing(String name) {
-    return AppConfigException._(
-      'Missing required dart define: $name. '
-      'Pass it with --dart-define=$name=... or '
-      '--dart-define-from-file=config/config.<env>.json.',
-    );
-  }
-
-  factory AppConfigException.invalid(
-    String name,
-    String value,
-    String expected,
-  ) {
-    return AppConfigException._(
-      'Invalid dart define $name=$value. Expected $expected.',
-    );
-  }
-
-  @override
-  String toString() => 'AppConfigException: $message';
 }

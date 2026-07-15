@@ -38,5 +38,8 @@
   "profileAvatarActionRemove": "Аватарды жою",
   "profileAvatarRemovedSuccessMessage": "Аватар сәтті жойылды",
   "profileAvatarUpdatedSuccessMessage": "Аватар сәтті жаңартылды",
-  "dismiss": "Жабу"
+  "dismiss": "Жабу",
+  "sessionLoadFailureTitle": "Сессияны жүктеу мүмкін болмады",
+  "sessionLoadFailureMessage": "Қосылымды тексеріп, әрекетті қайталаңыз.",
+  "retry": "Қайталау"
 }

@@ -14,5 +14,8 @@
   "devTalkerOpen": "Open Talker",
   "devTalkerDockLeft": "Move Talker control to the right",
   "devTalkerDockRight": "Move Talker control to the left",
-  "adminAccessRequired": "Only administrators can sign in."
+  "adminAccessRequired": "Only administrators can sign in.",
+  "sessionLoadFailureTitle": "Unable to load the admin session",
+  "sessionLoadFailureMessage": "Check your connection and try again.",
+  "retry": "Try again"
 }

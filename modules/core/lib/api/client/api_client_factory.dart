@@ -31,8 +31,14 @@ class ApiClientFactory {
 
   ApiClient createProtected({required ApiConfig config}) {
     final dio = _createDio(config: config);
+    final refreshDio = _createDio(config: config);
     dio.interceptors.add(
-      AuthInterceptor(dio, tokenStorage, onUnauthorized: _notifyUnauthorized),
+      AuthInterceptor(
+        dio,
+        AuthTokenRefresher(refreshDio, tokenStorage),
+        tokenStorage,
+        onUnauthorized: _notifyUnauthorized,
+      ),
     );
 
     return ApiClient._(dio);

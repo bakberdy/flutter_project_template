@@ -38,5 +38,8 @@
   "profileAvatarActionRemove": "Remove avatar",
   "profileAvatarRemovedSuccessMessage": "Avatar removed successfully",
   "profileAvatarUpdatedSuccessMessage": "Avatar updated successfully",
-  "dismiss": "Dismiss"
+  "dismiss": "Dismiss",
+  "sessionLoadFailureTitle": "Unable to load your session",
+  "sessionLoadFailureMessage": "Check your connection and try again.",
+  "retry": "Try again"
 }

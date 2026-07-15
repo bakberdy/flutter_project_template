@@ -78,4 +78,14 @@ class ClientAppLocalizationsEn extends ClientAppLocalizations {
 
   @override
   String get dismiss => 'Dismiss';
+
+  @override
+  String get sessionLoadFailureTitle => 'Unable to load your session';
+
+  @override
+  String get sessionLoadFailureMessage =>
+      'Check your connection and try again.';
+
+  @override
+  String get retry => 'Try again';
 }

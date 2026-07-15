@@ -53,4 +53,15 @@ class AdminAppLocalizationsRu extends AdminAppLocalizations {
 
   @override
   String get adminAccessRequired => 'Войти могут только администраторы.';
+
+  @override
+  String get sessionLoadFailureTitle =>
+      'Не удалось загрузить сессию администратора';
+
+  @override
+  String get sessionLoadFailureMessage =>
+      'Проверьте подключение и повторите попытку.';
+
+  @override
+  String get retry => 'Повторить';
 }

@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:client_app/src/common/config/router/client_app_router.dart';
-import 'package:client_auth/client_auth.dart';
+import 'package:client_app/src/common/client_app_localization_x.dart';
+import 'package:client_app/src/features/app_navigation/presentation/navigation/client_root_route_resolver.dart';
 import 'package:client_profile/client_profile.dart';
 import 'package:core/core.dart';
-import 'package:shared/shared.dart';
-import 'package:flutter/widgets.dart';
+import 'package:design_system/design_system.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
@@ -13,28 +13,27 @@ class RootNavigationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocBuilder<UserBloc, UserState>(
-    builder: (context, state) =>
-        AutoRouter.declarative(routes: (_) => [_routeForState(state)]),
+    builder: (context, state) => Stack(
+      children: [
+        Positioned.fill(
+          child: AutoRouter.declarative(
+            routes: (_) => [clientRouteForUserState(state)],
+          ),
+        ),
+        if (state.user == null)
+          if (state.status case ErrorStateStatus(:final failure))
+            Positioned.fill(
+              child: BaseRetryErrorView(
+                title: context.l10n.sessionLoadFailureTitle,
+                message:
+                    failure.message ?? context.l10n.sessionLoadFailureMessage,
+                retryLabel: context.l10n.retry,
+                onRetry: () =>
+                    context.read<UserBloc>().add(const UserStartedEvent()),
+                icon: const Icon(Icons.cloud_off_outlined, size: 48),
+              ),
+            ),
+      ],
+    ),
   );
-
-  PageRouteInfo<dynamic> _routeForState(UserState state) {
-    if (state.status.isInitial || state.status.isLoading) {
-      return const SplashRoute();
-    }
-
-    final user = state.user;
-    if (!state.status.isSuccess || user == null) {
-      return const AuthWrapperRoute();
-    }
-
-    return switch (user.status) {
-      UserStatus.blocked => const UserBlockedRoute(),
-      UserStatus.deletionRequested => UserDeletionRequestedRoute(),
-      UserStatus.deleted => UserDeletionRequestedRoute(isDeleted: true),
-      UserStatus.active =>
-        user.isUserDataUploaded
-            ? const MainNavigationRoute()
-            : const UserDataRegistrationRoute(),
-    };
-  }
 }

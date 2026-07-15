@@ -75,4 +75,14 @@ class ClientAppLocalizationsRu extends ClientAppLocalizations {
 
   @override
   String get dismiss => 'Закрыть';
+
+  @override
+  String get sessionLoadFailureTitle => 'Не удалось загрузить сессию';
+
+  @override
+  String get sessionLoadFailureMessage =>
+      'Проверьте подключение и повторите попытку.';
+
+  @override
+  String get retry => 'Повторить';
 }

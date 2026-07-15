@@ -1,3 +1,4 @@
+import 'package:client_app/src/features/app_navigation/presentation/widgets/nav_bar_entry.dart';
 import 'package:client_app/src/features/app_navigation/presentation/widgets/nav_bar_item.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';

@@ -53,4 +53,14 @@ class AdminAppLocalizationsEn extends AdminAppLocalizations {
 
   @override
   String get adminAccessRequired => 'Only administrators can sign in.';
+
+  @override
+  String get sessionLoadFailureTitle => 'Unable to load the admin session';
+
+  @override
+  String get sessionLoadFailureMessage =>
+      'Check your connection and try again.';
+
+  @override
+  String get retry => 'Try again';
 }

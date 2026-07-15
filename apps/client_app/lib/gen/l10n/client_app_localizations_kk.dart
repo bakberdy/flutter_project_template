@@ -76,4 +76,14 @@ class ClientAppLocalizationsKk extends ClientAppLocalizations {
 
   @override
   String get dismiss => 'Жабу';
+
+  @override
+  String get sessionLoadFailureTitle => 'Сессияны жүктеу мүмкін болмады';
+
+  @override
+  String get sessionLoadFailureMessage =>
+      'Қосылымды тексеріп, әрекетті қайталаңыз.';
+
+  @override
+  String get retry => 'Қайталау';
 }

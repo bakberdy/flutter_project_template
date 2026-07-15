@@ -192,6 +192,24 @@ abstract class AdminAppLocalizations {
   /// In en, this message translates to:
   /// **'Only administrators can sign in.'**
   String get adminAccessRequired;
+
+  /// No description provided for @sessionLoadFailureTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to load the admin session'**
+  String get sessionLoadFailureTitle;
+
+  /// No description provided for @sessionLoadFailureMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your connection and try again.'**
+  String get sessionLoadFailureMessage;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get retry;
 }
 
 class _AdminAppLocalizationsDelegate

@@ -216,6 +216,24 @@ abstract class ClientAppLocalizations {
   /// In en, this message translates to:
   /// **'Dismiss'**
   String get dismiss;
+
+  /// No description provided for @sessionLoadFailureTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to load your session'**
+  String get sessionLoadFailureTitle;
+
+  /// No description provided for @sessionLoadFailureMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your connection and try again.'**
+  String get sessionLoadFailureMessage;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get retry;
 }
 
 class _ClientAppLocalizationsDelegate

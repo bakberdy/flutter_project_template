@@ -53,4 +53,15 @@ class AdminAppLocalizationsKk extends AdminAppLocalizations {
 
   @override
   String get adminAccessRequired => 'Тек әкімшілер кіре алады.';
+
+  @override
+  String get sessionLoadFailureTitle =>
+      'Әкімші сессиясын жүктеу мүмкін болмады';
+
+  @override
+  String get sessionLoadFailureMessage =>
+      'Қосылымды тексеріп, әрекетті қайталаңыз.';
+
+  @override
+  String get retry => 'Қайталау';
 }

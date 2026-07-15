@@ -38,5 +38,8 @@
   "profileAvatarActionRemove": "Удалить аватар",
   "profileAvatarRemovedSuccessMessage": "Аватар успешно удалён",
   "profileAvatarUpdatedSuccessMessage": "Аватар успешно обновлён",
-  "dismiss": "Закрыть"
+  "dismiss": "Закрыть",
+  "sessionLoadFailureTitle": "Не удалось загрузить сессию",
+  "sessionLoadFailureMessage": "Проверьте подключение и повторите попытку.",
+  "retry": "Повторить"
 }

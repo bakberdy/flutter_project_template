@@ -14,5 +14,8 @@
   "devTalkerOpen": "Talker ашу",
   "devTalkerDockLeft": "Talker басқаруын оңға жылжыту",
   "devTalkerDockRight": "Talker басқаруын солға жылжыту",
-  "adminAccessRequired": "Тек әкімшілер кіре алады."
+  "adminAccessRequired": "Тек әкімшілер кіре алады.",
+  "sessionLoadFailureTitle": "Әкімші сессиясын жүктеу мүмкін болмады",
+  "sessionLoadFailureMessage": "Қосылымды тексеріп, әрекетті қайталаңыз.",
+  "retry": "Қайталау"
 }

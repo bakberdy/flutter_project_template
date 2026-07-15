@@ -4,15 +4,19 @@ sealed class AdminSessionEvent {
   const AdminSessionEvent();
 }
 
-final class AdminSessionStarted extends AdminSessionEvent {
+sealed class AdminSessionTransitionEvent extends AdminSessionEvent {
+  const AdminSessionTransitionEvent();
+}
+
+final class AdminSessionStarted extends AdminSessionTransitionEvent {
   const AdminSessionStarted();
 }
 
-final class AdminSessionLogoutRequested extends AdminSessionEvent {
+final class AdminSessionLogoutRequested extends AdminSessionTransitionEvent {
   const AdminSessionLogoutRequested();
 }
 
-final class AdminSessionInvalidated extends AdminSessionEvent {
+final class AdminSessionInvalidated extends AdminSessionTransitionEvent {
   const AdminSessionInvalidated();
 }
 

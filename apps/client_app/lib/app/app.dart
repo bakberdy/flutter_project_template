@@ -24,8 +24,8 @@ class _AppState extends State<App> {
   final ValueNotifier<bool> _showTalkerDock = ValueNotifier<bool>(true);
   late final ApiClientFactory _apiClientFactory = sl<ApiClientFactory>();
   late final Future<void> Function() _unauthorizedHandler = _handleUnauthorized;
-  late final CoreNavigationBloc _navigationBloc = sl<CoreNavigationBloc>();
-  late final ClientAppRouter _appRouter = sl<ClientAppRouter>();
+  late final CoreNavigationBloc _navigationBloc = CoreNavigationBloc();
+  late final ClientAppRouter _appRouter = ClientAppRouter();
   late final UserBloc _userBloc = sl<UserBloc>()..add(const UserStartedEvent());
   late final LocaleBloc _localeBloc = sl<LocaleBloc>()
     ..add(
@@ -70,6 +70,7 @@ class _AppState extends State<App> {
               onRefreshUser: () {
                 _userBloc.add(const UserStartedEvent());
               },
+              onNavigationError: _handleNavigationError,
               router: _appRouter,
               child: MaterialApp.router(
                 builder: (context, child) => DebugOverlay(
@@ -94,7 +95,12 @@ class _AppState extends State<App> {
                 locale: localeState.languageCode == null
                     ? null
                     : Locale(localeState.languageCode!),
-                localeResolutionCallback: _localeResolutionCallback,
+                localeResolutionCallback: (deviceLocale, supportedLocales) =>
+                    resolveSupportedLocale(
+                      deviceLocale,
+                      supportedLocales,
+                      fallback: AppLocalizationConfig.defaultLocale,
+                    ),
               ),
             ),
           ),
@@ -115,18 +121,6 @@ class _AppState extends State<App> {
     }
   }
 
-  Locale _localeResolutionCallback(
-    Locale? deviceLocale,
-    Iterable<Locale> supportedLocales,
-  ) {
-    for (final locale in supportedLocales) {
-      if (locale.languageCode == deviceLocale?.languageCode) {
-        return locale;
-      }
-    }
-    return AppLocalizationConfig.defaultLocale;
-  }
-
   void _logout() {
     unawaited(_logoutAndRefreshSession());
   }
@@ -140,5 +134,9 @@ class _AppState extends State<App> {
     if (mounted) {
       _userBloc.add(const UserLoggedOutEvent());
     }
+  }
+
+  void _handleNavigationError(Object error, StackTrace stackTrace) {
+    sl<Talker>().error('Navigation command failed', error, stackTrace);
   }
 }

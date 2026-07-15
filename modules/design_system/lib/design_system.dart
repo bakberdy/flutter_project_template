@@ -31,5 +31,6 @@ export 'src/tokens/design_radii.dart';
 export 'src/tokens/design_spacing.dart';
 export 'src/widgets/base_list_tile.dart';
 export 'src/widgets/base_radio_list_tile.dart';
+export 'src/widgets/base_retry_error_view.dart';
 export 'src/widgets/design_card.dart';
 export 'src/widgets/info_row.dart';

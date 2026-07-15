@@ -14,5 +14,8 @@
   "devTalkerOpen": "Открыть Talker",
   "devTalkerDockLeft": "Переместить Talker вправо",
   "devTalkerDockRight": "Переместить Talker влево",
-  "adminAccessRequired": "Войти могут только администраторы."
+  "adminAccessRequired": "Войти могут только администраторы.",
+  "sessionLoadFailureTitle": "Не удалось загрузить сессию администратора",
+  "sessionLoadFailureMessage": "Проверьте подключение и повторите попытку.",
+  "retry": "Повторить"
 }
