@@ -10,7 +10,11 @@ Future<void> main() => AppErrorHandler.run(() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AppConfig.load();
   await configureDependencies();
-  initializeCoreMonitoring(sl<Talker>());
+  initializeCoreMonitoring(
+    sl<Talker>(),
+    enableAnalytics: AppConfig.instance.enableAnalytics,
+    enableCrashlytics: AppConfig.instance.enableCrashlytics,
+  );
 
   unawaited(
     Analytics.track(const AnalyticsEvent(name: AnalyticsEventNames.appOpened)),

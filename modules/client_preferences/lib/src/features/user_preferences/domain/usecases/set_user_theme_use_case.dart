@@ -28,6 +28,8 @@ class SetUserThemeUseCase extends UseCase<void, SetUserThemeUseCaseParams> {
               Analytics.track(
                 SetUserThemeUseCaseEvent.failure(
                   properties: {
+                    AnalyticsPropertyKeys.preferenceName: 'theme',
+                    AnalyticsPropertyKeys.preferenceValue: params.theme.name,
                     AnalyticsPropertyKeys.failureMessage: failure.message,
                     AnalyticsPropertyKeys.failureType:
                         failure.details?.type.name,
@@ -39,7 +41,16 @@ class SetUserThemeUseCase extends UseCase<void, SetUserThemeUseCaseParams> {
             return result;
           },
           (_) {
-            unawaited(Analytics.track(SetUserThemeUseCaseEvent.success()));
+            unawaited(
+              Analytics.track(
+                SetUserThemeUseCaseEvent.success(
+                  properties: {
+                    AnalyticsPropertyKeys.preferenceName: 'theme',
+                    AnalyticsPropertyKeys.preferenceValue: params.theme.name,
+                  },
+                ),
+              ),
+            );
             return result;
           },
         ),

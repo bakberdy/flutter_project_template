@@ -72,6 +72,27 @@ final class SetAppLocaleUseCaseEvent extends AnalyticsEvent {
   );
 }
 
+final class SetUserNotificationsUseCaseEvent extends AnalyticsEvent {
+  const SetUserNotificationsUseCaseEvent({
+    required super.name,
+    super.properties,
+  });
+
+  factory SetUserNotificationsUseCaseEvent.success({
+    Map<String, dynamic>? properties,
+  }) => SetUserNotificationsUseCaseEvent(
+    name: 'set_user_notifications_usecase_success',
+    properties: properties,
+  );
+
+  factory SetUserNotificationsUseCaseEvent.failure({
+    required Map<String, dynamic> properties,
+  }) => SetUserNotificationsUseCaseEvent(
+    name: 'set_user_notifications_usecase_failure',
+    properties: properties,
+  );
+}
+
 final class SetEnvironmentUseCaseEvent extends AnalyticsEvent {
   const SetEnvironmentUseCaseEvent({required super.name, super.properties});
 

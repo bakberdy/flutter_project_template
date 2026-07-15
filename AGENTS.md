@@ -44,6 +44,10 @@ Use `snake_case.dart` filenames, `UpperCamelCase` types, and `lowerCamelCase`
 members. Do not hand-edit `*.g.dart`, `*.freezed.dart`, or other generated files.
 Keep user-facing text in the owning package's ARB files and access it through
 `context.l10n`; do not create handwritten localization message classes.
+Keep Blocs and Cubits focused on state coordination; never call
+`Analytics.track` from them. Track business-operation success or failure in the
+owning use case after the repository result, with event definitions under that
+feature's `domain/analytics/` directory.
 
 ## Testing Guidelines
 

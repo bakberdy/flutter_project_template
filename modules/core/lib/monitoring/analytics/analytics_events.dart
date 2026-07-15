@@ -77,6 +77,8 @@ final class AnalyticsPropertyKeys {
   static const String filterType = 'filter_type';
   static const String sortOrder = 'sort_order';
   static const String notificationType = 'notification_type';
+  static const String preferenceName = 'preference_name';
+  static const String preferenceValue = 'preference_value';
   static const String stepName = 'step_name';
   static const String stepIndex = 'step_index';
 

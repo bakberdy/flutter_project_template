@@ -29,6 +29,9 @@ class SetUserLanguageUseCase
               Analytics.track(
                 SetAppLocaleUseCaseEvent.failure(
                   properties: {
+                    AnalyticsPropertyKeys.preferenceName: 'language',
+                    AnalyticsPropertyKeys.preferenceValue:
+                        params.language.languageCode,
                     AnalyticsPropertyKeys.failureMessage: failure.message,
                     AnalyticsPropertyKeys.failureType:
                         failure.details?.type.name,
@@ -40,7 +43,17 @@ class SetUserLanguageUseCase
             return result;
           },
           (_) {
-            unawaited(Analytics.track(SetAppLocaleUseCaseEvent.success()));
+            unawaited(
+              Analytics.track(
+                SetAppLocaleUseCaseEvent.success(
+                  properties: {
+                    AnalyticsPropertyKeys.preferenceName: 'language',
+                    AnalyticsPropertyKeys.preferenceValue:
+                        params.language.languageCode,
+                  },
+                ),
+              ),
+            );
             return result;
           },
         ),
