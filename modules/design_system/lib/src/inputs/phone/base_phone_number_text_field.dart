@@ -1,4 +1,5 @@
 import 'package:design_system/src/extensions/build_context_design_x.dart';
+import 'package:design_system/src/inputs/base_input_field.dart';
 import 'package:design_system/src/inputs/phone/base_country_dial_code_prefix_button.dart';
 import 'package:design_system/src/inputs/phone/base_phone_number_input_formatter.dart';
 import 'package:design_system/src/inputs/phone/country_dial_code_option.dart';
@@ -45,7 +46,8 @@ class BasePhoneNumberTextField extends StatelessWidget {
       link: layerLink,
       child: Column(
         children: [
-          TextField(
+          BaseInputField(
+            label: labelText,
             controller: controller,
             onChanged: onChanged,
             textInputAction: TextInputAction.done,
@@ -55,7 +57,6 @@ class BasePhoneNumberTextField extends StatelessWidget {
             autocorrect: false,
             keyboardType: TextInputType.phone,
             decoration: InputDecoration(
-              labelText: labelText,
               prefixIcon: const Icon(Icons.phone),
               prefix: dialCode == null
                   ? const SizedBox.shrink()
@@ -64,8 +65,8 @@ class BasePhoneNumberTextField extends StatelessWidget {
                       onTap: onCountryCodeTap,
                     ),
               prefixStyle: context.designTextTheme.bodyLarge?.copyWith(),
-              errorText: errorText,
             ),
+            errorText: errorText,
           ),
           if (showVerificationPrompt || showVerified)
             Padding(

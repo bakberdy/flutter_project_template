@@ -18,6 +18,8 @@ dependencies:
 
 dev_dependencies:
   build_runner: ^2.13.0
+  flutter_test:
+    sdk: flutter
   flutter_lints: ^6.0.0
   flutter_gen_runner: ^5.13.0+1
   index_generator: ^4.1.2

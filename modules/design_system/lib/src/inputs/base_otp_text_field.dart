@@ -1,4 +1,5 @@
 import 'package:design_system/src/extensions/build_context_design_x.dart';
+import 'package:design_system/src/inputs/base_input_field.dart';
 import 'package:design_system/src/tokens/design_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -58,7 +59,7 @@ class BaseOtpTextField extends StatelessWidget {
             Positioned.fill(
               child: Opacity(
                 opacity: 0,
-                child: TextField(
+                child: BaseInputField(
                   focusNode: focusNode,
                   controller: controller,
                   autofocus: autofocus,
@@ -75,7 +76,7 @@ class BaseOtpTextField extends StatelessWidget {
                     counterText: '',
                   ),
                   onChanged: onChanged,
-                  onSubmitted: onSubmitted,
+                  onFieldSubmitted: onSubmitted,
                 ),
               ),
             ),

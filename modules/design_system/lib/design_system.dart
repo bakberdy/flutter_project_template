@@ -19,6 +19,7 @@ export 'src/extensions/build_context_design_x.dart';
 export 'src/extensions/design_system_localization_x.dart';
 export 'src/images/base_cached_network_image.dart';
 export 'src/images/user_avatar.dart';
+export 'src/inputs/base_input_field.dart';
 export 'src/inputs/base_otp_text_field.dart';
 export 'src/inputs/phone/base_country_dial_code_prefix_button.dart';
 export 'src/inputs/phone/base_country_dial_code_selector.dart';

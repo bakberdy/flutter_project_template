@@ -80,24 +80,22 @@ class _AdminSignInScreenState extends State<AdminSignInScreen>
                         style: context.designTextTheme.headlineMedium,
                       ),
                       const SizedBox(height: DesignSpacing.lg),
-                      TextField(
+                      BaseInputField(
+                        label: context.l10n.authEmailLabel,
                         autofocus: true,
                         style: context.designTextTheme.bodyMedium,
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.done,
                         focusNode: _emailFocusNode,
-                        onSubmitted: (_) {
+                        onFieldSubmitted: (_) {
                           if (canSubmit) {
                             context.read<AuthBloc>().add(
                               const AuthEvent.submitEmail(),
                             );
                           }
                         },
-                        decoration: InputDecoration(
-                          labelText: context.l10n.authEmailLabel,
-                          errorText: state.emailField.error,
-                        ),
+                        errorText: state.emailField.error,
                       ),
                       const SizedBox(height: DesignSpacing.md),
                       BaseButton.primary(

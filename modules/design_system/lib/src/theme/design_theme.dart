@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../tokens/design_radii.dart';
+import '../tokens/design_spacing.dart';
+
 class DesignTheme {
   const DesignTheme._();
 
@@ -16,6 +19,44 @@ class DesignTheme {
   static ThemeData _build(ColorScheme colors) => ThemeData(
     colorScheme: colors,
     useMaterial3: true,
+    dividerTheme: DividerThemeData(
+      color: colors.outlineVariant,
+      space: 1,
+      thickness: 1,
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: colors.surface,
+      isDense: true,
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: DesignSpacing.md,
+        vertical: DesignSpacing.sm,
+      ),
+      labelStyle: TextStyle(color: colors.onSurfaceVariant),
+      hintStyle: TextStyle(color: colors.onSurfaceVariant),
+      prefixIconColor: colors.onSurfaceVariant,
+      suffixIconColor: colors.onSurfaceVariant,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(DesignRadii.md),
+        borderSide: BorderSide(color: colors.outlineVariant),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(DesignRadii.md),
+        borderSide: BorderSide(color: colors.outlineVariant),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(DesignRadii.md),
+        borderSide: BorderSide(color: colors.primary, width: 2),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(DesignRadii.md),
+        borderSide: BorderSide(color: colors.error),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(DesignRadii.md),
+        borderSide: BorderSide(color: colors.error, width: 2),
+      ),
+    ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: colors.surface,
       elevation: 0,

@@ -57,7 +57,6 @@ class _UsersSearchBarState extends State<UsersSearchBar> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final colorScheme = context.designColors;
     return SizedBox(
       height: 40,
       child: Row(
@@ -69,7 +68,7 @@ class _UsersSearchBarState extends State<UsersSearchBar> {
               builder: (context, value, _) {
                 final showClear =
                     widget.activeSearch != null || value.text.isNotEmpty;
-                return TextField(
+                return BaseInputField(
                   focusNode: _focusNode,
                   controller: _controller,
                   decoration: InputDecoration(
@@ -93,23 +92,9 @@ class _UsersSearchBarState extends State<UsersSearchBar> {
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: AppSpacing.sm,
                     ),
-                    filled: true,
-                    fillColor: colorScheme.surface,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(AppRadii.md),
-                      borderSide: BorderSide(color: colorScheme.outlineVariant),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(AppRadii.md),
-                      borderSide: BorderSide(color: colorScheme.outlineVariant),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(AppRadii.md),
-                      borderSide: BorderSide(color: colorScheme.primary),
-                    ),
                   ),
                   textInputAction: TextInputAction.search,
-                  onSubmitted: (_) => _submit(),
+                  onFieldSubmitted: (_) => _submit(),
                 );
               },
             ),

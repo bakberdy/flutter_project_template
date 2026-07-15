@@ -74,14 +74,12 @@ class _AuthEmailScreenState extends State<AuthEmailScreen>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                TextField(
+                BaseInputField(
+                  label: l10n.authEmailLabel,
                   style: context.designTextTheme.bodyMedium,
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    labelText: l10n.authEmailLabel,
-                    errorText: state.emailField.error,
-                  ),
+                  errorText: state.emailField.error,
                 ),
                 const SizedBox(height: DesignSpacing.md),
                 BaseButton.primary(

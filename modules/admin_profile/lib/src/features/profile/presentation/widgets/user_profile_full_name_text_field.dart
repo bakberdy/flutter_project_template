@@ -1,4 +1,5 @@
 import 'package:admin_profile/src/common/admin_profile_context_x.dart';
+import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -16,7 +17,8 @@ class UserProfileFullNameTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return BaseInputField(
+      label: context.l10n.profileEditFullNameLabel,
       autofocus: false,
       controller: controller,
       onChanged: onChanged,
@@ -26,11 +28,8 @@ class UserProfileFullNameTextField extends StatelessWidget {
       ],
       autocorrect: false,
       textCapitalization: TextCapitalization.words,
-      decoration: InputDecoration(
-        labelText: context.l10n.profileEditFullNameLabel,
-        prefixIcon: const Icon(Icons.person),
-        errorText: errorText,
-      ),
+      decoration: InputDecoration(prefixIcon: const Icon(Icons.person)),
+      errorText: errorText,
     );
   }
 }

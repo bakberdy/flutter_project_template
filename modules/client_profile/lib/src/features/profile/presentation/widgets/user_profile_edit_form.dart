@@ -96,22 +96,12 @@ class UserProfileEditForm extends StatelessWidget {
                 sliver: SliverList(
                   delegate: SliverChildListDelegate([
                     const SizedBox(height: DesignSpacing.xl),
-                    Text(
-                      l10n.profileEditFullNameLabel,
-                      style: context.designTextTheme.labelLarge,
-                    ),
-                    const SizedBox(height: DesignSpacing.xs),
                     UserProfileFullNameTextField(
                       controller: fullNameController,
                       errorText: fullName.error,
                       onChanged: onFullNameChanged,
                     ),
                     const SizedBox(height: DesignSpacing.md),
-                    Text(
-                      l10n.profileEditPhoneNumberLabel,
-                      style: context.designTextTheme.labelLarge,
-                    ),
-                    const SizedBox(height: DesignSpacing.xs),
                     BasePhoneNumberTextField(
                       labelText: l10n.profileEditPhoneNumberLabel,
                       showVerificationPrompt: showPhoneVerificationPrompt,
