@@ -1,0 +1,65 @@
+import 'package:admin_users/src/features/users/domain/usecases/admin_users_use_case_tracking.dart';
+import 'package:core/core.dart';
+import 'package:dartz/dartz.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+void main() {
+  late _AnalyticsProviderFake analyticsProvider;
+
+  setUp(() {
+    analyticsProvider = _AnalyticsProviderFake();
+    Analytics.initialize([analyticsProvider]);
+  });
+
+  tearDown(() => Analytics.initialize([]));
+
+  test('tracks a successful admin users operation', () async {
+    await trackAdminUsersUseCase(
+      FutureEither<int>.value(const Right(1)),
+      'get_users',
+      properties: const {'has_search': true},
+    );
+
+    final event = analyticsProvider.events.single;
+    expect(event.name, 'admin_users_get_users_usecase_success');
+    expect(event.properties, const {'has_search': true});
+  });
+
+  test('tracks a failed admin users operation with failure details', () async {
+    const failure = Failure(
+      message: 'Request failed',
+      source: 'UsersRepository.getUsers',
+    );
+
+    await trackAdminUsersUseCase(
+      FutureEither<int>.value(const Left(failure)),
+      'get_users',
+      properties: const {'has_search': false},
+    );
+
+    final event = analyticsProvider.events.single;
+    expect(event.name, 'admin_users_get_users_usecase_failure');
+    expect(event.properties?['has_search'], isFalse);
+    expect(
+      event.properties?[AnalyticsPropertyKeys.failureMessage],
+      failure.message,
+    );
+    expect(
+      event.properties?[AnalyticsPropertyKeys.failureSource],
+      failure.source,
+    );
+  });
+}
+
+class _AnalyticsProviderFake implements AnalyticsProvider {
+  final List<AnalyticsEvent> events = [];
+
+  @override
+  Future<void> track(AnalyticsEvent event) async => events.add(event);
+
+  @override
+  Future<void> setUserId(String? userId) async {}
+
+  @override
+  Future<void> setUserProperty(Map<String, dynamic> properties) async {}
+}

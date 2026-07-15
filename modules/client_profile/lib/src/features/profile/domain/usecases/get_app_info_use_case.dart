@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:client_profile/src/features/profile/domain/analytics/user_profile_events.dart';
 import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
@@ -11,6 +14,17 @@ class GetAppInfoUseCase extends UseCase<AppInfo, NoParams> {
   @override
   FutureEither<AppInfo> call(NoParams params) async {
     final appInfo = await _deviceInfoService.getAppInfo();
+    unawaited(
+      Analytics.track(
+        UserProfileUseCaseEvent.success(
+          'get_app_info',
+          properties: {
+            AnalyticsPropertyKeys.appVersion: appInfo.version,
+            'build_number': appInfo.buildNumber,
+          },
+        ),
+      ),
+    );
     return Right(appInfo);
   }
 }

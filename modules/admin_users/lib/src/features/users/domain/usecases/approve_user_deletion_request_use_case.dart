@@ -2,6 +2,7 @@ import 'package:core/core.dart';
 import 'package:injectable/injectable.dart';
 import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
 import 'package:admin_users/src/features/users/domain/repositories/users_repository.dart';
+import 'package:admin_users/src/features/users/domain/usecases/admin_users_use_case_tracking.dart';
 
 @lazySingleton
 class ApproveUserDeletionRequestUseCase extends UseCase<AdminUser, String> {
@@ -10,6 +11,9 @@ class ApproveUserDeletionRequestUseCase extends UseCase<AdminUser, String> {
   final UsersRepository _repository;
 
   @override
-  FutureEither<AdminUser> call(String userId) =>
-      _repository.approveDeletionRequest(userId);
+  FutureEither<AdminUser> call(String userId) => trackAdminUsersUseCase(
+    _repository.approveDeletionRequest(userId),
+    'approve_deletion_request',
+    properties: {'target_user_id': userId},
+  );
 }

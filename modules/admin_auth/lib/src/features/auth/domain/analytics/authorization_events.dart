@@ -89,3 +89,21 @@ final class AuthSetNotificationTokenUseCaseEvent extends AnalyticsEvent {
     properties: properties,
   );
 }
+
+final class GetAdminSessionUseCaseEvent extends AnalyticsEvent {
+  const GetAdminSessionUseCaseEvent({required super.name, super.properties});
+
+  factory GetAdminSessionUseCaseEvent.success({
+    Map<String, dynamic>? properties,
+  }) => GetAdminSessionUseCaseEvent(
+    name: 'get_admin_session_usecase_success',
+    properties: properties,
+  );
+
+  factory GetAdminSessionUseCaseEvent.failure({
+    required Map<String, dynamic> properties,
+  }) => GetAdminSessionUseCaseEvent(
+    name: 'get_admin_session_usecase_failure',
+    properties: properties,
+  );
+}

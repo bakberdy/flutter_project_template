@@ -36,6 +36,24 @@ final class GetAppLocaleUseCaseEvent extends AnalyticsEvent {
   );
 }
 
+final class GetUserPreferencesUseCaseEvent extends AnalyticsEvent {
+  const GetUserPreferencesUseCaseEvent({required super.name, super.properties});
+
+  factory GetUserPreferencesUseCaseEvent.success({
+    Map<String, dynamic>? properties,
+  }) => GetUserPreferencesUseCaseEvent(
+    name: 'get_user_preferences_usecase_success',
+    properties: properties,
+  );
+
+  factory GetUserPreferencesUseCaseEvent.failure({
+    required Map<String, dynamic> properties,
+  }) => GetUserPreferencesUseCaseEvent(
+    name: 'get_user_preferences_usecase_failure',
+    properties: properties,
+  );
+}
+
 final class SetUserThemeUseCaseEvent extends AnalyticsEvent {
   const SetUserThemeUseCaseEvent({required super.name, super.properties});
 
