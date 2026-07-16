@@ -19,5 +19,5 @@ Future<void> main() => AppErrorHandler.run(() async {
   unawaited(
     Analytics.track(const AnalyticsEvent(name: AnalyticsEventNames.appOpened)),
   );
-  runApp(App());
+  runApp(const App());
 });

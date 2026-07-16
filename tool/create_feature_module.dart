@@ -404,7 +404,7 @@ final class _Options {
             throw _UsageException('Unknown option: $argument\n');
           }
           if (moduleName != null) {
-            throw _UsageException('Only one module_name is allowed.\n');
+            throw const _UsageException('Only one module_name is allowed.\n');
           }
           moduleName = argument;
       }

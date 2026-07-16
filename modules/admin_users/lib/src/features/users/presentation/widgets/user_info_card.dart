@@ -12,11 +12,11 @@ class UserInfoCard extends StatelessWidget {
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(context.designRadii.sm),
+        borderRadius: BorderRadius.circular(DesignRadiusTokens.sm),
         side: BorderSide(color: context.designColors.outlineVariant),
       ),
       child: Padding(
-        padding: EdgeInsets.all(context.designSpacing.lg),
+        padding: const EdgeInsets.all(DesignSpacingTokens.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -27,14 +27,14 @@ class UserInfoCard extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
-            SizedBox(height: context.designSpacing.lg),
+            const SizedBox(height: DesignSpacingTokens.lg),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 for (final row in rows) ...[
                   row,
                   if (row != rows.last)
-                    SizedBox(height: context.designSpacing.md),
+                    const SizedBox(height: DesignSpacingTokens.md),
                 ],
               ],
             ),

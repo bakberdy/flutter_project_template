@@ -46,10 +46,10 @@ class BaseOtpTextField extends StatelessWidget {
                     return Expanded(
                       child: Padding(
                         padding: EdgeInsets.only(
-                          left: index == 0 ? 0 : DesignTokens.spacing.xxs,
+                          left: index == 0 ? 0 : DesignSpacingTokens.xxs,
                           right: index == length - 1
                               ? 0
-                              : DesignTokens.spacing.xxs,
+                              : DesignSpacingTokens.xxs,
                         ),
                         child: _OtpDigitSlot(digit: digit),
                       ),
@@ -86,7 +86,7 @@ class BaseOtpTextField extends StatelessWidget {
         ),
         if (errorText case final error?)
           Padding(
-            padding: EdgeInsets.only(top: DesignTokens.spacing.xs),
+            padding: const EdgeInsets.only(top: DesignSpacingTokens.xs),
             child: Text(
               error,
               style: context.designTextTheme.bodySmall?.copyWith(

@@ -22,10 +22,10 @@ class AppSupportItemsList extends StatelessWidget {
           trailing: const Icon(Icons.chevron_right),
           disableBottomRadius: true,
         ),
-        Divider(
+        const Divider(
           height: 1,
-          indent: context.designSpacing.lg,
-          endIndent: context.designSpacing.lg,
+          indent: DesignSpacingTokens.lg,
+          endIndent: DesignSpacingTokens.lg,
         ),
         BaseListTile(
           disableTopRadius: true,

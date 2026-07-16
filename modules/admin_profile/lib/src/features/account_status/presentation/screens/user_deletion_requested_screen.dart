@@ -14,7 +14,7 @@ class UserDeletionRequestedScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(context.designSpacing.md),
+          padding: const EdgeInsets.all(DesignSpacingTokens.md),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -24,19 +24,19 @@ class UserDeletionRequestedScreen extends StatelessWidget {
                 size: 56,
                 color: context.designColors.error,
               ),
-              SizedBox(height: context.designSpacing.lg),
+              const SizedBox(height: DesignSpacingTokens.lg),
               Text(
                 context.l10n.userDeletionRequestedTitle,
                 textAlign: TextAlign.center,
                 style: context.designTextTheme.headlineSmall,
               ),
-              SizedBox(height: context.designSpacing.sm),
+              const SizedBox(height: DesignSpacingTokens.sm),
               Text(
                 context.l10n.userDeletionRequestedMessage,
                 textAlign: TextAlign.center,
                 style: context.designTextTheme.bodyMedium,
               ),
-              SizedBox(height: context.designSpacing.xl),
+              const SizedBox(height: DesignSpacingTokens.xl),
               BaseButton.primary(
                 onPressed: () {
                   context.router.markUrlStateForReplace();

@@ -25,26 +25,26 @@ class BaseRetryErrorView extends StatelessWidget {
     child: SafeArea(
       child: Center(
         child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 420),
+          constraints: const BoxConstraints(maxWidth: 420),
           child: Padding(
-            padding: EdgeInsets.all(DesignTokens.spacing.xl),
+            padding: const EdgeInsets.all(DesignSpacingTokens.xl),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 icon,
-                SizedBox(height: DesignTokens.spacing.lg),
+                const SizedBox(height: DesignSpacingTokens.lg),
                 Text(
                   title,
                   style: context.designTextTheme.headlineSmall,
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: DesignTokens.spacing.sm),
+                const SizedBox(height: DesignSpacingTokens.sm),
                 Text(
                   message,
                   style: context.designTextTheme.bodyMedium,
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: DesignTokens.spacing.lg),
+                const SizedBox(height: DesignSpacingTokens.lg),
                 BaseButton.primary(
                   onPressed: onRetry,
                   label: retryLabel,

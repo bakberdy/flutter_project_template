@@ -51,8 +51,8 @@ class UserProfileScreen extends StatelessWidget with UiFailureHandlerMixin {
               },
             ),
 
-            SliverToBoxAdapter(
-              child: SizedBox(height: context.designSpacing.xl),
+            const SliverToBoxAdapter(
+              child: SizedBox(height: DesignSpacingTokens.xl),
             ),
             UserPreferencesItemsList(
               onNotificationsTap: () => context.read<CoreNavigationBloc>().add(
@@ -69,8 +69,8 @@ class UserProfileScreen extends StatelessWidget with UiFailureHandlerMixin {
                 const CoreNavigationEvent.push(UserPreferencesLocaleRoute()),
               ),
             ),
-            SliverToBoxAdapter(
-              child: SizedBox(height: context.designSpacing.md),
+            const SliverToBoxAdapter(
+              child: SizedBox(height: DesignSpacingTokens.md),
             ),
             SliverToBoxAdapter(
               child: BaseListTile(
@@ -82,8 +82,8 @@ class UserProfileScreen extends StatelessWidget with UiFailureHandlerMixin {
                 ),
               ),
             ),
-            SliverToBoxAdapter(
-              child: SizedBox(height: context.designSpacing.md),
+            const SliverToBoxAdapter(
+              child: SizedBox(height: DesignSpacingTokens.md),
             ),
             AppSupportItemsList(onFAQTap: () {}, onSupportTap: () {}),
             Builder(

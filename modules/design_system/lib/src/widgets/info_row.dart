@@ -33,7 +33,7 @@ class InfoRow extends StatelessWidget {
           children: [
             SelectableText(value, style: context.designTextTheme.bodyLarge),
             if (showCopyIcon) ...[
-              SizedBox(width: DesignTokens.spacing.xs),
+              const SizedBox(width: DesignSpacingTokens.xs),
               InkWell(
                 onTap: () => Clipboard.setData(ClipboardData(text: value)),
                 child: Icon(

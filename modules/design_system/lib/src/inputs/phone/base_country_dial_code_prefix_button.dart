@@ -22,7 +22,7 @@ class BaseCountryDialCodePrefixButton extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           countryDialCodeFlag(context, dialCode),
-          SizedBox(width: DesignTokens.spacing.xs),
+          const SizedBox(width: DesignSpacingTokens.xs),
           Text('${dialCode.dialCode} '),
         ],
       ),
@@ -40,26 +40,26 @@ Widget countryDialCodeFlag(
       width: 24,
       height: 24,
       errorBuilder: (context, error, stackTrace) =>
-          SizedBox(width: 24, height: 24),
+          const SizedBox(width: 24, height: 24),
     ),
     'RU' => flags.russia.image(
       width: 24,
       height: 24,
       errorBuilder: (context, error, stackTrace) =>
-          SizedBox(width: 24, height: 24),
+          const SizedBox(width: 24, height: 24),
     ),
     'US' => flags.unitedStates.image(
       width: 24,
       height: 24,
       errorBuilder: (context, error, stackTrace) =>
-          SizedBox(width: 24, height: 24),
+          const SizedBox(width: 24, height: 24),
     ),
     'GB' => flags.unitedKingdom.image(
       width: 24,
       height: 24,
       errorBuilder: (context, error, stackTrace) =>
-          SizedBox(width: 24, height: 24),
+          const SizedBox(width: 24, height: 24),
     ),
-    _ => SizedBox(width: 24, height: 24),
+    _ => const SizedBox(width: 24, height: 24),
   };
 }

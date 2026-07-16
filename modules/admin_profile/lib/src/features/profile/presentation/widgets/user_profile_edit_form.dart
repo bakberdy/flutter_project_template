@@ -77,9 +77,9 @@ class UserProfileEditForm extends StatelessWidget {
               slivers: [
                 SliverToBoxAdapter(
                   child: Padding(
-                    padding: EdgeInsets.only(
-                      top: context.designSpacing.xl,
-                      bottom: context.designSpacing.lg,
+                    padding: const EdgeInsets.only(
+                      top: DesignSpacingTokens.xl,
+                      bottom: DesignSpacingTokens.lg,
                     ),
                     child: Center(
                       child: UserAvatar(
@@ -92,8 +92,8 @@ class UserProfileEditForm extends StatelessWidget {
                   ),
                 ),
                 SliverPadding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: context.designSpacing.md,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: DesignSpacingTokens.md,
                   ),
                   sliver: SliverList(
                     delegate: SliverChildListDelegate([
@@ -102,7 +102,7 @@ class UserProfileEditForm extends StatelessWidget {
                         errorText: fullName.error,
                         onChanged: onFullNameChanged,
                       ),
-                      SizedBox(height: context.designSpacing.md),
+                      const SizedBox(height: DesignSpacingTokens.md),
                       BasePhoneNumberTextField(
                         labelText: l10n.profileEditPhoneNumberLabel,
                         showVerificationPrompt: showPhoneVerificationPrompt,
@@ -123,7 +123,7 @@ class UserProfileEditForm extends StatelessWidget {
                         onCountryCodeTap: onCountryCodeTap,
                       ),
                       if (onRemoveAccountPressed != null) ...[
-                        SizedBox(height: context.designSpacing.xl),
+                        const SizedBox(height: DesignSpacingTokens.xl),
                         BaseButton.destructive(
                           onPressed: onRemoveAccountPressed,
                           label: l10n.profileEditRemoveAccount,
@@ -131,7 +131,7 @@ class UserProfileEditForm extends StatelessWidget {
                           loading: accountDeletionStatus.isLoading,
                         ),
                       ],
-                      SizedBox(height: 96),
+                      const SizedBox(height: 96),
                     ]),
                   ),
                 ),
@@ -140,9 +140,9 @@ class UserProfileEditForm extends StatelessWidget {
           ),
         ),
         Positioned(
-          left: context.designSpacing.md,
-          right: context.designSpacing.md,
-          bottom: context.designSpacing.md,
+          left: DesignSpacingTokens.md,
+          right: DesignSpacingTokens.md,
+          bottom: DesignSpacingTokens.md,
           child: BaseButton.primary(
             onPressed: onSavePressed,
             disabled: !canSaveChanges,

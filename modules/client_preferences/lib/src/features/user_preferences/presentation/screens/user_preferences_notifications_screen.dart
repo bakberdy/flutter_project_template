@@ -38,8 +38,8 @@ class UserPreferencesNotificationsScreen extends StatelessWidget
             builder: (context, state) {
               final preferences = state.preferences;
               return ListView(
-                padding: EdgeInsets.symmetric(
-                  vertical: context.designSpacing.sm,
+                padding: const EdgeInsets.symmetric(
+                  vertical: DesignSpacingTokens.sm,
                 ),
                 children: [
                   UserPreferencesNotificationSwitchCard(
@@ -57,10 +57,10 @@ class UserPreferencesNotificationsScreen extends StatelessWidget
                       );
                     },
                   ),
-                  Divider(
+                  const Divider(
                     height: 1,
-                    indent: context.designSpacing.lg,
-                    endIndent: context.designSpacing.lg,
+                    indent: DesignSpacingTokens.lg,
+                    endIndent: DesignSpacingTokens.lg,
                   ),
                   UserPreferencesNotificationSwitchCard(
                     disableTopRadius: true,
@@ -78,10 +78,10 @@ class UserPreferencesNotificationsScreen extends StatelessWidget
                       );
                     },
                   ),
-                  Divider(
+                  const Divider(
                     height: 1,
-                    indent: context.designSpacing.lg,
-                    endIndent: context.designSpacing.lg,
+                    indent: DesignSpacingTokens.lg,
+                    endIndent: DesignSpacingTokens.lg,
                   ),
                   UserPreferencesNotificationSwitchCard(
                     disableTopRadius: true,

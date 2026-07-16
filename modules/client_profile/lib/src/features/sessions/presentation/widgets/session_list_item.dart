@@ -30,10 +30,10 @@ class SessionListItem extends StatelessWidget {
             borderRadius: BorderRadius.vertical(
               top: disableTopRadius
                   ? Radius.zero
-                  : Radius.circular(context.designRadii.lg),
+                  : const Radius.circular(DesignRadiusTokens.lg),
               bottom: disableBottomRadius
                   ? Radius.zero
-                  : Radius.circular(context.designRadii.lg),
+                  : const Radius.circular(DesignRadiusTokens.lg),
             ),
             onPressed: onRevoke == null ? null : (_) => onRevoke!(),
             backgroundColor: context.designColors.error,

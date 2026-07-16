@@ -59,7 +59,7 @@ class BasePhoneNumberTextField extends StatelessWidget {
             decoration: InputDecoration(
               prefixIcon: const Icon(Icons.phone),
               prefix: dialCode == null
-                  ? SizedBox.shrink()
+                  ? const SizedBox.shrink()
                   : BaseCountryDialCodePrefixButton(
                       dialCode: dialCode!,
                       onTap: onCountryCodeTap,
@@ -70,7 +70,7 @@ class BasePhoneNumberTextField extends StatelessWidget {
           ),
           if (showVerificationPrompt || showVerified)
             Padding(
-              padding: EdgeInsets.only(top: DesignTokens.spacing.xs),
+              padding: const EdgeInsets.only(top: DesignSpacingTokens.xs),
               child: Align(
                 alignment: Alignment.centerRight,
                 child: Row(
@@ -82,7 +82,7 @@ class BasePhoneNumberTextField extends StatelessWidget {
                         size: 16,
                         color: context.designColors.primary,
                       ),
-                      SizedBox(width: DesignTokens.spacing.xxs),
+                      const SizedBox(width: DesignSpacingTokens.xxs),
                       Text(
                         verifiedLabel ?? '',
                         style: context.designTextTheme.bodySmall?.copyWith(
@@ -96,7 +96,7 @@ class BasePhoneNumberTextField extends StatelessWidget {
                         verificationPromptLabel ?? '',
                         style: context.designTextTheme.bodySmall,
                       ),
-                      SizedBox(width: DesignTokens.spacing.xxs),
+                      const SizedBox(width: DesignSpacingTokens.xxs),
                       TextButton(
                         onPressed: onVerifyTap,
                         style: TextButton.styleFrom(

@@ -28,7 +28,7 @@ class UserProfileFullNameTextField extends StatelessWidget {
       ],
       autocorrect: false,
       textCapitalization: TextCapitalization.words,
-      decoration: InputDecoration(prefixIcon: const Icon(Icons.person)),
+      decoration: const InputDecoration(prefixIcon: Icon(Icons.person)),
       errorText: errorText,
     );
   }

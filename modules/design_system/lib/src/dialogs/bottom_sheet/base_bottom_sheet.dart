@@ -33,35 +33,35 @@ class BaseBottomSheet {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(height: DesignTokens.spacing.sm),
+            const SizedBox(height: DesignSpacingTokens.sm),
             Divider(
               height: 3,
-              radius: BorderRadius.circular(DesignTokens.radius.xs),
+              radius: BorderRadius.circular(DesignRadiusTokens.xs),
               thickness: 4,
               color: context.designColors.onSurface,
               indent: mediaQuery.width / 2 - 30,
               endIndent: mediaQuery.width / 2 - 30,
             ),
-            SizedBox(height: DesignTokens.spacing.sm),
+            const SizedBox(height: DesignSpacingTokens.sm),
             if (title != null) ...[
               Text(title, style: context.designTextTheme.titleMedium),
-              SizedBox(height: DesignTokens.spacing.md),
+              const SizedBox(height: DesignSpacingTokens.md),
             ],
             builder(context),
-            SizedBox(height: DesignTokens.spacing.md),
+            const SizedBox(height: DesignSpacingTokens.md),
             if (actions != null)
               Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: DesignTokens.spacing.md,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: DesignSpacingTokens.md,
                 ),
                 child: Row(
-                  spacing: actionsSpacing ?? DesignTokens.spacing.xs,
+                  spacing: actionsSpacing ?? DesignSpacingTokens.xs,
                   children: actions
                       .map((action) => Expanded(child: action))
                       .toList(),
                 ),
               ),
-            SizedBox(height: DesignTokens.spacing.lg),
+            const SizedBox(height: DesignSpacingTokens.lg),
           ],
         );
       },

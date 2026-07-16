@@ -60,18 +60,18 @@ class _BaseOtpVerificationBottomSheetState
   Widget build(BuildContext context) {
     final buttonLabel = widget.buttonLabel;
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: DesignTokens.spacing.md),
+      padding: const EdgeInsets.symmetric(horizontal: DesignSpacingTokens.md),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(widget.description),
-          SizedBox(height: DesignTokens.spacing.md),
+          const SizedBox(height: DesignSpacingTokens.md),
           BaseOtpTextField(
             controller: otpCodeController,
             errorText: errorText,
             length: widget.otpLength,
           ),
-          SizedBox(height: DesignTokens.spacing.md),
+          const SizedBox(height: DesignSpacingTokens.md),
           if (buttonLabel != null)
             BaseButton.primary(
               onPressed: loading

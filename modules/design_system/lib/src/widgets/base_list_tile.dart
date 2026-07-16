@@ -30,7 +30,7 @@ class BaseListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final defaultRadiues = Radius.circular(DesignTokens.radius.lg);
+    final defaultRadiues = const Radius.circular(DesignRadiusTokens.lg);
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
@@ -39,7 +39,8 @@ class BaseListTile extends StatelessWidget {
         ),
       ),
       margin:
-          margin ?? EdgeInsets.symmetric(horizontal: DesignTokens.spacing.md),
+          margin ??
+          const EdgeInsets.symmetric(horizontal: DesignSpacingTokens.md),
       child: InkWell(
         borderRadius: BorderRadius.vertical(
           top: disableTopRadius ? Radius.zero : defaultRadiues,
@@ -49,14 +50,14 @@ class BaseListTile extends StatelessWidget {
         child: Padding(
           padding:
               padding ??
-              EdgeInsets.symmetric(
-                horizontal: DesignTokens.spacing.sm,
-                vertical: DesignTokens.spacing.sm,
+              const EdgeInsets.symmetric(
+                horizontal: DesignSpacingTokens.sm,
+                vertical: DesignSpacingTokens.sm,
               ),
           child: Row(
             children: [
               ?leading,
-              SizedBox(width: DesignTokens.spacing.sm),
+              const SizedBox(width: DesignSpacingTokens.sm),
               subtitle != null
                   ? Expanded(
                       child: Column(

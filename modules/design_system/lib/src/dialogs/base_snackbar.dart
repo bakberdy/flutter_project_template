@@ -33,24 +33,24 @@ class BaseSnackbar {
           behavior: behavior,
           backgroundColor: resolvedBg,
           margin: behavior == SnackBarBehavior.floating
-              ? EdgeInsets.all(DesignTokens.spacing.md)
+              ? const EdgeInsets.all(DesignSpacingTokens.md)
               : null,
           shape: behavior == SnackBarBehavior.floating
-              ? RoundedRectangleBorder(
+              ? const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
-                    Radius.circular(DesignTokens.radius.md),
+                    Radius.circular(DesignRadiusTokens.md),
                   ),
                 )
               : null,
-          padding: EdgeInsets.symmetric(
-            horizontal: DesignTokens.spacing.md,
+          padding: const EdgeInsets.symmetric(
+            horizontal: DesignSpacingTokens.md,
             vertical: 14,
           ),
           content: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               resolvedIcon,
-              SizedBox(width: DesignTokens.spacing.sm),
+              const SizedBox(width: DesignSpacingTokens.sm),
               Expanded(
                 child: Text(
                   message,

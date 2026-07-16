@@ -45,7 +45,9 @@ class _NotificationsDialogViewState extends State<NotificationsDialogView>
         builder: (context, state) {
           final preferences = state.preferences;
           return ListView(
-            padding: EdgeInsets.symmetric(vertical: context.designSpacing.sm),
+            padding: const EdgeInsets.symmetric(
+              vertical: DesignSpacingTokens.sm,
+            ),
             children: [
               UserPreferencesNotificationSwitchCard(
                 disableBottomRadius: true,
@@ -62,10 +64,10 @@ class _NotificationsDialogViewState extends State<NotificationsDialogView>
                   );
                 },
               ),
-              Divider(
+              const Divider(
                 height: 1,
-                indent: context.designSpacing.lg,
-                endIndent: context.designSpacing.lg,
+                indent: DesignSpacingTokens.lg,
+                endIndent: DesignSpacingTokens.lg,
               ),
               UserPreferencesNotificationSwitchCard(
                 disableTopRadius: true,
@@ -83,10 +85,10 @@ class _NotificationsDialogViewState extends State<NotificationsDialogView>
                   );
                 },
               ),
-              Divider(
+              const Divider(
                 height: 1,
-                indent: context.designSpacing.lg,
-                endIndent: context.designSpacing.lg,
+                indent: DesignSpacingTokens.lg,
+                endIndent: DesignSpacingTokens.lg,
               ),
               UserPreferencesNotificationSwitchCard(
                 disableTopRadius: true,

@@ -30,9 +30,9 @@ class UsersPagination extends StatelessWidget {
           label: l10n.usersPreviousPage,
           leadingIcon: const Icon(Icons.chevron_left),
         ),
-        SizedBox(width: context.designSpacing.md),
+        const SizedBox(width: DesignSpacingTokens.md),
         Text(l10n.usersPagination(pagination.page, pagination.totalPages)),
-        SizedBox(width: context.designSpacing.md),
+        const SizedBox(width: DesignSpacingTokens.md),
         BaseButton.secondary(
           expand: false,
           onPressed: pagination.hasNext

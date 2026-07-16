@@ -82,8 +82,8 @@ class _PreferencesDialogViewState extends State<PreferencesDialogView>
                   },
                   child: BlocBuilder<ThemeBloc, ThemeState>(
                     builder: (context, state) => ListView(
-                      padding: EdgeInsets.symmetric(
-                        vertical: context.designSpacing.sm,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: DesignSpacingTokens.sm,
                       ),
                       children: [
                         BaseRadioListTile<UserTheme>(
@@ -100,10 +100,10 @@ class _PreferencesDialogViewState extends State<PreferencesDialogView>
                               state.status.isLoading &&
                               state.themeMode == UserTheme.system,
                         ),
-                        Divider(
+                        const Divider(
                           height: 1,
-                          indent: context.designSpacing.lg,
-                          endIndent: context.designSpacing.lg,
+                          indent: DesignSpacingTokens.lg,
+                          endIndent: DesignSpacingTokens.lg,
                         ),
                         BaseRadioListTile<UserTheme>(
                           disableBottomRadius: true,
@@ -120,10 +120,10 @@ class _PreferencesDialogViewState extends State<PreferencesDialogView>
                               state.status.isLoading &&
                               state.themeMode == UserTheme.light,
                         ),
-                        Divider(
+                        const Divider(
                           height: 1,
-                          indent: context.designSpacing.lg,
-                          endIndent: context.designSpacing.lg,
+                          indent: DesignSpacingTokens.lg,
+                          endIndent: DesignSpacingTokens.lg,
                         ),
                         BaseRadioListTile<UserTheme>(
                           disableTopRadius: true,
@@ -152,8 +152,8 @@ class _PreferencesDialogViewState extends State<PreferencesDialogView>
                   },
                   child: BlocBuilder<LocaleBloc, LocaleState>(
                     builder: (context, state) => ListView(
-                      padding: EdgeInsets.symmetric(
-                        vertical: context.designSpacing.sm,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: DesignSpacingTokens.sm,
                       ),
                       children: [
                         _LanguageTile(
@@ -165,10 +165,10 @@ class _PreferencesDialogViewState extends State<PreferencesDialogView>
                               AdminPreferencesConstants.kazakh.languageCode,
                           disableBottomRadius: true,
                         ),
-                        Divider(
+                        const Divider(
                           height: 1,
-                          indent: context.designSpacing.lg,
-                          endIndent: context.designSpacing.lg,
+                          indent: DesignSpacingTokens.lg,
+                          endIndent: DesignSpacingTokens.lg,
                         ),
                         _LanguageTile(
                           state: state,
@@ -180,10 +180,10 @@ class _PreferencesDialogViewState extends State<PreferencesDialogView>
                           disableTopRadius: true,
                           disableBottomRadius: true,
                         ),
-                        Divider(
+                        const Divider(
                           height: 1,
-                          indent: context.designSpacing.lg,
-                          endIndent: context.designSpacing.lg,
+                          indent: DesignSpacingTokens.lg,
+                          endIndent: DesignSpacingTokens.lg,
                         ),
                         _LanguageTile(
                           state: state,

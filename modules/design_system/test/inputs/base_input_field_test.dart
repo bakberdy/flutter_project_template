@@ -27,7 +27,7 @@ void main() {
     expect(
       find.byWidgetPredicate(
         (widget) =>
-            widget is SizedBox && widget.height == DesignTokens.spacing.xs,
+            widget is SizedBox && widget.height == DesignSpacingTokens.xs,
       ),
       findsNothing,
     );

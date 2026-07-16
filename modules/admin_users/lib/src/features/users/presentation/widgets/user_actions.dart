@@ -29,12 +29,12 @@ class UserActions extends StatelessWidget {
     final canUnblock = user.status == AdminUserStatus.blocked;
 
     if (!canApproveDeletion && !canBlock && !canUnblock) {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
 
     return Wrap(
-      spacing: context.designSpacing.sm,
-      runSpacing: context.designSpacing.sm,
+      spacing: DesignSpacingTokens.sm,
+      runSpacing: DesignSpacingTokens.sm,
       children: [
         if (canApproveDeletion)
           BaseButton.destructive(

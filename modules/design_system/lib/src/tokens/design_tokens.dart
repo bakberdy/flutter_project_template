@@ -1,90 +1,76 @@
 import 'package:flutter/material.dart';
 
 abstract final class DesignTokens {
-  static const spacing = DesignSpacingTokens();
-  static const radius = DesignRadiusTokens();
-  static const size = DesignSizeTokens();
-  static const elevation = DesignElevationTokens();
-  static const duration = DesignDurationTokens();
-  static const curve = DesignCurveTokens();
-  static const shadow = DesignShadowTokens();
+  static const spacing = DesignSpacingTokens;
+  static const radius = DesignRadiusTokens;
+  static const size = DesignSizeTokens;
+  static const elevation = DesignElevationTokens;
+  static const duration = DesignDurationTokens;
+  static const curve = DesignCurveTokens;
+  static const shadow = DesignShadowTokens;
 }
 
-final class DesignSpacingTokens {
-  const DesignSpacingTokens();
-
-  final double xxs = 4;
-  final double xs = 8;
-  final double sm = 12;
-  final double md = 16;
-  final double lg = 24;
-  final double xl = 32;
+abstract final class DesignSpacingTokens {
+  static const double xxs = 4;
+  static const double xs = 8;
+  static const double sm = 12;
+  static const double md = 16;
+  static const double lg = 24;
+  static const double xl = 32;
 }
 
-final class DesignRadiusTokens {
-  const DesignRadiusTokens();
-
-  final double xs = 4;
-  final double sm = 8;
-  final double md = 12;
-  final double lg = 16;
-  final double xl = 20;
-  final double xxl = 24;
-  final double sheet = 28;
+abstract final class DesignRadiusTokens {
+  static const double xs = 4;
+  static const double sm = 8;
+  static const double md = 12;
+  static const double lg = 16;
+  static const double xl = 20;
+  static const double xxl = 24;
+  static const double sheet = 28;
 }
 
-final class DesignSizeTokens {
-  const DesignSizeTokens();
+abstract final class DesignSizeTokens {
+  static const double iconXs = 16;
+  static const double iconSm = 20;
+  static const double iconMd = 24;
+  static const double iconLg = 32;
+  static const double iconXl = 48;
 
-  final double iconXs = 16;
-  final double iconSm = 20;
-  final double iconMd = 24;
-  final double iconLg = 32;
-  final double iconXl = 48;
+  static const double controlSm = 32;
+  static const double controlMd = 40;
+  static const double controlLg = 48;
+  static const double minimumTouchTarget = 48;
 
-  final double controlSm = 32;
-  final double controlMd = 40;
-  final double controlLg = 48;
-  final double minimumTouchTarget = 48;
-
-  final double appBar = 64;
-  final double bottomNavigation = 64;
-  final double navigationRail = 80;
+  static const double appBar = 64;
+  static const double bottomNavigation = 64;
+  static const double navigationRail = 80;
 }
 
-final class DesignElevationTokens {
-  const DesignElevationTokens();
-
-  final double none = 0;
-  final double xs = 1;
-  final double sm = 2;
-  final double md = 4;
-  final double lg = 8;
-  final double xl = 16;
+abstract final class DesignElevationTokens {
+  static const double none = 0;
+  static const double xs = 1;
+  static const double sm = 2;
+  static const double md = 4;
+  static const double lg = 8;
+  static const double xl = 16;
 }
 
-final class DesignDurationTokens {
-  const DesignDurationTokens();
-
-  final Duration instant = const Duration(milliseconds: 100);
-  final Duration fast = const Duration(milliseconds: 200);
-  final Duration standard = const Duration(milliseconds: 300);
-  final Duration slow = const Duration(milliseconds: 500);
+abstract final class DesignDurationTokens {
+  static const Duration instant = Duration(milliseconds: 100);
+  static const Duration fast = Duration(milliseconds: 200);
+  static const Duration standard = Duration(milliseconds: 300);
+  static const Duration slow = Duration(milliseconds: 500);
 }
 
-final class DesignCurveTokens {
-  const DesignCurveTokens();
-
-  final Curve standard = Curves.easeInOutCubic;
-  final Curve emphasized = Curves.easeOutCubic;
-  final Curve enter = Curves.easeOut;
-  final Curve exit = Curves.easeIn;
+abstract final class DesignCurveTokens {
+  static const Curve standard = Curves.easeInOutCubic;
+  static const Curve emphasized = Curves.easeOutCubic;
+  static const Curve enter = Curves.easeOut;
+  static const Curve exit = Curves.easeIn;
 }
 
-final class DesignShadowTokens {
-  const DesignShadowTokens();
-
-  List<BoxShadow> xs(Color color) => [
+abstract final class DesignShadowTokens {
+  static List<BoxShadow> xs(Color color) => [
     BoxShadow(
       color: color.withValues(alpha: 0.08),
       blurRadius: 2,
@@ -92,7 +78,7 @@ final class DesignShadowTokens {
     ),
   ];
 
-  List<BoxShadow> sm(Color color) => [
+  static List<BoxShadow> sm(Color color) => [
     BoxShadow(
       color: color.withValues(alpha: 0.10),
       blurRadius: 6,
@@ -100,7 +86,7 @@ final class DesignShadowTokens {
     ),
   ];
 
-  List<BoxShadow> md(Color color) => [
+  static List<BoxShadow> md(Color color) => [
     BoxShadow(
       color: color.withValues(alpha: 0.12),
       blurRadius: 12,
@@ -108,7 +94,7 @@ final class DesignShadowTokens {
     ),
   ];
 
-  List<BoxShadow> lg(Color color) => [
+  static List<BoxShadow> lg(Color color) => [
     BoxShadow(
       color: color.withValues(alpha: 0.14),
       blurRadius: 24,

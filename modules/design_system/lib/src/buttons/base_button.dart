@@ -163,7 +163,7 @@ class BaseButton extends StatelessWidget {
     final shape = WidgetStateProperty.all(
       RoundedRectangleBorder(
         borderRadius:
-            borderRadius ?? BorderRadius.circular(DesignTokens.radius.md),
+            borderRadius ?? BorderRadius.circular(DesignRadiusTokens.md),
       ),
     );
 
@@ -287,11 +287,11 @@ class _ButtonContent extends StatelessWidget {
       children: [
         if (leading != null) ...[
           leading!,
-          SizedBox(width: DesignTokens.spacing.xs),
+          const SizedBox(width: DesignSpacingTokens.xs),
         ],
         Text(label),
         if (trailing != null) ...[
-          SizedBox(width: DesignTokens.spacing.xs),
+          const SizedBox(width: DesignSpacingTokens.xs),
           trailing!,
         ],
       ],

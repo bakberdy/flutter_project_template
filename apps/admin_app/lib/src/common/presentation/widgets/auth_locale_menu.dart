@@ -23,9 +23,9 @@ class AuthLocaleMenu extends StatelessWidget {
       enabled: !state.status.isLoading,
       tooltip: context.l10n.language,
       position: PopupMenuPosition.under,
-      offset: Offset(0, context.designSpacing.xs),
+      offset: const Offset(0, DesignSpacingTokens.xs),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(context.designRadii.md),
+        borderRadius: BorderRadius.circular(DesignRadiusTokens.md),
       ),
       onSelected: context.read<LocaleBloc>().setLocale,
       itemBuilder: (context) => languages
@@ -51,9 +51,9 @@ class AuthLocaleMenu extends StatelessWidget {
       child: Opacity(
         opacity: state.status.isLoading ? 0.5 : 1,
         child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: context.designSpacing.sm,
-            vertical: context.designSpacing.xs,
+          padding: const EdgeInsets.symmetric(
+            horizontal: DesignSpacingTokens.sm,
+            vertical: DesignSpacingTokens.xs,
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -63,7 +63,7 @@ class AuthLocaleMenu extends StatelessWidget {
                 size: 20,
                 color: context.designColors.primary,
               ),
-              SizedBox(width: context.designSpacing.xs),
+              const SizedBox(width: DesignSpacingTokens.xs),
               Text(
                 languages
                     .firstWhere(
@@ -73,7 +73,7 @@ class AuthLocaleMenu extends StatelessWidget {
                     .name,
                 style: context.designTextTheme.labelLarge,
               ),
-              SizedBox(width: context.designSpacing.xxs),
+              const SizedBox(width: DesignSpacingTokens.xxs),
               const Icon(Icons.keyboard_arrow_down_rounded, size: 20),
             ],
           ),

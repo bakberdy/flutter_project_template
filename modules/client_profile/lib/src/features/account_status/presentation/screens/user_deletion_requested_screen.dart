@@ -16,7 +16,7 @@ class UserDeletionRequestedScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(context.designSpacing.md),
+          padding: const EdgeInsets.all(DesignSpacingTokens.md),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -26,7 +26,7 @@ class UserDeletionRequestedScreen extends StatelessWidget {
                 size: 56,
                 color: context.designColors.error,
               ),
-              SizedBox(height: context.designSpacing.lg),
+              const SizedBox(height: DesignSpacingTokens.lg),
               Text(
                 isDeleted
                     ? context.l10n.userDeletedTitle
@@ -34,7 +34,7 @@ class UserDeletionRequestedScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: context.designTextTheme.headlineSmall,
               ),
-              SizedBox(height: context.designSpacing.sm),
+              const SizedBox(height: DesignSpacingTokens.sm),
               Text(
                 isDeleted
                     ? context.l10n.userDeletedMessage
@@ -42,7 +42,7 @@ class UserDeletionRequestedScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: context.designTextTheme.bodyMedium,
               ),
-              SizedBox(height: context.designSpacing.xl),
+              const SizedBox(height: DesignSpacingTokens.xl),
               BaseButton.primary(
                 onPressed: () => context.read<CoreNavigationBloc>().add(
                   const CoreNavigationEvent.loggedOut(),

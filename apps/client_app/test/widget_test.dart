@@ -10,10 +10,13 @@ void main() {
   test('keeps recoverable session failures away from auth', () {
     const failure = Failure(source: 'test');
 
-    expect(clientRouteForUserState(UserState()).routeName, SplashRoute.name);
+    expect(
+      clientRouteForUserState(const UserState()).routeName,
+      SplashRoute.name,
+    );
     expect(
       clientRouteForUserState(
-        UserState(status: const StateStatus.error(failure)),
+        const UserState(status: StateStatus.error(failure)),
       ).routeName,
       SplashRoute.name,
     );
@@ -22,7 +25,7 @@ void main() {
   test('opens auth only for a confirmed empty session', () {
     expect(
       clientRouteForUserState(
-        UserState(status: const StateStatus.success()),
+        const UserState(status: StateStatus.success()),
       ).routeName,
       AuthWrapperRoute.name,
     );

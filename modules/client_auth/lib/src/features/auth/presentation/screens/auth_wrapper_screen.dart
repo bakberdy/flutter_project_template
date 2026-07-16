@@ -29,7 +29,7 @@ class AuthWrapperScreen extends StatelessWidget implements AutoRouteWrapper {
           const CoreNavigationEvent.authenticated(),
         );
       },
-      child: AutoRouter(),
+      child: const AutoRouter(),
     );
   }
 }

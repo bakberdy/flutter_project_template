@@ -79,7 +79,7 @@ class BaseInputField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(label, style: context.designTextTheme.labelLarge),
-        SizedBox(height: DesignTokens.spacing.xs),
+        const SizedBox(height: DesignSpacingTokens.xs),
         field,
       ],
     );

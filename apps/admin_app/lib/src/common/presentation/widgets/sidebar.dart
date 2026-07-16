@@ -37,8 +37,8 @@ class Sidebar extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Column(
     children: [
-      SizedBox(height: context.designSpacing.xl),
-      SizedBox(height: 70, child: FlutterLogo(size: 50)),
+      const SizedBox(height: DesignSpacingTokens.xl),
+      const SizedBox(height: 70, child: FlutterLogo(size: 50)),
       Expanded(
         child: SidebarNavigationList(
           pages: pages,

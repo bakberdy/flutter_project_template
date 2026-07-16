@@ -126,12 +126,12 @@ class _AppState extends State<App> {
   }
 
   Future<void> _logoutAndRefreshSession() async {
-    _userBloc.add(UserEvent.logout());
+    _userBloc.add(const UserEvent.logout());
   }
 
   Future<void> _handleUnauthorized() async {
     if (mounted) {
-      _userBloc.add(UserEvent.refreshUser());
+      _userBloc.add(const UserEvent.refreshUser());
     }
   }
 

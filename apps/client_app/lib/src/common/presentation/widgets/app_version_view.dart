@@ -28,14 +28,14 @@ class AppVersionView extends StatelessWidget {
       child: Column(
         children: [
           const Spacer(),
-          SizedBox(height: context.designSpacing.lg),
+          const SizedBox(height: DesignSpacingTokens.lg),
           if (version != null && buildNumber != null)
             SelectableText(
               context.l10n.appVersionWithBuild(version, buildNumber),
               style: textStyle,
             ),
           if (showBuildDetails) ...[
-            SizedBox(height: context.designSpacing.sm),
+            const SizedBox(height: DesignSpacingTokens.sm),
             if (appName != null)
               SelectableText(
                 context.l10n.appNameValue(appName!),
@@ -52,7 +52,7 @@ class AppVersionView extends StatelessWidget {
                 style: textStyle,
               ),
           ],
-          SizedBox(height: context.designSpacing.xl),
+          const SizedBox(height: DesignSpacingTokens.xl),
         ],
       ),
     );

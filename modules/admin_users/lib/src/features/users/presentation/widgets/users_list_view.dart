@@ -24,7 +24,7 @@ class UsersListView extends StatelessWidget {
           _ => null,
         };
         return Padding(
-          padding: EdgeInsets.all(context.designSpacing.lg),
+          padding: const EdgeInsets.all(DesignSpacingTokens.lg),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -47,7 +47,7 @@ class UsersListView extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: context.designSpacing.md),
+              const SizedBox(height: DesignSpacingTokens.md),
               Row(
                 children: [
                   Expanded(
@@ -59,7 +59,7 @@ class UsersListView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(width: context.designSpacing.md),
+                  const SizedBox(width: DesignSpacingTokens.md),
                   UsersFiltersMenuButton(
                     query: state.query,
                     enabled: !loading,
@@ -70,7 +70,7 @@ class UsersListView extends StatelessWidget {
                 ],
               ),
               if (state.query.hasFilters) ...[
-                SizedBox(height: context.designSpacing.sm),
+                const SizedBox(height: DesignSpacingTokens.sm),
                 UsersActiveFiltersBar(
                   query: state.query,
                   onStatusCleared: () => context.read<UsersListBloc>().add(
@@ -92,7 +92,7 @@ class UsersListView extends StatelessWidget {
                 ),
               ],
               if (state.query.search case final search?) ...[
-                SizedBox(height: context.designSpacing.xs),
+                const SizedBox(height: DesignSpacingTokens.xs),
                 Text(
                   l10n.usersSearchResults(search),
                   style: context.designTextTheme.bodyMedium?.copyWith(
@@ -100,10 +100,10 @@ class UsersListView extends StatelessWidget {
                   ),
                 ),
               ],
-              SizedBox(height: context.designSpacing.md),
+              const SizedBox(height: DesignSpacingTokens.md),
               if (loading) const LinearProgressIndicator(),
-              if (!loading) SizedBox(height: context.designSpacing.xxs),
-              SizedBox(height: context.designSpacing.sm),
+              if (!loading) const SizedBox(height: DesignSpacingTokens.xxs),
+              const SizedBox(height: DesignSpacingTokens.sm),
               Expanded(
                 child: switch ((state.users.isEmpty, loading, failure)) {
                   (true, true, _) => const Center(
@@ -114,7 +114,7 @@ class UsersListView extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(error.message ?? l10n.usersLoadFailed),
-                        SizedBox(height: context.designSpacing.md),
+                        const SizedBox(height: DesignSpacingTokens.md),
                         BaseButton.secondary(
                           onPressed: () => context.read<UsersListBloc>().add(
                             const UsersListEvent.refreshed(),
@@ -135,7 +135,7 @@ class UsersListView extends StatelessWidget {
                 },
               ),
               if (state.pagination case final pagination?) ...[
-                SizedBox(height: context.designSpacing.md),
+                const SizedBox(height: DesignSpacingTokens.md),
                 UsersPagination(
                   pagination: pagination,
                   loading: loading,

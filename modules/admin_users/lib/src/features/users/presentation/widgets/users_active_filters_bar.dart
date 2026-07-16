@@ -27,12 +27,12 @@ class UsersActiveFiltersBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (!query.hasFilters) {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
     final l10n = context.l10n;
     return Wrap(
-      spacing: context.designSpacing.xs,
-      runSpacing: context.designSpacing.xs,
+      spacing: DesignSpacingTokens.xs,
+      runSpacing: DesignSpacingTokens.xs,
       children: [
         if (query.status case final AdminUserStatus status)
           _FilterChip(

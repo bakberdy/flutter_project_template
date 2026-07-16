@@ -45,6 +45,16 @@ Use `snake_case.dart` filenames, `UpperCamelCase` types, and `lowerCamelCase`
 members. Do not hand-edit `*.g.dart`, `*.freezed.dart`, or other generated files.
 Keep user-facing text in the owning package's ARB files and access it through
 `context.l10n`; do not create handwritten localization message classes.
+When building UI, access theme-dependent values through the public
+`BuildContext` extensions: `context.designColors`,
+`context.designSemanticColors`, `context.designTextTheme`, and
+`context.designAssets`. Access immutable visual tokens through their static
+token classes, such as `DesignSpacingTokens.md`, `DesignRadiusTokens.lg`,
+`DesignSizeTokens.controlLg`, `DesignElevationTokens.sm`,
+`DesignDurationTokens.standard`, `DesignCurveTokens.emphasized`, and
+`DesignShadowTokens.md(color)`. Do not use
+`Theme.of(context)`, legacy context token getters, or literal visual values when
+the design system already defines that role.
 Keep Blocs and Cubits focused on state coordination; never call
 `Analytics.track` from them. Track business-operation success or failure in the
 owning use case after the repository result, with event definitions under that

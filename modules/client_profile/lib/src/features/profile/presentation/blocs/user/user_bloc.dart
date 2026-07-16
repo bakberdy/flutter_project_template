@@ -48,7 +48,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     _getCurrentUserCancelToken?.cancel();
     _getCurrentUserCancelToken = ApiCancelToken();
 
-    emit(state.copyWith(status: StateStatus.loading()));
+    emit(state.copyWith(status: const StateStatus.loading()));
 
     final result = await getUserUseCase((
       cancelToken: _getCurrentUserCancelToken,
@@ -59,7 +59,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
     result.fold(
       (failure) => emit(state.copyWith(status: StateStatus.error(failure))),
-      (user) => emit(state.copyWith(user: user, status: StateStatus.success())),
+      (user) =>
+          emit(state.copyWith(user: user, status: const StateStatus.success())),
     );
   }
 

@@ -19,9 +19,9 @@ class AuthThemeToggle extends StatelessWidget {
               appliedTheme == UserTheme.dark ? UserTheme.light : UserTheme.dark,
             ),
       child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: context.designSpacing.xs,
-          vertical: context.designSpacing.xs,
+        padding: const EdgeInsets.symmetric(
+          horizontal: DesignSpacingTokens.xs,
+          vertical: DesignSpacingTokens.xs,
         ),
         child: AnimatedSwitcher(
           duration: const Duration(milliseconds: 200),

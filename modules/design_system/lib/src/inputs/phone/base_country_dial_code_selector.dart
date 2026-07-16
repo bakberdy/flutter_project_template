@@ -74,11 +74,11 @@ class BaseCountryDialCodeSelector extends StatelessWidget {
             child: CompositedTransformFollower(
               link: layerLink,
               showWhenUnlinked: false,
-              offset: Offset(0, 50),
+              offset: const Offset(0, 50),
               child: Container(
                 decoration: BoxDecoration(
                   color: context.designColors.surface,
-                  borderRadius: BorderRadius.circular(DesignTokens.radius.sm),
+                  borderRadius: BorderRadius.circular(DesignRadiusTokens.sm),
                 ),
                 height: 200,
                 width: 150,
@@ -90,14 +90,14 @@ class BaseCountryDialCodeSelector extends StatelessWidget {
                         (dialCode) => InkWell(
                           onTap: () => onSelected(dialCode),
                           child: Ink(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: DesignTokens.spacing.md,
-                              vertical: DesignTokens.spacing.sm,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: DesignSpacingTokens.md,
+                              vertical: DesignSpacingTokens.sm,
                             ),
                             child: Row(
                               children: [
                                 countryDialCodeFlag(context, dialCode),
-                                SizedBox(width: DesignTokens.spacing.xs),
+                                const SizedBox(width: DesignSpacingTokens.xs),
                                 Text(
                                   '${dialCode.dialCode} (${dialCode.countryCode})',
                                   style: context.designTextTheme.bodyLarge,

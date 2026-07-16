@@ -77,7 +77,7 @@ class UserAvatar extends StatelessWidget {
   bool get _hasAvatar => avatarUrl?.trim().isNotEmpty ?? false;
 
   BorderRadius _borderRadius(BuildContext context) => BorderRadius.circular(
-    format == UserAvatarFormat.circle ? radius : DesignTokens.spacing.sm,
+    format == UserAvatarFormat.circle ? radius : DesignSpacingTokens.sm,
   );
 
   String _initials(String? value) {

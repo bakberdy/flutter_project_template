@@ -60,12 +60,12 @@ class _AdminOtpScreenState extends State<AdminOtpScreen>
                 child: Stack(
                   children: [
                     Padding(
-                      padding: EdgeInsets.all(context.designSpacing.lg),
+                      padding: const EdgeInsets.all(DesignSpacingTokens.lg),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          SizedBox(height: 50),
+                          const SizedBox(height: 50),
                           BaseOtpTextField(
                             controller: _otpController,
                             errorText: state.otpCodeField.error,
@@ -78,7 +78,7 @@ class _AdminOtpScreenState extends State<AdminOtpScreen>
                               }
                             },
                           ),
-                          SizedBox(height: context.designSpacing.md),
+                          const SizedBox(height: DesignSpacingTokens.md),
                           BaseButton.primary(
                             label: context.l10n.authSubmitOtp,
                             loading: state.status.isLoading,
@@ -87,13 +87,13 @@ class _AdminOtpScreenState extends State<AdminOtpScreen>
                               const AuthEvent.submitOtp(),
                             ),
                           ),
-                          SizedBox(height: context.designSpacing.lg),
+                          const SizedBox(height: DesignSpacingTokens.lg),
                         ],
                       ),
                     ),
                     Positioned(
-                      top: context.designSpacing.lg,
-                      left: context.designSpacing.md,
+                      top: DesignSpacingTokens.lg,
+                      left: DesignSpacingTokens.md,
                       child: Row(
                         children: [
                           BackButton(

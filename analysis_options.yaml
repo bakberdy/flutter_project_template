@@ -5,3 +5,7 @@ analyzer:
     - "**/*.g.dart"
     - "**/*.freezed.dart"
     - "**/generated/**"
+
+linter:
+  rules:
+    prefer_const_constructors: true

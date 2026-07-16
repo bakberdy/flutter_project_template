@@ -1,4 +1,4 @@
-import 'package:design_system/src/extensions/build_context_design_x.dart';
+import 'package:design_system/src/tokens/design_tokens.dart';
 import 'package:flutter/material.dart';
 
 class BaseDialog {
@@ -26,9 +26,9 @@ class BaseDialog {
       barrierDismissible: barrierDismissible,
       builder: (dialogContext) {
         return AlertDialog(
-          contentPadding: EdgeInsets.symmetric(
-            horizontal: dialogContext.designSpacing.lg,
-            vertical: dialogContext.designSpacing.lg,
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: DesignSpacingTokens.lg,
+            vertical: DesignSpacingTokens.lg,
           ),
           constraints: width == null && height == null
               ? null
@@ -38,13 +38,13 @@ class BaseDialog {
               : Row(
                   children: [
                     Text(title),
-                    Spacer(),
+                    const Spacer(),
                     IconButton(
                       onPressed:
                           onPop ?? () => Navigator.of(dialogContext).pop(),
                       icon: const Icon(Icons.close),
                       padding: EdgeInsets.zero,
-                      constraints: BoxConstraints(),
+                      constraints: const BoxConstraints(),
                       alignment: Alignment.topRight,
                     ),
                   ],
