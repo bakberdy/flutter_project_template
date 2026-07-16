@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:client_app/src/common/client_app_localization_x.dart';
-import 'package:client_app/src/features/app_navigation/presentation/navigation/client_root_route_resolver.dart';
+import 'package:client_app/src/common/presentation/navigation/client_root_route_resolver.dart';
 import 'package:client_profile/client_profile.dart';
 import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';

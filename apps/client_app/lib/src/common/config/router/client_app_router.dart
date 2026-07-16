@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:client_app/src/features/app_navigation/presentation/screens/client_home_screen.dart';
-import 'package:client_app/src/features/app_navigation/presentation/screens/main_navigation_screen.dart';
-import 'package:client_app/src/features/app_navigation/presentation/screens/root_navigation_screen.dart';
-import 'package:client_app/src/features/app_navigation/presentation/screens/splash_screen.dart';
-import 'package:client_app/src/features/app_navigation/presentation/screens/user_profile_screen.dart';
+import 'package:client_app/src/common/presentation/screens/client_home_screen.dart';
+import 'package:client_app/src/common/presentation/screens/main_navigation_screen.dart';
+import 'package:client_app/src/common/presentation/screens/root_navigation_screen.dart';
+import 'package:client_app/src/common/presentation/screens/splash_screen.dart';
+import 'package:client_app/src/common/presentation/screens/user_profile_screen.dart';
 import 'package:client_auth/client_auth.dart';
 import 'package:client_profile/client_profile.dart';
 import 'package:client_preferences/client_preferences.dart';

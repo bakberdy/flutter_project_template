@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:client_app/src/common/client_app_localization_x.dart';
-import 'package:client_app/src/features/app_navigation/presentation/providers/scroll_to_top_provider.dart';
+import 'package:client_app/src/common/presentation/providers/scroll_to_top_provider.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()

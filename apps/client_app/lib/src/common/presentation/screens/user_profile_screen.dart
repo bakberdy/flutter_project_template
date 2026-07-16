@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:client_app/src/common/client_app_localization_x.dart';
-import 'package:client_app/src/features/app_navigation/presentation/widgets/app_support_items_list.dart';
-import 'package:client_app/src/features/app_navigation/presentation/widgets/app_version_view.dart';
-import 'package:client_app/src/features/app_navigation/presentation/widgets/user_preferences_items_list.dart';
+import 'package:client_app/src/common/presentation/widgets/app_support_items_list.dart';
+import 'package:client_app/src/common/presentation/widgets/app_version_view.dart';
+import 'package:client_app/src/common/presentation/widgets/user_preferences_items_list.dart';
 import 'package:client_profile/client_profile.dart';
 import 'package:client_preferences/client_preferences.dart';
 import 'package:core/core.dart';

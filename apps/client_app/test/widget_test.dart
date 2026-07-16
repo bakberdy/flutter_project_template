@@ -1,5 +1,5 @@
 import 'package:client_app/src/common/config/router/client_app_router.dart';
-import 'package:client_app/src/features/app_navigation/presentation/navigation/client_root_route_resolver.dart';
+import 'package:client_app/src/common/presentation/navigation/client_root_route_resolver.dart';
 import 'package:client_auth/client_auth.dart';
 import 'package:client_profile/client_profile.dart';
 import 'package:core/core.dart';

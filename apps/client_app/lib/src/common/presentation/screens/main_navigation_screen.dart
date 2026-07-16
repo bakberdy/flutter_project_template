@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:client_app/src/common/client_app_localization_x.dart';
-import 'package:client_app/src/features/app_navigation/presentation/observers/bottom_nav_visibility_observer.dart';
-import 'package:client_app/src/features/app_navigation/presentation/providers/scroll_to_top_provider.dart';
-import 'package:client_app/src/features/app_navigation/presentation/widgets/nav_bar.dart';
-import 'package:client_app/src/features/app_navigation/presentation/widgets/nav_bar_item.dart';
+import 'package:client_app/src/common/presentation/observers/bottom_nav_visibility_observer.dart';
+import 'package:client_app/src/common/presentation/providers/scroll_to_top_provider.dart';
+import 'package:client_app/src/common/presentation/widgets/nav_bar.dart';
+import 'package:client_app/src/common/presentation/widgets/nav_bar_item.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
