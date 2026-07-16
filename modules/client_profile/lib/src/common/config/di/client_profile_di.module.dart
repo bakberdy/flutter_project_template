@@ -13,8 +13,6 @@ import 'package:client_profile/src/features/profile/domain/repositories/user_pro
     as _i569;
 import 'package:client_profile/src/features/profile/domain/usecases/create_user_profile_use_case.dart'
     as _i243;
-import 'package:client_profile/src/features/profile/domain/usecases/get_app_info_use_case.dart'
-    as _i195;
 import 'package:client_profile/src/features/profile/domain/usecases/get_current_user_profile_use_case.dart'
     as _i722;
 import 'package:client_profile/src/features/profile/domain/usecases/get_current_user_use_case.dart'
@@ -62,8 +60,6 @@ class ClientProfilePackageModule extends _i526.MicroPackageModule {
     gh.singleton<_i279.SessionsRemoteDataSource>(() =>
         _i279.SessionsRemoteDataSourceImpl(
             gh<_i494.ApiClient>(instanceName: 'protectedApiClient')));
-    gh.lazySingleton<_i195.GetAppInfoUseCase>(
-        () => _i195.GetAppInfoUseCase(gh<_i494.DeviceInfoService>()));
     gh.singleton<_i569.UserProfileRepository>(() =>
         _i328.UserProfileRepositoryImpl(
             gh<_i694.UserProfileRemoteDataSource>()));
@@ -94,7 +90,7 @@ class ClientProfilePackageModule extends _i526.MicroPackageModule {
     gh.factory<_i100.UserBloc>(
         () => _i100.UserBloc(gh<_i225.GetCurrentUserUseCase>()));
     gh.factory<_i922.UserProfileBloc>(() => _i922.UserProfileBloc(
-          gh<_i195.GetAppInfoUseCase>(),
+          gh<_i494.GetAppInfoUseCase>(),
           gh<_i225.GetCurrentUserUseCase>(),
           gh<_i722.GetCurrentUserProfileUseCase>(),
           gh<_i1046.UpdateUserAvatarUseCase>(),

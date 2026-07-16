@@ -8,7 +8,7 @@ import 'client_profile_di.module.dart';
   ignoreUnregisteredTypes: [
     ApiClient,
     CoreAppConfig,
-    DeviceInfoService,
+    GetAppInfoUseCase,
     TokenStorage,
   ],
 )

@@ -10,11 +10,13 @@ import 'package:core/api/storage/token_storage.dart' as _i610;
 import 'package:core/api/storage/token_storage_impl.dart' as _i511;
 import 'package:core/config/core_app_config.dart' as _i283;
 import 'package:core/di/core_module.dart' as _i674;
+import 'package:core/shared/repositories/device_info_repository.dart' as _i1036;
 import 'package:core/shared/services/device_info_service.dart' as _i19;
 import 'package:core/storage/local/local_storage.dart' as _i2;
 import 'package:core/storage/local/shared_preferences_storage.dart' as _i862;
 import 'package:core/storage/secure/flutter_secure_storage_impl.dart' as _i181;
 import 'package:core/storage/secure/secure_storage.dart' as _i423;
+import 'package:core/usecases/get_app_info_use_case.dart' as _i267;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
@@ -36,12 +38,16 @@ class CorePackageModule extends _i526.MicroPackageModule {
         () => _i181.FlutterSecureStorageImpl(gh<_i558.FlutterSecureStorage>()));
     gh.singleton<_i610.TokenStorage>(
         () => _i511.TokenStorageImpl(gh<_i558.FlutterSecureStorage>()));
+    gh.lazySingleton<_i1036.DeviceInfoRepository>(
+        () => _i1036.DeviceInfoRepositoryImpl(gh<_i19.DeviceInfoService>()));
     gh.lazySingleton<_i229.ApiClientFactory>(() => coreModule.apiClientFactory(
           gh<_i229.TokenStorage>(),
           gh<_i207.Talker>(),
         ));
     gh.singleton<_i2.LocalStorage>(
         () => _i862.SharedPreferencesStorage(gh<_i460.SharedPreferences>()));
+    gh.lazySingleton<_i267.GetAppInfoUseCase>(
+        () => _i267.GetAppInfoUseCase(gh<_i1036.DeviceInfoRepository>()));
     gh.lazySingleton<_i229.ApiClient>(
       () => coreModule.publicApiClient(
         gh<_i283.CoreAppConfig>(),
