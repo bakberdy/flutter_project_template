@@ -1,3 +1,4 @@
+import 'package:design_system/src/tokens/design_tokens.dart';
 import 'package:design_system/src/extensions/build_context_design_x.dart';
 import 'package:flutter/material.dart';
 
@@ -32,24 +33,24 @@ class BaseSnackbar {
           behavior: behavior,
           backgroundColor: resolvedBg,
           margin: behavior == SnackBarBehavior.floating
-              ? EdgeInsets.all(context.designSpacing.md)
+              ? EdgeInsets.all(DesignTokens.spacing.md)
               : null,
           shape: behavior == SnackBarBehavior.floating
               ? RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
-                    Radius.circular(context.designRadii.md),
+                    Radius.circular(DesignTokens.radius.md),
                   ),
                 )
               : null,
           padding: EdgeInsets.symmetric(
-            horizontal: context.designSpacing.md,
+            horizontal: DesignTokens.spacing.md,
             vertical: 14,
           ),
           content: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               resolvedIcon,
-              SizedBox(width: context.designSpacing.sm),
+              SizedBox(width: DesignTokens.spacing.sm),
               Expanded(
                 child: Text(
                   message,

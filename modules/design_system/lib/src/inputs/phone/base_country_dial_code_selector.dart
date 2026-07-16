@@ -1,3 +1,4 @@
+import 'package:design_system/src/tokens/design_tokens.dart';
 import 'package:design_system/src/extensions/build_context_design_x.dart';
 import 'package:design_system/src/inputs/phone/base_country_dial_code_prefix_button.dart';
 import 'package:design_system/src/inputs/phone/country_dial_code_option.dart';
@@ -77,7 +78,7 @@ class BaseCountryDialCodeSelector extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   color: context.designColors.surface,
-                  borderRadius: BorderRadius.circular(context.designRadii.sm),
+                  borderRadius: BorderRadius.circular(DesignTokens.radius.sm),
                 ),
                 height: 200,
                 width: 150,
@@ -90,13 +91,13 @@ class BaseCountryDialCodeSelector extends StatelessWidget {
                           onTap: () => onSelected(dialCode),
                           child: Ink(
                             padding: EdgeInsets.symmetric(
-                              horizontal: context.designSpacing.md,
-                              vertical: context.designSpacing.sm,
+                              horizontal: DesignTokens.spacing.md,
+                              vertical: DesignTokens.spacing.sm,
                             ),
                             child: Row(
                               children: [
                                 countryDialCodeFlag(context, dialCode),
-                                SizedBox(width: context.designSpacing.xs),
+                                SizedBox(width: DesignTokens.spacing.xs),
                                 Text(
                                   '${dialCode.dialCode} (${dialCode.countryCode})',
                                   style: context.designTextTheme.bodyLarge,

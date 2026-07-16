@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('exposes design tokens through context', (tester) async {
+  testWidgets('keeps temporary context aliases for downstream migration', (
+    tester,
+  ) async {
     late BuildContext subjectContext;
 
     await tester.pumpWidget(
@@ -18,24 +20,7 @@ void main() {
       ),
     );
 
-    expect(subjectContext.designSpacing.md, DesignSpacing.md);
-    expect(subjectContext.designRadii.lg, DesignRadii.lg);
-    expect(
-      subjectContext.designComponentSizes.controlLg,
-      DesignComponentSizes.controlLg,
-    );
-    expect(subjectContext.designElevation.md, DesignElevation.md);
-    expect(
-      subjectContext.designMotion.durations.standard,
-      DesignMotionDurations.standard,
-    );
-    expect(
-      subjectContext.designMotion.curves.emphasized,
-      DesignMotionCurves.emphasized,
-    );
-    expect(
-      subjectContext.designShadows.md,
-      DesignShadows.md(subjectContext.designColors.shadow),
-    );
+    expect(subjectContext.designSpacing.md, DesignTokens.spacing.md);
+    expect(subjectContext.designRadii.lg, DesignTokens.radius.lg);
   });
 }

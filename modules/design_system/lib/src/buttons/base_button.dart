@@ -1,3 +1,4 @@
+import 'package:design_system/src/tokens/design_tokens.dart';
 import 'package:design_system/src/buttons/base_button_progress.dart';
 import 'package:design_system/src/extensions/build_context_design_x.dart';
 import 'package:flutter/material.dart';
@@ -162,7 +163,7 @@ class BaseButton extends StatelessWidget {
     final shape = WidgetStateProperty.all(
       RoundedRectangleBorder(
         borderRadius:
-            borderRadius ?? BorderRadius.circular(context.designRadii.md),
+            borderRadius ?? BorderRadius.circular(DesignTokens.radius.md),
       ),
     );
 
@@ -286,11 +287,11 @@ class _ButtonContent extends StatelessWidget {
       children: [
         if (leading != null) ...[
           leading!,
-          SizedBox(width: context.designSpacing.xs),
+          SizedBox(width: DesignTokens.spacing.xs),
         ],
         Text(label),
         if (trailing != null) ...[
-          SizedBox(width: context.designSpacing.xs),
+          SizedBox(width: DesignTokens.spacing.xs),
           trailing!,
         ],
       ],

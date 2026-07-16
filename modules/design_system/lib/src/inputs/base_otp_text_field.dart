@@ -1,3 +1,4 @@
+import 'package:design_system/src/tokens/design_tokens.dart';
 import 'package:design_system/src/extensions/build_context_design_x.dart';
 import 'package:design_system/src/inputs/base_input_field.dart';
 import 'package:flutter/material.dart';
@@ -45,10 +46,10 @@ class BaseOtpTextField extends StatelessWidget {
                     return Expanded(
                       child: Padding(
                         padding: EdgeInsets.only(
-                          left: index == 0 ? 0 : context.designSpacing.xxs,
+                          left: index == 0 ? 0 : DesignTokens.spacing.xxs,
                           right: index == length - 1
                               ? 0
-                              : context.designSpacing.xxs,
+                              : DesignTokens.spacing.xxs,
                         ),
                         child: _OtpDigitSlot(digit: digit),
                       ),
@@ -85,7 +86,7 @@ class BaseOtpTextField extends StatelessWidget {
         ),
         if (errorText case final error?)
           Padding(
-            padding: EdgeInsets.only(top: context.designSpacing.xs),
+            padding: EdgeInsets.only(top: DesignTokens.spacing.xs),
             child: Text(
               error,
               style: context.designTextTheme.bodySmall?.copyWith(

@@ -1,3 +1,4 @@
+import 'package:design_system/src/tokens/design_tokens.dart';
 import 'package:design_system/src/extensions/build_context_design_x.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -32,7 +33,7 @@ class InfoRow extends StatelessWidget {
           children: [
             SelectableText(value, style: context.designTextTheme.bodyLarge),
             if (showCopyIcon) ...[
-              SizedBox(width: context.designSpacing.xs),
+              SizedBox(width: DesignTokens.spacing.xs),
               InkWell(
                 onTap: () => Clipboard.setData(ClipboardData(text: value)),
                 child: Icon(

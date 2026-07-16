@@ -1,11 +1,7 @@
+import 'package:design_system/src/tokens/design_tokens.dart';
 import 'package:design_system/gen/fonts.gen.dart';
 import 'package:flutter/material.dart';
 
-import '../tokens/design_component_sizes.dart';
-import '../tokens/design_elevation.dart';
-import '../tokens/design_motion.dart';
-import '../tokens/design_radii.dart';
-import '../tokens/design_spacing.dart';
 import 'design_semantic_colors.dart';
 import 'design_typography.dart';
 
@@ -47,10 +43,10 @@ class DesignTheme {
   ) {
     final textTheme = DesignTypography.textTheme(colors);
     final controlShape = RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(DesignRadii.md),
+      borderRadius: BorderRadius.circular(DesignTokens.radius.md),
     );
     final surfaceShape = RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(DesignRadii.lg),
+      borderRadius: BorderRadius.circular(DesignTokens.radius.lg),
     );
 
     return ThemeData(
@@ -66,15 +62,15 @@ class DesignTheme {
         backgroundColor: colors.surface,
         foregroundColor: colors.onSurface,
         surfaceTintColor: Colors.transparent,
-        elevation: DesignElevation.none,
-        scrolledUnderElevation: DesignElevation.xs,
+        elevation: DesignTokens.elevation.none,
+        scrolledUnderElevation: DesignTokens.elevation.xs,
         centerTitle: false,
-        toolbarHeight: DesignComponentSizes.appBar,
+        toolbarHeight: DesignTokens.size.appBar,
         titleTextStyle: textTheme.titleLarge?.copyWith(color: colors.onSurface),
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: colors.surface,
-        elevation: DesignElevation.none,
+        elevation: DesignTokens.elevation.none,
         enableFeedback: false,
         showSelectedLabels: true,
         showUnselectedLabels: true,
@@ -91,11 +87,11 @@ class DesignTheme {
         backgroundColor: colors.surface,
         modalBackgroundColor: colors.surface,
         surfaceTintColor: Colors.transparent,
-        elevation: DesignElevation.lg,
-        modalElevation: DesignElevation.lg,
-        shape: const RoundedRectangleBorder(
+        elevation: DesignTokens.elevation.lg,
+        modalElevation: DesignTokens.elevation.lg,
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
-            top: Radius.circular(DesignRadii.sheet),
+            top: Radius.circular(DesignTokens.radius.sheet),
           ),
         ),
         clipBehavior: Clip.antiAlias,
@@ -105,14 +101,14 @@ class DesignTheme {
         color: colors.surfaceContainerLow,
         surfaceTintColor: Colors.transparent,
         shadowColor: colors.shadow,
-        elevation: DesignElevation.xs,
+        elevation: DesignTokens.elevation.xs,
         margin: EdgeInsets.zero,
         shape: surfaceShape,
         clipBehavior: Clip.antiAlias,
       ),
       checkboxTheme: CheckboxThemeData(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(DesignRadii.xs),
+          borderRadius: BorderRadius.circular(DesignTokens.radius.xs),
         ),
         fillColor: _selectionFillColor(colors, semanticColors),
         side: BorderSide(color: colors.outline),
@@ -130,18 +126,18 @@ class DesignTheme {
         secondaryLabelStyle: textTheme.labelLarge?.copyWith(
           color: colors.onSecondaryContainer,
         ),
-        padding: const EdgeInsets.symmetric(horizontal: DesignSpacing.xs),
-        labelPadding: const EdgeInsets.symmetric(horizontal: DesignSpacing.xs),
+        padding: EdgeInsets.symmetric(horizontal: DesignTokens.spacing.xs),
+        labelPadding: EdgeInsets.symmetric(horizontal: DesignTokens.spacing.xs),
         brightness: colors.brightness,
-        elevation: DesignElevation.none,
-        pressElevation: DesignElevation.xs,
+        elevation: DesignTokens.elevation.none,
+        pressElevation: DesignTokens.elevation.xs,
         showCheckmark: true,
       ),
       dataTableTheme: DataTableThemeData(
         decoration: BoxDecoration(
           color: colors.surface,
           border: Border.all(color: colors.outlineVariant),
-          borderRadius: BorderRadius.circular(DesignRadii.lg),
+          borderRadius: BorderRadius.circular(DesignTokens.radius.lg),
         ),
         headingRowColor: WidgetStatePropertyAll(colors.surfaceContainerLow),
         dataRowColor: WidgetStateProperty.resolveWith(
@@ -151,20 +147,20 @@ class DesignTheme {
         ),
         headingTextStyle: textTheme.titleSmall,
         dataTextStyle: textTheme.bodyMedium,
-        headingRowHeight: DesignComponentSizes.controlLg,
-        dataRowMinHeight: DesignComponentSizes.controlLg,
-        dataRowMaxHeight: DesignComponentSizes.bottomNavigation,
-        horizontalMargin: DesignSpacing.md,
-        columnSpacing: DesignSpacing.lg,
+        headingRowHeight: DesignTokens.size.controlLg,
+        dataRowMinHeight: DesignTokens.size.controlLg,
+        dataRowMaxHeight: DesignTokens.size.bottomNavigation,
+        horizontalMargin: DesignTokens.spacing.md,
+        columnSpacing: DesignTokens.spacing.lg,
         dividerThickness: 1,
       ),
       dialogTheme: DialogThemeData(
         backgroundColor: colors.surfaceContainerHigh,
         surfaceTintColor: Colors.transparent,
         shadowColor: colors.shadow,
-        elevation: DesignElevation.xl,
+        elevation: DesignTokens.elevation.xl,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(DesignRadii.xxl),
+          borderRadius: BorderRadius.circular(DesignTokens.radius.xxl),
         ),
         iconColor: colors.onSurfaceVariant,
         titleTextStyle: textTheme.headlineSmall?.copyWith(
@@ -173,13 +169,13 @@ class DesignTheme {
         contentTextStyle: textTheme.bodyMedium?.copyWith(
           color: colors.onSurfaceVariant,
         ),
-        actionsPadding: const EdgeInsets.fromLTRB(
-          DesignSpacing.lg,
+        actionsPadding: EdgeInsets.fromLTRB(
+          DesignTokens.spacing.lg,
           0,
-          DesignSpacing.lg,
-          DesignSpacing.lg,
+          DesignTokens.spacing.lg,
+          DesignTokens.spacing.lg,
         ),
-        insetPadding: const EdgeInsets.all(DesignSpacing.lg),
+        insetPadding: EdgeInsets.all(DesignTokens.spacing.lg),
         clipBehavior: Clip.antiAlias,
       ),
       dividerTheme: DividerThemeData(
@@ -189,11 +185,11 @@ class DesignTheme {
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: ButtonStyle(
-          minimumSize: const WidgetStatePropertyAll(
-            Size(64, DesignComponentSizes.controlLg),
+          minimumSize: WidgetStatePropertyAll(
+            Size(64, DesignTokens.size.controlLg),
           ),
-          padding: const WidgetStatePropertyAll(
-            EdgeInsets.symmetric(horizontal: DesignSpacing.lg),
+          padding: WidgetStatePropertyAll(
+            EdgeInsets.symmetric(horizontal: DesignTokens.spacing.lg),
           ),
           shape: WidgetStatePropertyAll(controlShape),
           textStyle: WidgetStatePropertyAll(textTheme.labelLarge),
@@ -203,21 +199,21 @@ class DesignTheme {
       ),
       iconButtonTheme: IconButtonThemeData(
         style: ButtonStyle(
-          minimumSize: const WidgetStatePropertyAll(
-            Size.square(DesignComponentSizes.minimumTouchTarget),
+          minimumSize: WidgetStatePropertyAll(
+            Size.square(DesignTokens.size.minimumTouchTarget),
           ),
-          iconSize: const WidgetStatePropertyAll(DesignComponentSizes.iconMd),
+          iconSize: WidgetStatePropertyAll(DesignTokens.size.iconMd),
           foregroundColor: _defaultForeground(colors, semanticColors),
-          shape: const WidgetStatePropertyAll(CircleBorder()),
+          shape: WidgetStatePropertyAll(CircleBorder()),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: colors.surface,
         isDense: true,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: DesignSpacing.md,
-          vertical: DesignSpacing.sm,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: DesignTokens.spacing.md,
+          vertical: DesignTokens.spacing.sm,
         ),
         labelStyle: TextStyle(color: colors.onSurfaceVariant),
         hintStyle: TextStyle(color: colors.onSurfaceVariant),
@@ -225,27 +221,27 @@ class DesignTheme {
         prefixIconColor: colors.onSurfaceVariant,
         suffixIconColor: colors.onSurfaceVariant,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(DesignRadii.md),
+          borderRadius: BorderRadius.circular(DesignTokens.radius.md),
           borderSide: BorderSide(color: colors.outlineVariant),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(DesignRadii.md),
+          borderRadius: BorderRadius.circular(DesignTokens.radius.md),
           borderSide: BorderSide(color: colors.outlineVariant),
         ),
         disabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(DesignRadii.md),
+          borderRadius: BorderRadius.circular(DesignTokens.radius.md),
           borderSide: BorderSide(color: semanticColors.disabled),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(DesignRadii.md),
+          borderRadius: BorderRadius.circular(DesignTokens.radius.md),
           borderSide: BorderSide(color: colors.primary, width: 2),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(DesignRadii.md),
+          borderRadius: BorderRadius.circular(DesignTokens.radius.md),
           borderSide: BorderSide(color: colors.error),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(DesignRadii.md),
+          borderRadius: BorderRadius.circular(DesignTokens.radius.md),
           borderSide: BorderSide(color: colors.error, width: 2),
         ),
       ),
@@ -256,17 +252,17 @@ class DesignTheme {
         subtitleTextStyle: textTheme.bodyMedium?.copyWith(
           color: colors.onSurfaceVariant,
         ),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: DesignSpacing.md,
-          vertical: DesignSpacing.xs,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: DesignTokens.spacing.md,
+          vertical: DesignTokens.spacing.xs,
         ),
         shape: controlShape,
       ),
       navigationBarTheme: NavigationBarThemeData(
-        height: DesignComponentSizes.bottomNavigation,
+        height: DesignTokens.size.bottomNavigation,
         backgroundColor: colors.surface,
         surfaceTintColor: Colors.transparent,
-        elevation: DesignElevation.none,
+        elevation: DesignTokens.elevation.none,
         indicatorColor: colors.primaryContainer,
         indicatorShape: const StadiumBorder(),
         iconTheme: WidgetStateProperty.resolveWith(
@@ -286,8 +282,8 @@ class DesignTheme {
       ),
       navigationRailTheme: NavigationRailThemeData(
         backgroundColor: colors.surface,
-        elevation: DesignElevation.none,
-        minWidth: DesignComponentSizes.navigationRail,
+        elevation: DesignTokens.elevation.none,
+        minWidth: DesignTokens.size.navigationRail,
         minExtendedWidth: 240,
         useIndicator: true,
         indicatorColor: colors.primaryContainer,
@@ -303,11 +299,11 @@ class DesignTheme {
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: ButtonStyle(
-          minimumSize: const WidgetStatePropertyAll(
-            Size(64, DesignComponentSizes.controlLg),
+          minimumSize: WidgetStatePropertyAll(
+            Size(64, DesignTokens.size.controlLg),
           ),
-          padding: const WidgetStatePropertyAll(
-            EdgeInsets.symmetric(horizontal: DesignSpacing.lg),
+          padding: WidgetStatePropertyAll(
+            EdgeInsets.symmetric(horizontal: DesignTokens.spacing.lg),
           ),
           shape: WidgetStatePropertyAll(controlShape),
           textStyle: WidgetStatePropertyAll(textTheme.labelLarge),
@@ -318,7 +314,7 @@ class DesignTheme {
       popupMenuTheme: PopupMenuThemeData(
         color: colors.surfaceContainer,
         surfaceTintColor: Colors.transparent,
-        elevation: DesignElevation.lg,
+        elevation: DesignTokens.elevation.lg,
         shape: surfaceShape,
         textStyle: textTheme.bodyMedium,
       ),
@@ -338,9 +334,9 @@ class DesignTheme {
         ),
         actionTextColor: colors.inversePrimary,
         disabledActionTextColor: semanticColors.onDisabled,
-        elevation: DesignElevation.lg,
+        elevation: DesignTokens.elevation.lg,
         shape: controlShape,
-        insetPadding: const EdgeInsets.all(DesignSpacing.md),
+        insetPadding: EdgeInsets.all(DesignTokens.spacing.md),
       ),
       switchTheme: SwitchThemeData(
         thumbColor: WidgetStateProperty.resolveWith((states) {
@@ -373,11 +369,11 @@ class DesignTheme {
       ),
       textButtonTheme: TextButtonThemeData(
         style: ButtonStyle(
-          minimumSize: const WidgetStatePropertyAll(
-            Size(48, DesignComponentSizes.controlLg),
+          minimumSize: WidgetStatePropertyAll(
+            Size(48, DesignTokens.size.controlLg),
           ),
-          padding: const WidgetStatePropertyAll(
-            EdgeInsets.symmetric(horizontal: DesignSpacing.md),
+          padding: WidgetStatePropertyAll(
+            EdgeInsets.symmetric(horizontal: DesignTokens.spacing.md),
           ),
           shape: WidgetStatePropertyAll(controlShape),
           textStyle: WidgetStatePropertyAll(textTheme.labelLarge),
@@ -387,16 +383,16 @@ class DesignTheme {
       tooltipTheme: TooltipThemeData(
         decoration: BoxDecoration(
           color: colors.inverseSurface,
-          borderRadius: BorderRadius.circular(DesignRadii.sm),
+          borderRadius: BorderRadius.circular(DesignTokens.radius.sm),
         ),
         textStyle: textTheme.bodySmall?.copyWith(
           color: colors.onInverseSurface,
         ),
-        padding: const EdgeInsets.symmetric(
-          horizontal: DesignSpacing.sm,
-          vertical: DesignSpacing.xs,
+        padding: EdgeInsets.symmetric(
+          horizontal: DesignTokens.spacing.sm,
+          vertical: DesignTokens.spacing.xs,
         ),
-        waitDuration: DesignMotionDurations.slow,
+        waitDuration: DesignTokens.duration.slow,
       ),
     );
   }

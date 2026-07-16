@@ -1,3 +1,4 @@
+import 'package:design_system/src/tokens/design_tokens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -78,7 +79,7 @@ class BaseInputField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(label, style: context.designTextTheme.labelLarge),
-        SizedBox(height: context.designSpacing.xs),
+        SizedBox(height: DesignTokens.spacing.xs),
         field,
       ],
     );

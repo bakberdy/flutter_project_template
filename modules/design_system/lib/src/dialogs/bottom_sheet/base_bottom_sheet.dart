@@ -1,3 +1,4 @@
+import 'package:design_system/src/tokens/design_tokens.dart';
 import 'package:design_system/src/buttons/base_button.dart';
 import 'package:design_system/src/dialogs/bottom_sheet/bottom_sheet_list.dart';
 import 'package:design_system/src/extensions/build_context_design_x.dart';
@@ -32,35 +33,35 @@ class BaseBottomSheet {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(height: context.designSpacing.sm),
+            SizedBox(height: DesignTokens.spacing.sm),
             Divider(
               height: 3,
-              radius: BorderRadius.circular(context.designRadii.xs),
+              radius: BorderRadius.circular(DesignTokens.radius.xs),
               thickness: 4,
               color: context.designColors.onSurface,
               indent: mediaQuery.width / 2 - 30,
               endIndent: mediaQuery.width / 2 - 30,
             ),
-            SizedBox(height: context.designSpacing.sm),
+            SizedBox(height: DesignTokens.spacing.sm),
             if (title != null) ...[
               Text(title, style: context.designTextTheme.titleMedium),
-              SizedBox(height: context.designSpacing.md),
+              SizedBox(height: DesignTokens.spacing.md),
             ],
             builder(context),
-            SizedBox(height: context.designSpacing.md),
+            SizedBox(height: DesignTokens.spacing.md),
             if (actions != null)
               Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: context.designSpacing.md,
+                  horizontal: DesignTokens.spacing.md,
                 ),
                 child: Row(
-                  spacing: actionsSpacing ?? context.designSpacing.xs,
+                  spacing: actionsSpacing ?? DesignTokens.spacing.xs,
                   children: actions
                       .map((action) => Expanded(child: action))
                       .toList(),
                 ),
               ),
-            SizedBox(height: context.designSpacing.lg),
+            SizedBox(height: DesignTokens.spacing.lg),
           ],
         );
       },

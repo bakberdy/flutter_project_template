@@ -1,3 +1,4 @@
+import 'package:design_system/src/tokens/design_tokens.dart';
 import 'package:design_system/src/extensions/build_context_design_x.dart';
 import 'package:design_system/src/inputs/base_input_field.dart';
 import 'package:design_system/src/inputs/phone/base_country_dial_code_prefix_button.dart';
@@ -69,7 +70,7 @@ class BasePhoneNumberTextField extends StatelessWidget {
           ),
           if (showVerificationPrompt || showVerified)
             Padding(
-              padding: EdgeInsets.only(top: context.designSpacing.xs),
+              padding: EdgeInsets.only(top: DesignTokens.spacing.xs),
               child: Align(
                 alignment: Alignment.centerRight,
                 child: Row(
@@ -81,7 +82,7 @@ class BasePhoneNumberTextField extends StatelessWidget {
                         size: 16,
                         color: context.designColors.primary,
                       ),
-                      SizedBox(width: context.designSpacing.xxs),
+                      SizedBox(width: DesignTokens.spacing.xxs),
                       Text(
                         verifiedLabel ?? '',
                         style: context.designTextTheme.bodySmall?.copyWith(
@@ -95,7 +96,7 @@ class BasePhoneNumberTextField extends StatelessWidget {
                         verificationPromptLabel ?? '',
                         style: context.designTextTheme.bodySmall,
                       ),
-                      SizedBox(width: context.designSpacing.xxs),
+                      SizedBox(width: DesignTokens.spacing.xxs),
                       TextButton(
                         onPressed: onVerifyTap,
                         style: TextButton.styleFrom(

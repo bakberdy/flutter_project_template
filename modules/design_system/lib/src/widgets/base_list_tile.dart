@@ -1,3 +1,4 @@
+import 'package:design_system/src/tokens/design_tokens.dart';
 import 'package:design_system/src/extensions/build_context_design_x.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +30,7 @@ class BaseListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final defaultRadiues = Radius.circular(context.designRadii.lg);
+    final defaultRadiues = Radius.circular(DesignTokens.radius.lg);
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
@@ -38,7 +39,7 @@ class BaseListTile extends StatelessWidget {
         ),
       ),
       margin:
-          margin ?? EdgeInsets.symmetric(horizontal: context.designSpacing.md),
+          margin ?? EdgeInsets.symmetric(horizontal: DesignTokens.spacing.md),
       child: InkWell(
         borderRadius: BorderRadius.vertical(
           top: disableTopRadius ? Radius.zero : defaultRadiues,
@@ -49,13 +50,13 @@ class BaseListTile extends StatelessWidget {
           padding:
               padding ??
               EdgeInsets.symmetric(
-                horizontal: context.designSpacing.sm,
-                vertical: context.designSpacing.sm,
+                horizontal: DesignTokens.spacing.sm,
+                vertical: DesignTokens.spacing.sm,
               ),
           child: Row(
             children: [
               ?leading,
-              SizedBox(width: context.designSpacing.sm),
+              SizedBox(width: DesignTokens.spacing.sm),
               subtitle != null
                   ? Expanded(
                       child: Column(

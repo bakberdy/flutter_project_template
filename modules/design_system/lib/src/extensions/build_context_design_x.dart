@@ -1,6 +1,6 @@
 import 'package:design_system/gen/assets.gen.dart' as ds_assets;
 import 'package:design_system/src/theme/design_semantic_colors.dart';
-import 'package:design_system/src/tokens/design_context_tokens.dart';
+import 'package:design_system/src/tokens/design_tokens.dart';
 import 'package:flutter/material.dart';
 
 extension BuildContextDesignX on BuildContext {
@@ -13,13 +13,9 @@ extension BuildContextDesignX on BuildContext {
       designTheme.bottomSheetTheme;
   BottomNavigationBarThemeData get designBottomNavigationBarTheme =>
       designTheme.bottomNavigationBarTheme;
-  DsContextSpacing get designSpacing => const DsContextSpacing();
-  DsContextRadii get designRadii => const DsContextRadii();
-  DsContextComponentSizes get designComponentSizes =>
-      const DsContextComponentSizes();
-  DsContextElevation get designElevation => const DsContextElevation();
-  DsContextMotion get designMotion => const DsContextMotion();
-  DsContextShadows get designShadows => DsContextShadows(designColors.shadow);
+  // Temporary compatibility aliases until downstream UI is migrated.
+  DesignSpacingTokens get designSpacing => DesignTokens.spacing;
+  DesignRadiusTokens get designRadii => DesignTokens.radius;
   DsContextAssets get designAssets => const DsContextAssets();
 }
 

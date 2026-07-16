@@ -1,3 +1,4 @@
+import 'package:design_system/src/tokens/design_tokens.dart';
 import 'package:design_system/src/extensions/build_context_design_x.dart';
 import 'package:design_system/src/images/base_cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +77,7 @@ class UserAvatar extends StatelessWidget {
   bool get _hasAvatar => avatarUrl?.trim().isNotEmpty ?? false;
 
   BorderRadius _borderRadius(BuildContext context) => BorderRadius.circular(
-    format == UserAvatarFormat.circle ? radius : context.designSpacing.sm,
+    format == UserAvatarFormat.circle ? radius : DesignTokens.spacing.sm,
   );
 
   String _initials(String? value) {

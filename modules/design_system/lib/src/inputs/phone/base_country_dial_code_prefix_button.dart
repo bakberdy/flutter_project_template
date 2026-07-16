@@ -1,3 +1,4 @@
+import 'package:design_system/src/tokens/design_tokens.dart';
 import 'package:design_system/src/extensions/build_context_design_x.dart';
 import 'package:design_system/src/inputs/phone/country_dial_code_option.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class BaseCountryDialCodePrefixButton extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           countryDialCodeFlag(context, dialCode),
-          SizedBox(width: context.designSpacing.xs),
+          SizedBox(width: DesignTokens.spacing.xs),
           Text('${dialCode.dialCode} '),
         ],
       ),

@@ -3,40 +3,46 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  test('centralizes value tokens under DesignTokens', () {
+    expect(DesignTokens.spacing.md, 16);
+    expect(DesignTokens.radius.lg, 16);
+    expect(DesignTokens.size.controlLg, 48);
+    expect(DesignTokens.elevation.md, 4);
+    expect(DesignTokens.duration.standard, const Duration(milliseconds: 300));
+    expect(DesignTokens.curve.emphasized, Curves.easeOutCubic);
+  });
+
   test('component sizes preserve minimum accessible touch targets', () {
-    expect(DesignComponentSizes.minimumTouchTarget, greaterThanOrEqualTo(48));
-    expect(
-      DesignComponentSizes.controlLg,
-      DesignComponentSizes.minimumTouchTarget,
-    );
+    expect(DesignTokens.size.minimumTouchTarget, greaterThanOrEqualTo(48));
+    expect(DesignTokens.size.controlLg, DesignTokens.size.minimumTouchTarget);
   });
 
   test('motion tokens are ordered from fastest to slowest', () {
-    expect(DesignMotionDurations.instant, lessThan(DesignMotionDurations.fast));
+    expect(DesignTokens.duration.instant, lessThan(DesignTokens.duration.fast));
     expect(
-      DesignMotionDurations.fast,
-      lessThan(DesignMotionDurations.standard),
+      DesignTokens.duration.fast,
+      lessThan(DesignTokens.duration.standard),
     );
     expect(
-      DesignMotionDurations.standard,
-      lessThan(DesignMotionDurations.slow),
+      DesignTokens.duration.standard,
+      lessThan(DesignTokens.duration.slow),
     );
-    expect(DesignMotionCurves.standard, Curves.easeInOutCubic);
+    expect(DesignTokens.curve.standard, Curves.easeInOutCubic);
   });
 
   test('shadow tokens grow in visual depth', () {
     const color = Colors.black;
     expect(
-      DesignShadows.xs(color).single.blurRadius,
-      lessThan(DesignShadows.sm(color).single.blurRadius),
+      DesignTokens.shadow.xs(color).single.blurRadius,
+      lessThan(DesignTokens.shadow.sm(color).single.blurRadius),
     );
     expect(
-      DesignShadows.sm(color).single.blurRadius,
-      lessThan(DesignShadows.md(color).single.blurRadius),
+      DesignTokens.shadow.sm(color).single.blurRadius,
+      lessThan(DesignTokens.shadow.md(color).single.blurRadius),
     );
     expect(
-      DesignShadows.md(color).single.blurRadius,
-      lessThan(DesignShadows.lg(color).single.blurRadius),
+      DesignTokens.shadow.md(color).single.blurRadius,
+      lessThan(DesignTokens.shadow.lg(color).single.blurRadius),
     );
   });
 }
