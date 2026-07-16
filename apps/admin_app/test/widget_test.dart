@@ -1,6 +1,7 @@
 import 'package:admin_app/src/common/config/router/admin_app_router.dart';
 import 'package:admin_app/src/common/presentation/navigation/admin_root_route_resolver.dart';
 import 'package:admin_auth/admin_auth.dart';
+import 'package:admin_profile/admin_profile.dart';
 import 'package:core/core.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared/shared.dart';
@@ -10,15 +11,12 @@ void main() {
     const failure = Failure(source: 'test');
 
     expect(
-      adminRouteForSessionState(const AdminSessionState()).routeName,
+      adminRouteForUserState(const UserState()).routeName,
       SplashRoute.name,
     );
     expect(
-      adminRouteForSessionState(
-        const AdminSessionState(
-          hasSession: true,
-          status: StateStatus.error(failure),
-        ),
+      adminRouteForUserState(
+        const UserState(status: StateStatus.error(failure)),
       ).routeName,
       SplashRoute.name,
     );
@@ -26,8 +24,8 @@ void main() {
 
   test('opens auth only for a confirmed empty session', () {
     expect(
-      adminRouteForSessionState(
-        const AdminSessionState(status: StateStatus.success()),
+      adminRouteForUserState(
+        const UserState(status: StateStatus.success()),
       ).routeName,
       AdminAuthWrapperRoute.name,
     );
@@ -35,12 +33,8 @@ void main() {
 
   test('opens the main shell for an active configured admin', () {
     expect(
-      adminRouteForSessionState(
-        AdminSessionState(
-          user: _admin,
-          hasSession: true,
-          status: const StateStatus.success(),
-        ),
+      adminRouteForUserState(
+        UserState(user: _admin, status: const StateStatus.success()),
       ).routeName,
       MainNavigationRoute.name,
     );

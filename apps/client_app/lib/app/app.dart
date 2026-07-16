@@ -25,7 +25,8 @@ class _AppState extends State<App> {
   late final Future<void> Function() _unauthorizedHandler = _handleUnauthorized;
   late final CoreNavigationBloc _navigationBloc = CoreNavigationBloc();
   late final ClientAppRouter _appRouter = ClientAppRouter();
-  late final UserBloc _userBloc = sl<UserBloc>()..add(const UserStartedEvent());
+  late final UserBloc _userBloc = sl<UserBloc>()
+    ..add(const UserEvent.refreshUser());
   late final LocaleBloc _localeBloc = sl<LocaleBloc>()
     ..add(
       LocaleEvent.started(
@@ -63,11 +64,11 @@ class _AppState extends State<App> {
           BlocBuilder<LocaleBloc, LocaleState>(
             builder: (context, localeState) => CoreNavigationListener(
               onAuthenticated: () {
-                _userBloc.add(const UserStartedEvent());
+                _userBloc.add(const UserEvent.refreshUser());
               },
               onLoggedOut: _logout,
               onRefreshUser: () {
-                _userBloc.add(const UserStartedEvent());
+                _userBloc.add(const UserEvent.refreshUser());
               },
               onNavigationError: _handleNavigationError,
               router: _appRouter,

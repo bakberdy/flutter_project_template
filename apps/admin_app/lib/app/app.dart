@@ -1,10 +1,10 @@
-import 'package:admin_auth/admin_auth.dart';
 import 'package:admin_app/app/theme/app_theme_scope.dart';
 import 'package:admin_app/src/common/admin_app_localization_x.dart';
 import 'package:admin_app/src/common/config/localization/app_localization_config.dart';
 import 'package:admin_app/src/common/config/router/admin_app_router.dart';
 import 'package:admin_app/src/common/presentation/widgets/admin_debug_overlay.dart';
 import 'package:admin_preferences/admin_preferences.dart';
+import 'package:admin_profile/admin_profile.dart';
 import 'package:core/core.dart';
 import 'package:shared/shared.dart';
 import 'package:design_system/design_system.dart';
@@ -25,8 +25,8 @@ class _AppState extends State<App> {
   late final Future<void> Function() _unauthorizedHandler = _handleUnauthorized;
   late final CoreNavigationBloc _navigationBloc = CoreNavigationBloc();
   late final AdminAppRouter _appRouter = AdminAppRouter();
-  late final AdminSessionBloc _sessionBloc = sl<AdminSessionBloc>()
-    ..add(const AdminSessionStarted());
+  late final UserBloc _userBloc = sl<UserBloc>()
+    ..add(const UserEvent.refreshUser());
   late final LocaleBloc _localeBloc = sl<LocaleBloc>()
     ..add(
       LocaleEvent.started(
@@ -46,7 +46,7 @@ class _AppState extends State<App> {
     _apiClientFactory.unregisterUnauthorizedHandler(_unauthorizedHandler);
     _showTalkerDock.dispose();
     _navigationBloc.close();
-    _sessionBloc.close();
+    _userBloc.close();
     _localeBloc.close();
     _appRouter.dispose();
     super.dispose();
@@ -56,7 +56,7 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) => MultiBlocProvider(
     providers: [
       BlocProvider.value(value: _navigationBloc),
-      BlocProvider.value(value: _sessionBloc),
+      BlocProvider.value(value: _userBloc),
       BlocProvider.value(value: _localeBloc),
     ],
     child: AppThemeScope(
@@ -123,17 +123,13 @@ class _AppState extends State<App> {
     }
   }
 
-  void _refreshUser() {
-    _sessionBloc.add(const AdminSessionStarted());
-  }
+  void _refreshUser() => _userBloc.add(const UserEvent.refreshUser());
 
-  void _logout() {
-    _sessionBloc.add(const AdminSessionLogoutRequested());
-  }
+  void _logout() => _userBloc.add(const UserEvent.logout());
 
   Future<void> _handleUnauthorized() async {
     if (mounted) {
-      _sessionBloc.add(const AdminSessionInvalidated());
+      _userBloc.add(const UserEvent.refreshUser());
     }
   }
 

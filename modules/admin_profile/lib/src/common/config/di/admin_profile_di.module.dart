@@ -15,6 +15,10 @@ import 'package:admin_profile/src/features/profile/domain/usecases/create_user_p
     as _i160;
 import 'package:admin_profile/src/features/profile/domain/usecases/get_current_user_profile_use_case.dart'
     as _i501;
+import 'package:admin_profile/src/features/profile/domain/usecases/get_current_user_use_case.dart'
+    as _i1040;
+import 'package:admin_profile/src/features/profile/domain/usecases/log_out_use_case.dart'
+    as _i775;
 import 'package:admin_profile/src/features/profile/domain/usecases/remove_user_avatar_use_case.dart'
     as _i657;
 import 'package:admin_profile/src/features/profile/domain/usecases/request_account_deletion_use_case.dart'
@@ -25,6 +29,8 @@ import 'package:admin_profile/src/features/profile/domain/usecases/update_user_p
     as _i647;
 import 'package:admin_profile/src/features/profile/presentation/blocs/create_user_profile/create_user_profile_bloc.dart'
     as _i705;
+import 'package:admin_profile/src/features/profile/presentation/blocs/user/user_bloc.dart'
+    as _i62;
 import 'package:admin_profile/src/features/profile/presentation/blocs/user_profile/user_profile_bloc.dart'
     as _i333;
 import 'package:admin_profile/src/features/profile/presentation/blocs/user_profile_edit/user_profile_edit_bloc.dart'
@@ -39,13 +45,19 @@ class AdminProfilePackageModule extends _i526.MicroPackageModule {
     gh.singleton<_i1034.UserProfileRemoteDataSource>(() =>
         _i1034.UserProfileRemoteDataSourceImpl(
             gh<_i494.ApiClient>(instanceName: 'protectedApiClient')));
-    gh.singleton<_i967.UserProfileRepository>(() =>
-        _i411.UserProfileRepositoryImpl(
-            gh<_i1034.UserProfileRemoteDataSource>()));
+    gh.singleton<_i967.UserProfileRepository>(
+        () => _i411.UserProfileRepositoryImpl(
+              gh<_i1034.UserProfileRemoteDataSource>(),
+              gh<_i494.TokenStorage>(),
+            ));
     gh.lazySingleton<_i160.CreateUserProfileUseCase>(() =>
         _i160.CreateUserProfileUseCase(gh<_i967.UserProfileRepository>()));
     gh.lazySingleton<_i501.GetCurrentUserProfileUseCase>(() =>
         _i501.GetCurrentUserProfileUseCase(gh<_i967.UserProfileRepository>()));
+    gh.lazySingleton<_i1040.GetCurrentUserUseCase>(
+        () => _i1040.GetCurrentUserUseCase(gh<_i967.UserProfileRepository>()));
+    gh.lazySingleton<_i775.LogOutUseCase>(
+        () => _i775.LogOutUseCase(gh<_i967.UserProfileRepository>()));
     gh.lazySingleton<_i657.RemoveUserAvatarUseCase>(
         () => _i657.RemoveUserAvatarUseCase(gh<_i967.UserProfileRepository>()));
     gh.lazySingleton<_i535.RequestAccountDeletionUseCase>(() =>
@@ -64,5 +76,9 @@ class AdminProfilePackageModule extends _i526.MicroPackageModule {
         _i705.CreateUserProfileBloc(gh<_i160.CreateUserProfileUseCase>()));
     gh.factory<_i410.UserProfileEditBloc>(
         () => _i410.UserProfileEditBloc(gh<_i647.UpdateUserProfileUseCase>()));
+    gh.factory<_i62.UserBloc>(() => _i62.UserBloc(
+          gh<_i1040.GetCurrentUserUseCase>(),
+          gh<_i775.LogOutUseCase>(),
+        ));
   }
 }

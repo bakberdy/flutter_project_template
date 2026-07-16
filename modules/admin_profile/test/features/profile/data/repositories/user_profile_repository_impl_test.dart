@@ -1,23 +1,23 @@
-import 'package:admin_auth/src/features/auth/data/datasources/auth_remote_data_source.dart';
-import 'package:admin_auth/src/features/auth/data/repositories/auth_repository_impl.dart';
+import 'package:admin_profile/src/features/profile/data/datasources/user_profile_remote_data_source.dart';
+import 'package:admin_profile/src/features/profile/data/repositories/user_profile_repository_impl.dart';
 import 'package:core/core.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 void main() {
-  late _MockAuthRemoteDataSource remoteDataSource;
+  late _MockUserProfileRemoteDataSource remoteDataSource;
   late _MockTokenStorage tokenStorage;
-  late AuthRepositoryImpl repository;
+  late UserProfileRepositoryImpl repository;
 
   setUp(() {
-    remoteDataSource = _MockAuthRemoteDataSource();
+    remoteDataSource = _MockUserProfileRemoteDataSource();
     tokenStorage = _MockTokenStorage();
     when(() => remoteDataSource.logOut()).thenAnswer((_) async {});
     when(() => tokenStorage.clearTokens()).thenAnswer((_) async {});
-    repository = AuthRepositoryImpl(remoteDataSource, tokenStorage);
+    repository = UserProfileRepositoryImpl(remoteDataSource, tokenStorage);
   });
 
-  test('logout clears local tokens after a successful remote logout', () async {
+  test('logout clears local tokens after a successful API request', () async {
     final result = await repository.logOut();
 
     expect(result.isRight(), isTrue);
@@ -25,10 +25,8 @@ void main() {
     verify(() => tokenStorage.clearTokens()).called(1);
   });
 
-  test('logout still clears local tokens when remote logout fails', () async {
-    when(
-      () => remoteDataSource.logOut(),
-    ).thenThrow(Exception('network unavailable'));
+  test('logout clears local tokens when the API request fails', () async {
+    when(() => remoteDataSource.logOut()).thenThrow(Exception('offline'));
 
     final result = await repository.logOut();
 
@@ -38,6 +36,7 @@ void main() {
   });
 }
 
-class _MockAuthRemoteDataSource extends Mock implements AuthRemoteDataSource {}
+class _MockUserProfileRemoteDataSource extends Mock
+    implements UserProfileRemoteDataSource {}
 
 class _MockTokenStorage extends Mock implements TokenStorage {}

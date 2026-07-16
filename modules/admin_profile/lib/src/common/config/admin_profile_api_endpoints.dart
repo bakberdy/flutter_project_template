@@ -3,4 +3,5 @@ abstract final class AdminProfileApiEndpoints {
   static const String profile = '$me/profile';
   static const String avatar = '$me/avatar';
   static const String accountDeletion = '$me/delete-request';
+  static const String logOut = '/auth/logout';
 }

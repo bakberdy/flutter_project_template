@@ -1,5 +1,4 @@
 import 'package:core/core.dart';
-import 'package:shared/shared.dart';
 import 'package:admin_auth/src/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:admin_auth/src/features/auth/data/models/authorization_verify_request_model/authorization_verify_request_model.dart';
 import 'package:admin_auth/src/features/auth/domain/entities/auth_login_request.dart';
@@ -16,18 +15,6 @@ class AuthRepositoryImpl implements AuthRepository {
   final TokenStorage _tokenStorage;
 
   AuthRepositoryImpl(this._remoteDataSource, this._tokenStorage);
-
-  @override
-  Future<bool> hasSession() => _tokenStorage.containsRefreshToken();
-
-  @override
-  FutureEither<User> getCurrentUser() async {
-    try {
-      return Right(await _remoteDataSource.getCurrentUser());
-    } on Exception catch (e) {
-      return Left(await e.toFailure(source: '$runtimeType.getCurrentUser'));
-    }
-  }
 
   @override
   FutureEither<LoginResponse> login(String email) async {
@@ -76,21 +63,6 @@ class AuthRepositoryImpl implements AuthRepository {
       return Left(await e.toFailure(source: '$runtimeType.refreshToken'));
     }
   }
-
-  @override
-  FutureEither<void> logOut() async {
-    try {
-      await _remoteDataSource.logOut();
-      return const Right(null);
-    } on Exception catch (e) {
-      return Left(await e.toFailure(source: '$runtimeType.logOut'));
-    } finally {
-      await _tokenStorage.clearTokens();
-    }
-  }
-
-  @override
-  Future<void> clearSession() => _tokenStorage.clearTokens();
 
   @override
   FutureEither<void> setNotificationToken(String token, String provider) async {

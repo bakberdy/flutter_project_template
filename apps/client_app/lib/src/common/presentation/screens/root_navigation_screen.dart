@@ -29,7 +29,7 @@ class RootNavigationScreen extends StatelessWidget {
                 message: failure.messageTextOrDefault(context),
                 retryLabel: context.l10n.retry,
                 onRetry: () =>
-                    context.read<UserBloc>().add(const UserStartedEvent()),
+                    context.read<UserBloc>().add(const UserEvent.refreshUser()),
                 icon: const Icon(Icons.cloud_off_outlined, size: 48),
               ),
             ),

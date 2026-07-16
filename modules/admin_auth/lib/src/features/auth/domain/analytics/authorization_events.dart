@@ -52,23 +52,6 @@ final class AuthRefreshTokenUseCaseEvent extends AnalyticsEvent {
   );
 }
 
-final class AuthLogOutUseCaseEvent extends AnalyticsEvent {
-  const AuthLogOutUseCaseEvent({required super.name, super.properties});
-
-  factory AuthLogOutUseCaseEvent.success({Map<String, dynamic>? properties}) =>
-      AuthLogOutUseCaseEvent(
-        name: 'auth_log_out_usecase_success',
-        properties: properties,
-      );
-
-  factory AuthLogOutUseCaseEvent.failure({
-    required Map<String, dynamic> properties,
-  }) => AuthLogOutUseCaseEvent(
-    name: 'auth_log_out_usecase_failure',
-    properties: properties,
-  );
-}
-
 final class AuthSetNotificationTokenUseCaseEvent extends AnalyticsEvent {
   const AuthSetNotificationTokenUseCaseEvent({
     required super.name,
@@ -86,24 +69,6 @@ final class AuthSetNotificationTokenUseCaseEvent extends AnalyticsEvent {
     required Map<String, dynamic> properties,
   }) => AuthSetNotificationTokenUseCaseEvent(
     name: 'auth_set_notification_token_usecase_failure',
-    properties: properties,
-  );
-}
-
-final class GetAdminSessionUseCaseEvent extends AnalyticsEvent {
-  const GetAdminSessionUseCaseEvent({required super.name, super.properties});
-
-  factory GetAdminSessionUseCaseEvent.success({
-    Map<String, dynamic>? properties,
-  }) => GetAdminSessionUseCaseEvent(
-    name: 'get_admin_session_usecase_success',
-    properties: properties,
-  );
-
-  factory GetAdminSessionUseCaseEvent.failure({
-    required Map<String, dynamic> properties,
-  }) => GetAdminSessionUseCaseEvent(
-    name: 'get_admin_session_usecase_failure',
     properties: properties,
   );
 }

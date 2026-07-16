@@ -11,8 +11,6 @@ import 'package:admin_auth/src/features/auth/data/repositories/auth_repository_i
     as _i71;
 import 'package:admin_auth/src/features/auth/domain/repositories/auth_repository.dart'
     as _i318;
-import 'package:admin_auth/src/features/auth/domain/usecases/auth_log_out_use_case.dart'
-    as _i640;
 import 'package:admin_auth/src/features/auth/domain/usecases/auth_login_use_case.dart'
     as _i38;
 import 'package:admin_auth/src/features/auth/domain/usecases/auth_refresh_token_use_case.dart'
@@ -21,10 +19,6 @@ import 'package:admin_auth/src/features/auth/domain/usecases/auth_set_notificati
     as _i80;
 import 'package:admin_auth/src/features/auth/domain/usecases/auth_verify_use_case.dart'
     as _i1060;
-import 'package:admin_auth/src/features/auth/domain/usecases/get_admin_session_use_case.dart'
-    as _i553;
-import 'package:admin_auth/src/features/auth/presentation/blocs/admin_session/admin_session_bloc.dart'
-    as _i97;
 import 'package:admin_auth/src/features/auth/presentation/blocs/auth/auth_bloc.dart'
     as _i698;
 import 'package:admin_auth/src/features/sessions/data/datasources/sessions_remote_data_source.dart'
@@ -75,8 +69,6 @@ class AdminAuthPackageModule extends _i526.MicroPackageModule {
           gh<_i655.AuthRemoteDataSource>(),
           gh<_i494.TokenStorage>(),
         ));
-    gh.lazySingleton<_i640.AuthLogOutUseCase>(
-        () => _i640.AuthLogOutUseCase(gh<_i318.AuthRepository>()));
     gh.lazySingleton<_i38.AuthLoginUseCase>(
         () => _i38.AuthLoginUseCase(gh<_i318.AuthRepository>()));
     gh.lazySingleton<_i751.AuthRefreshTokenUseCase>(
@@ -85,15 +77,9 @@ class AdminAuthPackageModule extends _i526.MicroPackageModule {
         () => _i80.AuthSetNotificationTokenUseCase(gh<_i318.AuthRepository>()));
     gh.lazySingleton<_i1060.AuthVerifyUseCase>(
         () => _i1060.AuthVerifyUseCase(gh<_i318.AuthRepository>()));
-    gh.lazySingleton<_i553.GetAdminSessionUseCase>(
-        () => _i553.GetAdminSessionUseCase(gh<_i318.AuthRepository>()));
     gh.factory<_i698.AuthBloc>(() => _i698.AuthBloc(
           gh<_i38.AuthLoginUseCase>(),
           gh<_i1060.AuthVerifyUseCase>(),
-        ));
-    gh.factory<_i97.AdminSessionBloc>(() => _i97.AdminSessionBloc(
-          gh<_i553.GetAdminSessionUseCase>(),
-          gh<_i640.AuthLogOutUseCase>(),
         ));
   }
 }

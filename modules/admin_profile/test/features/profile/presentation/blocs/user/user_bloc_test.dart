@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:client_profile/src/features/profile/domain/repositories/user_profile_repository.dart';
-import 'package:client_profile/src/features/profile/domain/usecases/get_current_user_use_case.dart';
-import 'package:client_profile/src/features/profile/domain/usecases/log_out_use_case.dart';
-import 'package:client_profile/src/features/profile/presentation/blocs/user/user_bloc.dart';
+import 'package:admin_profile/src/features/profile/domain/repositories/user_profile_repository.dart';
+import 'package:admin_profile/src/features/profile/domain/usecases/get_current_user_use_case.dart';
+import 'package:admin_profile/src/features/profile/domain/usecases/log_out_use_case.dart';
+import 'package:admin_profile/src/features/profile/presentation/blocs/user/user_bloc.dart';
 import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -16,6 +16,7 @@ void main() {
     () async {
       final repository = _MockUserProfileRepository();
       final currentUser = Completer<Either<Failure, User>>();
+      when(() => repository.hasSession()).thenAnswer((_) async => true);
       when(
         () => repository.getCurrentUser(cancelToken: any(named: 'cancelToken')),
       ).thenAnswer((_) => currentUser.future);
@@ -35,7 +36,7 @@ void main() {
         (state) => state.status.isSuccess && state.user == null,
       );
 
-      currentUser.complete(Right(_user));
+      currentUser.complete(Right(_admin));
       await Future<void>.delayed(const Duration(milliseconds: 10));
 
       expect(bloc.state.user, isNull);
@@ -44,10 +45,10 @@ void main() {
   );
 }
 
-final _user = User(
-  id: 'user-1',
-  email: 'user@example.com',
-  role: UserRole.user,
+final _admin = User(
+  id: 'admin-1',
+  email: 'admin@example.com',
+  role: UserRole.admin,
   status: UserStatus.active,
   isVerified: true,
   createdAt: DateTime.utc(2026),

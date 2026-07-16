@@ -5,7 +5,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:core/core.dart';
 import 'package:shared/shared.dart';
 
-PageRouteInfo<dynamic> adminRouteForSessionState(AdminSessionState state) {
+PageRouteInfo<dynamic> adminRouteForUserState(UserState state) {
   final user = state.user;
   if (user != null) {
     return switch (user.status) {
