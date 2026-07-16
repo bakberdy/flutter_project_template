@@ -9,7 +9,7 @@ class AdminProfileLocalizationsKk extends AdminProfileLocalizations {
   AdminProfileLocalizationsKk([String locale = 'kk']) : super(locale);
 
   @override
-  String get continueToLogin => 'Кіруге жалғастыру';
+  String get logout => 'Шығу';
 
   @override
   String get dismiss => 'Жабу';

@@ -1,6 +1,6 @@
 {
   "@@locale": "ru",
-  "continueToLogin": "Продолжить вход",
+  "logout": "Выйти",
   "dismiss": "Закрыть",
   "profileAvatarActionChange": "Изменить аватар",
   "profileAvatarActionRemove": "Удалить аватар",

@@ -15,6 +15,7 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Ваш аккаунт удалён'), findsNothing);
+    expect(find.text('Выйти'), findsOneWidget);
   });
 
   testWidgets('shows completed copy for a deleted account', (tester) async {
@@ -26,6 +27,7 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Запрошено удаление'), findsNothing);
+    expect(find.text('Выйти'), findsOneWidget);
   });
 }
 

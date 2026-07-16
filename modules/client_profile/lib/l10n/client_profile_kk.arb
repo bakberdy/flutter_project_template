@@ -1,6 +1,6 @@
 {
   "@@locale": "kk",
-  "continueToLogin": "Кіруге жалғастыру",
+  "logout": "Шығу",
   "dismiss": "Жабу",
   "profileAvatarActionChange": "Аватарды өзгерту",
   "profileAvatarActionRemove": "Аватарды жою",

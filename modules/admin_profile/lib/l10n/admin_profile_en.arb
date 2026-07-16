@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "continueToLogin": "Continue to Login",
+  "logout": "Log out",
   "dismiss": "Dismiss",
   "profileAvatarActionChange": "Change avatar",
   "profileAvatarActionRemove": "Remove avatar",

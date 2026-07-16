@@ -127,7 +127,7 @@ class _UserProfileEditScreenState extends State<UserProfileEditScreen>
           const UserProfileEvent.accountDeletionStatusReset(),
         );
         context.read<CoreNavigationBloc>().add(
-          const CoreNavigationEvent.loggedOut(),
+          const CoreNavigationEvent.refreshUser(),
         );
         break;
       default:

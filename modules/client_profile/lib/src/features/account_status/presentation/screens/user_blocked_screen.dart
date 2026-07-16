@@ -37,7 +37,7 @@ class UserBlockedScreen extends StatelessWidget {
                 onPressed: () => context.read<CoreNavigationBloc>().add(
                   const CoreNavigationEvent.loggedOut(),
                 ),
-                label: context.l10n.continueToLogin,
+                label: context.l10n.logout,
               ),
             ],
           ),

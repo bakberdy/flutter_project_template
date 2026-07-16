@@ -9,7 +9,7 @@ class ClientProfileLocalizationsRu extends ClientProfileLocalizations {
   ClientProfileLocalizationsRu([String locale = 'ru']) : super(locale);
 
   @override
-  String get continueToLogin => 'Продолжить вход';
+  String get logout => 'Выйти';
 
   @override
   String get dismiss => 'Закрыть';

@@ -9,7 +9,7 @@ class ClientProfileLocalizationsEn extends ClientProfileLocalizations {
   ClientProfileLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get continueToLogin => 'Continue to Login';
+  String get logout => 'Log out';
 
   @override
   String get dismiss => 'Dismiss';

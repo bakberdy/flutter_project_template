@@ -136,7 +136,7 @@ class _UserProfileEditContentState extends State<_UserProfileEditContent>
         );
         Navigator.of(context).pop();
         context.read<CoreNavigationBloc>().add(
-          const CoreNavigationEvent.loggedOut(),
+          const CoreNavigationEvent.refreshUser(),
         );
         break;
       default:

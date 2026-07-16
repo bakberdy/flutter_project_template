@@ -134,7 +134,7 @@ class SessionsScreen extends StatelessWidget
 
     if (state.navigateToAuthAfterRevokeAll) {
       context.read<CoreNavigationBloc>().add(
-        const CoreNavigationEvent.loggedOut(),
+        const CoreNavigationEvent.refreshUser(),
       );
       return;
     }

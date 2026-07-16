@@ -44,7 +44,7 @@ class UserDeletionRequestedScreen extends StatelessWidget {
                     const CoreNavigationEvent.loggedOut(),
                   );
                 },
-                label: context.l10n.continueToLogin,
+                label: context.l10n.logout,
               ),
             ],
           ),

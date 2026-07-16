@@ -103,11 +103,11 @@ abstract class ClientProfileLocalizations {
     Locale('ru'),
   ];
 
-  /// No description provided for @continueToLogin.
+  /// No description provided for @logout.
   ///
   /// In en, this message translates to:
-  /// **'Continue to Login'**
-  String get continueToLogin;
+  /// **'Log out'**
+  String get logout;
 
   /// No description provided for @dismiss.
   ///
