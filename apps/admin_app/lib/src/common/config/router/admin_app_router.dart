@@ -1,8 +1,8 @@
 import 'package:admin_app/src/common/config/router/admin_app_navigation_paths.dart';
-import 'package:admin_app/src/features/app_navigation/presentation/screens/admin_dashboard_screen.dart';
-import 'package:admin_app/src/features/app_navigation/presentation/screens/main_navigation_screen.dart';
-import 'package:admin_app/src/features/app_navigation/presentation/screens/root_navigation_screen.dart';
-import 'package:admin_app/src/features/app_navigation/presentation/screens/splash_screen.dart';
+import 'package:admin_app/src/common/presentation/screens/admin_dashboard_screen.dart';
+import 'package:admin_app/src/common/presentation/screens/main_navigation_screen.dart';
+import 'package:admin_app/src/common/presentation/screens/root_navigation_screen.dart';
+import 'package:admin_app/src/common/presentation/screens/splash_screen.dart';
 import 'package:admin_auth/admin_auth.dart';
 import 'package:admin_profile/admin_profile.dart';
 import 'package:admin_users/admin_users.dart';

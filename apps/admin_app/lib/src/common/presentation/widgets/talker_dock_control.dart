@@ -1,6 +1,6 @@
 import 'package:admin_app/src/common/admin_app_localization_x.dart';
-import 'package:admin_app/src/features/app_navigation/presentation/widgets/talker_dock_button.dart';
-import 'package:admin_app/src/features/app_navigation/presentation/widgets/talker_dock_swap_button.dart';
+import 'package:admin_app/src/common/presentation/widgets/talker_dock_button.dart';
+import 'package:admin_app/src/common/presentation/widgets/talker_dock_swap_button.dart';
 import 'package:flutter/material.dart';
 
 class TalkerDockControl extends StatelessWidget {

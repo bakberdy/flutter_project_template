@@ -1,4 +1,4 @@
-import 'package:admin_app/src/features/app_navigation/presentation/widgets/sidebar_item.dart';
+import 'package:admin_app/src/common/presentation/widgets/sidebar_item.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 

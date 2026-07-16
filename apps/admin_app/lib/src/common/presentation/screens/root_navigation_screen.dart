@@ -1,6 +1,6 @@
 import 'package:admin_app/src/common/admin_app_localization_x.dart';
-import 'package:admin_app/src/features/app_navigation/presentation/navigation/admin_root_route_resolver.dart';
-import 'package:admin_app/src/features/app_navigation/presentation/widgets/auth_preferences_toggles.dart';
+import 'package:admin_app/src/common/presentation/navigation/admin_root_route_resolver.dart';
+import 'package:admin_app/src/common/presentation/widgets/auth_preferences_toggles.dart';
 import 'package:admin_auth/admin_auth.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:core/core.dart';

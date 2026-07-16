@@ -1,7 +1,7 @@
 import 'package:admin_app/src/common/admin_app_localization_x.dart';
 import 'package:admin_app/src/common/config/router/admin_app_router.dart';
-import 'package:admin_app/src/features/app_navigation/presentation/widgets/sidebar.dart';
-import 'package:admin_app/src/features/app_navigation/presentation/widgets/sidebar_item.dart';
+import 'package:admin_app/src/common/presentation/widgets/sidebar.dart';
+import 'package:admin_app/src/common/presentation/widgets/sidebar_item.dart';
 import 'package:admin_auth/admin_auth.dart';
 import 'package:admin_preferences/admin_preferences.dart';
 import 'package:admin_profile/admin_profile.dart';

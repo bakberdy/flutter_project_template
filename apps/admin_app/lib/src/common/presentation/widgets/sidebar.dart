@@ -1,6 +1,6 @@
-import 'package:admin_app/src/features/app_navigation/presentation/widgets/sidebar_account_menu.dart';
-import 'package:admin_app/src/features/app_navigation/presentation/widgets/sidebar_item.dart';
-import 'package:admin_app/src/features/app_navigation/presentation/widgets/sidebar_navigation_list.dart';
+import 'package:admin_app/src/common/presentation/widgets/sidebar_account_menu.dart';
+import 'package:admin_app/src/common/presentation/widgets/sidebar_item.dart';
+import 'package:admin_app/src/common/presentation/widgets/sidebar_navigation_list.dart';
 import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';

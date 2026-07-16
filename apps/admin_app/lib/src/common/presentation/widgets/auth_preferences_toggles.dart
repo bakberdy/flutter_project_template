@@ -1,5 +1,5 @@
-import 'package:admin_app/src/features/app_navigation/presentation/widgets/auth_locale_menu.dart';
-import 'package:admin_app/src/features/app_navigation/presentation/widgets/auth_theme_toggle.dart';
+import 'package:admin_app/src/common/presentation/widgets/auth_locale_menu.dart';
+import 'package:admin_app/src/common/presentation/widgets/auth_theme_toggle.dart';
 import 'package:admin_preferences/admin_preferences.dart';
 import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';

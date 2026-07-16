@@ -1,5 +1,5 @@
 import 'package:admin_app/src/common/config/router/admin_app_router.dart';
-import 'package:admin_app/src/features/app_navigation/presentation/navigation/admin_root_route_resolver.dart';
+import 'package:admin_app/src/common/presentation/navigation/admin_root_route_resolver.dart';
 import 'package:admin_auth/admin_auth.dart';
 import 'package:core/core.dart';
 import 'package:flutter_test/flutter_test.dart';

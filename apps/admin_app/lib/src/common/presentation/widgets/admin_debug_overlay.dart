@@ -1,4 +1,4 @@
-import 'package:admin_app/src/features/app_navigation/presentation/widgets/talker_dock_control.dart';
+import 'package:admin_app/src/common/presentation/widgets/talker_dock_control.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
