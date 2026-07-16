@@ -68,16 +68,4 @@ class AuthRepositoryImpl implements AuthRepository {
       return Left(await e.toFailure(source: '$runtimeType.refreshToken'));
     }
   }
-
-  @override
-  FutureEither<void> logOut() async {
-    try {
-      await _remoteDataSource.logOut();
-      return const Right(null);
-    } on Exception catch (e) {
-      return Left(await e.toFailure(source: '$runtimeType.logOut'));
-    } finally {
-      await _tokenStorage.clearTokens();
-    }
-  }
 }

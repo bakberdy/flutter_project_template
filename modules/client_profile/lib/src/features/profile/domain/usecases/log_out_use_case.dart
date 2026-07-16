@@ -1,14 +1,15 @@
 import 'dart:async';
 
 import 'package:core/core.dart';
-import 'package:client_auth/src/features/auth/domain/analytics/authorization_events.dart';
-import 'package:client_auth/src/features/auth/domain/repositories/auth_repository.dart';
+import 'package:client_profile/src/features/profile/domain/analytics/log_out_events.dart';
+import 'package:client_profile/src/features/profile/domain/repositories/user_profile_repository.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
-class AuthLogOutUseCase extends UseCase<void, NoParams> {
-  final AuthRepository _repository;
-  AuthLogOutUseCase(this._repository);
+class LogOutUseCase extends UseCase<void, NoParams> {
+  final UserProfileRepository _repository;
+
+  LogOutUseCase(this._repository);
 
   @override
   FutureEither<void> call(NoParams params) async {
@@ -17,7 +18,7 @@ class AuthLogOutUseCase extends UseCase<void, NoParams> {
       (failure) {
         unawaited(
           Analytics.track(
-            AuthLogOutUseCaseEvent.failure(
+            LogOutUseCaseEvent.failure(
               properties: {
                 AnalyticsPropertyKeys.failureMessage: failure.message,
                 AnalyticsPropertyKeys.failureType: failure.details?.type.name,
@@ -29,7 +30,7 @@ class AuthLogOutUseCase extends UseCase<void, NoParams> {
         return result;
       },
       (_) {
-        unawaited(Analytics.track(AuthLogOutUseCaseEvent.success()));
+        unawaited(Analytics.track(LogOutUseCaseEvent.success()));
         return result;
       },
     );

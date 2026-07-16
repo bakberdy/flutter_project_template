@@ -11,7 +11,6 @@ abstract class AuthRemoteDataSource {
   Future<LoginResponseModel> login(AuthLoginRequest request);
   Future<VerifyResponseModel> verify(VerifyRequestModel request);
   Future<VerifyResponseModel> refreshToken(String refreshToken);
-  Future<void> logOut();
 }
 
 @Singleton(as: AuthRemoteDataSource)
@@ -20,12 +19,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   static const _bearerPrefix = 'Bearer';
 
   final ApiClient _publicApiClient;
-  final ApiClient _protectedApiClient;
-
-  AuthRemoteDataSourceImpl(
-    @Named('publicApiClient') this._publicApiClient,
-    @Named('protectedApiClient') this._protectedApiClient,
-  );
+  AuthRemoteDataSourceImpl(@Named('publicApiClient') this._publicApiClient);
 
   @override
   Future<LoginResponseModel> login(AuthLoginRequest request) async {
@@ -55,12 +49,5 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       ),
     );
     return VerifyResponseModel.fromJson(response.data!);
-  }
-
-  @override
-  Future<void> logOut() async {
-    await _protectedApiClient.post<Map<String, dynamic>>(
-      ClientAuthApiEndpoints.logOut,
-    );
   }
 }

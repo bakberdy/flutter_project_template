@@ -25,4 +25,6 @@ abstract class UserProfileRepository {
   FutureEither<UserProfile> removeAvatar();
 
   FutureEither<User> requestAccountDeletion();
+
+  FutureEither<void> logOut();
 }

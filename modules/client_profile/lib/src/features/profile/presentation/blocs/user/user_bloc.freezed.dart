@@ -12,6 +12,98 @@ part of 'user_bloc.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
+mixin _$UserEvent {
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserEvent);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'UserEvent()';
+}
+
+
+}
+
+
+
+
+
+/// @nodoc
+
+
+class UserRefreshEvent implements UserEvent {
+  const UserRefreshEvent();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserRefreshEvent);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'UserEvent.refreshUser()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class UserLoggedOutEvent implements UserEvent {
+  const UserLoggedOutEvent();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserLoggedOutEvent);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'UserEvent.logout()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
 mixin _$UserState {
 
  User? get user; StateStatus get status;

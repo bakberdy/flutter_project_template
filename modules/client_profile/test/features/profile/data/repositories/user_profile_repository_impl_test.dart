@@ -1,26 +1,20 @@
-import 'package:client_auth/src/features/auth/data/datasources/auth_remote_data_source.dart';
-import 'package:client_auth/src/features/auth/data/repositories/auth_repository_impl.dart';
+import 'package:client_profile/src/features/profile/data/datasources/user_profile_remote_data_source.dart';
+import 'package:client_profile/src/features/profile/data/repositories/user_profile_repository_impl.dart';
 import 'package:core/core.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 void main() {
-  late _MockAuthRemoteDataSource remoteDataSource;
+  late _MockUserProfileRemoteDataSource remoteDataSource;
   late _MockTokenStorage tokenStorage;
-  late _MockDeviceInfoService deviceInfoService;
-  late AuthRepositoryImpl repository;
+  late UserProfileRepositoryImpl repository;
 
   setUp(() {
-    remoteDataSource = _MockAuthRemoteDataSource();
+    remoteDataSource = _MockUserProfileRemoteDataSource();
     tokenStorage = _MockTokenStorage();
-    deviceInfoService = _MockDeviceInfoService();
     when(() => remoteDataSource.logOut()).thenAnswer((_) async {});
     when(() => tokenStorage.clearTokens()).thenAnswer((_) async {});
-    repository = AuthRepositoryImpl(
-      remoteDataSource,
-      tokenStorage,
-      deviceInfoService,
-    );
+    repository = UserProfileRepositoryImpl(remoteDataSource, tokenStorage);
   });
 
   test('logout clears local tokens after a successful API request', () async {
@@ -42,8 +36,7 @@ void main() {
   });
 }
 
-class _MockAuthRemoteDataSource extends Mock implements AuthRemoteDataSource {}
+class _MockUserProfileRemoteDataSource extends Mock
+    implements UserProfileRemoteDataSource {}
 
 class _MockTokenStorage extends Mock implements TokenStorage {}
-
-class _MockDeviceInfoService extends Mock implements DeviceInfoService {}

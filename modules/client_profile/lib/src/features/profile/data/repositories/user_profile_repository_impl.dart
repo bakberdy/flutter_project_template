@@ -9,7 +9,9 @@ import 'package:injectable/injectable.dart';
 @Singleton(as: UserProfileRepository)
 class UserProfileRepositoryImpl implements UserProfileRepository {
   final UserProfileRemoteDataSource _remoteDataSource;
-  UserProfileRepositoryImpl(this._remoteDataSource);
+  final TokenStorage _tokenStorage;
+
+  UserProfileRepositoryImpl(this._remoteDataSource, this._tokenStorage);
 
   @override
   FutureEither<User> getCurrentUser({ApiCancelToken? cancelToken}) async {
@@ -120,6 +122,18 @@ class UserProfileRepositoryImpl implements UserProfileRepository {
       return Left(
         await e.toFailure(source: '$runtimeType.requestAccountDeletion'),
       );
+    }
+  }
+
+  @override
+  FutureEither<void> logOut() async {
+    try {
+      await _remoteDataSource.logOut();
+      return const Right(null);
+    } on Exception catch (e) {
+      return Left(await e.toFailure(source: '$runtimeType.logOut'));
+    } finally {
+      await _tokenStorage.clearTokens();
     }
   }
 }

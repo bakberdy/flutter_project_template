@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:client_app/app/theme/app_theme_scope.dart';
 import 'package:client_app/src/common/config/localization/app_localization_config.dart';
 import 'package:client_app/src/common/config/router/client_app_router.dart';
-import 'package:client_auth/client_auth.dart';
 import 'package:client_profile/client_profile.dart';
 import 'package:client_preferences/client_preferences.dart';
 import 'package:core/core.dart';
@@ -126,13 +125,12 @@ class _AppState extends State<App> {
   }
 
   Future<void> _logoutAndRefreshSession() async {
-    await sl<AuthLogOutUseCase>()(const NoParams());
-    _userBloc.add(const UserLoggedOutEvent());
+    _userBloc.add(UserEvent.logout());
   }
 
   Future<void> _handleUnauthorized() async {
     if (mounted) {
-      _userBloc.add(const UserLoggedOutEvent());
+      _userBloc.add(UserEvent.refreshUser());
     }
   }
 

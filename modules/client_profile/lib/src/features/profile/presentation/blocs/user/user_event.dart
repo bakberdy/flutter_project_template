@@ -1,13 +1,7 @@
 part of 'user_bloc.dart';
 
-sealed class UserEvent {
-  const UserEvent();
-}
-
-final class UserStartedEvent extends UserEvent {
-  const UserStartedEvent();
-}
-
-final class UserLoggedOutEvent extends UserEvent {
-  const UserLoggedOutEvent();
+@Freezed(copyWith: false)
+sealed class UserEvent with _$UserEvent {
+  const factory UserEvent.refreshUser() = UserRefreshEvent;
+  const factory UserEvent.logout() = UserLoggedOutEvent;
 }

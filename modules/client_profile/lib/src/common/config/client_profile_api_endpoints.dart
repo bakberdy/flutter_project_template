@@ -4,6 +4,7 @@ abstract final class ClientProfileApiEndpoints {
   static const String avatar = '$me/avatar';
   static const String accountDeletion = '$me/delete-request';
   static const String sessions = '/auth/sessions';
+  static const String logOut = '/auth/logout';
 
   static String session(String sessionId) => '$sessions/$sessionId';
 }

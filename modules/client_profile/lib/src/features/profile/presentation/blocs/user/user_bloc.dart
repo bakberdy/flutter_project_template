@@ -1,6 +1,8 @@
 import 'package:bloc_concurrency/bloc_concurrency.dart';
+import 'package:client_profile/client_profile.dart';
 import 'package:core/api/models/api_cancel_token.dart';
 import 'package:core/bloc/state_status/state_status.dart';
+import 'package:core/usecases/use_case.dart';
 import 'package:shared/shared.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:client_profile/src/features/profile/domain/usecases/get_current_user_use_case.dart';
@@ -16,8 +18,9 @@ const _requestTimeout = Duration(seconds: 10);
 @injectable
 class UserBloc extends Bloc<UserEvent, UserState> {
   final GetCurrentUserUseCase getUserUseCase;
+  final LogOutUseCase logOutUseCase;
 
-  UserBloc(this.getUserUseCase) : super(UserState()) {
+  UserBloc(this.getUserUseCase, this.logOutUseCase) : super(UserState()) {
     on<UserEvent>(_onEvent, transformer: restartable());
   }
 
@@ -25,13 +28,18 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   Future<void> _onEvent(UserEvent event, Emitter<UserState> emit) async {
     switch (event) {
-      case UserStartedEvent():
+      case UserRefreshEvent():
         await _getCurrentUser(emit);
         return;
       case UserLoggedOutEvent():
         _getCurrentUserCancelToken?.cancel();
         _getCurrentUserCancelToken = null;
-        emit(UserState(status: StateStatus.success()));
+        final result = await logOutUseCase(const NoParams());
+
+        result.fold(
+          (failure) => emit(state.copyWith(status: StateStatus.error(failure))),
+          (_) => emit(UserState(status: StateStatus.success())),
+        );
         return;
     }
   }

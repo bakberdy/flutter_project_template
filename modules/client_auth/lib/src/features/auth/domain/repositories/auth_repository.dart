@@ -7,5 +7,4 @@ abstract class AuthRepository {
   FutureEither<LoginResponse> login(String email);
   FutureEither<VerifyResponse> verify(VerifyRequest request);
   FutureEither<VerifyResponse> refreshToken();
-  FutureEither<void> logOut();
 }

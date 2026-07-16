@@ -51,20 +51,3 @@ final class AuthRefreshTokenUseCaseEvent extends AnalyticsEvent {
     properties: properties,
   );
 }
-
-final class AuthLogOutUseCaseEvent extends AnalyticsEvent {
-  const AuthLogOutUseCaseEvent({required super.name, super.properties});
-
-  factory AuthLogOutUseCaseEvent.success({Map<String, dynamic>? properties}) =>
-      AuthLogOutUseCaseEvent(
-        name: 'auth_log_out_usecase_success',
-        properties: properties,
-      );
-
-  factory AuthLogOutUseCaseEvent.failure({
-    required Map<String, dynamic> properties,
-  }) => AuthLogOutUseCaseEvent(
-    name: 'auth_log_out_usecase_failure',
-    properties: properties,
-  );
-}

@@ -5,6 +5,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i687;
 
+import 'package:client_profile/client_profile.dart' as _i559;
 import 'package:client_profile/src/features/profile/data/datasources/user_profile_remote_data_source.dart'
     as _i694;
 import 'package:client_profile/src/features/profile/data/repositories/user_profile_repository_impl.dart'
@@ -17,6 +18,8 @@ import 'package:client_profile/src/features/profile/domain/usecases/get_current_
     as _i722;
 import 'package:client_profile/src/features/profile/domain/usecases/get_current_user_use_case.dart'
     as _i225;
+import 'package:client_profile/src/features/profile/domain/usecases/log_out_use_case.dart'
+    as _i527;
 import 'package:client_profile/src/features/profile/domain/usecases/remove_user_avatar_use_case.dart'
     as _i133;
 import 'package:client_profile/src/features/profile/domain/usecases/request_account_deletion_use_case.dart'
@@ -60,9 +63,11 @@ class ClientProfilePackageModule extends _i526.MicroPackageModule {
     gh.singleton<_i279.SessionsRemoteDataSource>(() =>
         _i279.SessionsRemoteDataSourceImpl(
             gh<_i494.ApiClient>(instanceName: 'protectedApiClient')));
-    gh.singleton<_i569.UserProfileRepository>(() =>
-        _i328.UserProfileRepositoryImpl(
-            gh<_i694.UserProfileRemoteDataSource>()));
+    gh.singleton<_i569.UserProfileRepository>(
+        () => _i328.UserProfileRepositoryImpl(
+              gh<_i694.UserProfileRemoteDataSource>(),
+              gh<_i494.TokenStorage>(),
+            ));
     gh.singleton<_i481.SessionsRepository>(() => _i814.SessionsRepositoryImpl(
           gh<_i279.SessionsRemoteDataSource>(),
           gh<_i494.TokenStorage>(),
@@ -79,6 +84,8 @@ class ClientProfilePackageModule extends _i526.MicroPackageModule {
         _i722.GetCurrentUserProfileUseCase(gh<_i569.UserProfileRepository>()));
     gh.lazySingleton<_i225.GetCurrentUserUseCase>(
         () => _i225.GetCurrentUserUseCase(gh<_i569.UserProfileRepository>()));
+    gh.lazySingleton<_i527.LogOutUseCase>(
+        () => _i527.LogOutUseCase(gh<_i569.UserProfileRepository>()));
     gh.lazySingleton<_i133.RemoveUserAvatarUseCase>(
         () => _i133.RemoveUserAvatarUseCase(gh<_i569.UserProfileRepository>()));
     gh.lazySingleton<_i61.RequestAccountDeletionUseCase>(() =>
@@ -87,8 +94,10 @@ class ClientProfilePackageModule extends _i526.MicroPackageModule {
         _i1046.UpdateUserAvatarUseCase(gh<_i569.UserProfileRepository>()));
     gh.lazySingleton<_i302.UpdateUserProfileUseCase>(() =>
         _i302.UpdateUserProfileUseCase(gh<_i569.UserProfileRepository>()));
-    gh.factory<_i100.UserBloc>(
-        () => _i100.UserBloc(gh<_i225.GetCurrentUserUseCase>()));
+    gh.factory<_i100.UserBloc>(() => _i100.UserBloc(
+          gh<_i225.GetCurrentUserUseCase>(),
+          gh<_i559.LogOutUseCase>(),
+        ));
     gh.factory<_i922.UserProfileBloc>(() => _i922.UserProfileBloc(
           gh<_i494.GetAppInfoUseCase>(),
           gh<_i225.GetCurrentUserUseCase>(),

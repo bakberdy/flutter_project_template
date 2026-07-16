@@ -27,6 +27,8 @@ abstract class UserProfileRemoteDataSource {
   Future<UserProfileModel> removeAvatar();
 
   Future<UserModel> requestAccountDeletion();
+
+  Future<void> logOut();
 }
 
 @Singleton(as: UserProfileRemoteDataSource)
@@ -112,5 +114,12 @@ class UserProfileRemoteDataSourceImpl implements UserProfileRemoteDataSource {
       ClientProfileApiEndpoints.accountDeletion,
     );
     return UserModel.fromJson(response.data!);
+  }
+
+  @override
+  Future<void> logOut() async {
+    await _apiClient.post<Map<String, dynamic>>(
+      ClientProfileApiEndpoints.logOut,
+    );
   }
 }
