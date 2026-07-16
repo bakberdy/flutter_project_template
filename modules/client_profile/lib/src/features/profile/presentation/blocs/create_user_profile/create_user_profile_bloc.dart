@@ -1,12 +1,12 @@
-import 'package:core/core.dart';
-import 'package:shared/shared.dart';
 import 'package:client_profile/src/common/config/client_profile_constants.dart';
 import 'package:client_profile/src/features/profile/domain/usecases/create_user_profile_use_case.dart';
 import 'package:client_profile/src/features/profile/presentation/helpers/user_profile_phone_number_validation.dart';
+import 'package:core/core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared/shared.dart';
 
 part 'create_user_profile_bloc.freezed.dart';
 part 'create_user_profile_event.dart';

@@ -1,13 +1,13 @@
-import 'package:bloc_test/bloc_test.dart';
-import 'package:core/core.dart';
-import 'package:dartz/dartz.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
 import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
 import 'package:admin_users/src/features/users/domain/entities/users_query.dart';
 import 'package:admin_users/src/features/users/domain/repositories/users_repository.dart';
 import 'package:admin_users/src/features/users/domain/usecases/get_users_use_case.dart';
 import 'package:admin_users/src/features/users/presentation/blocs/users_list/users_list_bloc.dart';
+import 'package:bloc_test/bloc_test.dart';
+import 'package:core/core.dart';
+import 'package:dartz/dartz.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 
 void main() {
   late _MockUsersRepository repository;

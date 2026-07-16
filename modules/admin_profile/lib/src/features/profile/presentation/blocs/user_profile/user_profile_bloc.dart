@@ -1,13 +1,13 @@
-import 'package:core/core.dart';
-import 'package:shared/shared.dart';
 import 'package:admin_profile/src/features/profile/domain/entities/user_avatar_upload.dart';
 import 'package:admin_profile/src/features/profile/domain/usecases/get_current_user_profile_use_case.dart';
 import 'package:admin_profile/src/features/profile/domain/usecases/remove_user_avatar_use_case.dart';
 import 'package:admin_profile/src/features/profile/domain/usecases/request_account_deletion_use_case.dart';
 import 'package:admin_profile/src/features/profile/domain/usecases/update_user_avatar_use_case.dart';
+import 'package:core/core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared/shared.dart';
 
 part 'user_profile_bloc.freezed.dart';
 part 'user_profile_event.dart';

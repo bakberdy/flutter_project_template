@@ -1,6 +1,6 @@
-import 'package:json_annotation/json_annotation.dart';
 import 'package:admin_users/src/features/users/data/models/admin_user_phone_number_model/admin_user_phone_number_model.dart';
 import 'package:admin_users/src/features/users/domain/entities/admin_user_profile.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'admin_user_profile_model.g.dart';
 

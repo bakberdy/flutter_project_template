@@ -1,5 +1,5 @@
-import 'package:core/config/core_app_config.dart';
 import 'package:core/api/api.dart';
+import 'package:core/config/core_app_config.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';

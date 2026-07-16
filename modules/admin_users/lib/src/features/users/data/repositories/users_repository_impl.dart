@@ -1,11 +1,11 @@
-import 'package:core/core.dart';
-import 'package:injectable/injectable.dart';
 import 'package:admin_users/src/features/users/data/datasources/users_remote_data_source.dart';
 import 'package:admin_users/src/features/users/data/services/users_repository_request_handler.dart';
 import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
 import 'package:admin_users/src/features/users/domain/entities/admin_user_profile.dart';
 import 'package:admin_users/src/features/users/domain/entities/users_query.dart';
 import 'package:admin_users/src/features/users/domain/repositories/users_repository.dart';
+import 'package:core/core.dart';
+import 'package:injectable/injectable.dart';
 
 @Singleton(as: UsersRepository)
 class UsersRepositoryImpl implements UsersRepository {

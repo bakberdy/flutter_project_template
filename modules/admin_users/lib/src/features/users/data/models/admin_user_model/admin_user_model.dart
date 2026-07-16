@@ -1,5 +1,5 @@
-import 'package:json_annotation/json_annotation.dart';
 import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'admin_user_model.g.dart';
 

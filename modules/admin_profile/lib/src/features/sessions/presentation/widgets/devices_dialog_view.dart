@@ -1,13 +1,15 @@
-import 'package:admin_profile/src/common/admin_profile_context_x.dart';
+import 'dart:async';
+
 import 'package:admin_auth/admin_auth.dart';
+import 'package:admin_profile/src/common/admin_profile_context_x.dart';
 import 'package:admin_profile/src/features/sessions/presentation/widgets/session_list_item.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:core/core.dart';
-import 'package:shared/shared.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:shared/shared.dart';
 
 class DevicesDialogView extends StatefulWidget {
   const DevicesDialogView({super.key});
@@ -28,7 +30,7 @@ class _DevicesDialogViewState extends State<DevicesDialogView>
 
   @override
   void dispose() {
-    _bloc.close();
+    unawaited(_bloc.close());
     super.dispose();
   }
 

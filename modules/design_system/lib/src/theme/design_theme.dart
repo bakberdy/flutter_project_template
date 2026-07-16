@@ -1,5 +1,5 @@
-import 'package:design_system/src/tokens/design_tokens.dart';
 import 'package:design_system/gen/fonts.gen.dart';
+import 'package:design_system/src/tokens/design_tokens.dart';
 import 'package:flutter/material.dart';
 
 import 'design_semantic_colors.dart';

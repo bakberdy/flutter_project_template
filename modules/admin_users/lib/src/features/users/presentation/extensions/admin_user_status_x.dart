@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
+import 'package:flutter/material.dart';
 
 extension AdminUserStatusX on AdminUserStatus {
   Color get color {

@@ -1,12 +1,12 @@
 library;
 
 export 'gen/l10n/shared_localizations.dart';
+export 'src/entities/auth/country_dial_code.dart';
 export 'src/entities/auth/user.dart';
 export 'src/entities/auth/user_phone_number.dart';
 export 'src/entities/auth/user_profile.dart';
 export 'src/entities/auth/user_role.dart';
 export 'src/entities/auth/user_status.dart';
-export 'src/entities/auth/country_dial_code.dart';
 export 'src/extensions/di_context_x.dart';
 export 'src/extensions/failure_ui_x.dart';
 export 'src/extensions/string_x.dart';

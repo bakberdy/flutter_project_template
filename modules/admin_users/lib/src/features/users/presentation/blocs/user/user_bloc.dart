@@ -1,14 +1,14 @@
-import 'package:bloc_concurrency/bloc_concurrency.dart';
-import 'package:core/core.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:injectable/injectable.dart';
 import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
 import 'package:admin_users/src/features/users/domain/entities/admin_user_profile.dart';
 import 'package:admin_users/src/features/users/domain/usecases/approve_user_deletion_request_use_case.dart';
 import 'package:admin_users/src/features/users/domain/usecases/change_user_status_use_case.dart';
 import 'package:admin_users/src/features/users/domain/usecases/get_user_profile_use_case.dart';
 import 'package:admin_users/src/features/users/domain/usecases/get_user_use_case.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart';
+import 'package:core/core.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 
 part 'user_bloc.freezed.dart';
 part 'user_event.dart';

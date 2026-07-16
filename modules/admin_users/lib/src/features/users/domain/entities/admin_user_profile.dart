@@ -1,5 +1,5 @@
-import 'package:equatable/equatable.dart';
 import 'package:admin_users/src/features/users/domain/entities/admin_user_phone_number.dart';
+import 'package:equatable/equatable.dart';
 
 class AdminUserProfile extends Equatable {
   const AdminUserProfile({

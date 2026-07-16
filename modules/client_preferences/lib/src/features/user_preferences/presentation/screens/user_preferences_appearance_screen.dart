@@ -1,12 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:client_preferences/src/common/client_preferences_context_x.dart';
-import 'package:core/core.dart';
-import 'package:shared/shared.dart';
-import 'package:design_system/design_system.dart';
 import 'package:client_preferences/src/features/user_preferences/domain/entities/user_preferences.dart';
 import 'package:client_preferences/src/features/user_preferences/presentation/blocs/theme/theme_bloc.dart';
+import 'package:core/core.dart';
+import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared/shared.dart';
 
 @RoutePage()
 class UserPreferencesAppearanceScreen extends StatelessWidget

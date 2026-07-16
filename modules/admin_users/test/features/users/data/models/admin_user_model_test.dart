@@ -1,8 +1,8 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:admin_users/src/features/users/data/models/admin_user_model/admin_user_model.dart';
 import 'package:admin_users/src/features/users/data/models/admin_user_phone_number_model/admin_user_phone_number_model.dart';
 import 'package:admin_users/src/features/users/data/models/admin_user_profile_model/admin_user_profile_model.dart';
 import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('parses user payload with backend snake_case keys', () {

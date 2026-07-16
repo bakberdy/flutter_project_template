@@ -1,15 +1,15 @@
+import 'package:admin_users/src/common/admin_users_context_x.dart';
+import 'package:admin_users/src/common/config/router/admin_users_router.dart';
+import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
+import 'package:admin_users/src/features/users/domain/entities/users_query.dart';
+import 'package:admin_users/src/features/users/presentation/extensions/admin_user_localization_x.dart';
+import 'package:admin_users/src/features/users/presentation/widgets/user_status_card.dart';
+import 'package:admin_users/src/features/users/presentation/widgets/user_verified_icon.dart';
 import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
-import 'package:admin_users/src/features/users/domain/entities/users_query.dart';
-import 'package:admin_users/src/common/config/router/admin_users_router.dart';
-import 'package:admin_users/src/features/users/presentation/extensions/admin_user_localization_x.dart';
-import 'package:admin_users/src/features/users/presentation/widgets/user_status_card.dart';
-import 'package:admin_users/src/features/users/presentation/widgets/user_verified_icon.dart';
-import 'package:admin_users/src/common/admin_users_context_x.dart';
 
 class UsersDataTable extends StatelessWidget {
   const UsersDataTable({
@@ -117,7 +117,7 @@ class UsersDataTable extends StatelessWidget {
       rows: users
           .map(
             (user) => DataRow(
-              onSelectChanged: (selected) async {
+              onSelectChanged: (selected) {
                 if (!(selected ?? false)) {
                   return;
                 }

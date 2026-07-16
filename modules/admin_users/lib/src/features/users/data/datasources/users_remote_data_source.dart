@@ -1,11 +1,11 @@
-import 'package:core/core.dart';
-import 'package:injectable/injectable.dart';
 import 'package:admin_users/src/common/config/admin_users_api_endpoints.dart';
 import 'package:admin_users/src/features/users/data/mappers/users_api_mapper.dart';
 import 'package:admin_users/src/features/users/data/models/admin_user_model/admin_user_model.dart';
 import 'package:admin_users/src/features/users/data/models/admin_user_profile_model/admin_user_profile_model.dart';
 import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
 import 'package:admin_users/src/features/users/domain/entities/users_query.dart';
+import 'package:core/core.dart';
+import 'package:injectable/injectable.dart';
 
 abstract class UsersRemoteDataSource {
   Future<PaginatedResponseModel<AdminUserModel>> getUsers(

@@ -1,10 +1,10 @@
-import 'package:core/core.dart';
 import 'package:admin_auth/src/common/config/admin_auth_api_endpoints.dart';
 import 'package:admin_auth/src/features/auth/data/models/auth_login_request_model/auth_login_request_model.dart';
 import 'package:admin_auth/src/features/auth/data/models/authorization_login_response_model/authorization_login_response_model.dart';
 import 'package:admin_auth/src/features/auth/data/models/authorization_verify_request_model/authorization_verify_request_model.dart';
 import 'package:admin_auth/src/features/auth/data/models/authorization_verify_response_model/authorization_verify_response_model.dart';
 import 'package:admin_auth/src/features/auth/domain/entities/auth_login_request.dart';
+import 'package:core/core.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class AuthRemoteDataSource {

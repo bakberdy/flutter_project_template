@@ -43,7 +43,7 @@ void main() {
         ),
       ),
     );
-    verify(() => tokenStorage.clearTokens()).called(1);
+    verify(tokenStorage.clearTokens).called(1);
     expect(unauthorizedNotifications, 1);
   });
 
@@ -114,7 +114,7 @@ void main() {
     );
 
     expect(refreshState.authorization, 'Bearer expired-refresh');
-    verify(() => tokenStorage.clearTokens()).called(1);
+    verify(tokenStorage.clearTokens).called(1);
     expect(unauthorizedNotifications, 1);
   });
 
@@ -157,7 +157,7 @@ void main() {
     unawaited(Future<void>.microtask(notificationCompleter.complete));
 
     await expectLater(requests, throwsA(isA<DioException>()));
-    verify(() => tokenStorage.clearTokens()).called(1);
+    verify(tokenStorage.clearTokens).called(1);
     expect(unauthorizedNotifications, 1);
   });
 }

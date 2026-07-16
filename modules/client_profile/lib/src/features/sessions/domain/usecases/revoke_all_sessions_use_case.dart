@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:core/core.dart';
 import 'package:client_profile/src/features/sessions/domain/analytics/sessions_events.dart';
 import 'package:client_profile/src/features/sessions/domain/repositories/sessions_repository.dart';
+import 'package:core/core.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton

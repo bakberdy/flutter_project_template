@@ -15,7 +15,7 @@ void main() {
   group('DeviceInfoRepository.getAppInfo', () {
     test('returns app info from the service', () async {
       final service = _MockDeviceInfoService();
-      when(() => service.getAppInfo()).thenAnswer((_) async => appInfo);
+      when(service.getAppInfo).thenAnswer((_) async => appInfo);
       final repository = DeviceInfoRepositoryImpl(service);
 
       final result = await repository.getAppInfo();
@@ -29,7 +29,7 @@ void main() {
     test('maps service errors to a failure', () async {
       final service = _MockDeviceInfoService();
       when(
-        () => service.getAppInfo(),
+        service.getAppInfo,
       ).thenThrow(Exception('package info unavailable'));
       final repository = DeviceInfoRepositoryImpl(service);
 

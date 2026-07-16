@@ -1,7 +1,7 @@
-import 'package:core/core.dart';
 import 'package:admin_auth/src/features/auth/domain/entities/login_response.dart';
 import 'package:admin_auth/src/features/auth/domain/entities/verify_request.dart';
 import 'package:admin_auth/src/features/auth/domain/entities/verify_response.dart';
+import 'package:core/core.dart';
 
 abstract class AuthRepository {
   FutureEither<LoginResponse> login(String email);

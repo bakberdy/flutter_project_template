@@ -1,8 +1,8 @@
-import 'package:core/core.dart';
-import 'package:injectable/injectable.dart';
 import 'package:admin_users/src/features/users/domain/entities/admin_user_profile.dart';
 import 'package:admin_users/src/features/users/domain/repositories/users_repository.dart';
 import 'package:admin_users/src/features/users/domain/usecases/admin_users_use_case_tracking.dart';
+import 'package:core/core.dart';
+import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class GetUserProfileUseCase extends UseCase<AdminUserProfile, String> {

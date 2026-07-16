@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:core/core.dart';
 import 'package:admin_auth/src/features/sessions/domain/analytics/sessions_events.dart';
 import 'package:admin_auth/src/features/sessions/domain/entities/session.dart';
 import 'package:admin_auth/src/features/sessions/domain/repositories/sessions_repository.dart';
+import 'package:core/core.dart';
 import 'package:injectable/injectable.dart';
 
 typedef GetSessionsParams = ({int? pageNumber, int? limit, bool? isActive});

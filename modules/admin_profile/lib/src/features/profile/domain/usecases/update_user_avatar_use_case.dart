@@ -1,10 +1,10 @@
-import 'package:core/core.dart';
-import 'package:shared/shared.dart';
 import 'package:admin_profile/src/features/profile/domain/entities/user_avatar_upload.dart';
 import 'package:admin_profile/src/features/profile/domain/repositories/user_profile_repository.dart';
 import 'package:admin_profile/src/features/profile/domain/usecases/user_profile_use_case_tracking.dart';
+import 'package:core/core.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared/shared.dart';
 
 class UpdateUserAvatarParams extends Equatable {
   final UserAvatarUpload avatar;

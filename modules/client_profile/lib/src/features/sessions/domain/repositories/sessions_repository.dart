@@ -1,5 +1,5 @@
-import 'package:core/core.dart';
 import 'package:client_profile/src/features/sessions/domain/entities/session.dart';
+import 'package:core/core.dart';
 
 abstract class SessionsRepository {
   FutureEither<PaginatedResponse<Session>> getSessions({

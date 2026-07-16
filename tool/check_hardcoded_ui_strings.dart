@@ -80,7 +80,7 @@ bool _isUserFacingLiteral(String value) {
   if (value.isEmpty || value.contains(r'$')) {
     return false;
   }
-  return RegExp(r'[A-Za-zА-Яа-яЁёҚқӘәІіҢңҒғҮүҰұӨөҺһ]').hasMatch(value);
+  return RegExp('[A-Za-zА-Яа-яЁёҚқӘәІіҢңҒғҮүҰұӨөҺһ]').hasMatch(value);
 }
 
 bool _isExplicitlyAllowed(String source, int offset) {

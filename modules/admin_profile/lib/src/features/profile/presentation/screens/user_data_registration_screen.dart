@@ -1,13 +1,13 @@
-import 'package:auto_route/auto_route.dart';
-import 'package:core/core.dart';
-import 'package:shared/shared.dart';
 import 'package:admin_profile/src/common/admin_profile_context_x.dart';
 import 'package:admin_profile/src/common/config/admin_profile_constants.dart';
 import 'package:admin_profile/src/features/profile/presentation/blocs/create_user_profile/create_user_profile_bloc.dart';
 import 'package:admin_profile/src/features/profile/presentation/widgets/user_profile_edit_form.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared/shared.dart';
 
 @RoutePage()
 class UserDataRegistrationScreen extends StatefulWidget

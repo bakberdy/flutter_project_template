@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:core/core.dart';
 import 'package:admin_profile/src/features/profile/domain/analytics/user_profile_events.dart';
+import 'package:core/core.dart';
 
 FutureEither<T> trackUserProfileUseCase<T>(
   FutureEither<T> result,

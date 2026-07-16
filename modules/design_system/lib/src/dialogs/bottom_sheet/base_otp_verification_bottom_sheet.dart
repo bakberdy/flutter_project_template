@@ -1,6 +1,6 @@
-import 'package:design_system/src/tokens/design_tokens.dart';
 import 'package:design_system/src/buttons/base_button.dart';
 import 'package:design_system/src/inputs/base_otp_text_field.dart';
+import 'package:design_system/src/tokens/design_tokens.dart';
 import 'package:flutter/material.dart';
 
 class BaseOtpVerificationBottomSheet extends StatefulWidget {

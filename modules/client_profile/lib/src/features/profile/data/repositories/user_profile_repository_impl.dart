@@ -1,10 +1,10 @@
-import 'package:core/core.dart';
-import 'package:shared/shared.dart';
 import 'package:client_profile/src/features/profile/data/datasources/user_profile_remote_data_source.dart';
 import 'package:client_profile/src/features/profile/domain/entities/user_avatar_upload.dart';
 import 'package:client_profile/src/features/profile/domain/repositories/user_profile_repository.dart';
+import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared/shared.dart';
 
 @Singleton(as: UserProfileRepository)
 class UserProfileRepositoryImpl implements UserProfileRepository {

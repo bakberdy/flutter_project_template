@@ -1,9 +1,9 @@
 import 'package:bloc_concurrency/bloc_concurrency.dart';
-import 'package:core/core.dart';
 import 'package:client_profile/src/features/sessions/domain/entities/session.dart';
 import 'package:client_profile/src/features/sessions/domain/usecases/get_sessions_use_case.dart';
 import 'package:client_profile/src/features/sessions/domain/usecases/revoke_all_sessions_use_case.dart';
 import 'package:client_profile/src/features/sessions/domain/usecases/revoke_session_use_case.dart';
+import 'package:core/core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';

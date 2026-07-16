@@ -1,7 +1,7 @@
-import 'package:core/core.dart';
 import 'package:client_profile/src/features/sessions/data/datasources/sessions_remote_data_source.dart';
 import 'package:client_profile/src/features/sessions/domain/entities/session.dart';
 import 'package:client_profile/src/features/sessions/domain/repositories/sessions_repository.dart';
+import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 

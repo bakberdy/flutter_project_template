@@ -1,7 +1,7 @@
-import 'package:core/core.dart';
 import 'package:admin_auth/src/features/auth/domain/entities/verify_request.dart';
 import 'package:admin_auth/src/features/auth/domain/usecases/auth_login_use_case.dart';
 import 'package:admin_auth/src/features/auth/domain/usecases/auth_verify_use_case.dart';
+import 'package:core/core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';

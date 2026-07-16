@@ -16,12 +16,12 @@ void main() {
     () async {
       final repository = _MockUserProfileRepository();
       final currentUser = Completer<Either<Failure, User>>();
-      when(() => repository.hasSession()).thenAnswer((_) async => true);
+      when(repository.hasSession).thenAnswer((_) async => true);
       when(
         () => repository.getCurrentUser(cancelToken: any(named: 'cancelToken')),
       ).thenAnswer((_) => currentUser.future);
       when(
-        () => repository.logOut(),
+        repository.logOut,
       ).thenAnswer((_) async => const Right<Failure, void>(null));
       final bloc = UserBloc(
         GetCurrentUserUseCase(repository),

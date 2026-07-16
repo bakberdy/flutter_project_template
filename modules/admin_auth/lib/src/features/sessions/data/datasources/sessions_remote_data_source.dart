@@ -1,7 +1,7 @@
-import 'package:core/core.dart';
 import 'package:admin_auth/src/common/config/admin_auth_api_endpoints.dart';
 import 'package:admin_auth/src/features/sessions/data/models/session_model/session_model.dart';
 import 'package:admin_auth/src/features/sessions/domain/entities/session.dart';
+import 'package:core/core.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class SessionsRemoteDataSource {

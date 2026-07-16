@@ -1,5 +1,5 @@
-import 'package:design_system/src/tokens/design_tokens.dart';
 import 'package:design_system/src/extensions/build_context_design_x.dart';
+import 'package:design_system/src/tokens/design_tokens.dart';
 import 'package:flutter/material.dart';
 
 class BaseListTile extends StatelessWidget {
@@ -30,7 +30,7 @@ class BaseListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final defaultRadiues = const Radius.circular(DesignRadiusTokens.lg);
+    const defaultRadiues = Radius.circular(DesignRadiusTokens.lg);
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(

@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:core/core.dart';
-import 'package:shared/shared.dart';
 import 'package:client_auth/src/features/auth/presentation/blocs/auth/auth_bloc.dart';
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared/shared.dart';
 
 @RoutePage()
 class AuthWrapperScreen extends StatelessWidget implements AutoRouteWrapper {

@@ -20,7 +20,7 @@ void main() {
         () => repository.getCurrentUser(cancelToken: any(named: 'cancelToken')),
       ).thenAnswer((_) => currentUser.future);
       when(
-        () => repository.logOut(),
+        repository.logOut,
       ).thenAnswer((_) async => const Right<Failure, void>(null));
       final bloc = UserBloc(
         GetCurrentUserUseCase(repository),

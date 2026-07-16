@@ -1,12 +1,12 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/widgets.dart';
 import 'package:client_profile/src/common/config/client_profile_navigation_paths.dart';
 import 'package:client_profile/src/features/account_status/presentation/screens/user_blocked_screen.dart';
 import 'package:client_profile/src/features/account_status/presentation/screens/user_deletion_requested_screen.dart';
-import 'package:client_profile/src/features/sessions/presentation/screens/sessions_screen.dart';
 import 'package:client_profile/src/features/profile/presentation/screens/profile_tab_shell_screen.dart';
 import 'package:client_profile/src/features/profile/presentation/screens/user_data_registration_screen.dart';
 import 'package:client_profile/src/features/profile/presentation/screens/user_profile_edit_screen.dart';
+import 'package:client_profile/src/features/sessions/presentation/screens/sessions_screen.dart';
+import 'package:flutter/widgets.dart';
 
 part 'client_profile_router.gr.dart';
 

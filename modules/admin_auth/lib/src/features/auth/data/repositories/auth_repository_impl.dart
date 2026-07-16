@@ -1,4 +1,3 @@
-import 'package:core/core.dart';
 import 'package:admin_auth/src/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:admin_auth/src/features/auth/data/models/authorization_verify_request_model/authorization_verify_request_model.dart';
 import 'package:admin_auth/src/features/auth/domain/entities/auth_login_request.dart';
@@ -6,6 +5,7 @@ import 'package:admin_auth/src/features/auth/domain/entities/login_response.dart
 import 'package:admin_auth/src/features/auth/domain/entities/verify_request.dart';
 import 'package:admin_auth/src/features/auth/domain/entities/verify_response.dart';
 import 'package:admin_auth/src/features/auth/domain/repositories/auth_repository.dart';
+import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
@@ -19,7 +19,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   FutureEither<LoginResponse> login(String email) async {
     try {
-      final device = const AuthDeviceInfo(
+      const device = AuthDeviceInfo(
         deviceId: 'web',
         os: 'web',
         osVersion: '',
