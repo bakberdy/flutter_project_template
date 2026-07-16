@@ -11,7 +11,7 @@ class CoreNavigationListener extends StatelessWidget {
     required this.child,
     super.key,
     this.onAuthenticated,
-    this.onUnauthenticated,
+    this.onLoggedOut,
     this.onRefreshUser,
     this.onNavigationError,
   });
@@ -20,7 +20,7 @@ class CoreNavigationListener extends StatelessWidget {
   final Widget child;
 
   final VoidCallback? onAuthenticated;
-  final VoidCallback? onUnauthenticated;
+  final VoidCallback? onLoggedOut;
   final VoidCallback? onRefreshUser;
   final void Function(Object error, StackTrace stackTrace)? onNavigationError;
 
@@ -67,8 +67,8 @@ class CoreNavigationListener extends StatelessWidget {
           router.popUntilRouteWithName(route.routeName, scoped: false);
         case OpenDeepLinkNavigationCommand(:final uri):
           _dispatch(router.pushPath(uri.toString()));
-        case UnAuthenticatedNavigationCommand():
-          onUnauthenticated?.call();
+        case LoggedOutNavigationCommand():
+          onLoggedOut?.call();
         case RefreshUserNavigationCommand():
           onRefreshUser?.call();
         case AuthenticatedNavigationCommand():

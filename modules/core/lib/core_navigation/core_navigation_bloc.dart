@@ -20,7 +20,7 @@ class CoreNavigationBloc
     on<_CommandHandled>(_onCommandHandled);
     on<_StackSynchronized>(_onStackSynchronized);
     on<_AuthenticatedRequested>(_onAuthenticatedRequested);
-    on<_UnauthenticatedRequested>(_onUnauthenticatedRequested);
+    on<_LoggedOutRequested>(_onLoggedOutRequested);
     on<_RefreshUserRequested>(_onRefreshUserRequested);
   }
 
@@ -195,15 +195,15 @@ class CoreNavigationBloc
     );
   }
 
-  void _onUnauthenticatedRequested(
-    _UnauthenticatedRequested event,
+  void _onLoggedOutRequested(
+    _LoggedOutRequested event,
     Emitter<CoreNavigationState> emit,
   ) {
     emit(
       state.copyWith(
         pendingCommands: [
           ...state.pendingCommands,
-          CoreNavigationCommand.unAuthenticated(id: _createCommandId()),
+          CoreNavigationCommand.loggedOut(id: _createCommandId()),
         ],
       ),
     );

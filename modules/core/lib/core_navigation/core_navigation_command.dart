@@ -38,8 +38,8 @@ sealed class CoreNavigationCommand with _$CoreNavigationCommand {
     required Uri uri,
   }) = OpenDeepLinkNavigationCommand;
 
-  const factory CoreNavigationCommand.unAuthenticated({required int id}) =
-      UnAuthenticatedNavigationCommand;
+  const factory CoreNavigationCommand.loggedOut({required int id}) =
+      LoggedOutNavigationCommand;
 
   const factory CoreNavigationCommand.authenticated({required int id}) =
       AuthenticatedNavigationCommand;

@@ -186,14 +186,14 @@ void main() {
     test('unAuthenticated queues an unauthenticated command', () async {
       final bloc = CoreNavigationBloc();
 
-      bloc.add(const CoreNavigationEvent.unAuthenticated());
+      bloc.add(const CoreNavigationEvent.loggedOut());
       await expectLater(
         bloc.stream,
         emits(
           isA<CoreNavigationState>().having(
             (state) => state.nextCommand,
             'nextCommand',
-            isA<UnAuthenticatedNavigationCommand>().having(
+            isA<LoggedOutNavigationCommand>().having(
               (command) => command.id,
               'id',
               0,

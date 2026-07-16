@@ -132,7 +132,7 @@ class MainNavigationScreen extends StatelessWidget implements AutoRouteWrapper {
     if ((accepted ?? false) && context.mounted) {
       context.router.markUrlStateForReplace();
       context.read<CoreNavigationBloc>().add(
-        const CoreNavigationEvent.unAuthenticated(),
+        const CoreNavigationEvent.loggedOut(),
       );
     }
   }

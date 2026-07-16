@@ -64,7 +64,7 @@ class _AppState extends State<App> {
           BlocBuilder<LocaleBloc, LocaleState>(
             builder: (context, localeState) => CoreNavigationListener(
               onAuthenticated: _refreshUser,
-              onUnauthenticated: _logout,
+              onLoggedOut: _logout,
               onRefreshUser: _refreshUser,
               onNavigationError: _handleNavigationError,
               router: _appRouter,

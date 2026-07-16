@@ -54,7 +54,7 @@ export 'storage/local/local_storage.dart';
 export 'storage/local/shared_preferences_storage.dart';
 export 'storage/secure/flutter_secure_storage_impl.dart';
 export 'storage/secure/secure_storage.dart';
-export 'usecases/use_case.dart';
 export 'usecases/get_app_info_use_case.dart';
+export 'usecases/use_case.dart';
 export 'utils/constants/api_constants.dart';
 export 'utils/typedef.dart';

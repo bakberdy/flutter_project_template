@@ -127,7 +127,7 @@ class _UserProfileEditScreenState extends State<UserProfileEditScreen>
           const UserProfileEvent.accountDeletionStatusReset(),
         );
         context.read<CoreNavigationBloc>().add(
-          const CoreNavigationEvent.unAuthenticated(),
+          const CoreNavigationEvent.loggedOut(),
         );
         break;
       default:
@@ -207,7 +207,7 @@ class _UserProfileEditScreenState extends State<UserProfileEditScreen>
     );
     if (accepted == true && mounted) {
       context.read<CoreNavigationBloc>().add(
-        const CoreNavigationEvent.unAuthenticated(),
+        const CoreNavigationEvent.loggedOut(),
       );
     }
   }

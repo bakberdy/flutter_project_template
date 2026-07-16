@@ -45,7 +45,7 @@ class UserDeletionRequestedScreen extends StatelessWidget {
               const SizedBox(height: DesignSpacing.xl),
               BaseButton.primary(
                 onPressed: () => context.read<CoreNavigationBloc>().add(
-                  const CoreNavigationEvent.unAuthenticated(),
+                  const CoreNavigationEvent.loggedOut(),
                 ),
                 label: context.l10n.continueToLogin,
               ),

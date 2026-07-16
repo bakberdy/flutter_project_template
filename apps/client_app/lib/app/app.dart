@@ -66,7 +66,7 @@ class _AppState extends State<App> {
               onAuthenticated: () {
                 _userBloc.add(const UserStartedEvent());
               },
-              onUnauthenticated: _logout,
+              onLoggedOut: _logout,
               onRefreshUser: () {
                 _userBloc.add(const UserStartedEvent());
               },

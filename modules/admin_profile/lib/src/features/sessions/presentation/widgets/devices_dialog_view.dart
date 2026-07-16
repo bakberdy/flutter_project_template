@@ -138,7 +138,7 @@ class _DevicesDialogViewState extends State<DevicesDialogView>
       context.router.markUrlStateForReplace();
       Navigator.of(context).pop();
       context.read<CoreNavigationBloc>().add(
-        const CoreNavigationEvent.unAuthenticated(),
+        const CoreNavigationEvent.loggedOut(),
       );
       return;
     }

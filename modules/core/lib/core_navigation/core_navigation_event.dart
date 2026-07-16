@@ -28,8 +28,7 @@ sealed class CoreNavigationEvent with _$CoreNavigationEvent {
   const factory CoreNavigationEvent.commandHandled(int commandId) =
       _CommandHandled;
   const factory CoreNavigationEvent.authenticated() = _AuthenticatedRequested;
-  const factory CoreNavigationEvent.unAuthenticated() =
-      _UnauthenticatedRequested;
+  const factory CoreNavigationEvent.loggedOut() = _LoggedOutRequested;
 
   const factory CoreNavigationEvent.refreshUser() = _RefreshUserRequested;
 

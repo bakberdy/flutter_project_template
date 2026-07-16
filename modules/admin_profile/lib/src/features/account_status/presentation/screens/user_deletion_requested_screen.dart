@@ -41,7 +41,7 @@ class UserDeletionRequestedScreen extends StatelessWidget {
                 onPressed: () {
                   context.router.markUrlStateForReplace();
                   context.read<CoreNavigationBloc>().add(
-                    const CoreNavigationEvent.unAuthenticated(),
+                    const CoreNavigationEvent.loggedOut(),
                   );
                 },
                 label: context.l10n.continueToLogin,

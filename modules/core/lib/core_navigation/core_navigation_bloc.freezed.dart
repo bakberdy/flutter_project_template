@@ -78,7 +78,7 @@ as int,
 
 class PushNavigationCommand extends CoreNavigationCommand {
   const PushNavigationCommand({required this.id, required this.route}): super._();
-
+  
 
 @override final  int id;
  final  PageRouteInfo<dynamic> route;
@@ -146,7 +146,7 @@ as PageRouteInfo<dynamic>,
 
 class NavigatePathNavigationCommand extends CoreNavigationCommand {
   const NavigatePathNavigationCommand({required this.id, required this.path, required this.includePrefixMatches}): super._();
-
+  
 
 @override final  int id;
  final  String path;
@@ -559,8 +559,8 @@ as Uri,
 /// @nodoc
 
 
-class UnAuthenticatedNavigationCommand extends CoreNavigationCommand {
-  const UnAuthenticatedNavigationCommand({required this.id}): super._();
+class LoggedOutNavigationCommand extends CoreNavigationCommand {
+  const LoggedOutNavigationCommand({required this.id}): super._();
   
 
 @override final  int id;
@@ -569,13 +569,13 @@ class UnAuthenticatedNavigationCommand extends CoreNavigationCommand {
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$UnAuthenticatedNavigationCommandCopyWith<UnAuthenticatedNavigationCommand> get copyWith => _$UnAuthenticatedNavigationCommandCopyWithImpl<UnAuthenticatedNavigationCommand>(this, _$identity);
+$LoggedOutNavigationCommandCopyWith<LoggedOutNavigationCommand> get copyWith => _$LoggedOutNavigationCommandCopyWithImpl<LoggedOutNavigationCommand>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UnAuthenticatedNavigationCommand&&(identical(other.id, id) || other.id == id));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoggedOutNavigationCommand&&(identical(other.id, id) || other.id == id));
 }
 
 
@@ -584,15 +584,15 @@ int get hashCode => Object.hash(runtimeType,id);
 
 @override
 String toString() {
-  return 'CoreNavigationCommand.unAuthenticated(id: $id)';
+  return 'CoreNavigationCommand.loggedOut(id: $id)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $UnAuthenticatedNavigationCommandCopyWith<$Res> implements $CoreNavigationCommandCopyWith<$Res> {
-  factory $UnAuthenticatedNavigationCommandCopyWith(UnAuthenticatedNavigationCommand value, $Res Function(UnAuthenticatedNavigationCommand) _then) = _$UnAuthenticatedNavigationCommandCopyWithImpl;
+abstract mixin class $LoggedOutNavigationCommandCopyWith<$Res> implements $CoreNavigationCommandCopyWith<$Res> {
+  factory $LoggedOutNavigationCommandCopyWith(LoggedOutNavigationCommand value, $Res Function(LoggedOutNavigationCommand) _then) = _$LoggedOutNavigationCommandCopyWithImpl;
 @override @useResult
 $Res call({
  int id
@@ -603,17 +603,17 @@ $Res call({
 
 }
 /// @nodoc
-class _$UnAuthenticatedNavigationCommandCopyWithImpl<$Res>
-    implements $UnAuthenticatedNavigationCommandCopyWith<$Res> {
-  _$UnAuthenticatedNavigationCommandCopyWithImpl(this._self, this._then);
+class _$LoggedOutNavigationCommandCopyWithImpl<$Res>
+    implements $LoggedOutNavigationCommandCopyWith<$Res> {
+  _$LoggedOutNavigationCommandCopyWithImpl(this._self, this._then);
 
-  final UnAuthenticatedNavigationCommand _self;
-  final $Res Function(UnAuthenticatedNavigationCommand) _then;
+  final LoggedOutNavigationCommand _self;
+  final $Res Function(LoggedOutNavigationCommand) _then;
 
 /// Create a copy of CoreNavigationCommand
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? id = null,}) {
-  return _then(UnAuthenticatedNavigationCommand(
+  return _then(LoggedOutNavigationCommand(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,
   ));
@@ -856,7 +856,7 @@ as PageRouteInfo<dynamic>,
 
 class _NavigatePathRequested implements CoreNavigationEvent {
   const _NavigatePathRequested(this.path, {this.includePrefixMatches = false});
-
+  
 
  final  String path;
 @JsonKey() final  bool includePrefixMatches;
@@ -1355,8 +1355,8 @@ String toString() {
 /// @nodoc
 
 
-class _UnauthenticatedRequested implements CoreNavigationEvent {
-  const _UnauthenticatedRequested();
+class _LoggedOutRequested implements CoreNavigationEvent {
+  const _LoggedOutRequested();
   
 
 
@@ -1366,7 +1366,7 @@ class _UnauthenticatedRequested implements CoreNavigationEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UnauthenticatedRequested);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoggedOutRequested);
 }
 
 
@@ -1375,7 +1375,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'CoreNavigationEvent.unAuthenticated()';
+  return 'CoreNavigationEvent.loggedOut()';
 }
 
 

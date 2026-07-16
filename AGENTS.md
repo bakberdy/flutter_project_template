@@ -50,6 +50,13 @@ Keep Blocs and Cubits focused on state coordination; never call
 owning use case after the repository result, with event definitions under that
 feature's `domain/analytics/` directory.
 
+Treat logout as an explicit user action. Whenever the user can see and activate
+a localized logout label, dispatch `CoreNavigationEvent.loggedOut()` through
+`CoreNavigationBloc`. Never use the logout event for account deletion or any
+other non-logout operation. After those operations change the current user's
+state, dispatch `CoreNavigationEvent.refreshUser()` through
+`CoreNavigationBloc` instead.
+
 ## Testing Guidelines
 
 Use `flutter_test` and `mocktail` for test doubles; do not create handwritten
