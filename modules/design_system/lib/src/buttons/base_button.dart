@@ -1,7 +1,5 @@
 import 'package:design_system/src/buttons/base_button_progress.dart';
 import 'package:design_system/src/extensions/build_context_design_x.dart';
-import 'package:design_system/src/tokens/design_radii.dart';
-import 'package:design_system/src/tokens/design_spacing.dart';
 import 'package:flutter/material.dart';
 
 class BaseButton extends StatelessWidget {
@@ -118,11 +116,12 @@ class BaseButton extends StatelessWidget {
 
   Color _progressColor(BuildContext context) {
     final s = context.designColors;
+    final semanticColors = context.designSemanticColors;
     final foregroundColor = this.foregroundColor;
     return switch (_variant) {
       _BaseButtonVariant.primary => foregroundColor ?? s.onPrimary,
       _BaseButtonVariant.secondary => s.primary,
-      _BaseButtonVariant.destructive => s.error,
+      _BaseButtonVariant.destructive => semanticColors.destructive,
     };
   }
 
@@ -162,7 +161,8 @@ class BaseButton extends StatelessWidget {
   ButtonStyle? _primaryStyle(BuildContext context) {
     final shape = WidgetStateProperty.all(
       RoundedRectangleBorder(
-        borderRadius: borderRadius ?? BorderRadius.circular(DesignRadii.md),
+        borderRadius:
+            borderRadius ?? BorderRadius.circular(context.designRadii.md),
       ),
     );
 
@@ -198,25 +198,26 @@ class BaseButton extends StatelessWidget {
 
   ButtonStyle _destructiveStyle(BuildContext context) {
     final s = context.designColors;
+    final semanticColors = context.designSemanticColors;
     return ButtonStyle(
       foregroundColor: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.disabled)) {
           return s.onSurface.withValues(alpha: 0.38);
         }
-        return s.error;
+        return semanticColors.destructive;
       }),
       side: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.disabled)) {
           return BorderSide(color: s.onSurface.withValues(alpha: 0.12));
         }
-        return BorderSide(color: s.error);
+        return BorderSide(color: semanticColors.destructive);
       }),
       overlayColor: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.pressed)) {
-          return s.error.withValues(alpha: 0.12);
+          return semanticColors.destructive.withValues(alpha: 0.12);
         }
         if (states.contains(WidgetState.hovered)) {
-          return s.error.withValues(alpha: 0.08);
+          return semanticColors.destructive.withValues(alpha: 0.08);
         }
         return null;
       }),
@@ -285,11 +286,11 @@ class _ButtonContent extends StatelessWidget {
       children: [
         if (leading != null) ...[
           leading!,
-          const SizedBox(width: DesignSpacing.xs),
+          SizedBox(width: context.designSpacing.xs),
         ],
         Text(label),
         if (trailing != null) ...[
-          const SizedBox(width: DesignSpacing.xs),
+          SizedBox(width: context.designSpacing.xs),
           trailing!,
         ],
       ],

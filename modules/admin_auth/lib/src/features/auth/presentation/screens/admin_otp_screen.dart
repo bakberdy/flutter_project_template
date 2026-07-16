@@ -60,12 +60,12 @@ class _AdminOtpScreenState extends State<AdminOtpScreen>
                 child: Stack(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(DesignSpacing.lg),
+                      padding: EdgeInsets.all(context.designSpacing.lg),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          const SizedBox(height: 50),
+                          SizedBox(height: 50),
                           BaseOtpTextField(
                             controller: _otpController,
                             errorText: state.otpCodeField.error,
@@ -78,7 +78,7 @@ class _AdminOtpScreenState extends State<AdminOtpScreen>
                               }
                             },
                           ),
-                          const SizedBox(height: DesignSpacing.md),
+                          SizedBox(height: context.designSpacing.md),
                           BaseButton.primary(
                             label: context.l10n.authSubmitOtp,
                             loading: state.status.isLoading,
@@ -87,13 +87,13 @@ class _AdminOtpScreenState extends State<AdminOtpScreen>
                               const AuthEvent.submitOtp(),
                             ),
                           ),
-                          const SizedBox(height: DesignSpacing.lg),
+                          SizedBox(height: context.designSpacing.lg),
                         ],
                       ),
                     ),
                     Positioned(
-                      top: DesignSpacing.lg,
-                      left: DesignSpacing.md,
+                      top: context.designSpacing.lg,
+                      left: context.designSpacing.md,
                       child: Row(
                         children: [
                           BackButton(

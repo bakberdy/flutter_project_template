@@ -1,6 +1,4 @@
 import 'package:design_system/src/extensions/build_context_design_x.dart';
-import 'package:design_system/src/tokens/design_radii.dart';
-import 'package:design_system/src/tokens/design_spacing.dart';
 import 'package:flutter/material.dart';
 
 class BaseListTile extends StatelessWidget {
@@ -14,11 +12,8 @@ class BaseListTile extends StatelessWidget {
     this.foregroundColor,
     this.disableTopRadius = false,
     this.disableBottomRadius = false,
-    this.padding = const EdgeInsets.symmetric(
-      horizontal: DesignSpacing.sm,
-      vertical: DesignSpacing.sm,
-    ),
-    this.margin = const EdgeInsets.symmetric(horizontal: DesignSpacing.md),
+    this.padding,
+    this.margin,
   });
   final VoidCallback? onTap;
   final String title;
@@ -28,13 +23,13 @@ class BaseListTile extends StatelessWidget {
 
   final bool disableTopRadius;
   final bool disableBottomRadius;
-  final EdgeInsetsGeometry padding;
-  final EdgeInsetsGeometry margin;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
   final Color? foregroundColor;
 
   @override
   Widget build(BuildContext context) {
-    const defaultRadiues = Radius.circular(DesignRadii.lg);
+    final defaultRadiues = Radius.circular(context.designRadii.lg);
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
@@ -42,7 +37,8 @@ class BaseListTile extends StatelessWidget {
           bottom: disableBottomRadius ? Radius.zero : defaultRadiues,
         ),
       ),
-      margin: margin,
+      margin:
+          margin ?? EdgeInsets.symmetric(horizontal: context.designSpacing.md),
       child: InkWell(
         borderRadius: BorderRadius.vertical(
           top: disableTopRadius ? Radius.zero : defaultRadiues,
@@ -50,11 +46,16 @@ class BaseListTile extends StatelessWidget {
         ),
         onTap: onTap,
         child: Padding(
-          padding: padding,
+          padding:
+              padding ??
+              EdgeInsets.symmetric(
+                horizontal: context.designSpacing.sm,
+                vertical: context.designSpacing.sm,
+              ),
           child: Row(
             children: [
               ?leading,
-              const SizedBox(width: DesignSpacing.sm),
+              SizedBox(width: context.designSpacing.sm),
               subtitle != null
                   ? Expanded(
                       child: Column(

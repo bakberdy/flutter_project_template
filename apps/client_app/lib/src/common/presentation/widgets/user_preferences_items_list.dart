@@ -24,10 +24,10 @@ class UserPreferencesItemsList extends StatelessWidget {
           disableBottomRadius: true,
           trailing: const Icon(Icons.chevron_right),
         ),
-        const Divider(
+        Divider(
           height: 1,
-          indent: DesignSpacing.lg,
-          endIndent: DesignSpacing.lg,
+          indent: context.designSpacing.lg,
+          endIndent: context.designSpacing.lg,
         ),
         BaseListTile(
           disableTopRadius: true,
@@ -37,10 +37,10 @@ class UserPreferencesItemsList extends StatelessWidget {
           leading: const Icon(Icons.palette),
           trailing: const Icon(Icons.chevron_right),
         ),
-        const Divider(
+        Divider(
           height: 1,
-          indent: DesignSpacing.lg,
-          endIndent: DesignSpacing.lg,
+          indent: context.designSpacing.lg,
+          endIndent: context.designSpacing.lg,
         ),
         BaseListTile(
           disableTopRadius: true,

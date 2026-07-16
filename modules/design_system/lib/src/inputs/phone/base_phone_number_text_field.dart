@@ -3,7 +3,6 @@ import 'package:design_system/src/inputs/base_input_field.dart';
 import 'package:design_system/src/inputs/phone/base_country_dial_code_prefix_button.dart';
 import 'package:design_system/src/inputs/phone/base_phone_number_input_formatter.dart';
 import 'package:design_system/src/inputs/phone/country_dial_code_option.dart';
-import 'package:design_system/src/tokens/design_spacing.dart';
 import 'package:flutter/material.dart';
 
 class BasePhoneNumberTextField extends StatelessWidget {
@@ -59,7 +58,7 @@ class BasePhoneNumberTextField extends StatelessWidget {
             decoration: InputDecoration(
               prefixIcon: const Icon(Icons.phone),
               prefix: dialCode == null
-                  ? const SizedBox.shrink()
+                  ? SizedBox.shrink()
                   : BaseCountryDialCodePrefixButton(
                       dialCode: dialCode!,
                       onTap: onCountryCodeTap,
@@ -70,7 +69,7 @@ class BasePhoneNumberTextField extends StatelessWidget {
           ),
           if (showVerificationPrompt || showVerified)
             Padding(
-              padding: const EdgeInsets.only(top: DesignSpacing.xs),
+              padding: EdgeInsets.only(top: context.designSpacing.xs),
               child: Align(
                 alignment: Alignment.centerRight,
                 child: Row(
@@ -82,7 +81,7 @@ class BasePhoneNumberTextField extends StatelessWidget {
                         size: 16,
                         color: context.designColors.primary,
                       ),
-                      const SizedBox(width: DesignSpacing.xxs),
+                      SizedBox(width: context.designSpacing.xxs),
                       Text(
                         verifiedLabel ?? '',
                         style: context.designTextTheme.bodySmall?.copyWith(
@@ -96,7 +95,7 @@ class BasePhoneNumberTextField extends StatelessWidget {
                         verificationPromptLabel ?? '',
                         style: context.designTextTheme.bodySmall,
                       ),
-                      const SizedBox(width: DesignSpacing.xxs),
+                      SizedBox(width: context.designSpacing.xxs),
                       TextButton(
                         onPressed: onVerifyTap,
                         style: TextButton.styleFrom(

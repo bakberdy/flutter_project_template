@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../extensions/build_context_design_x.dart';
-import '../tokens/design_spacing.dart';
 
 class BaseInputField extends StatelessWidget {
   const BaseInputField({
@@ -79,7 +78,7 @@ class BaseInputField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(label, style: context.designTextTheme.labelLarge),
-        const SizedBox(height: DesignSpacing.xs),
+        SizedBox(height: context.designSpacing.xs),
         field,
       ],
     );

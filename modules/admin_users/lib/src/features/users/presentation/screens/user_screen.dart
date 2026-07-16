@@ -42,11 +42,11 @@ class _UserScreenState extends State<UserScreen> {
           return Column(
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  DesignSpacing.lg,
-                  DesignSpacing.md,
-                  DesignSpacing.lg,
-                  DesignSpacing.sm,
+                padding: EdgeInsets.fromLTRB(
+                  context.designSpacing.lg,
+                  context.designSpacing.md,
+                  context.designSpacing.lg,
+                  context.designSpacing.sm,
                 ),
                 child: Row(
                   children: [
@@ -55,7 +55,7 @@ class _UserScreenState extends State<UserScreen> {
                         const CoreNavigationEvent.pop(),
                       ),
                     ),
-                    const SizedBox(width: DesignSpacing.sm),
+                    SizedBox(width: context.designSpacing.sm),
                     Expanded(
                       child: Text(
                         state.user?.email ?? l10n.userTitle,
@@ -74,20 +74,20 @@ class _UserScreenState extends State<UserScreen> {
                   ],
                 ),
               ),
-              const Divider(height: 1),
+              Divider(height: 1),
               if (state.status.isLoading) const LinearProgressIndicator(),
               if (!state.status.isLoading)
-                const SizedBox(height: DesignSpacing.xxs),
+                SizedBox(height: context.designSpacing.xxs),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(DesignSpacing.lg),
+                  padding: EdgeInsets.all(context.designSpacing.lg),
                   child: switch ((state.user, failure)) {
                     (_, final Failure error) => Center(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(error.messageTextOrDefault(context)),
-                          const SizedBox(height: DesignSpacing.md),
+                          SizedBox(height: context.designSpacing.md),
                           BaseButton.secondary(
                             onPressed: () => context.read<UserBloc>().add(
                               UserEvent.started(widget.userId),

@@ -1,6 +1,4 @@
 import 'package:design_system/src/extensions/build_context_design_x.dart';
-import 'package:design_system/src/tokens/design_radii.dart';
-import 'package:design_system/src/tokens/design_spacing.dart';
 import 'package:flutter/material.dart';
 
 class BaseSnackbar {
@@ -34,24 +32,24 @@ class BaseSnackbar {
           behavior: behavior,
           backgroundColor: resolvedBg,
           margin: behavior == SnackBarBehavior.floating
-              ? const EdgeInsets.all(DesignSpacing.md)
+              ? EdgeInsets.all(context.designSpacing.md)
               : null,
           shape: behavior == SnackBarBehavior.floating
-              ? const RoundedRectangleBorder(
+              ? RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
-                    Radius.circular(DesignRadii.md),
+                    Radius.circular(context.designRadii.md),
                   ),
                 )
               : null,
-          padding: const EdgeInsets.symmetric(
-            horizontal: DesignSpacing.md,
+          padding: EdgeInsets.symmetric(
+            horizontal: context.designSpacing.md,
             vertical: 14,
           ),
           content: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               resolvedIcon,
-              const SizedBox(width: DesignSpacing.sm),
+              SizedBox(width: context.designSpacing.sm),
               Expanded(
                 child: Text(
                   message,
@@ -141,30 +139,31 @@ class BaseSnackbar {
     BaseSnackbarType type,
   ) {
     final cs = context.designColors;
+    final semanticColors = context.designSemanticColors;
 
     return switch (type) {
       BaseSnackbarType.success => _SnackbarColors(
         background: cs.surface,
         foreground: cs.onSurface,
-        accent: cs.primary,
+        accent: semanticColors.success,
         iconData: Icons.check_circle_outline_rounded,
       ),
       BaseSnackbarType.warning => _SnackbarColors(
         background: cs.surface,
         foreground: cs.onSurface,
-        accent: cs.tertiary,
+        accent: semanticColors.warning,
         iconData: Icons.warning_amber_rounded,
       ),
       BaseSnackbarType.info => _SnackbarColors(
         background: cs.surface,
         foreground: cs.onSurface,
-        accent: cs.secondary,
+        accent: semanticColors.info,
         iconData: Icons.info_outline_rounded,
       ),
       BaseSnackbarType.error => _SnackbarColors(
         background: cs.surface,
         foreground: cs.onSurface,
-        accent: cs.error,
+        accent: semanticColors.destructive,
         iconData: Icons.error_outline_rounded,
       ),
     };

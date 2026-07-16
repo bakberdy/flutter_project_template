@@ -1,6 +1,5 @@
 import 'package:design_system/src/extensions/build_context_design_x.dart';
 import 'package:design_system/src/images/base_cached_network_image.dart';
-import 'package:design_system/src/tokens/design_spacing.dart';
 import 'package:flutter/material.dart';
 
 enum UserAvatarFormat { circle, square }
@@ -38,7 +37,7 @@ class UserAvatar extends StatelessWidget {
       child: SizedBox.square(
         dimension: radius * 2,
         child: ClipRRect(
-          borderRadius: _borderRadius,
+          borderRadius: _borderRadius(context),
           child: Stack(
             fit: StackFit.expand,
             alignment: Alignment.center,
@@ -76,8 +75,8 @@ class UserAvatar extends StatelessWidget {
 
   bool get _hasAvatar => avatarUrl?.trim().isNotEmpty ?? false;
 
-  BorderRadius get _borderRadius => BorderRadius.circular(
-    format == UserAvatarFormat.circle ? radius : DesignSpacing.sm,
+  BorderRadius _borderRadius(BuildContext context) => BorderRadius.circular(
+    format == UserAvatarFormat.circle ? radius : context.designSpacing.sm,
   );
 
   String _initials(String? value) {

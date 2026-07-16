@@ -39,8 +39,8 @@ class UserPreferencesLocaleScreen extends StatelessWidget
             child: BlocBuilder<LocaleBloc, LocaleState>(
               builder: (context, state) {
                 return ListView(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: DesignSpacing.sm,
+                  padding: EdgeInsets.symmetric(
+                    vertical: context.designSpacing.sm,
                   ),
                   children: [
                     BaseRadioListTile<String>(
@@ -61,10 +61,10 @@ class UserPreferencesLocaleScreen extends StatelessWidget
                           state.languageCode ==
                               ClientPreferencesConstants.kazakh.languageCode,
                     ),
-                    const Divider(
+                    Divider(
                       height: 1,
-                      indent: DesignSpacing.lg,
-                      endIndent: DesignSpacing.lg,
+                      indent: context.designSpacing.lg,
+                      endIndent: context.designSpacing.lg,
                     ),
                     BaseRadioListTile<String>(
                       disableBottomRadius: true,
@@ -85,10 +85,10 @@ class UserPreferencesLocaleScreen extends StatelessWidget
                           state.languageCode ==
                               ClientPreferencesConstants.russian.languageCode,
                     ),
-                    const Divider(
+                    Divider(
                       height: 1,
-                      indent: DesignSpacing.lg,
-                      endIndent: DesignSpacing.lg,
+                      indent: context.designSpacing.lg,
+                      endIndent: context.designSpacing.lg,
                     ),
                     BaseRadioListTile<String>(
                       disableTopRadius: true,

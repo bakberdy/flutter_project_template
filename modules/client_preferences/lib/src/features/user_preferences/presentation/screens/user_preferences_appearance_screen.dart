@@ -39,8 +39,8 @@ class UserPreferencesAppearanceScreen extends StatelessWidget
             child: BlocBuilder<ThemeBloc, ThemeState>(
               builder: (context, state) {
                 return ListView(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: DesignSpacing.sm,
+                  padding: EdgeInsets.symmetric(
+                    vertical: context.designSpacing.sm,
                   ),
                   children: [
                     BaseRadioListTile<UserTheme>(
@@ -57,10 +57,10 @@ class UserPreferencesAppearanceScreen extends StatelessWidget
                           state.status.isLoading &&
                           state.themeMode == UserTheme.system,
                     ),
-                    const Divider(
+                    Divider(
                       height: 1,
-                      indent: DesignSpacing.lg,
-                      endIndent: DesignSpacing.lg,
+                      indent: context.designSpacing.lg,
+                      endIndent: context.designSpacing.lg,
                     ),
                     BaseRadioListTile<UserTheme>(
                       disableBottomRadius: true,
@@ -77,10 +77,10 @@ class UserPreferencesAppearanceScreen extends StatelessWidget
                           state.status.isLoading &&
                           state.themeMode == UserTheme.light,
                     ),
-                    const Divider(
+                    Divider(
                       height: 1,
-                      indent: DesignSpacing.lg,
-                      endIndent: DesignSpacing.lg,
+                      indent: context.designSpacing.lg,
+                      endIndent: context.designSpacing.lg,
                     ),
                     BaseRadioListTile<UserTheme>(
                       disableTopRadius: true,

@@ -40,10 +40,10 @@ class AuthPreferencesToggles extends StatelessWidget
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
         side: BorderSide(color: context.designColors.outlineVariant),
-        borderRadius: BorderRadius.circular(DesignRadii.lg),
+        borderRadius: BorderRadius.circular(context.designRadii.lg),
       ),
-      child: const Padding(
-        padding: EdgeInsets.all(DesignSpacing.xxs),
+      child: Padding(
+        padding: EdgeInsets.all(context.designSpacing.xxs),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [AuthThemeToggle(), AuthLocaleMenu()],

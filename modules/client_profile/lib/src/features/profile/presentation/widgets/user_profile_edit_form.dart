@@ -90,18 +90,18 @@ class UserProfileEditForm extends StatelessWidget {
           child: CustomScrollView(
             slivers: [
               SliverPadding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: DesignSpacing.md,
+                padding: EdgeInsets.symmetric(
+                  horizontal: context.designSpacing.md,
                 ),
                 sliver: SliverList(
                   delegate: SliverChildListDelegate([
-                    const SizedBox(height: DesignSpacing.xl),
+                    SizedBox(height: context.designSpacing.xl),
                     UserProfileFullNameTextField(
                       controller: fullNameController,
                       errorText: fullName.error,
                       onChanged: onFullNameChanged,
                     ),
-                    const SizedBox(height: DesignSpacing.md),
+                    SizedBox(height: context.designSpacing.md),
                     BasePhoneNumberTextField(
                       labelText: l10n.profileEditPhoneNumberLabel,
                       showVerificationPrompt: showPhoneVerificationPrompt,
@@ -123,7 +123,7 @@ class UserProfileEditForm extends StatelessWidget {
                     ),
                     if (onLogoutPressed != null ||
                         onRemoveAccountPressed != null) ...[
-                      const SizedBox(height: DesignSpacing.xl),
+                      SizedBox(height: context.designSpacing.xl),
                       if (onLogoutPressed != null)
                         BaseButton.secondary(
                           onPressed: onLogoutPressed,
@@ -132,7 +132,7 @@ class UserProfileEditForm extends StatelessWidget {
                         ),
                       if (onLogoutPressed != null &&
                           onRemoveAccountPressed != null)
-                        const SizedBox(height: DesignSpacing.sm),
+                        SizedBox(height: context.designSpacing.sm),
                       if (onRemoveAccountPressed != null)
                         BaseButton.destructive(
                           onPressed: onRemoveAccountPressed,
@@ -141,7 +141,7 @@ class UserProfileEditForm extends StatelessWidget {
                           loading: accountDeletionStatus.isLoading,
                         ),
                     ],
-                    const SizedBox(height: 96),
+                    SizedBox(height: 96),
                   ]),
                 ),
               ),
@@ -149,7 +149,7 @@ class UserProfileEditForm extends StatelessWidget {
           ),
         ),
         floatingActionButton: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: DesignSpacing.md),
+          padding: EdgeInsets.symmetric(horizontal: context.designSpacing.md),
           child: BaseButton.primary(
             onPressed: onSavePressed,
             disabled: !canSaveChanges,

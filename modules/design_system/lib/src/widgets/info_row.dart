@@ -1,5 +1,4 @@
 import 'package:design_system/src/extensions/build_context_design_x.dart';
-import 'package:design_system/src/tokens/design_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -27,13 +26,13 @@ class InfoRow extends StatelessWidget {
             height: 1.2,
           ),
         ),
-        // const SizedBox(height: AppSpacing.xxs),
+        // SizedBox(height: AppSpacing.xxs),
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             SelectableText(value, style: context.designTextTheme.bodyLarge),
             if (showCopyIcon) ...[
-              SizedBox(width: DesignSpacing.xs),
+              SizedBox(width: context.designSpacing.xs),
               InkWell(
                 onTap: () => Clipboard.setData(ClipboardData(text: value)),
                 child: Icon(

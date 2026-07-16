@@ -64,7 +64,7 @@ class _AuthOtpScreenState extends State<AuthOtpScreen>
           child: Scaffold(
             appBar: AppBar(title: Text(l10n.authTitle)),
             body: Padding(
-              padding: const EdgeInsets.all(DesignSpacing.md),
+              padding: EdgeInsets.all(context.designSpacing.md),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -72,7 +72,7 @@ class _AuthOtpScreenState extends State<AuthOtpScreen>
                     controller: _otpCodeController,
                     errorText: state.otpCodeField.error,
                   ),
-                  const SizedBox(height: DesignSpacing.md),
+                  SizedBox(height: context.designSpacing.md),
                   BaseButton.primary(
                     label: l10n.authSubmitOtp,
                     loading: state.status.isLoading,

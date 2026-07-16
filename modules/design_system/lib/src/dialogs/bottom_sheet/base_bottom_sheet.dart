@@ -1,8 +1,6 @@
 import 'package:design_system/src/buttons/base_button.dart';
 import 'package:design_system/src/dialogs/bottom_sheet/bottom_sheet_list.dart';
 import 'package:design_system/src/extensions/build_context_design_x.dart';
-import 'package:design_system/src/tokens/design_radii.dart';
-import 'package:design_system/src/tokens/design_spacing.dart';
 import 'package:flutter/material.dart';
 
 class BaseBottomSheet {
@@ -34,35 +32,35 @@ class BaseBottomSheet {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const SizedBox(height: DesignSpacing.sm),
+            SizedBox(height: context.designSpacing.sm),
             Divider(
               height: 3,
-              radius: BorderRadius.circular(DesignRadii.xs),
+              radius: BorderRadius.circular(context.designRadii.xs),
               thickness: 4,
               color: context.designColors.onSurface,
               indent: mediaQuery.width / 2 - 30,
               endIndent: mediaQuery.width / 2 - 30,
             ),
-            const SizedBox(height: DesignSpacing.sm),
+            SizedBox(height: context.designSpacing.sm),
             if (title != null) ...[
               Text(title, style: context.designTextTheme.titleMedium),
-              const SizedBox(height: DesignSpacing.md),
+              SizedBox(height: context.designSpacing.md),
             ],
             builder(context),
-            const SizedBox(height: DesignSpacing.md),
+            SizedBox(height: context.designSpacing.md),
             if (actions != null)
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: DesignSpacing.md,
+                padding: EdgeInsets.symmetric(
+                  horizontal: context.designSpacing.md,
                 ),
                 child: Row(
-                  spacing: actionsSpacing ?? DesignSpacing.xs,
+                  spacing: actionsSpacing ?? context.designSpacing.xs,
                   children: actions
                       .map((action) => Expanded(child: action))
                       .toList(),
                 ),
               ),
-            const SizedBox(height: DesignSpacing.lg),
+            SizedBox(height: context.designSpacing.lg),
           ],
         );
       },

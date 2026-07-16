@@ -74,7 +74,7 @@ class _UsersSearchBarState extends State<UsersSearchBar> {
                   decoration: InputDecoration(
                     hintText: l10n.usersSearchHint,
                     prefixIcon: const Icon(Icons.search, size: 18),
-                    prefixIconConstraints: const BoxConstraints(
+                    prefixIconConstraints: BoxConstraints(
                       minWidth: 40,
                       minHeight: 40,
                     ),
@@ -85,12 +85,12 @@ class _UsersSearchBarState extends State<UsersSearchBar> {
                             icon: const Icon(Icons.clear, size: 18),
                           )
                         : null,
-                    suffixIconConstraints: const BoxConstraints(
+                    suffixIconConstraints: BoxConstraints(
                       minWidth: 40,
                       minHeight: 40,
                     ),
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: DesignSpacing.sm,
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: context.designSpacing.sm,
                     ),
                   ),
                   textInputAction: TextInputAction.search,
@@ -99,7 +99,7 @@ class _UsersSearchBarState extends State<UsersSearchBar> {
               },
             ),
           ),
-          const SizedBox(width: DesignSpacing.sm),
+          SizedBox(width: context.designSpacing.sm),
           ValueListenableBuilder(
             valueListenable: _controller,
             builder: (context, value, _) {
@@ -143,8 +143,8 @@ class _SearchBarActionButton extends StatelessWidget {
           icon: Icon(icon, size: 18),
           label: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis),
           style: ButtonStyle(
-            padding: const WidgetStatePropertyAll(
-              EdgeInsets.symmetric(horizontal: DesignSpacing.sm),
+            padding: WidgetStatePropertyAll(
+              EdgeInsets.symmetric(horizontal: context.designSpacing.sm),
             ),
             foregroundColor: WidgetStateProperty.resolveWith(
               (states) => states.contains(WidgetState.disabled)
@@ -161,7 +161,7 @@ class _SearchBarActionButton extends StatelessWidget {
             ),
             shape: WidgetStatePropertyAll(
               RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(DesignRadii.md),
+                borderRadius: BorderRadius.circular(context.designRadii.md),
               ),
             ),
           ),

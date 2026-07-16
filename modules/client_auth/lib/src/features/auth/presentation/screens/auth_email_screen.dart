@@ -70,7 +70,7 @@ class _AuthEmailScreenState extends State<AuthEmailScreen>
         return Scaffold(
           appBar: AppBar(title: Text(l10n.authTitle)),
           body: Padding(
-            padding: const EdgeInsets.all(DesignSpacing.md),
+            padding: EdgeInsets.all(context.designSpacing.md),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -81,7 +81,7 @@ class _AuthEmailScreenState extends State<AuthEmailScreen>
                   keyboardType: TextInputType.emailAddress,
                   errorText: state.emailField.error,
                 ),
-                const SizedBox(height: DesignSpacing.md),
+                SizedBox(height: context.designSpacing.md),
                 BaseButton.primary(
                   label: l10n.authSubmitEmail,
                   loading: state.status.isLoading,

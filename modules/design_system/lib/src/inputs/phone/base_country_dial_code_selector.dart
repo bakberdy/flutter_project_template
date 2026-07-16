@@ -1,8 +1,6 @@
 import 'package:design_system/src/extensions/build_context_design_x.dart';
 import 'package:design_system/src/inputs/phone/base_country_dial_code_prefix_button.dart';
 import 'package:design_system/src/inputs/phone/country_dial_code_option.dart';
-import 'package:design_system/src/tokens/design_radii.dart';
-import 'package:design_system/src/tokens/design_spacing.dart';
 import 'package:flutter/material.dart';
 
 class BaseCountryDialCodeSelectorOverlay {
@@ -75,11 +73,11 @@ class BaseCountryDialCodeSelector extends StatelessWidget {
             child: CompositedTransformFollower(
               link: layerLink,
               showWhenUnlinked: false,
-              offset: const Offset(0, 50),
+              offset: Offset(0, 50),
               child: Container(
                 decoration: BoxDecoration(
                   color: context.designColors.surface,
-                  borderRadius: BorderRadius.circular(DesignRadii.sm),
+                  borderRadius: BorderRadius.circular(context.designRadii.sm),
                 ),
                 height: 200,
                 width: 150,
@@ -91,14 +89,14 @@ class BaseCountryDialCodeSelector extends StatelessWidget {
                         (dialCode) => InkWell(
                           onTap: () => onSelected(dialCode),
                           child: Ink(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: DesignSpacing.md,
-                              vertical: DesignSpacing.sm,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: context.designSpacing.md,
+                              vertical: context.designSpacing.sm,
                             ),
                             child: Row(
                               children: [
                                 countryDialCodeFlag(context, dialCode),
-                                const SizedBox(width: DesignSpacing.xs),
+                                SizedBox(width: context.designSpacing.xs),
                                 Text(
                                   '${dialCode.dialCode} (${dialCode.countryCode})',
                                   style: context.designTextTheme.bodyLarge,

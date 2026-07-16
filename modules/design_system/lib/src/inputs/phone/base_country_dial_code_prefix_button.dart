@@ -1,6 +1,5 @@
 import 'package:design_system/src/extensions/build_context_design_x.dart';
 import 'package:design_system/src/inputs/phone/country_dial_code_option.dart';
-import 'package:design_system/src/tokens/design_spacing.dart';
 import 'package:flutter/material.dart';
 
 class BaseCountryDialCodePrefixButton extends StatelessWidget {
@@ -22,7 +21,7 @@ class BaseCountryDialCodePrefixButton extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           countryDialCodeFlag(context, dialCode),
-          const SizedBox(width: DesignSpacing.xs),
+          SizedBox(width: context.designSpacing.xs),
           Text('${dialCode.dialCode} '),
         ],
       ),
@@ -40,26 +39,26 @@ Widget countryDialCodeFlag(
       width: 24,
       height: 24,
       errorBuilder: (context, error, stackTrace) =>
-          const SizedBox(width: 24, height: 24),
+          SizedBox(width: 24, height: 24),
     ),
     'RU' => flags.russia.image(
       width: 24,
       height: 24,
       errorBuilder: (context, error, stackTrace) =>
-          const SizedBox(width: 24, height: 24),
+          SizedBox(width: 24, height: 24),
     ),
     'US' => flags.unitedStates.image(
       width: 24,
       height: 24,
       errorBuilder: (context, error, stackTrace) =>
-          const SizedBox(width: 24, height: 24),
+          SizedBox(width: 24, height: 24),
     ),
     'GB' => flags.unitedKingdom.image(
       width: 24,
       height: 24,
       errorBuilder: (context, error, stackTrace) =>
-          const SizedBox(width: 24, height: 24),
+          SizedBox(width: 24, height: 24),
     ),
-    _ => const SizedBox(width: 24, height: 24),
+    _ => SizedBox(width: 24, height: 24),
   };
 }

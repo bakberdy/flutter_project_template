@@ -14,25 +14,25 @@ class UserBlockedScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(DesignSpacing.md),
+          padding: EdgeInsets.all(context.designSpacing.md),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Icon(Icons.block, size: 56, color: context.designColors.error),
-              const SizedBox(height: DesignSpacing.lg),
+              SizedBox(height: context.designSpacing.lg),
               Text(
                 context.l10n.userBlockedTitle,
                 textAlign: TextAlign.center,
                 style: context.designTextTheme.headlineSmall,
               ),
-              const SizedBox(height: DesignSpacing.sm),
+              SizedBox(height: context.designSpacing.sm),
               Text(
                 context.l10n.userBlockedMessage,
                 textAlign: TextAlign.center,
                 style: context.designTextTheme.bodyMedium,
               ),
-              const SizedBox(height: DesignSpacing.xl),
+              SizedBox(height: context.designSpacing.xl),
               BaseButton.primary(
                 onPressed: () => context.read<CoreNavigationBloc>().add(
                   const CoreNavigationEvent.loggedOut(),

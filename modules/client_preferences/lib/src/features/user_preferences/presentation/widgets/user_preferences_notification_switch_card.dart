@@ -22,9 +22,9 @@ class UserPreferencesNotificationSwitchCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseListTile(
-      padding: const EdgeInsets.symmetric(
-        horizontal: DesignSpacing.sm,
-        vertical: DesignSpacing.xs,
+      padding: EdgeInsets.symmetric(
+        horizontal: context.designSpacing.sm,
+        vertical: context.designSpacing.xs,
       ),
       onTap: loading ? () {} : () => onChanged(!value),
       title: title,

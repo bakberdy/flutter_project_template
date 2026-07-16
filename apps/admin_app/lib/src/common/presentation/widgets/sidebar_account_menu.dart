@@ -35,23 +35,23 @@ class SidebarAccountMenu extends StatelessWidget {
         backgroundColor: WidgetStatePropertyAll(
           context.designColors.surfaceContainer,
         ),
-        elevation: const WidgetStatePropertyAll(0),
-        padding: const WidgetStatePropertyAll(EdgeInsets.zero),
+        elevation: WidgetStatePropertyAll(0),
+        padding: WidgetStatePropertyAll(EdgeInsets.zero),
         fixedSize: WidgetStatePropertyAll(Size.fromWidth(constraints.maxWidth)),
         side: WidgetStatePropertyAll(
           BorderSide(color: context.designColors.outlineVariant),
         ),
-        shape: const WidgetStatePropertyAll(
+        shape: WidgetStatePropertyAll(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(
-              top: Radius.circular(DesignRadii.md),
+              top: Radius.circular(context.designRadii.md),
             ),
           ),
         ),
       ),
       menuChildren: [
         Padding(
-          padding: const EdgeInsets.all(DesignSpacing.md),
+          padding: EdgeInsets.all(context.designSpacing.md),
           child: Row(
             children: [
               UserAvatar(
@@ -60,7 +60,7 @@ class SidebarAccountMenu extends StatelessWidget {
                 baseUrl: baseUrl,
                 radius: 24,
               ),
-              const SizedBox(width: DesignSpacing.sm),
+              SizedBox(width: context.designSpacing.sm),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,7 +87,7 @@ class SidebarAccountMenu extends StatelessWidget {
             ],
           ),
         ),
-        const Divider(height: 1),
+        Divider(height: 1),
         MenuItemButton(
           leadingIcon: const Icon(Icons.edit_outlined),
           onPressed: onEditProfileTapped,
@@ -108,7 +108,7 @@ class SidebarAccountMenu extends StatelessWidget {
           onPressed: onDevicesTapped,
           child: Text(context.l10n.devices),
         ),
-        const Divider(height: 1),
+        Divider(height: 1),
         MenuItemButton(
           leadingIcon: Icon(Icons.logout, color: context.designColors.error),
           onPressed: onLogout,
@@ -123,10 +123,10 @@ class SidebarAccountMenu extends StatelessWidget {
         shape: RoundedRectangleBorder(
           side: BorderSide(color: context.designColors.outlineVariant),
           borderRadius: controller.isOpen
-              ? const BorderRadius.vertical(
-                  bottom: Radius.circular(DesignRadii.md),
+              ? BorderRadius.vertical(
+                  bottom: Radius.circular(context.designRadii.md),
                 )
-              : BorderRadius.circular(DesignRadii.md),
+              : BorderRadius.circular(context.designRadii.md),
         ),
         clipBehavior: Clip.antiAlias,
         child: ListTile(

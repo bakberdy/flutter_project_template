@@ -35,12 +35,12 @@ class UsersStatusFilter extends StatelessWidget {
     final backgroundColor = !enabled || value == null
         ? colorScheme.surface
         : colorScheme.primaryContainer.withValues(alpha: 0.24);
-    final borderRadius = BorderRadius.circular(DesignRadii.md);
+    final borderRadius = BorderRadius.circular(context.designRadii.md);
 
     return PopupMenuButton<AdminUserStatus?>(
       enabled: enabled,
       tooltip: l10n.usersStatusFilterLabel,
-      offset: const Offset(0, DesignSpacing.xs),
+      offset: Offset(0, context.designSpacing.xs),
       initialValue: value,
       onSelected: onChanged,
       borderRadius: borderRadius,
@@ -61,7 +61,7 @@ class UsersStatusFilter extends StatelessWidget {
         width: 172,
         child: Container(
           height: 40,
-          padding: const EdgeInsets.symmetric(horizontal: DesignSpacing.sm),
+          padding: EdgeInsets.symmetric(horizontal: context.designSpacing.sm),
           decoration: BoxDecoration(
             color: backgroundColor,
             borderRadius: borderRadius,
@@ -70,7 +70,7 @@ class UsersStatusFilter extends StatelessWidget {
           child: Row(
             children: [
               Icon(Icons.filter_list, size: 18, color: foregroundColor),
-              const SizedBox(width: DesignSpacing.xs),
+              SizedBox(width: context.designSpacing.xs),
               Expanded(
                 child: Text(
                   selectedLabel,
@@ -82,7 +82,7 @@ class UsersStatusFilter extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: DesignSpacing.xs),
+              SizedBox(width: context.designSpacing.xs),
               Icon(Icons.expand_more, size: 18, color: foregroundColor),
             ],
           ),

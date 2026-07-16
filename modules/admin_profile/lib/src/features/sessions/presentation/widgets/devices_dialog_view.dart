@@ -56,25 +56,25 @@ class _DevicesDialogViewState extends State<DevicesDialogView>
           onRefresh: () => _refresh(context),
           child: ListView.separated(
             physics: const AlwaysScrollableScrollPhysics(),
-            padding: const EdgeInsets.symmetric(horizontal: DesignSpacing.md),
+            padding: EdgeInsets.symmetric(horizontal: context.designSpacing.md),
             itemCount: switch ((isInitialLoading, isInitialError)) {
               (true, _) || (_, true) => 1,
               _ => sessions.length + 1,
             },
-            separatorBuilder: (_, _) => const Divider(
-              endIndent: DesignSpacing.md,
-              indent: DesignSpacing.md,
+            separatorBuilder: (_, _) => Divider(
+              endIndent: context.designSpacing.md,
+              indent: context.designSpacing.md,
             ),
             itemBuilder: (context, index) {
               if (isInitialLoading) {
-                return const Padding(
-                  padding: EdgeInsets.only(top: DesignSpacing.xl),
+                return Padding(
+                  padding: EdgeInsets.only(top: context.designSpacing.xl),
                   child: Center(child: CircularProgressIndicator()),
                 );
               }
               if (isInitialError) {
                 return Padding(
-                  padding: const EdgeInsets.only(top: DesignSpacing.xl),
+                  padding: EdgeInsets.only(top: context.designSpacing.xl),
                   child: BaseButton.secondary(
                     onPressed: () => context.read<SessionsBloc>().add(
                       const SessionsEvent.refreshed(),

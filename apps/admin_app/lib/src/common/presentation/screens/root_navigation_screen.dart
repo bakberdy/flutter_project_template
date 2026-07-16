@@ -45,9 +45,9 @@ class RootNavigationScreen extends StatelessWidget {
               ),
             ),
         if (state.status.isSuccess && state.user == null)
-          const Positioned(
-            top: DesignSpacing.lg,
-            right: DesignSpacing.lg,
+          Positioned(
+            top: context.designSpacing.lg,
+            right: context.designSpacing.lg,
             child: AuthPreferencesToggles(),
           ),
       ],

@@ -1,6 +1,6 @@
 import 'package:design_system/src/buttons/base_button.dart';
+import 'package:design_system/src/extensions/build_context_design_x.dart';
 import 'package:design_system/src/inputs/base_otp_text_field.dart';
-import 'package:design_system/src/tokens/design_spacing.dart';
 import 'package:flutter/material.dart';
 
 class BaseOtpVerificationBottomSheet extends StatefulWidget {
@@ -60,18 +60,18 @@ class _BaseOtpVerificationBottomSheetState
   Widget build(BuildContext context) {
     final buttonLabel = widget.buttonLabel;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: DesignSpacing.md),
+      padding: EdgeInsets.symmetric(horizontal: context.designSpacing.md),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(widget.description),
-          const SizedBox(height: DesignSpacing.md),
+          SizedBox(height: context.designSpacing.md),
           BaseOtpTextField(
             controller: otpCodeController,
             errorText: errorText,
             length: widget.otpLength,
           ),
-          const SizedBox(height: DesignSpacing.md),
+          SizedBox(height: context.designSpacing.md),
           if (buttonLabel != null)
             BaseButton.primary(
               onPressed: loading

@@ -70,7 +70,7 @@ class _AdminSignInScreenState extends State<AdminSignInScreen>
               width: 400,
               child: Card(
                 child: Padding(
-                  padding: const EdgeInsets.all(DesignSpacing.lg),
+                  padding: EdgeInsets.all(context.designSpacing.lg),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisSize: MainAxisSize.min,
@@ -79,7 +79,7 @@ class _AdminSignInScreenState extends State<AdminSignInScreen>
                         context.l10n.authTitle,
                         style: context.designTextTheme.headlineMedium,
                       ),
-                      const SizedBox(height: DesignSpacing.lg),
+                      SizedBox(height: context.designSpacing.lg),
                       BaseInputField(
                         label: context.l10n.authEmailLabel,
                         autofocus: true,
@@ -97,7 +97,7 @@ class _AdminSignInScreenState extends State<AdminSignInScreen>
                         },
                         errorText: state.emailField.error,
                       ),
-                      const SizedBox(height: DesignSpacing.md),
+                      SizedBox(height: context.designSpacing.md),
                       BaseButton.primary(
                         label: context.l10n.authSubmitEmail,
                         loading: state.status.isLoading,
@@ -106,7 +106,7 @@ class _AdminSignInScreenState extends State<AdminSignInScreen>
                           const AuthEvent.submitEmail(),
                         ),
                       ),
-                      const SizedBox(height: DesignSpacing.lg),
+                      SizedBox(height: context.designSpacing.lg),
                     ],
                   ),
                 ),
