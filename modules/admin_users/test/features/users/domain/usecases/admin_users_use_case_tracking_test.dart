@@ -2,12 +2,18 @@ import 'package:admin_users/src/features/users/domain/usecases/admin_users_use_c
 import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 
 void main() {
-  late _AnalyticsProviderFake analyticsProvider;
+  late _MockAnalyticsProvider analyticsProvider;
+
+  setUpAll(() {
+    registerFallbackValue(const AnalyticsEvent(name: 'fallback'));
+  });
 
   setUp(() {
-    analyticsProvider = _AnalyticsProviderFake();
+    analyticsProvider = _MockAnalyticsProvider();
+    when(() => analyticsProvider.track(any())).thenAnswer((_) async {});
     Analytics.initialize([analyticsProvider]);
   });
 
@@ -20,7 +26,9 @@ void main() {
       properties: const {'has_search': true},
     );
 
-    final event = analyticsProvider.events.single;
+    final event =
+        verify(() => analyticsProvider.track(captureAny())).captured.single
+            as AnalyticsEvent;
     expect(event.name, 'admin_users_get_users_usecase_success');
     expect(event.properties, const {'has_search': true});
   });
@@ -37,7 +45,9 @@ void main() {
       properties: const {'has_search': false},
     );
 
-    final event = analyticsProvider.events.single;
+    final event =
+        verify(() => analyticsProvider.track(captureAny())).captured.single
+            as AnalyticsEvent;
     expect(event.name, 'admin_users_get_users_usecase_failure');
     expect(event.properties?['has_search'], isFalse);
     expect(
@@ -51,15 +61,4 @@ void main() {
   });
 }
 
-class _AnalyticsProviderFake implements AnalyticsProvider {
-  final List<AnalyticsEvent> events = [];
-
-  @override
-  Future<void> track(AnalyticsEvent event) async => events.add(event);
-
-  @override
-  Future<void> setUserId(String? userId) async {}
-
-  @override
-  Future<void> setUserProperty(Map<String, dynamic> properties) async {}
-}
+class _MockAnalyticsProvider extends Mock implements AnalyticsProvider {}

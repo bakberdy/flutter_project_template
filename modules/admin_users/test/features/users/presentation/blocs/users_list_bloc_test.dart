@@ -2,71 +2,25 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
-import 'package:admin_users/src/features/users/domain/entities/admin_user_profile.dart';
 import 'package:admin_users/src/features/users/domain/entities/users_query.dart';
 import 'package:admin_users/src/features/users/domain/repositories/users_repository.dart';
 import 'package:admin_users/src/features/users/domain/usecases/get_users_use_case.dart';
 import 'package:admin_users/src/features/users/presentation/blocs/users_list/users_list_bloc.dart';
 
-class UsersListRepositoryFake implements UsersRepository {
-  final List<UsersQuery> queries = [];
-
-  @override
-  FutureEither<PaginatedResponse<AdminUser>> getUsers(
-    UsersQuery query, {
-    ApiCancelToken? cancelToken,
-  }) async {
-    queries.add(query);
-    return const Right(
-      PaginatedResponse(
-        items: [],
-        pagination: PaginationMeta(
-          page: 1,
-          limit: 20,
-          totalItems: 0,
-          totalPages: 1,
-          hasNext: false,
-          hasPrevious: false,
-        ),
-      ),
-    );
-  }
-
-  @override
-  FutureEither<AdminUser> getUser(
-    String userId, {
-    ApiCancelToken? cancelToken,
-  }) async => throw UnimplementedError();
-
-  @override
-  FutureEither<AdminUserProfile> getUserProfile(
-    String userId, {
-    ApiCancelToken? cancelToken,
-  }) async => throw UnimplementedError();
-
-  @override
-  FutureEither<AdminUser> changeUserStatus(
-    String userId,
-    AdminUserStatus status,
-  ) async => throw UnimplementedError();
-
-  @override
-  FutureEither<AdminUser> changeUserRole(
-    String userId,
-    AdminUserRole role,
-  ) async => throw UnimplementedError();
-
-  @override
-  FutureEither<AdminUser> approveDeletionRequest(String userId) async =>
-      throw UnimplementedError();
-}
-
 void main() {
-  late UsersListRepositoryFake repository;
+  late _MockUsersRepository repository;
+
+  setUpAll(() {
+    registerFallbackValue(const UsersQuery());
+  });
 
   setUp(() {
-    repository = UsersListRepositoryFake();
+    repository = _MockUsersRepository();
+    when(
+      () => repository.getUsers(any()),
+    ).thenAnswer((_) async => _emptyUsersPage);
   });
 
   blocTest<UsersListBloc, UsersListState>(
@@ -74,11 +28,9 @@ void main() {
     build: () => UsersListBloc(GetUsersUseCase(repository)),
     act: (bloc) => bloc.add(const UsersListEvent.started()),
     verify: (_) {
-      expect(repository.queries.single.sortField, UsersSortField.createdAt);
-      expect(
-        repository.queries.single.sortDirection,
-        UsersSortDirection.descending,
-      );
+      final query = _capturedQuery(repository);
+      expect(query.sortField, UsersSortField.createdAt);
+      expect(query.sortDirection, UsersSortDirection.descending);
     },
   );
 
@@ -106,7 +58,7 @@ void main() {
     act: (bloc) =>
         bloc.add(const UsersListEvent.sortChanged(UsersSortField.email)),
     verify: (_) {
-      final query = repository.queries.single;
+      final query = _capturedQuery(repository);
       expect(query.pageNumber, 1);
       expect(query.sortField, UsersSortField.email);
       expect(query.sortDirection, UsersSortDirection.ascending);
@@ -131,7 +83,7 @@ void main() {
         bloc.add(const UsersListEvent.sortChanged(UsersSortField.email)),
     verify: (_) {
       expect(
-        repository.queries.single.sortDirection,
+        _capturedQuery(repository).sortDirection,
         UsersSortDirection.descending,
       );
     },
@@ -144,7 +96,7 @@ void main() {
     act: (bloc) =>
         bloc.add(const UsersListEvent.searchSubmitted('  user@example.com  ')),
     verify: (_) {
-      final query = repository.queries.single;
+      final query = _capturedQuery(repository);
       expect(query.pageNumber, 1);
       expect(query.search, 'user@example.com');
     },
@@ -158,7 +110,7 @@ void main() {
     ),
     act: (bloc) => bloc.add(const UsersListEvent.searchSubmitted('')),
     verify: (_) {
-      final query = repository.queries.single;
+      final query = _capturedQuery(repository);
       expect(query.pageNumber, 1);
       expect(query.search, isNull);
     },
@@ -171,7 +123,7 @@ void main() {
         const UsersListState(query: UsersQuery(search: 'user@example.com')),
     act: (bloc) =>
         bloc.add(const UsersListEvent.searchSubmitted(' user@example.com ')),
-    verify: (_) => expect(repository.queries, isEmpty),
+    verify: (_) => _verifyNoGetUsers(repository),
   );
 
   blocTest<UsersListBloc, UsersListState>(
@@ -181,7 +133,7 @@ void main() {
     act: (bloc) =>
         bloc.add(const UsersListEvent.statusChanged(AdminUserStatus.active)),
     verify: (_) {
-      final query = repository.queries.single;
+      final query = _capturedQuery(repository);
       expect(query.pageNumber, 1);
       expect(query.status, AdminUserStatus.active);
     },
@@ -195,7 +147,7 @@ void main() {
     ),
     act: (bloc) => bloc.add(const UsersListEvent.statusChanged(null)),
     verify: (_) {
-      final query = repository.queries.single;
+      final query = _capturedQuery(repository);
       expect(query.pageNumber, 1);
       expect(query.status, isNull);
     },
@@ -208,7 +160,7 @@ void main() {
         const UsersListState(query: UsersQuery(status: AdminUserStatus.active)),
     act: (bloc) =>
         bloc.add(const UsersListEvent.statusChanged(AdminUserStatus.active)),
-    verify: (_) => expect(repository.queries, isEmpty),
+    verify: (_) => _verifyNoGetUsers(repository),
   );
 
   blocTest<UsersListBloc, UsersListState>(
@@ -218,7 +170,7 @@ void main() {
     act: (bloc) =>
         bloc.add(const UsersListEvent.roleChanged(AdminUserRole.admin)),
     verify: (_) {
-      final query = repository.queries.single;
+      final query = _capturedQuery(repository);
       expect(query.pageNumber, 1);
       expect(query.role, AdminUserRole.admin);
     },
@@ -230,7 +182,7 @@ void main() {
     seed: () => const UsersListState(query: UsersQuery(pageNumber: 3)),
     act: (bloc) => bloc.add(const UsersListEvent.isVerifiedChanged(false)),
     verify: (_) {
-      final query = repository.queries.single;
+      final query = _capturedQuery(repository);
       expect(query.pageNumber, 1);
       expect(query.isVerified, isFalse);
     },
@@ -243,7 +195,7 @@ void main() {
     act: (bloc) =>
         bloc.add(const UsersListEvent.isProfileCompletedChanged(true)),
     verify: (_) {
-      final query = repository.queries.single;
+      final query = _capturedQuery(repository);
       expect(query.pageNumber, 1);
       expect(query.isProfileCompleted, isTrue);
     },
@@ -259,7 +211,7 @@ void main() {
       bloc.add(UsersListEvent.createdAtRangeChanged(from: from, to: to));
     },
     verify: (_) {
-      final query = repository.queries.single;
+      final query = _capturedQuery(repository);
       expect(query.pageNumber, 1);
       expect(query.createdAtFrom, DateTime.utc(2026, 6, 1));
       expect(query.createdAtTo, DateTime.utc(2026, 6, 24));
@@ -284,7 +236,7 @@ void main() {
       ),
     ),
     verify: (_) {
-      final query = repository.queries.single;
+      final query = _capturedQuery(repository);
       expect(query.pageNumber, 1);
       expect(query.status, AdminUserStatus.active);
       expect(query.role, AdminUserRole.admin);
@@ -295,3 +247,26 @@ void main() {
     },
   );
 }
+
+const _emptyUsersPage = Right<Failure, PaginatedResponse<AdminUser>>(
+  PaginatedResponse(
+    items: [],
+    pagination: PaginationMeta(
+      page: 1,
+      limit: 20,
+      totalItems: 0,
+      totalPages: 1,
+      hasNext: false,
+      hasPrevious: false,
+    ),
+  ),
+);
+
+UsersQuery _capturedQuery(_MockUsersRepository repository) =>
+    verify(() => repository.getUsers(captureAny())).captured.single
+        as UsersQuery;
+
+void _verifyNoGetUsers(_MockUsersRepository repository) =>
+    verifyNever(() => repository.getUsers(any()));
+
+class _MockUsersRepository extends Mock implements UsersRepository {}

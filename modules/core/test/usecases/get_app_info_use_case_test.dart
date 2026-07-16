@@ -1,12 +1,20 @@
 import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 
 void main() {
-  late _RecordingAnalyticsProvider analyticsProvider;
+  late _MockAnalyticsProvider analyticsProvider;
+  late _MockDeviceInfoRepository repository;
+
+  setUpAll(() {
+    registerFallbackValue(const AnalyticsEvent(name: 'fallback'));
+  });
 
   setUp(() {
-    analyticsProvider = _RecordingAnalyticsProvider();
+    analyticsProvider = _MockAnalyticsProvider();
+    repository = _MockDeviceInfoRepository();
+    when(() => analyticsProvider.track(any())).thenAnswer((_) async {});
     Analytics.initialize([analyticsProvider]);
   });
 
@@ -21,13 +29,16 @@ void main() {
       buildSignature: 'signature',
       installerStore: 'store',
     );
-    final useCase = GetAppInfoUseCase(
-      _FakeDeviceInfoRepository(result: const Right(appInfo)),
-    );
+    when(
+      () => repository.getAppInfo(),
+    ).thenAnswer((_) async => const Right(appInfo));
+    final useCase = GetAppInfoUseCase(repository);
 
     await useCase(const NoParams());
 
-    final event = analyticsProvider.events.single;
+    final event =
+        verify(() => analyticsProvider.track(captureAny())).captured.single
+            as AnalyticsEvent;
     expect(event.name, 'get_app_info_usecase_success');
     expect(event.properties, {
       AnalyticsPropertyKeys.appVersion: '1.2.3',
@@ -40,13 +51,16 @@ void main() {
       message: 'Package info unavailable',
       source: 'DeviceInfoRepository.getAppInfo',
     );
-    final useCase = GetAppInfoUseCase(
-      _FakeDeviceInfoRepository(result: const Left(failure)),
-    );
+    when(
+      () => repository.getAppInfo(),
+    ).thenAnswer((_) async => const Left(failure));
+    final useCase = GetAppInfoUseCase(repository);
 
     await useCase(const NoParams());
 
-    final event = analyticsProvider.events.single;
+    final event =
+        verify(() => analyticsProvider.track(captureAny())).captured.single
+            as AnalyticsEvent;
     expect(event.name, 'get_app_info_usecase_failure');
     expect(
       event.properties?[AnalyticsPropertyKeys.failureMessage],
@@ -59,27 +73,6 @@ void main() {
   });
 }
 
-class _FakeDeviceInfoRepository implements DeviceInfoRepository {
-  const _FakeDeviceInfoRepository({required this.result});
+class _MockDeviceInfoRepository extends Mock implements DeviceInfoRepository {}
 
-  final Either<Failure, AppInfo> result;
-
-  @override
-  FutureEither<AppInfo> getAppInfo() async => result;
-
-  @override
-  FutureEither<AppDeviceInfo> getDeviceInfo() => throw UnimplementedError();
-}
-
-class _RecordingAnalyticsProvider implements AnalyticsProvider {
-  final events = <AnalyticsEvent>[];
-
-  @override
-  Future<void> track(AnalyticsEvent event) async => events.add(event);
-
-  @override
-  Future<void> setUserId(String? userId) async {}
-
-  @override
-  Future<void> setUserProperty(Map<String, dynamic> properties) async {}
-}
+class _MockAnalyticsProvider extends Mock implements AnalyticsProvider {}

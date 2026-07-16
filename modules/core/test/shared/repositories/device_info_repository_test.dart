@@ -1,5 +1,6 @@
 import 'package:core/core.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 
 void main() {
   const appInfo = AppInfo(
@@ -13,9 +14,9 @@ void main() {
 
   group('DeviceInfoRepository.getAppInfo', () {
     test('returns app info from the service', () async {
-      final repository = DeviceInfoRepositoryImpl(
-        _FakeDeviceInfoService(onGetAppInfo: () async => appInfo),
-      );
+      final service = _MockDeviceInfoService();
+      when(() => service.getAppInfo()).thenAnswer((_) async => appInfo);
+      final repository = DeviceInfoRepositoryImpl(service);
 
       final result = await repository.getAppInfo();
 
@@ -26,11 +27,11 @@ void main() {
     });
 
     test('maps service errors to a failure', () async {
-      final repository = DeviceInfoRepositoryImpl(
-        _FakeDeviceInfoService(
-          onGetAppInfo: () async => throw Exception('package info unavailable'),
-        ),
-      );
+      final service = _MockDeviceInfoService();
+      when(
+        () => service.getAppInfo(),
+      ).thenThrow(Exception('package info unavailable'));
+      final repository = DeviceInfoRepositoryImpl(service);
 
       final result = await repository.getAppInfo();
 
@@ -43,14 +44,4 @@ void main() {
   });
 }
 
-class _FakeDeviceInfoService implements DeviceInfoService {
-  _FakeDeviceInfoService({required this.onGetAppInfo});
-
-  final Future<AppInfo> Function() onGetAppInfo;
-
-  @override
-  Future<AppInfo> getAppInfo() => onGetAppInfo();
-
-  @override
-  Future<AppDeviceInfo> getDeviceInfo() => throw UnimplementedError();
-}
+class _MockDeviceInfoService extends Mock implements DeviceInfoService {}

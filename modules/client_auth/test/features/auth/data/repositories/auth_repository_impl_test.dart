@@ -2,19 +2,24 @@ import 'package:client_auth/src/features/auth/data/datasources/auth_remote_data_
 import 'package:client_auth/src/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:core/core.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 
 void main() {
-  late _FakeAuthRemoteDataSource remoteDataSource;
-  late _FakeTokenStorage tokenStorage;
+  late _MockAuthRemoteDataSource remoteDataSource;
+  late _MockTokenStorage tokenStorage;
+  late _MockDeviceInfoService deviceInfoService;
   late AuthRepositoryImpl repository;
 
   setUp(() {
-    remoteDataSource = _FakeAuthRemoteDataSource();
-    tokenStorage = _FakeTokenStorage();
+    remoteDataSource = _MockAuthRemoteDataSource();
+    tokenStorage = _MockTokenStorage();
+    deviceInfoService = _MockDeviceInfoService();
+    when(() => remoteDataSource.logOut()).thenAnswer((_) async {});
+    when(() => tokenStorage.clearTokens()).thenAnswer((_) async {});
     repository = AuthRepositoryImpl(
       remoteDataSource,
       tokenStorage,
-      _FakeDeviceInfoService(),
+      deviceInfoService,
     );
   });
 
@@ -22,50 +27,23 @@ void main() {
     final result = await repository.logOut();
 
     expect(result.isRight(), isTrue);
-    expect(remoteDataSource.logoutCalls, 1);
-    expect(tokenStorage.clearCalls, 1);
+    verify(() => remoteDataSource.logOut()).called(1);
+    verify(() => tokenStorage.clearTokens()).called(1);
   });
 
   test('logout clears local tokens when the API request fails', () async {
-    remoteDataSource.logoutError = Exception('offline');
+    when(() => remoteDataSource.logOut()).thenThrow(Exception('offline'));
 
     final result = await repository.logOut();
 
     expect(result.isLeft(), isTrue);
-    expect(remoteDataSource.logoutCalls, 1);
-    expect(tokenStorage.clearCalls, 1);
+    verify(() => remoteDataSource.logOut()).called(1);
+    verify(() => tokenStorage.clearTokens()).called(1);
   });
 }
 
-class _FakeAuthRemoteDataSource implements AuthRemoteDataSource {
-  int logoutCalls = 0;
-  Exception? logoutError;
+class _MockAuthRemoteDataSource extends Mock implements AuthRemoteDataSource {}
 
-  @override
-  Future<void> logOut() async {
-    logoutCalls++;
-    if (logoutError case final error?) {
-      throw error;
-    }
-  }
+class _MockTokenStorage extends Mock implements TokenStorage {}
 
-  @override
-  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
-}
-
-class _FakeTokenStorage implements TokenStorage {
-  int clearCalls = 0;
-
-  @override
-  Future<void> clearTokens() async {
-    clearCalls++;
-  }
-
-  @override
-  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
-}
-
-class _FakeDeviceInfoService implements DeviceInfoService {
-  @override
-  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
-}
+class _MockDeviceInfoService extends Mock implements DeviceInfoService {}

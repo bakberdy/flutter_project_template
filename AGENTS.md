@@ -51,9 +51,11 @@ feature's `domain/analytics/` directory.
 
 ## Testing Guidelines
 
-Use `flutter_test`; name files `*_test.dart` and mirror source paths where
-practical. Test changed blocs, repositories, models, routes, and widgets. Before
-submission, run analysis, affected tests, generators, and the string check.
+Use `flutter_test` and `mocktail` for test doubles; do not create handwritten
+fake or mock implementations. Name files `*_test.dart` and mirror source paths
+where practical. Test changed blocs, repositories, models, routes, and widgets.
+Before submission, run analysis, affected tests, generators, and the string
+check.
 
 ## Commit & Pull Request Guidelines
 

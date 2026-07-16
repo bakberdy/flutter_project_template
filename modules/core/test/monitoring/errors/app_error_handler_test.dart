@@ -4,16 +4,25 @@ import 'dart:ui';
 import 'package:core/core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  late _RecordingCrashProvider provider;
+  late _MockCrashProvider provider;
   late FlutterExceptionHandler? previousFlutterHandler;
   late ErrorCallback? previousPlatformHandler;
 
   setUp(() {
-    provider = _RecordingCrashProvider();
+    provider = _MockCrashProvider();
+    when(
+      () => provider.recordError(
+        any(),
+        any(),
+        reason: any(named: 'reason'),
+        data: any(named: 'data'),
+      ),
+    ).thenAnswer((_) async {});
     Crashlytics.initialize([provider]);
     previousFlutterHandler = FlutterError.onError;
     previousPlatformHandler = PlatformDispatcher.instance.onError;
@@ -43,37 +52,20 @@ void main() {
         await Future<void>.delayed(Duration.zero);
       });
 
+      final reasons = verify(
+        () => provider.recordError(
+          any(),
+          any(),
+          reason: captureAny(named: 'reason'),
+          data: any(named: 'data'),
+        ),
+      ).captured;
       expect(
-        provider.reasons,
-        containsAll([
-          UnhandledErrorSource.flutterFramework.reason,
-          UnhandledErrorSource.platformDispatcher.reason,
-          UnhandledErrorSource.zone.reason,
-        ]),
+        reasons,
+        containsAll(UnhandledErrorSource.values.map((e) => e.reason)),
       );
     },
   );
 }
 
-class _RecordingCrashProvider implements CrashlyticsProvider {
-  final List<String?> reasons = [];
-
-  @override
-  Future<void> recordError(
-    dynamic exception,
-    StackTrace? stackTrace, {
-    String? reason,
-    Map<String, dynamic>? data,
-  }) async {
-    reasons.add(reason);
-  }
-
-  @override
-  Future<void> clearUserId() async {}
-
-  @override
-  Future<void> log(String message) async {}
-
-  @override
-  Future<void> setUserId(String userId) async {}
-}
+class _MockCrashProvider extends Mock implements CrashlyticsProvider {}
