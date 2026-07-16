@@ -33,8 +33,8 @@ class UserActions extends StatelessWidget {
     }
 
     return Wrap(
-      spacing: AppSpacing.sm,
-      runSpacing: AppSpacing.sm,
+      spacing: DesignSpacing.sm,
+      runSpacing: DesignSpacing.sm,
       children: [
         if (canApproveDeletion)
           BaseButton.destructive(

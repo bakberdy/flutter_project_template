@@ -31,8 +31,8 @@ class UsersActiveFiltersBar extends StatelessWidget {
     }
     final l10n = context.l10n;
     return Wrap(
-      spacing: AppSpacing.xs,
-      runSpacing: AppSpacing.xs,
+      spacing: DesignSpacing.xs,
+      runSpacing: DesignSpacing.xs,
       children: [
         if (query.status case final AdminUserStatus status)
           _FilterChip(

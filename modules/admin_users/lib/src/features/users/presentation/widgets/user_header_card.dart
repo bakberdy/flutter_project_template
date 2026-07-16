@@ -23,11 +23,11 @@ class UserHeaderCard extends StatelessWidget {
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadii.sm),
+        borderRadius: BorderRadius.circular(DesignRadii.sm),
         side: BorderSide(color: context.designColors.outlineVariant),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.lg),
+        padding: const EdgeInsets.all(DesignSpacing.lg),
         child: Row(
           children: [
             UserAvatar(
@@ -36,7 +36,7 @@ class UserHeaderCard extends StatelessWidget {
               radius: 42,
               format: UserAvatarFormat.square,
             ),
-            const SizedBox(width: AppSpacing.lg),
+            const SizedBox(width: DesignSpacing.lg),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,17 +47,17 @@ class UserHeaderCard extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.xs),
+                  const SizedBox(height: DesignSpacing.xs),
                   SelectableText(
                     user.email,
                     style: context.designTextTheme.bodyLarge?.copyWith(
                       color: context.designColors.onSurfaceVariant,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.sm),
+                  const SizedBox(height: DesignSpacing.sm),
                   Wrap(
-                    spacing: AppSpacing.sm,
-                    runSpacing: AppSpacing.xs,
+                    spacing: DesignSpacing.sm,
+                    runSpacing: DesignSpacing.xs,
                     children: [
                       UserStatusChip(status: user.status),
                       Chip(

@@ -27,7 +27,6 @@ export 'src/inputs/phone/base_phone_number_input_formatter.dart';
 export 'src/inputs/phone/base_phone_number_text_field.dart';
 export 'src/inputs/phone/country_dial_code_option.dart';
 export 'src/theme/design_theme.dart';
-export 'src/tokens/app_design_aliases.dart';
 export 'src/tokens/design_radii.dart';
 export 'src/tokens/design_spacing.dart';
 export 'src/widgets/base_list_tile.dart';

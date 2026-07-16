@@ -90,7 +90,7 @@ class _UsersSearchBarState extends State<UsersSearchBar> {
                       minHeight: 40,
                     ),
                     contentPadding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.sm,
+                      horizontal: DesignSpacing.sm,
                     ),
                   ),
                   textInputAction: TextInputAction.search,
@@ -99,7 +99,7 @@ class _UsersSearchBarState extends State<UsersSearchBar> {
               },
             ),
           ),
-          const SizedBox(width: AppSpacing.sm),
+          const SizedBox(width: DesignSpacing.sm),
           ValueListenableBuilder(
             valueListenable: _controller,
             builder: (context, value, _) {
@@ -144,7 +144,7 @@ class _SearchBarActionButton extends StatelessWidget {
           label: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis),
           style: ButtonStyle(
             padding: const WidgetStatePropertyAll(
-              EdgeInsets.symmetric(horizontal: AppSpacing.sm),
+              EdgeInsets.symmetric(horizontal: DesignSpacing.sm),
             ),
             foregroundColor: WidgetStateProperty.resolveWith(
               (states) => states.contains(WidgetState.disabled)
@@ -161,7 +161,7 @@ class _SearchBarActionButton extends StatelessWidget {
             ),
             shape: WidgetStatePropertyAll(
               RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(AppRadii.md),
+                borderRadius: BorderRadius.circular(DesignRadii.md),
               ),
             ),
           ),

@@ -43,10 +43,10 @@ class _UserScreenState extends State<UserScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.lg,
-                  AppSpacing.md,
-                  AppSpacing.lg,
-                  AppSpacing.sm,
+                  DesignSpacing.lg,
+                  DesignSpacing.md,
+                  DesignSpacing.lg,
+                  DesignSpacing.sm,
                 ),
                 child: Row(
                   children: [
@@ -55,7 +55,7 @@ class _UserScreenState extends State<UserScreen> {
                         const CoreNavigationEvent.pop(),
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.sm),
+                    const SizedBox(width: DesignSpacing.sm),
                     Expanded(
                       child: Text(
                         state.user?.email ?? l10n.userTitle,
@@ -77,17 +77,17 @@ class _UserScreenState extends State<UserScreen> {
               const Divider(height: 1),
               if (state.status.isLoading) const LinearProgressIndicator(),
               if (!state.status.isLoading)
-                const SizedBox(height: AppSpacing.xxs),
+                const SizedBox(height: DesignSpacing.xxs),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(AppSpacing.lg),
+                  padding: const EdgeInsets.all(DesignSpacing.lg),
                   child: switch ((state.user, failure)) {
                     (_, final Failure error) => Center(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(error.messageTextOrDefault(context)),
-                          const SizedBox(height: AppSpacing.md),
+                          const SizedBox(height: DesignSpacing.md),
                           BaseButton.secondary(
                             onPressed: () => context.read<UserBloc>().add(
                               UserEvent.started(widget.userId),

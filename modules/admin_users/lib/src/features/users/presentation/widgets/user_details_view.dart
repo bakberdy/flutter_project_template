@@ -104,7 +104,7 @@ class UserDetailsView extends StatelessWidget {
           children: [
             UserHeaderCard(user: user, profile: profile),
             if (hasActions) ...[
-              const SizedBox(height: AppSpacing.md),
+              const SizedBox(height: DesignSpacing.md),
               UserActions(
                 user: user,
                 loading: actionLoading,
@@ -113,13 +113,13 @@ class UserDetailsView extends StatelessWidget {
                 onUnblockUser: onUnblockUser,
               ),
             ],
-            const SizedBox(height: AppSpacing.md),
+            const SizedBox(height: DesignSpacing.md),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(child: userCard),
                 if (profileCard != null) ...[
-                  const SizedBox(width: AppSpacing.md),
+                  const SizedBox(width: DesignSpacing.md),
                   Expanded(child: profileCard),
                 ],
               ],

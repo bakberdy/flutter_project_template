@@ -36,7 +36,7 @@ class UsersFiltersMenuButton extends StatelessWidget {
     final backgroundColor = !enabled || !active
         ? colorScheme.surface
         : colorScheme.primaryContainer.withValues(alpha: 0.24);
-    final borderRadius = BorderRadius.circular(AppRadii.md);
+    final borderRadius = BorderRadius.circular(DesignRadii.md);
 
     return InkWell(
       borderRadius: borderRadius,
@@ -44,7 +44,7 @@ class UsersFiltersMenuButton extends StatelessWidget {
       child: Container(
         width: 172,
         height: 40,
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
+        padding: const EdgeInsets.symmetric(horizontal: DesignSpacing.sm),
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: borderRadius,
@@ -53,7 +53,7 @@ class UsersFiltersMenuButton extends StatelessWidget {
         child: Row(
           children: [
             Icon(Icons.filter_list, size: 18, color: foregroundColor),
-            const SizedBox(width: AppSpacing.xs),
+            const SizedBox(width: DesignSpacing.xs),
             Expanded(
               child: Text(
                 l10n.usersFiltersLabel,
@@ -65,7 +65,7 @@ class UsersFiltersMenuButton extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: AppSpacing.xs),
+            const SizedBox(width: DesignSpacing.xs),
             Icon(Icons.tune, size: 18, color: foregroundColor),
           ],
         ),
@@ -101,7 +101,7 @@ class UsersFiltersMenuButton extends StatelessWidget {
                   label: Text(l10n.usersFiltersClearAll),
                 ),
               ),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: DesignSpacing.sm),
               _FilterDropdown<AdminUserStatus>(
                 label: l10n.usersStatusFilterLabel,
                 value: draft.status,
@@ -116,7 +116,7 @@ class UsersFiltersMenuButton extends StatelessWidget {
                     .toList(),
                 onChanged: (status) => setState(() => draft.status = status),
               ),
-              const SizedBox(height: AppSpacing.md),
+              const SizedBox(height: DesignSpacing.md),
               _FilterDropdown<AdminUserRole>(
                 label: l10n.usersRoleFilterLabel,
                 value: draft.role,
@@ -131,7 +131,7 @@ class UsersFiltersMenuButton extends StatelessWidget {
                     .toList(),
                 onChanged: (role) => setState(() => draft.role = role),
               ),
-              const SizedBox(height: AppSpacing.md),
+              const SizedBox(height: DesignSpacing.md),
               Row(
                 children: [
                   Expanded(
@@ -147,7 +147,7 @@ class UsersFiltersMenuButton extends StatelessWidget {
                           setState(() => draft.isVerified = value),
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.md),
+                  const SizedBox(width: DesignSpacing.md),
                   Expanded(
                     child: _FilterDropdown<bool>(
                       label: l10n.usersProfileCompletedFilterLabel,
@@ -163,7 +163,7 @@ class UsersFiltersMenuButton extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.md),
+              const SizedBox(height: DesignSpacing.md),
               _CreatedAtRangeTile(
                 from: draft.createdAtFrom,
                 to: draft.createdAtTo,
@@ -299,7 +299,7 @@ class _CreatedAtRangeTile extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: context.designColors.outlineVariant),
-        borderRadius: BorderRadius.circular(AppRadii.md),
+        borderRadius: BorderRadius.circular(DesignRadii.md),
       ),
       child: ListTile(
         leading: const Icon(Icons.calendar_today),
