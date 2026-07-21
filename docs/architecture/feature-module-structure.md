@@ -839,19 +839,20 @@ routes, DI registrations, assets, dependencies или exports.
 
 ## Checklist нового модуля
 
-Новый модуль создаётся repository generator-скриптом:
+Новый модуль создаётся repository generator tool:
 
 ```bash
-./scripts/create_feature_module.sh <module_name>
+dart run tools/generation/create_feature_module.dart <module_name>
 ```
 
 При необходимости имя первой feature-зоны задаётся отдельно:
 
 ```bash
-./scripts/create_feature_module.sh admin_reports --feature reports
+dart run tools/generation/create_feature_module.dart admin_reports \
+  --feature reports
 ```
 
-Скрипт валидирует `snake_case`, не перезаписывает существующий package,
+Dart tool валидирует `snake_case`, не перезаписывает существующий package,
 добавляет модуль в root workspace, создаёт canonical scaffold и запускает
 localization, FlutterGen, DI generation, format и analyze. `--no-codegen`
 используется только когда генерация намеренно будет выполнена позже.

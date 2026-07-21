@@ -31,9 +31,10 @@ tests stay with their owning package.
 - `make client-dev` / `make admin-dev`: run an app with development config.
 - `dart analyze`: run workspace static analysis.
 - `dart format .`: format Dart sources using the standard formatter.
-- `./scripts/run_all_tests.sh`: run every app and module test suite.
+- `./tools/scripts/run_all_tests.sh`: run every app and module test suite.
 - `flutter test modules/core`: test one package; replace the path as needed.
-- `./scripts/check_hardcoded_ui_strings.sh`: reject user-facing literals.
+- `dart run tools/validation/check_hardcoded_ui_strings.dart`: reject
+  user-facing literals.
 - `cd <package> && dart run build_runner build --delete-conflicting-outputs`:
   regenerate package code.
 - `cd <package> && flutter gen-l10n`: regenerate package-local localization.
