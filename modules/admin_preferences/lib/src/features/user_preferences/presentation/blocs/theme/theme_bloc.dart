@@ -28,7 +28,6 @@ UserTheme _resolveAppliedThemeMode(
 
 @Injectable()
 class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
-
   ThemeBloc(this._getUserThemeUseCase, this._setUserThemeUseCase)
     : super(const ThemeState()) {
     on<ThemeStarted>(_onStarted);

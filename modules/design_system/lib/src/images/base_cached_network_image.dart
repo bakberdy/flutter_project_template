@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 class BaseCachedNetworkImage extends StatelessWidget {
   const BaseCachedNetworkImage({
-    required this.imageUrl, super.key,
+    required this.imageUrl,
+    super.key,
     this.baseUrl,
     this.fit,
     this.placeholder,

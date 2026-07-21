@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 
 class UserAvatarUpload extends Equatable {
-
   const UserAvatarUpload({
     required this.bytes,
     required this.filename,

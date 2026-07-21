@@ -6,7 +6,6 @@ import 'package:shared/shared.dart';
 
 @lazySingleton
 class RemoveUserAvatarUseCase extends UseCase<UserProfile, NoParams> {
-
   RemoveUserAvatarUseCase(this._repository);
   final UserProfileRepository _repository;
 

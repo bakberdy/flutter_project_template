@@ -17,7 +17,6 @@ const _requestTimeout = Duration(seconds: 10);
 
 @injectable
 class UserBloc extends Bloc<UserEvent, UserState> {
-
   UserBloc(this.getUserUseCase, this.logOutUseCase) : super(const UserState()) {
     on<UserEvent>(_onEvent, transformer: restartable());
   }

@@ -9,7 +9,6 @@ abstract class UserPreferencesLocalDataSource {
 @Singleton(as: UserPreferencesLocalDataSource)
 class UserPreferencesLocalDataSourceImpl
     implements UserPreferencesLocalDataSource {
-
   UserPreferencesLocalDataSourceImpl({required this.localStorage});
   final LocalStorage localStorage;
 

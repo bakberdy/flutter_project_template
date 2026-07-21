@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 
 class UsersPagination extends StatelessWidget {
   const UsersPagination({
-    required this.pagination, required this.onPageChanged, super.key,
+    required this.pagination,
+    required this.onPageChanged,
+    super.key,
     this.loading = false,
   });
 

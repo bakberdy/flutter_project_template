@@ -2,7 +2,9 @@ import 'package:equatable/equatable.dart';
 
 class AdminUserPhoneNumber extends Equatable {
   const AdminUserPhoneNumber({
-    required this.dialCode, required this.number, this.countryCode,
+    required this.dialCode,
+    required this.number,
+    this.countryCode,
   });
 
   final String? countryCode;

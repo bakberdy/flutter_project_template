@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 
 class VerifyRequest extends Equatable {
-
   const VerifyRequest({
     required this.loginRequestId,
     required this.email,

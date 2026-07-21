@@ -17,7 +17,6 @@ enum UserProfileAvatarAction { upload, remove }
 
 @Injectable()
 class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
-
   UserProfileBloc(
     this._getCurrentUserProfileUseCase,
     this._updateUserAvatarUseCase,

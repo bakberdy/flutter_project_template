@@ -16,7 +16,6 @@ part 'locale_state.dart';
 
 @Injectable()
 class LocaleBloc extends Bloc<LocaleEvent, LocaleState> {
-
   LocaleBloc(this._getUserLanguageUseCase, this._setUserLanguageUseCase)
     : super(const LocaleState()) {
     on<LocaleStarted>(_onStarted);

@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 
 class Device extends Equatable {
-
   const Device({
     required this.id,
     required this.clientDeviceId,
@@ -9,7 +8,8 @@ class Device extends Equatable {
     required this.osVersion,
     required this.model,
     required this.appVersion,
-    required this.hasNotificationToken, this.pushProvider,
+    required this.hasNotificationToken,
+    this.pushProvider,
   });
   final String id;
   final String clientDeviceId;

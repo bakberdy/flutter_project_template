@@ -5,7 +5,8 @@ import 'package:flutter/services.dart';
 
 class UserProfileFullNameTextField extends StatelessWidget {
   const UserProfileFullNameTextField({
-    required this.controller, super.key,
+    required this.controller,
+    super.key,
     this.onChanged,
     this.errorText,
   });

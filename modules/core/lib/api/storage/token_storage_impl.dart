@@ -4,7 +4,6 @@ import 'package:injectable/injectable.dart';
 
 @Singleton(as: TokenStorage)
 class TokenStorageImpl implements TokenStorage {
-
   const TokenStorageImpl(this._storage);
   final FlutterSecureStorage _storage;
 

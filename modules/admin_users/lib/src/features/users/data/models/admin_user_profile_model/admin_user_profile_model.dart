@@ -10,7 +10,9 @@ class AdminUserProfileModel extends AdminUserProfile {
   const AdminUserProfileModel({
     required super.userId,
     required super.fullName,
-    required super.createdAt, required super.updatedAt, super.phoneNumber,
+    required super.createdAt,
+    required super.updatedAt,
+    super.phoneNumber,
     super.avatarUrl,
     super.completedAt,
   });

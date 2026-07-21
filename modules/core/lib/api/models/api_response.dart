@@ -1,9 +1,9 @@
 import 'package:core/api/models/api_request.dart';
 
 class ApiResponse<T> {
-
   const ApiResponse({
-    required this.statusCode, this.data,
+    required this.statusCode,
+    this.data,
     this.statusMessage,
     this.headers = const {},
     this.request,

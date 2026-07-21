@@ -1,7 +1,6 @@
 import 'package:core/api/models/api_options.dart';
 
 class ApiRequest {
-
   const ApiRequest({
     required this.path,
     required this.method,

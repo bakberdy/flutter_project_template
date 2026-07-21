@@ -8,7 +8,8 @@ import 'package:shared/shared.dart';
 
 class UserProfileAppBar extends StatelessWidget {
   const UserProfileAppBar({
-    required this.fullName, super.key,
+    required this.fullName,
+    super.key,
     this.onShare,
     this.onEdit,
     this.onViewAvatar,
@@ -137,7 +138,8 @@ class CollapsedTitle extends StatelessWidget {
 
 class ExpandedHeader extends StatelessWidget {
   const ExpandedHeader({
-    required this.fullName, super.key,
+    required this.fullName,
+    super.key,
     this.avatarUrl,
     this.avatarLoading = false,
     this.avatarLoadingProgress,

@@ -33,7 +33,6 @@ abstract class UserProfileRemoteDataSource {
 
 @Singleton(as: UserProfileRemoteDataSource)
 class UserProfileRemoteDataSourceImpl implements UserProfileRemoteDataSource {
-
   UserProfileRemoteDataSourceImpl(@Named('protectedApiClient') this._apiClient);
   final ApiClient _apiClient;
 

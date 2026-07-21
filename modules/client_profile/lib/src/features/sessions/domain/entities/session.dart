@@ -2,7 +2,6 @@ import 'package:client_profile/src/features/sessions/domain/entities/device.dart
 import 'package:equatable/equatable.dart';
 
 class Session extends Equatable {
-
   const Session({
     required this.id,
     required this.userId,
@@ -10,7 +9,9 @@ class Session extends Equatable {
     required this.createdAt,
     required this.expiresAt,
     required this.lastActive,
-    required this.isRevoked, required this.device, this.revokedAt,
+    required this.isRevoked,
+    required this.device,
+    this.revokedAt,
   });
   final String id;
   final String userId;

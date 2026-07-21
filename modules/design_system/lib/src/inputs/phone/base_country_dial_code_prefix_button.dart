@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 
 class BaseCountryDialCodePrefixButton extends StatelessWidget {
   const BaseCountryDialCodePrefixButton({
-    required this.dialCode, required this.onTap, super.key,
+    required this.dialCode,
+    required this.onTap,
+    super.key,
   });
 
   final CountryDialCodeOption dialCode;

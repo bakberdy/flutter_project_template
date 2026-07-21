@@ -15,7 +15,6 @@ part 'user_profile_edit_state.dart';
 @Injectable()
 class UserProfileEditBloc
     extends Bloc<UserProfileEditEvent, UserProfileEditState> {
-
   UserProfileEditBloc(this._updateUserProfileUseCase)
     : super(const UserProfileEditState()) {
     on<UserProfileEditStarted>(_onStarted);

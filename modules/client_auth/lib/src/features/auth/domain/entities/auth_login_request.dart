@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 
 class AuthDeviceInfo extends Equatable {
-
   const AuthDeviceInfo({
     required this.deviceId,
     required this.os,
@@ -32,7 +31,6 @@ class AuthDeviceInfo extends Equatable {
 }
 
 class AuthLoginRequest extends Equatable {
-
   const AuthLoginRequest({required this.email, required this.device});
   final String email;
   final AuthDeviceInfo device;

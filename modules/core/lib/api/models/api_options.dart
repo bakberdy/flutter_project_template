@@ -1,5 +1,4 @@
 class ApiOptions {
-
   const ApiOptions({
     this.headers,
     this.contentType,

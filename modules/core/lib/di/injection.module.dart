@@ -23,7 +23,7 @@ import 'package:shared_preferences/shared_preferences.dart' as _i460;
 import 'package:talker_flutter/talker_flutter.dart' as _i207;
 
 class CorePackageModule extends _i526.MicroPackageModule {
-// initializes the registration of main-scope dependencies inside of GetIt
+  // initializes the registration of main-scope dependencies inside of GetIt
   @override
   _i687.FutureOr<void> init(_i526.GetItHelper gh) async {
     final coreModule = _$CoreModule();
@@ -35,19 +35,26 @@ class CorePackageModule extends _i526.MicroPackageModule {
     gh.singleton<_i207.Talker>(() => coreModule.talker);
     gh.singleton<_i19.DeviceInfoService>(() => _i19.DeviceInfoService());
     gh.lazySingleton<_i423.SecureStorage>(
-        () => _i181.FlutterSecureStorageImpl(gh<_i558.FlutterSecureStorage>()));
+      () => _i181.FlutterSecureStorageImpl(gh<_i558.FlutterSecureStorage>()),
+    );
     gh.singleton<_i610.TokenStorage>(
-        () => _i511.TokenStorageImpl(gh<_i558.FlutterSecureStorage>()));
+      () => _i511.TokenStorageImpl(gh<_i558.FlutterSecureStorage>()),
+    );
     gh.lazySingleton<_i1036.DeviceInfoRepository>(
-        () => _i1036.DeviceInfoRepositoryImpl(gh<_i19.DeviceInfoService>()));
-    gh.lazySingleton<_i229.ApiClientFactory>(() => coreModule.apiClientFactory(
-          gh<_i229.TokenStorage>(),
-          gh<_i207.Talker>(),
-        ));
+      () => _i1036.DeviceInfoRepositoryImpl(gh<_i19.DeviceInfoService>()),
+    );
+    gh.lazySingleton<_i229.ApiClientFactory>(
+      () => coreModule.apiClientFactory(
+        gh<_i229.TokenStorage>(),
+        gh<_i207.Talker>(),
+      ),
+    );
     gh.singleton<_i2.LocalStorage>(
-        () => _i862.SharedPreferencesStorage(gh<_i460.SharedPreferences>()));
+      () => _i862.SharedPreferencesStorage(gh<_i460.SharedPreferences>()),
+    );
     gh.lazySingleton<_i267.GetAppInfoUseCase>(
-        () => _i267.GetAppInfoUseCase(gh<_i1036.DeviceInfoRepository>()));
+      () => _i267.GetAppInfoUseCase(gh<_i1036.DeviceInfoRepository>()),
+    );
     gh.lazySingleton<_i229.ApiClient>(
       () => coreModule.publicApiClient(
         gh<_i283.CoreAppConfig>(),

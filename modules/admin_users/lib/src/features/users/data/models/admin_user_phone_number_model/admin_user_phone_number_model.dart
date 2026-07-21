@@ -6,7 +6,9 @@ part 'admin_user_phone_number_model.g.dart';
 @JsonSerializable(createToJson: false, fieldRename: FieldRename.snake)
 class AdminUserPhoneNumberModel extends AdminUserPhoneNumber {
   const AdminUserPhoneNumberModel({
-    required super.dialCode, required super.number, super.countryCode,
+    required super.dialCode,
+    required super.number,
+    super.countryCode,
   });
 
   factory AdminUserPhoneNumberModel.fromJson(Map<String, dynamic> json) =>

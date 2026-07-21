@@ -15,7 +15,6 @@ part 'create_user_profile_state.dart';
 @injectable
 class CreateUserProfileBloc
     extends Bloc<CreateUserProfileEvent, CreateUserProfileState> {
-
   CreateUserProfileBloc(this._createUserProfileUseCase)
     : super(const CreateUserProfileState()) {
     on<_Started>(_onStarted);

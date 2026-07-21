@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 
 class UsersStatusFilter extends StatelessWidget {
   const UsersStatusFilter({
-    required this.value, required this.onChanged, super.key,
+    required this.value,
+    required this.onChanged,
+    super.key,
     this.enabled = true,
   });
 

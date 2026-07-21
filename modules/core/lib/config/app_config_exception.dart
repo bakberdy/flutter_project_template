@@ -1,5 +1,4 @@
 class AppConfigException implements Exception {
-
   factory AppConfigException.missing(String name) {
     return AppConfigException._(
       'Missing required dart define: $name. '

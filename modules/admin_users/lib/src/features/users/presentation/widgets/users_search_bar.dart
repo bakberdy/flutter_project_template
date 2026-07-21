@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 
 class UsersSearchBar extends StatefulWidget {
   const UsersSearchBar({
-    required this.onSearch, required this.activeSearch, super.key,
+    required this.onSearch,
+    required this.activeSearch,
+    super.key,
     this.initialValue,
   });
 

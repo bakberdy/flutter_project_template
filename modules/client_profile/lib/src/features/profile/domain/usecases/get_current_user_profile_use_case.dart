@@ -6,7 +6,6 @@ import 'package:shared/shared.dart';
 
 @lazySingleton
 class GetCurrentUserProfileUseCase extends UseCase<UserProfile, void> {
-
   GetCurrentUserProfileUseCase(this._repository);
   final UserProfileRepository _repository;
 

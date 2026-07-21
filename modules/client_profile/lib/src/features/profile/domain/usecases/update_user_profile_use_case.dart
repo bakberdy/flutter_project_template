@@ -6,7 +6,6 @@ import 'package:injectable/injectable.dart';
 import 'package:shared/shared.dart';
 
 class UpdateUserProfileParams extends Equatable {
-
   const UpdateUserProfileParams({
     this.fullName,
     this.phoneNumber,
@@ -30,7 +29,6 @@ class UpdateUserProfileParams extends Equatable {
 @lazySingleton
 class UpdateUserProfileUseCase
     extends UseCase<UserProfile, UpdateUserProfileParams> {
-
   UpdateUserProfileUseCase(this._repository);
   final UserProfileRepository _repository;
 

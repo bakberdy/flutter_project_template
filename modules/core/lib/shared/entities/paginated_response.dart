@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 
 class PaginatedResponse<T> extends Equatable {
-
   const PaginatedResponse({required this.items, required this.pagination});
   final List<T> items;
   final PaginationMeta pagination;
@@ -11,7 +10,6 @@ class PaginatedResponse<T> extends Equatable {
 }
 
 class PaginationMeta extends Equatable {
-
   const PaginationMeta({
     required this.page,
     required this.limit,

@@ -5,7 +5,6 @@ import 'package:injectable/injectable.dart';
 import 'package:shared/shared.dart';
 
 class CreateUserProfileParams {
-
   const CreateUserProfileParams({required this.fullName, this.phoneNumber});
   final String fullName;
   final UserPhoneNumber? phoneNumber;
@@ -14,7 +13,6 @@ class CreateUserProfileParams {
 @lazySingleton
 class CreateUserProfileUseCase
     extends UseCase<UserProfile, CreateUserProfileParams> {
-
   CreateUserProfileUseCase(this._repository);
   final UserProfileRepository _repository;
 

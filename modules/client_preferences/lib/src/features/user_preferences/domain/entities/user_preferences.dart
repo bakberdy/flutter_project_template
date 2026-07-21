@@ -18,7 +18,6 @@ enum UserLanguage {
 enum UserTheme { system, light, dark }
 
 class UserPreferences extends Equatable {
-
   const UserPreferences({
     required this.userId,
     required this.language,

@@ -7,7 +7,6 @@ import 'package:injectable/injectable.dart';
 import 'package:shared/shared.dart';
 
 class UpdateUserAvatarParams extends Equatable {
-
   const UpdateUserAvatarParams({required this.avatar, this.onSendProgress});
   final UserAvatarUpload avatar;
   final ApiProgressCallback? onSendProgress;
@@ -19,7 +18,6 @@ class UpdateUserAvatarParams extends Equatable {
 @lazySingleton
 class UpdateUserAvatarUseCase
     extends UseCase<UserProfile, UpdateUserAvatarParams> {
-
   UpdateUserAvatarUseCase(this._repository);
   final UserProfileRepository _repository;
 

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 
 class BottomSheetList extends StatefulWidget {
   const BottomSheetList({
-    required this.items, required this.divider, super.key,
+    required this.items,
+    required this.divider,
+    super.key,
     this.isScrollable = false,
     this.title,
     this.footer,

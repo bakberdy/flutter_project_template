@@ -27,7 +27,6 @@ abstract class UserPreferencesRemoteDataSource {
 @Singleton(as: UserPreferencesRemoteDataSource)
 class UserPreferencesRemoteDataSourceImpl
     implements UserPreferencesRemoteDataSource {
-
   UserPreferencesRemoteDataSourceImpl(
     @Named('protectedApiClient') this._apiClient,
   );

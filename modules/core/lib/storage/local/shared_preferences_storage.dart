@@ -4,7 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 @Singleton(as: LocalStorage)
 class SharedPreferencesStorage implements LocalStorage {
-
   SharedPreferencesStorage(this._sharedPreferences);
   final SharedPreferences _sharedPreferences;
   @override
