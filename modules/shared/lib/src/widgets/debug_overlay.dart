@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:inspector/inspector.dart';
 
 class DebugOverlay extends StatelessWidget {
   const DebugOverlay({
@@ -25,7 +26,7 @@ class DebugOverlay extends StatelessWidget {
 
     return Stack(
       children: [
-        child,
+        Inspector(isEnabled: true, child: child),
         ValueListenableBuilder<bool>(
           valueListenable: showTalkerDock,
           builder: (context, showTalkerDock, _) {
