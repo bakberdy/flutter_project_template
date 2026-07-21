@@ -29,9 +29,8 @@ class GetCurrentUserUseCase
         : result.timeout(
             params.timeout!,
             onTimeout: () => const Left(
-              Failure(
+              TimeoutFailure(
                 source: 'GetCurrentUserUseCase.timeout',
-                reason: FailureReason.timeout,
                 details: FailureDetails(statusCode: 0),
               ),
             ),
@@ -54,7 +53,8 @@ class GetCurrentUserUseCase
             Analytics.track(
               GetCurrentUserUseCaseEvent.failure(
                 properties: {
-                  AnalyticsPropertyKeys.failureMessage: failure.message,
+                  if (failure case BackendFailure(:final message))
+                    AnalyticsPropertyKeys.failureMessage: message,
                   AnalyticsPropertyKeys.failureType: failure.details?.type.name,
                   AnalyticsPropertyKeys.failureSource: failure.source,
                 },

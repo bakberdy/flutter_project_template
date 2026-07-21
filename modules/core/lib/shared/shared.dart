@@ -3,7 +3,6 @@ library;
 export 'entities/app_device_info.dart';
 export 'entities/app_info.dart';
 export 'entities/app_picked_file.dart';
-export 'entities/failure.dart';
 export 'entities/paginated_response.dart';
 export 'extensions/exception_x.dart';
 export 'mappers/http_error_mapper.dart';

@@ -1,4 +1,4 @@
-import 'package:core/shared/entities/failure.dart';
+import 'package:core/domain/failures/failure.dart';
 import 'package:dartz/dartz.dart';
 
 /// Common type definitions for cleaner code

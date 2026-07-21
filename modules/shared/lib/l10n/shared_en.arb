@@ -9,5 +9,7 @@
   "errorInvalidResponse": "The server response could not be processed.",
   "errorRequestFailed": "The request could not be completed. Try again.",
   "errorUnauthorized": "Your session has expired. Sign in again.",
+  "errorGetAppInfo": "App information could not be loaded.",
+  "errorGetDeviceInfo": "Device information could not be loaded.",
   "errorUnknown": "Something went wrong. Try again."
 }

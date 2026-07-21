@@ -32,7 +32,8 @@ class SetUserLanguageUseCase
                     AnalyticsPropertyKeys.preferenceName: 'language',
                     AnalyticsPropertyKeys.preferenceValue:
                         params.language.languageCode,
-                    AnalyticsPropertyKeys.failureMessage: failure.message,
+                    if (failure case BackendFailure(:final message))
+                      AnalyticsPropertyKeys.failureMessage: message,
                     AnalyticsPropertyKeys.failureType:
                         failure.details?.type.name,
                     AnalyticsPropertyKeys.failureSource: failure.source,

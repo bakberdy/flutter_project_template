@@ -6,10 +6,9 @@ import 'package:shared/shared.dart';
 void main() {
   group('FailureUiX', () {
     testWidgets('preserves backend-owned messages', (tester) async {
-      const failure = Failure(
+      const failure = BackendFailure(
         message: 'Invalid credentials',
         source: 'test',
-        reason: FailureReason.backend,
         details: FailureDetails(statusCode: 401),
       );
 
@@ -22,9 +21,8 @@ void main() {
     testWidgets('maps connection failures using the active locale', (
       tester,
     ) async {
-      const failure = Failure(
+      const failure = NoConnectionFailure(
         source: 'test',
-        reason: FailureReason.noConnection,
         details: FailureDetails(statusCode: 0),
       );
 
@@ -37,9 +35,8 @@ void main() {
     testWidgets('maps service failures using the active locale', (
       tester,
     ) async {
-      const failure = Failure(
+      const failure = ServiceUnavailableFailure(
         source: 'test',
-        reason: FailureReason.serviceUnavailable,
         details: FailureDetails(statusCode: 503),
       );
 
@@ -52,7 +49,7 @@ void main() {
     testWidgets('maps unknown failures to the localized fallback', (
       tester,
     ) async {
-      const failure = Failure(
+      const failure = UnknownFailure(
         source: 'test',
         details: FailureDetails(statusCode: 500),
       );
@@ -60,6 +57,28 @@ void main() {
       expect(
         await _messageFor(tester, failure, const Locale('en')),
         'Something went wrong. Try again.',
+      );
+    });
+
+    testWidgets('maps app info failures using the active locale', (
+      tester,
+    ) async {
+      const failure = GetAppInfoFailure(source: 'test');
+
+      expect(
+        await _messageFor(tester, failure, const Locale('ru')),
+        'Не удалось загрузить информацию о приложении.',
+      );
+    });
+
+    testWidgets('maps device info failures using the active locale', (
+      tester,
+    ) async {
+      const failure = GetDeviceInfoFailure(source: 'test');
+
+      expect(
+        await _messageFor(tester, failure, const Locale('kk')),
+        'Құрылғы туралы ақпаратты жүктеу мүмкін болмады.',
       );
     });
   });

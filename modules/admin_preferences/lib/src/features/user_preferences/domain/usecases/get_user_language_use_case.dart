@@ -21,7 +21,8 @@ class GetUserLanguageUseCase extends UseCase<UserLanguage?, NoParams> {
           Analytics.track(
             GetAppLocaleUseCaseEvent.failure(
               properties: {
-                AnalyticsPropertyKeys.failureMessage: failure.message,
+                if (failure case BackendFailure(:final message))
+                  AnalyticsPropertyKeys.failureMessage: message,
                 AnalyticsPropertyKeys.failureType: failure.details?.type.name,
                 AnalyticsPropertyKeys.failureSource: failure.source,
               },

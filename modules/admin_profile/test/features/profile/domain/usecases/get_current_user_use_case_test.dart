@@ -61,7 +61,7 @@ void main() {
   });
 
   test('does not convert current-user failures into a session', () async {
-    const failure = Failure(source: 'users/me');
+    const failure = UnknownFailure(source: 'users/me');
     when(
       () => repository.getCurrentUser(cancelToken: any(named: 'cancelToken')),
     ).thenAnswer((_) async => const Left<Failure, User>(failure));

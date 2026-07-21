@@ -21,7 +21,8 @@ class GetUserThemeUseCase extends UseCase<UserTheme?, NoParams> {
           Analytics.track(
             GetUserThemeUseCaseEvent.failure(
               properties: {
-                AnalyticsPropertyKeys.failureMessage: failure.message,
+                if (failure case BackendFailure(:final message))
+                  AnalyticsPropertyKeys.failureMessage: message,
                 AnalyticsPropertyKeys.failureType: failure.details?.type.name,
                 AnalyticsPropertyKeys.failureSource: failure.source,
               },

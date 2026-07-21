@@ -5,24 +5,21 @@ import 'package:shared/src/localization/shared_localization_context_x.dart';
 extension FailureUiX on Failure {
   String messageTextOrDefault(BuildContext context) {
     final l10n = context.l10n;
-    final backendMessage = message?.trim();
-    if (reason == FailureReason.backend &&
-        backendMessage != null &&
-        backendMessage.isNotEmpty) {
-      return backendMessage;
-    }
-
-    return switch (reason) {
-      FailureReason.noConnection => l10n.errorNoConnection,
-      FailureReason.timeout => l10n.errorTimeout,
-      FailureReason.serviceUnavailable => l10n.errorServiceUnavailable,
-      FailureReason.secureConnection => l10n.errorSecureConnection,
-      FailureReason.invalidResponse => l10n.errorInvalidResponse,
-      FailureReason.requestFailed => l10n.errorRequestFailed,
-      FailureReason.unauthorized => l10n.errorUnauthorized,
-      FailureReason.backend => l10n.errorRequestFailed,
-      FailureReason.cancelled || FailureReason.unknown =>
+    return switch (this) {
+      BackendFailure(:final message) when message.trim().isNotEmpty =>
+        message.trim(),
+      BackendFailure() || RequestFailedFailure() => l10n.errorRequestFailed,
+      NoConnectionFailure() => l10n.errorNoConnection,
+      TimeoutFailure() => l10n.errorTimeout,
+      ServiceUnavailableFailure() => l10n.errorServiceUnavailable,
+      SecureConnectionFailure() => l10n.errorSecureConnection,
+      InvalidResponseFailure() => l10n.errorInvalidResponse,
+      UnauthorizedFailure() => l10n.errorUnauthorized,
+      GetAppInfoFailure() => l10n.errorGetAppInfo,
+      GetDeviceInfoFailure() => l10n.errorGetDeviceInfo,
+      RequestCancelledFailure() || UnknownFailure() =>
         details?.statusCode == 0 ? l10n.errorNoConnection : l10n.errorUnknown,
+      _ => l10n.errorUnknown,
     };
   }
 }

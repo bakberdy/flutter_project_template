@@ -37,8 +37,26 @@ void main() {
 
       expect(result.isLeft(), isTrue);
       result.fold((failure) {
+        expect(failure, isA<GetAppInfoFailure>());
         expect(failure.source, 'DeviceInfoRepository.getAppInfo');
-        expect(failure.message, contains('package info unavailable'));
+      }, (_) => fail('Expected a failure'));
+    });
+  });
+
+  group('DeviceInfoRepository.getDeviceInfo', () {
+    test('maps service errors to an operation-specific failure', () async {
+      final service = _MockDeviceInfoService();
+      when(
+        service.getDeviceInfo,
+      ).thenThrow(Exception('device info unavailable'));
+      final repository = DeviceInfoRepositoryImpl(service);
+
+      final result = await repository.getDeviceInfo();
+
+      expect(result.isLeft(), isTrue);
+      result.fold((failure) {
+        expect(failure, isA<GetDeviceInfoFailure>());
+        expect(failure.source, 'DeviceInfoRepository.getDeviceInfo');
       }, (_) => fail('Expected a failure'));
     });
   });

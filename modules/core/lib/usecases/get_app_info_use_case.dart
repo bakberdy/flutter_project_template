@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:core/domain/failures/failure.dart';
 import 'package:core/monitoring/analytics/analytics.dart';
 import 'package:core/monitoring/analytics/analytics_events.dart';
 import 'package:core/monitoring/analytics/events/get_app_info_use_case_event.dart';
@@ -11,7 +12,6 @@ import 'package:injectable/injectable.dart';
 
 @LazySingleton()
 class GetAppInfoUseCase extends UseCase<AppInfo, NoParams> {
-
   GetAppInfoUseCase(this._deviceInfoRepository);
   final DeviceInfoRepository _deviceInfoRepository;
 
@@ -24,7 +24,8 @@ class GetAppInfoUseCase extends UseCase<AppInfo, NoParams> {
         Analytics.track(
           GetAppInfoUseCaseEvent.failure(
             properties: {
-              AnalyticsPropertyKeys.failureMessage: failure.message,
+              if (failure case BackendFailure(:final message))
+                AnalyticsPropertyKeys.failureMessage: message,
               AnalyticsPropertyKeys.failureType: failure.details?.type.name,
               AnalyticsPropertyKeys.failureSource: failure.source,
             },

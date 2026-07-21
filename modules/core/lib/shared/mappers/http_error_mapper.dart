@@ -1,11 +1,17 @@
-import 'package:core/shared/entities/failure.dart';
+import 'package:core/domain/failures/failure.dart';
+import 'package:core/domain/failures/field_failure.dart';
 import 'package:core/shared/models/http_error_model.dart';
 
 extension HttpErrorMapper on HttpErrorModel {
   Failure toFailure(String source) {
     final parsedDetails = details;
     final fieldErrors = parsedDetails?.fieldErrors
-        ?.map((e) => FieldFailure(fieldName: e.fieldName, message: e.message))
+        ?.map(
+          (error) => BackendFieldFailure(
+            fieldName: error.fieldName,
+            message: error.message,
+          ),
+        )
         .toList();
     final failureDetails = FailureDetails(
       statusCode: parsedDetails?.statusCode ?? code,
@@ -13,10 +19,9 @@ extension HttpErrorMapper on HttpErrorModel {
       fieldErrors: fieldErrors,
     );
 
-    return Failure(
+    return BackendFailure(
       message: message,
       source: source,
-      reason: FailureReason.backend,
       details: failureDetails,
     );
   }

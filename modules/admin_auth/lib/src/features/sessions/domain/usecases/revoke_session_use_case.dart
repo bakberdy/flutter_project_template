@@ -20,7 +20,8 @@ class RevokeSessionUseCase extends UseCase<void, String> {
           Analytics.track(
             RevokeSessionUseCaseEvent.failure(
               properties: {
-                AnalyticsPropertyKeys.failureMessage: failure.message,
+                if (failure case BackendFailure(:final message))
+                  AnalyticsPropertyKeys.failureMessage: message,
                 AnalyticsPropertyKeys.failureType: failure.details?.type.name,
                 AnalyticsPropertyKeys.failureSource: failure.source,
               },

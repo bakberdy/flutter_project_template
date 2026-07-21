@@ -62,6 +62,41 @@ Keep Blocs and Cubits focused on state coordination; never call
 owning use case after the repository result, with event definitions under that
 feature's `domain/analytics/` directory.
 
+Failure handling follows these rules:
+
+- Represent failures with concrete `Failure` subclasses, never reason enums.
+- Keep core failures under `modules/core/lib/domain/failures/`. Create every
+  feature-specific failure under the owning feature's
+  `lib/src/features/<feature>/domain/failures/` directory. Never place a
+  feature-specific failure in `core` or `shared`; expose only the failure types
+  required by that feature package's public contract.
+- Use shared core failure types for reusable transport conditions such as no
+  connection, timeout, invalid response, and service unavailability. Create an
+  operation-specific or business-specific failure, such as
+  `GetAppInfoFailure`, when a local operation fails for its own reason.
+- Only `BackendFailure` may carry a user-facing `message`. Only
+  `BackendFieldFailure` may carry a backend field-validation message; no other
+  failure type may store localized or diagnostic text.
+- Represent local field-validation errors with concrete `FieldFailure`
+  subclasses, never strings or reason enums. Put feature-specific field
+  failures in the owning feature's `domain/failures/` directory and name them
+  by field and reason, such as `EmailTooShortFieldFailure`. Keep these classes
+  message-free and map their types to ARB text in the owning presentation
+  layer. Do not infer a typed field failure from backend prose; use a stable
+  backend error code when one is available, otherwise preserve it as a
+  `BackendFieldFailure`.
+- Resolve backend field messages through `FieldFailuresX`, using
+  `backendMessageForField` or `backendMessageForAnyField`. Do not duplicate
+  loops that filter `BackendFieldFailure` by `fieldName` in feature code.
+- Convert exceptions to typed failures in the data or repository boundary. Do
+  not pass exceptions or locally generated error strings into presentation.
+- Map non-backend failure types to ARB messages in presentation code. Preserve
+  a non-empty `BackendFailure.message` exactly as returned by the backend. Do
+  not introduce a localization data source into repositories or use cases.
+- Keep generic failure-to-UI mapping in `shared`. Resolve feature-specific
+  failures inside their owning feature; `shared` must not import feature
+  packages.
+
 Treat logout as an explicit user action. Whenever the user can see and activate
 a localized logout label, dispatch `CoreNavigationEvent.loggedOut()` through
 `CoreNavigationBloc`. Never use the logout event for account deletion or any

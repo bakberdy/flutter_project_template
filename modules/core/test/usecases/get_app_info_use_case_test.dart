@@ -46,9 +46,8 @@ void main() {
     });
   });
 
-  test('tracks failure metadata on failure', () async {
-    const failure = Failure(
-      message: 'Package info unavailable',
+  test('tracks failure metadata without a client error message', () async {
+    const failure = GetAppInfoFailure(
       source: 'DeviceInfoRepository.getAppInfo',
     );
     when(
@@ -63,8 +62,8 @@ void main() {
             as AnalyticsEvent;
     expect(event.name, 'get_app_info_usecase_failure');
     expect(
-      event.properties?[AnalyticsPropertyKeys.failureMessage],
-      failure.message,
+      event.properties,
+      isNot(contains(AnalyticsPropertyKeys.failureMessage)),
     );
     expect(
       event.properties?[AnalyticsPropertyKeys.failureSource],

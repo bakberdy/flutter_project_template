@@ -58,7 +58,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         final fieldErrors = failure.details?.fieldErrors;
         final type = failure.details?.type;
         if (type == FailureType.inline && fieldErrors != null) {
-          final emailError = _fieldError(fieldErrors, 'email');
+          final emailError = fieldErrors.backendMessageForField('email');
           if (emailError != null) {
             emit(
               state.copyWith(
@@ -112,7 +112,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         final fieldErrors = failure.details?.fieldErrors;
         if (failure.details?.type == FailureType.inline &&
             fieldErrors != null) {
-          final codeError = _fieldError(fieldErrors, 'code');
+          final codeError = fieldErrors.backendMessageForField('code');
           if (codeError == null) {
             emit(state.copyWith(status: StateStatus.error(failure)));
             return;
@@ -160,12 +160,4 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
   }
 
-  String? _fieldError(List<FieldFailure> fieldErrors, String fieldName) {
-    for (final error in fieldErrors) {
-      if (error.fieldName == fieldName) {
-        return error.message;
-      }
-    }
-    return null;
-  }
 }

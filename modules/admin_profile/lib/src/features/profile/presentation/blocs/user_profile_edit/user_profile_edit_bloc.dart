@@ -188,8 +188,10 @@ class UserProfileEditBloc
     if (failure.details?.type == FailureType.inline &&
         fieldErrors != null &&
         fieldErrors.isNotEmpty) {
-      final fullNameError = _fieldError(fieldErrors, const {'full_name'});
-      final phoneNumberError = _fieldError(fieldErrors, const {'phone_number'});
+      final fullNameError = fieldErrors.backendMessageForField('full_name');
+      final phoneNumberError = fieldErrors.backendMessageForField(
+        'phone_number',
+      );
 
       emit(
         state.copyWith(
@@ -212,15 +214,6 @@ class UserProfileEditBloc
     }
 
     emit(state.copyWith(saveStatus: StateStatus.error(failure)));
-  }
-
-  String? _fieldError(List<FieldFailure> fieldErrors, Set<String> names) {
-    for (final error in fieldErrors) {
-      if (names.contains(error.fieldName)) {
-        return error.message;
-      }
-    }
-    return null;
   }
 
   CountryDialCode _phonePrefix() {

@@ -12,7 +12,6 @@ typedef GetCurrentUserParams = ({
 
 @lazySingleton
 class GetCurrentUserUseCase extends UseCase<User, GetCurrentUserParams> {
-
   GetCurrentUserUseCase(this._repository);
   final UserProfileRepository _repository;
 
@@ -27,9 +26,8 @@ class GetCurrentUserUseCase extends UseCase<User, GetCurrentUserParams> {
         : result.timeout(
             params.timeout!,
             onTimeout: () => const Left(
-              Failure(
+              TimeoutFailure(
                 source: 'GetCurrentUserUseCase.timeout',
-                reason: FailureReason.timeout,
                 details: FailureDetails(statusCode: 0),
               ),
             ),

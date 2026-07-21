@@ -39,5 +39,13 @@ class SharedLocalizationsKk extends SharedLocalizations {
   String get errorUnauthorized => 'Сессия аяқталды. Қайта кіріңіз.';
 
   @override
+  String get errorGetAppInfo =>
+      'Қолданба туралы ақпаратты жүктеу мүмкін болмады.';
+
+  @override
+  String get errorGetDeviceInfo =>
+      'Құрылғы туралы ақпаратты жүктеу мүмкін болмады.';
+
+  @override
   String get errorUnknown => 'Бірдеңе дұрыс болмады. Қайталап көріңіз.';
 }

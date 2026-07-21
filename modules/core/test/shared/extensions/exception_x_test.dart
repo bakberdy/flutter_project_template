@@ -15,8 +15,7 @@ void main() {
 
       final failure = await exception.toFailure(source: 'auth.login');
 
-      expect(failure.message, isNull);
-      expect(failure.reason, FailureReason.requestFailed);
+      expect(failure, isA<RequestFailedFailure>());
       expect(failure.source, 'auth.login');
       expect(failure.details?.statusCode, 301);
       expect(failure.details?.type, FailureType.snackbar);
@@ -29,7 +28,13 @@ void main() {
           data: {
             'message': 'Invalid credentials',
             'code': 401,
-            'details': {'status_code': 401, 'type': 'inline'},
+            'details': {
+              'status_code': 401,
+              'type': 'inline',
+              'field_errors': [
+                {'field_name': 'email', 'message': 'Email is invalid'},
+              ],
+            },
           },
           statusCode: 401,
         ),
@@ -37,10 +42,19 @@ void main() {
 
       final failure = await exception.toFailure(source: 'auth.login');
 
-      expect(failure.message, 'Invalid credentials');
-      expect(failure.reason, FailureReason.backend);
+      expect(failure, isA<BackendFailure>());
+      expect((failure as BackendFailure).message, 'Invalid credentials');
       expect(failure.details?.statusCode, 401);
       expect(failure.details?.type, FailureType.inline);
+      expect(
+        failure.details?.fieldErrors,
+        const [
+          BackendFieldFailure(
+            fieldName: 'email',
+            message: 'Email is invalid',
+          ),
+        ],
+      );
     });
 
     test('maps refused backend connections to service unavailable', () async {
@@ -51,8 +65,7 @@ void main() {
 
       final failure = await exception.toFailure(source: 'auth.login');
 
-      expect(failure.message, isNull);
-      expect(failure.reason, FailureReason.serviceUnavailable);
+      expect(failure, isA<ServiceUnavailableFailure>());
       expect(failure.details?.statusCode, 503);
       expect(failure.details?.type, FailureType.snackbar);
     });
@@ -65,8 +78,7 @@ void main() {
 
       final failure = await exception.toFailure(source: 'auth.login');
 
-      expect(failure.message, isNull);
-      expect(failure.reason, FailureReason.noConnection);
+      expect(failure, isA<NoConnectionFailure>());
       expect(failure.details?.statusCode, 0);
       expect(failure.details?.type, FailureType.snackbar);
     });
@@ -83,10 +95,35 @@ void main() {
 
       final failure = await exception.toFailure(source: 'auth.login');
 
-      expect(failure.message, isNull);
-      expect(failure.reason, FailureReason.serviceUnavailable);
+      expect(failure, isA<ServiceUnavailableFailure>());
       expect(failure.details?.statusCode, 503);
       expect(failure.details?.type, FailureType.snackbar);
+    });
+
+    test('maps format exceptions to invalid response failures', () async {
+      const exception = FormatException('Invalid response');
+
+      final failure = await exception.toFailure(source: 'auth.login');
+
+      expect(failure, isA<InvalidResponseFailure>());
+      expect(failure.source, 'auth.login');
+    });
+
+    test('maps unclassified exceptions to unknown failures', () async {
+      final failure = await Exception(
+        'Unexpected error',
+      ).toFailure(source: 'auth.login');
+
+      expect(failure, isA<UnknownFailure>());
+      expect(failure.source, 'auth.login');
+    });
+
+    test('creates silent typed cancellation failures', () {
+      final failure = Failure.requestCancelled('auth.login');
+
+      expect(failure, isA<RequestCancelledFailure>());
+      expect(failure.source, 'auth.login');
+      expect(failure.details?.type, FailureType.silent);
     });
   });
 }

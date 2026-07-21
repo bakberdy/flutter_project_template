@@ -154,6 +154,18 @@ abstract class SharedLocalizations {
   /// **'Your session has expired. Sign in again.'**
   String get errorUnauthorized;
 
+  /// No description provided for @errorGetAppInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'App information could not be loaded.'**
+  String get errorGetAppInfo;
+
+  /// No description provided for @errorGetDeviceInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Device information could not be loaded.'**
+  String get errorGetDeviceInfo;
+
   /// No description provided for @errorUnknown.
   ///
   /// In en, this message translates to:

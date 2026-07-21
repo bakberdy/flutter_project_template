@@ -9,6 +9,7 @@ import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared/shared.dart';
 
 class UsersListView extends StatelessWidget {
   const UsersListView({super.key});
@@ -113,7 +114,7 @@ class UsersListView extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(error.message ?? l10n.usersLoadFailed),
+                        Text(error.messageTextOrDefault(context)),
                         const SizedBox(height: DesignSpacingTokens.md),
                         BaseButton.secondary(
                           onPressed: () => context.read<UsersListBloc>().add(

@@ -1,4 +1,4 @@
-import 'package:core/shared/shared.dart';
+import 'package:core/domain/failures/failure.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'state_status.freezed.dart';

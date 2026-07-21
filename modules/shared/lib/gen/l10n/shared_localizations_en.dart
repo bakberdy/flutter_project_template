@@ -40,5 +40,11 @@ class SharedLocalizationsEn extends SharedLocalizations {
   String get errorUnauthorized => 'Your session has expired. Sign in again.';
 
   @override
+  String get errorGetAppInfo => 'App information could not be loaded.';
+
+  @override
+  String get errorGetDeviceInfo => 'Device information could not be loaded.';
+
+  @override
   String get errorUnknown => 'Something went wrong. Try again.';
 }

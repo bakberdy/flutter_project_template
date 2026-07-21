@@ -7,7 +7,6 @@ import 'package:core/core.dart';
 import 'package:injectable/injectable.dart';
 
 class SetUserNotificationsUseCaseParams {
-
   const SetUserNotificationsUseCaseParams({
     this.pushNotificationsEnabled,
     this.emailNotificationsEnabled,
@@ -21,7 +20,6 @@ class SetUserNotificationsUseCaseParams {
 @LazySingleton()
 class SetUserNotificationsUseCase
     extends UseCase<UserPreferences, SetUserNotificationsUseCaseParams> {
-
   SetUserNotificationsUseCase(this._repo);
   final UserPreferencesRepository _repo;
 
@@ -42,7 +40,8 @@ class SetUserNotificationsUseCase
                 SetUserNotificationsUseCaseEvent.failure(
                   properties: {
                     ..._analyticsProperties(params),
-                    AnalyticsPropertyKeys.failureMessage: failure.message,
+                    if (failure case BackendFailure(:final message))
+                      AnalyticsPropertyKeys.failureMessage: message,
                     AnalyticsPropertyKeys.failureType:
                         failure.details?.type.name,
                     AnalyticsPropertyKeys.failureSource: failure.source,

@@ -93,7 +93,8 @@ on<LoginSubmitted>((event, emit) async {
       Analytics.track(AnalyticsEvent(
         name: AnalyticsEventNames.loginFailed,
         properties: {
-          AnalyticsPropertyKeys.errorMessage: failure.message,
+          if (failure case BackendFailure(:final message))
+            AnalyticsPropertyKeys.failureMessage: message,
           AnalyticsPropertyKeys.authMethod: 'email',
         },
       ));

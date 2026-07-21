@@ -34,7 +34,7 @@ void main() {
   });
 
   test('tracks a failed admin users operation with failure details', () async {
-    const failure = Failure(
+    const failure = BackendFailure(
       message: 'Request failed',
       source: 'UsersRepository.getUsers',
     );

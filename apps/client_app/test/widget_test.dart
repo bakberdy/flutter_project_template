@@ -8,7 +8,7 @@ import 'package:shared/shared.dart';
 
 void main() {
   test('keeps recoverable session failures away from auth', () {
-    const failure = Failure(source: 'test');
+    const failure = UnknownFailure(source: 'test');
 
     expect(
       clientRouteForUserState(const UserState()).routeName,

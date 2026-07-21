@@ -7,7 +7,6 @@ import 'package:core/core.dart';
 import 'package:injectable/injectable.dart';
 
 class SetUserLanguageUseCaseParams {
-
   const SetUserLanguageUseCaseParams({required this.language});
   final UserLanguage language;
 }
@@ -15,7 +14,6 @@ class SetUserLanguageUseCaseParams {
 @LazySingleton()
 class SetUserLanguageUseCase
     extends UseCase<void, SetUserLanguageUseCaseParams> {
-
   SetUserLanguageUseCase(this._repo);
   final UserPreferencesRepository _repo;
 
@@ -32,7 +30,8 @@ class SetUserLanguageUseCase
                     AnalyticsPropertyKeys.preferenceName: 'language',
                     AnalyticsPropertyKeys.preferenceValue:
                         params.language.languageCode,
-                    AnalyticsPropertyKeys.failureMessage: failure.message,
+                    if (failure case BackendFailure(:final message))
+                      AnalyticsPropertyKeys.failureMessage: message,
                     AnalyticsPropertyKeys.failureType:
                         failure.details?.type.name,
                     AnalyticsPropertyKeys.failureSource: failure.source,

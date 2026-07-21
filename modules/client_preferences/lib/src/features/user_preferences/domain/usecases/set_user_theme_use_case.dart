@@ -7,14 +7,12 @@ import 'package:core/core.dart';
 import 'package:injectable/injectable.dart';
 
 class SetUserThemeUseCaseParams {
-
   const SetUserThemeUseCaseParams({required this.theme});
   final UserTheme theme;
 }
 
 @LazySingleton()
 class SetUserThemeUseCase extends UseCase<void, SetUserThemeUseCaseParams> {
-
   SetUserThemeUseCase(this._repo);
   final UserPreferencesRepository _repo;
 
@@ -30,7 +28,8 @@ class SetUserThemeUseCase extends UseCase<void, SetUserThemeUseCaseParams> {
                   properties: {
                     AnalyticsPropertyKeys.preferenceName: 'theme',
                     AnalyticsPropertyKeys.preferenceValue: params.theme.name,
-                    AnalyticsPropertyKeys.failureMessage: failure.message,
+                    if (failure case BackendFailure(:final message))
+                      AnalyticsPropertyKeys.failureMessage: message,
                     AnalyticsPropertyKeys.failureType:
                         failure.details?.type.name,
                     AnalyticsPropertyKeys.failureSource: failure.source,

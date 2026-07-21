@@ -39,5 +39,12 @@ class SharedLocalizationsRu extends SharedLocalizations {
   String get errorUnauthorized => 'Сессия истекла. Войдите снова.';
 
   @override
+  String get errorGetAppInfo => 'Не удалось загрузить информацию о приложении.';
+
+  @override
+  String get errorGetDeviceInfo =>
+      'Не удалось загрузить информацию об устройстве.';
+
+  @override
   String get errorUnknown => 'Что-то пошло не так. Попробуйте ещё раз.';
 }

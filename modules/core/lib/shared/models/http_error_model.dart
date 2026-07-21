@@ -1,4 +1,4 @@
-import 'package:core/shared/entities/failure.dart';
+import 'package:core/domain/failures/failure.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'http_error_model.g.dart';
