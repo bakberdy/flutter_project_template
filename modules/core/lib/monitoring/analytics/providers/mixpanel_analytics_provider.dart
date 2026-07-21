@@ -1,5 +1,5 @@
-import '../analytics.dart';
-import '../analytics_events.dart';
+import 'package:core/monitoring/analytics/analytics.dart';
+import 'package:core/monitoring/analytics/analytics_events.dart';
 
 /// Mixpanel Analytics provider implementation
 /// To use: Add mixpanel_flutter package to pubspec.yaml

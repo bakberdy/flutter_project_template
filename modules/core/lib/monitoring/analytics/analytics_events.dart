@@ -112,8 +112,8 @@ final class AnalyticsPropertyKeys {
 }
 
 class AnalyticsEvent {
-  final String name;
-  final Map<String, dynamic>? properties;
 
   const AnalyticsEvent({required this.name, this.properties});
+  final String name;
+  final Map<String, dynamic>? properties;
 }

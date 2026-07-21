@@ -12,9 +12,6 @@ part 'notifications_state.dart';
 
 @Injectable()
 class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
-  final GetUserPreferencesUseCase _getUserPreferencesUseCase;
-  final SetUserNotificationsUseCase _setUserNotificationsUseCase;
-
   NotificationsBloc(
     this._getUserPreferencesUseCase,
     this._setUserNotificationsUseCase,
@@ -22,14 +19,8 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
     on<NotificationsStarted>(_onStarted);
     on<NotificationsChanged>(_onChanged);
   }
-
-  void start() {
-    add(const NotificationsEvent.started());
-  }
-
-  void setNotification(UserPreferencesNotificationType type, bool enabled) {
-    add(NotificationsEvent.changed(type: type, enabled: enabled));
-  }
+  final GetUserPreferencesUseCase _getUserPreferencesUseCase;
+  final SetUserNotificationsUseCase _setUserNotificationsUseCase;
 
   Future<void> _onStarted(
     NotificationsStarted event,

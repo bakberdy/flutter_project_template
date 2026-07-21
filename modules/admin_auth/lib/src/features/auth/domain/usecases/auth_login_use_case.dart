@@ -8,8 +8,9 @@ import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class AuthLoginUseCase extends UseCase<LoginResponse, String> {
-  final AuthRepository _repository;
   AuthLoginUseCase(this._repository);
+
+  final AuthRepository _repository;
 
   @override
   FutureEither<LoginResponse> call(String params) async {

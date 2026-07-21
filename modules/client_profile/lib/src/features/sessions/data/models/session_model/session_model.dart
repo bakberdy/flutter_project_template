@@ -13,9 +13,7 @@ class SessionModel extends Session {
     required super.createdAt,
     required super.expiresAt,
     required super.lastActive,
-    super.revokedAt,
-    required super.isRevoked,
-    required DeviceModel device,
+    required super.isRevoked, required DeviceModel device, super.revokedAt,
   }) : super(device: device);
 
   factory SessionModel.fromJson(Map<String, dynamic> json) =>

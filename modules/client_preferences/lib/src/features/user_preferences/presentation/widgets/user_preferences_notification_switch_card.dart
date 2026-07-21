@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 class UserPreferencesNotificationSwitchCard extends StatelessWidget {
   const UserPreferencesNotificationSwitchCard({
-    super.key,
     required this.title,
     required this.value,
     required this.onChanged,
+    super.key,
     this.loading = false,
     this.disableTopRadius = false,
     this.disableBottomRadius = false,

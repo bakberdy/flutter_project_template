@@ -7,4 +7,9 @@ import 'design_system_localizations.dart';
 /// The translations for Russian (`ru`).
 class DesignSystemLocalizationsRu extends DesignSystemLocalizations {
   DesignSystemLocalizationsRu([String locale = 'ru']) : super(locale);
+
+  @override
+  String countryDialCodeOption(String dialCode, String countryCode) {
+    return '$dialCode ($countryCode)';
+  }
 }

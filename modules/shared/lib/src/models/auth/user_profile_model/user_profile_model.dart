@@ -6,21 +6,15 @@ part 'user_profile_model.g.dart';
 
 @JsonSerializable()
 class UserProfileModel extends UserProfile {
-  @JsonKey(name: 'phone_number')
-  final UserPhoneNumberModel? phoneNumberDto;
-
   const UserProfileModel({
     required super.userId,
     required super.fullName,
-    this.phoneNumberDto,
-    super.avatarUrl,
     required super.createdAt,
     required super.updatedAt,
+    this.phoneNumberDto,
+    super.avatarUrl,
     super.completedAt,
   }) : super(phoneNumber: phoneNumberDto);
-
-  factory UserProfileModel.fromJson(Map<String, dynamic> json) =>
-      _$UserProfileModelFromJson(json);
 
   factory UserProfileModel.fromEntity(UserProfile profile) => UserProfileModel(
     userId: profile.userId,
@@ -33,6 +27,11 @@ class UserProfileModel extends UserProfile {
     updatedAt: profile.updatedAt,
     completedAt: profile.completedAt,
   );
+
+  factory UserProfileModel.fromJson(Map<String, dynamic> json) =>
+      _$UserProfileModelFromJson(json);
+  @JsonKey(name: 'phone_number')
+  final UserPhoneNumberModel? phoneNumberDto;
 
   Map<String, dynamic> toJson() => _$UserProfileModelToJson(this);
 }

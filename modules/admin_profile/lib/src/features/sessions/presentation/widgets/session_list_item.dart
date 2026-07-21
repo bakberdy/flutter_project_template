@@ -5,12 +5,12 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 class SessionListItem extends StatelessWidget {
   const SessionListItem({
-    super.key,
     required this.title,
     required this.subtitle,
-    this.onRevoke,
     required this.disableTopRadius,
     required this.disableBottomRadius,
+    super.key,
+    this.onRevoke,
   });
 
   final String title;

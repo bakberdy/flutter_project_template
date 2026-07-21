@@ -9,8 +9,8 @@ import 'package:talker_flutter/talker_flutter.dart';
 abstract class CoreModule {
   @preResolve
   @singleton
-  Future<SharedPreferences> get sharedPreferences async =>
-      await SharedPreferences.getInstance();
+  Future<SharedPreferences> get sharedPreferences =>
+      SharedPreferences.getInstance();
 
   @singleton
   FlutterSecureStorage get secureStorage => const FlutterSecureStorage();
@@ -34,10 +34,6 @@ abstract class CoreModule {
         connectTimeout: appConfig.connectTimeout,
         receiveTimeout: appConfig.receiveTimeout,
         sendTimeout: appConfig.sendTimeout,
-        defaultHeaders: const {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
       ),
     );
   }
@@ -54,10 +50,6 @@ abstract class CoreModule {
         connectTimeout: appConfig.connectTimeout,
         receiveTimeout: appConfig.receiveTimeout,
         sendTimeout: appConfig.sendTimeout,
-        defaultHeaders: const {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
       ),
     );
   }

@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 
 class BaseButton extends StatelessWidget {
   const BaseButton._({
-    super.key,
     required this._variant,
     required this.onPressed,
     required this.label,
+    required this.expand,
+    super.key,
     this.leadingIcon,
     this.trailingIcon,
-    required this.expand,
     this.borderRadius,
     this.padding,
     this.backgroundColor,
@@ -21,9 +21,9 @@ class BaseButton extends StatelessWidget {
   });
 
   factory BaseButton.primary({
-    Key? key,
     required VoidCallback? onPressed,
     required String label,
+    Key? key,
     Widget? leadingIcon,
     Widget? trailingIcon,
     bool expand = false,
@@ -50,9 +50,9 @@ class BaseButton extends StatelessWidget {
   );
 
   factory BaseButton.secondary({
-    Key? key,
     required VoidCallback? onPressed,
     required String label,
+    Key? key,
     Widget? leadingIcon,
     Widget? trailingIcon,
     bool expand = false,
@@ -75,9 +75,9 @@ class BaseButton extends StatelessWidget {
   );
 
   factory BaseButton.destructive({
-    Key? key,
     required VoidCallback? onPressed,
     required String label,
+    Key? key,
     Widget? leadingIcon,
     Widget? trailingIcon,
     bool expand = false,

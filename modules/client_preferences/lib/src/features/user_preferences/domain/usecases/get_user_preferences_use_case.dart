@@ -8,9 +8,9 @@ import 'package:injectable/injectable.dart';
 
 @LazySingleton()
 class GetUserPreferencesUseCase extends UseCase<UserPreferences?, NoParams> {
-  final UserPreferencesRepository _repo;
 
   GetUserPreferencesUseCase(this._repo);
+  final UserPreferencesRepository _repo;
 
   @override
   FutureEither<UserPreferences?> call(NoParams params) async {

@@ -8,8 +8,8 @@ import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class AuthRefreshTokenUseCase extends UseCase<VerifyResponse, NoParams> {
-  final AuthRepository _repository;
   AuthRefreshTokenUseCase(this._repository);
+  final AuthRepository _repository;
 
   @override
   FutureEither<VerifyResponse> call(NoParams params) async {

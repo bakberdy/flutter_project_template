@@ -3,14 +3,6 @@ import 'package:shared/src/entities/auth/user_role.dart';
 import 'package:shared/src/entities/auth/user_status.dart';
 
 class User extends Equatable {
-  final String id;
-  final String email;
-  final UserRole role;
-  final UserStatus status;
-  final bool isVerified;
-  final DateTime createdAt;
-  final bool isUserDataUploaded;
-
   const User({
     required this.id,
     required this.email,
@@ -20,6 +12,13 @@ class User extends Equatable {
     required this.createdAt,
     required this.isUserDataUploaded,
   });
+  final String id;
+  final String email;
+  final UserRole role;
+  final UserStatus status;
+  final bool isVerified;
+  final DateTime createdAt;
+  final bool isUserDataUploaded;
 
   @override
   List<Object?> get props => [

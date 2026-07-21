@@ -7,16 +7,16 @@ import 'package:core/core.dart';
 import 'package:injectable/injectable.dart';
 
 class SetUserThemeUseCaseParams {
-  final UserTheme theme;
-
   const SetUserThemeUseCaseParams({required this.theme});
+
+  final UserTheme theme;
 }
 
 @LazySingleton()
 class SetUserThemeUseCase extends UseCase<void, SetUserThemeUseCaseParams> {
-  final UserPreferencesRepository _repo;
-
   SetUserThemeUseCase(this._repo);
+
+  final UserPreferencesRepository _repo;
 
   @override
   FutureEither<void> call(SetUserThemeUseCaseParams params) => _repo

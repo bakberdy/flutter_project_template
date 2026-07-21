@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 
 class UsersSearchBar extends StatefulWidget {
   const UsersSearchBar({
-    super.key,
-    required this.onSearch,
-    required this.activeSearch,
+    required this.onSearch, required this.activeSearch, super.key,
     this.initialValue,
   });
 
@@ -134,7 +132,6 @@ class _SearchBarActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = context.designColors;
     return Align(
-      alignment: Alignment.center,
       child: SizedBox(
         width: 172,
         height: 40,

@@ -5,7 +5,7 @@ import 'package:admin_users/src/features/users/presentation/extensions/admin_use
 import 'package:flutter/material.dart';
 
 class UserStatusChip extends StatelessWidget {
-  const UserStatusChip({super.key, required this.status});
+  const UserStatusChip({required this.status, super.key});
 
   final AdminUserStatus status;
 

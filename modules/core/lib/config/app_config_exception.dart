@@ -1,7 +1,4 @@
 class AppConfigException implements Exception {
-  const AppConfigException._(this.message);
-
-  final String message;
 
   factory AppConfigException.missing(String name) {
     return AppConfigException._(
@@ -20,6 +17,9 @@ class AppConfigException implements Exception {
       'Invalid dart define $name=$value. Expected $expected.',
     );
   }
+  const AppConfigException._(this.message);
+
+  final String message;
 
   @override
   String toString() => 'AppConfigException: $message';

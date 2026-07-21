@@ -21,8 +21,6 @@ void main() {
     when(
       () => repository.setNotifications(
         pushNotificationsEnabled: false,
-        emailNotificationsEnabled: null,
-        marketingNotificationsEnabled: null,
       ),
     ).thenAnswer((_) async => Right(_preferences));
     Analytics.initialize([analyticsProvider]);

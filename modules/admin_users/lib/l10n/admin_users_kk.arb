@@ -24,6 +24,7 @@
   "usersProfileCompletedFilterLabel": "Профиль",
   "usersProfileCompletedFilterAll": "Барлық профильдер",
   "usersCreatedAtFilterAll": "Барлық күндер",
+  "usersActiveFilter": "{label}: {value}",
   "usersSearchResults": "\"{search}\" бойынша нәтижелер",
   "@usersSearchResults": {
     "placeholders": {

@@ -3,7 +3,7 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
 class UserVerifiedIcon extends StatelessWidget {
-  const UserVerifiedIcon({super.key, required this.verified});
+  const UserVerifiedIcon({required this.verified, super.key});
 
   final bool verified;
 

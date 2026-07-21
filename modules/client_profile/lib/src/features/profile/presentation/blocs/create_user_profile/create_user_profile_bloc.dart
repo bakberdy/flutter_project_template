@@ -15,7 +15,6 @@ part 'create_user_profile_state.dart';
 @injectable
 class CreateUserProfileBloc
     extends Bloc<CreateUserProfileEvent, CreateUserProfileState> {
-  final CreateUserProfileUseCase _createUserProfileUseCase;
 
   CreateUserProfileBloc(this._createUserProfileUseCase)
     : super(const CreateUserProfileState()) {
@@ -25,6 +24,7 @@ class CreateUserProfileBloc
     on<_PhoneNumberChanged>(_onPhoneNumberChanged);
     on<_SaveRequested>(_onSaveRequested);
   }
+  final CreateUserProfileUseCase _createUserProfileUseCase;
 
   void _onStarted(_Started event, Emitter<CreateUserProfileState> emit) {
     emit(
@@ -60,7 +60,6 @@ class CreateUserProfileBloc
           status: event.value.trim().isEmpty
               ? FieldStatus.invalid
               : FieldStatus.valid,
-          error: null,
         ),
       ),
     );

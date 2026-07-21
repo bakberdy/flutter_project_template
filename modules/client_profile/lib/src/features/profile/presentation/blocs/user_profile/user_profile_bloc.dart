@@ -19,13 +19,6 @@ enum UserProfileAvatarAction { upload, remove }
 
 @Injectable()
 class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
-  final GetAppInfoUseCase _getAppInfoUseCase;
-  final GetCurrentUserUseCase _getCurrentUserUseCase;
-  final GetCurrentUserProfileUseCase _getCurrentUserProfileUseCase;
-  final UpdateUserAvatarUseCase _updateUserAvatarUseCase;
-  final RemoveUserAvatarUseCase _removeUserAvatarUseCase;
-  final RequestAccountDeletionUseCase _requestAccountDeletionUseCase;
-  final CoreAppConfig _appConfig;
 
   UserProfileBloc(
     this._getAppInfoUseCase,
@@ -44,6 +37,13 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
     on<UserProfileAccountDeletionRequested>(_onAccountDeletionRequested);
     on<UserProfileAccountDeletionStatusReset>(_onAccountDeletionStatusReset);
   }
+  final GetAppInfoUseCase _getAppInfoUseCase;
+  final GetCurrentUserUseCase _getCurrentUserUseCase;
+  final GetCurrentUserProfileUseCase _getCurrentUserProfileUseCase;
+  final UpdateUserAvatarUseCase _updateUserAvatarUseCase;
+  final RemoveUserAvatarUseCase _removeUserAvatarUseCase;
+  final RequestAccountDeletionUseCase _requestAccountDeletionUseCase;
+  final CoreAppConfig _appConfig;
 
   Future<void> _onStarted(
     UserProfileStarted event,

@@ -11,9 +11,9 @@ import 'package:injectable/injectable.dart';
 
 @LazySingleton()
 class GetAppInfoUseCase extends UseCase<AppInfo, NoParams> {
-  final DeviceInfoRepository _deviceInfoRepository;
 
   GetAppInfoUseCase(this._deviceInfoRepository);
+  final DeviceInfoRepository _deviceInfoRepository;
 
   @override
   FutureEither<AppInfo> call(NoParams params) async {

@@ -1,6 +1,11 @@
-include: package:flutter_lints/flutter.yaml
+include: package:very_good_analysis/analysis_options.10.0.0.yaml
 
 analyzer:
+  errors:
+    no_runtimetype_tostring: ignore
+    one_member_abstracts: ignore
+    specify_nonobvious_property_types: ignore
+    unnecessary_library_directive: ignore
   exclude:
     - ios/**
     - android/**
@@ -69,9 +74,9 @@ linter:
     use_enums: true
     use_is_even_rather_than_modulo: true
     valid_regexps: true
+    public_member_api_docs: false
+    sort_pub_dependencies: false
     
-
-
 
 
 

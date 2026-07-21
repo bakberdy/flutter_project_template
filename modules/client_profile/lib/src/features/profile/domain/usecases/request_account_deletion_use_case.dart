@@ -6,9 +6,9 @@ import 'package:shared/shared.dart';
 
 @lazySingleton
 class RequestAccountDeletionUseCase extends UseCase<User, NoParams> {
-  final UserProfileRepository _repository;
 
   RequestAccountDeletionUseCase(this._repository);
+  final UserProfileRepository _repository;
 
   @override
   FutureEither<User> call(NoParams params) {

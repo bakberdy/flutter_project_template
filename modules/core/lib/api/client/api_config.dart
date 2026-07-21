@@ -1,9 +1,4 @@
 class ApiConfig {
-  final String baseUrl;
-  final Duration connectTimeout;
-  final Duration receiveTimeout;
-  final Duration sendTimeout;
-  final Map<String, String> defaultHeaders;
 
   const ApiConfig({
     required this.baseUrl,
@@ -15,6 +10,11 @@ class ApiConfig {
       'Accept': 'application/json',
     },
   });
+  final String baseUrl;
+  final Duration connectTimeout;
+  final Duration receiveTimeout;
+  final Duration sendTimeout;
+  final Map<String, String> defaultHeaders;
 
   ApiConfig copyWith({
     String? baseUrl,

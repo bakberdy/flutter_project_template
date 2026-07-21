@@ -8,13 +8,11 @@ import 'package:shared/shared.dart';
 
 class UserProfileEditForm extends StatelessWidget {
   const UserProfileEditForm({
-    super.key,
     required this.fullName,
     required this.phoneNumber,
     required this.saveStatus,
     required this.hasUnsavedChanges,
     required this.canSaveChanges,
-    this.accountDeletionStatus = const StateStatus.initial(),
     required this.dialCode,
     required this.fullNameController,
     required this.phoneNumberController,
@@ -24,10 +22,12 @@ class UserProfileEditForm extends StatelessWidget {
     required this.onPhoneNumberChanged,
     required this.onCountryCodeTap,
     required this.onSavePressed,
+    required this.onPopDiscardRequested,
+    super.key,
+    this.accountDeletionStatus = const StateStatus.initial(),
     this.onLogoutPressed,
     this.onRemoveAccountPressed,
     this.onVerifyPhonePressed,
-    required this.onPopDiscardRequested,
     this.showPhoneVerificationPrompt = false,
     this.showPhoneVerified = false,
     this.isInitialLoading = false,

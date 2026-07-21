@@ -12,9 +12,10 @@ import 'package:injectable/injectable.dart';
 
 @Singleton(as: UserPreferencesRepository)
 class UserPreferencesRepositoryImpl implements UserPreferencesRepository {
+  UserPreferencesRepositoryImpl(this._localDataSource, this._remoteDataSource);
+
   final UserPreferencesLocalDataSource _localDataSource;
   final UserPreferencesRemoteDataSource _remoteDataSource;
-  UserPreferencesRepositoryImpl(this._localDataSource, this._remoteDataSource);
 
   @override
   FutureEither<UserPreferences?> getPreferences() async {
@@ -163,7 +164,7 @@ class UserPreferencesRepositoryImpl implements UserPreferencesRepository {
         theme: changedTheme,
       );
       await _cachePreferences(updatedPreferences);
-    } on Exception {
+    } on ApiException {
       return;
     }
   }

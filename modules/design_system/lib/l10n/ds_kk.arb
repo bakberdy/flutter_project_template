@@ -1,3 +1,4 @@
 {
-  "@@locale": "kk"
+  "@@locale": "kk",
+  "countryDialCodeOption": "{dialCode} ({countryCode})"
 }

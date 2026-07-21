@@ -15,11 +15,11 @@ abstract class AuthRemoteDataSource {
 
 @Singleton(as: AuthRemoteDataSource)
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
+  AuthRemoteDataSourceImpl(@Named('publicApiClient') this._publicApiClient);
   static const _authorizationHeader = 'Authorization';
   static const _bearerPrefix = 'Bearer';
 
   final ApiClient _publicApiClient;
-  AuthRemoteDataSourceImpl(@Named('publicApiClient') this._publicApiClient);
 
   @override
   Future<LoginResponseModel> login(AuthLoginRequest request) async {

@@ -1,7 +1,6 @@
+import 'package:core/monitoring/analytics/analytics.dart';
+import 'package:core/monitoring/analytics/analytics_events.dart';
 import 'package:talker/talker.dart';
-
-import '../analytics.dart';
-import '../analytics_events.dart';
 
 /// Talker-backed analytics provider.
 class TalkerAnalyticsProvider implements AnalyticsProvider {

@@ -88,9 +88,6 @@ class _UserProfileEditContentState extends State<_UserProfileEditContent>
         canSaveChanges: editState.canSaveChanges,
         accountDeletionStatus: profileState.accountDeletionStatus,
         avatarUrl: profileState.profile?.avatarUrl,
-        showPhoneVerificationPrompt:
-            false, //editState.showPhoneVerificationPrompt,
-        showPhoneVerified: false, //editState.showPhoneVerified,
         dialCode: _dialCodeFromPhoneNumber(editState.phoneNumber.value),
         isInitialLoading:
             profileState.profileStatus.isLoading &&
@@ -129,7 +126,6 @@ class _UserProfileEditContentState extends State<_UserProfileEditContent>
         context.read<UserProfileBloc>().add(
           const UserProfileEvent.accountDeletionStatusReset(),
         );
-        break;
       case SuccessStateStatus():
         context.read<UserProfileBloc>().add(
           const UserProfileEvent.accountDeletionStatusReset(),
@@ -138,7 +134,6 @@ class _UserProfileEditContentState extends State<_UserProfileEditContent>
         context.read<CoreNavigationBloc>().add(
           const CoreNavigationEvent.refreshUser(),
         );
-        break;
       default:
         break;
     }
@@ -158,10 +153,8 @@ class _UserProfileEditContentState extends State<_UserProfileEditContent>
     switch (state.saveStatus) {
       case ErrorStateStatus(:final failure):
         await handleFailure(failure, context);
-        break;
       case SuccessStateStatus():
         _handleSaveSuccess(context);
-        break;
       default:
         break;
     }
@@ -214,7 +207,7 @@ class _UserProfileEditContentState extends State<_UserProfileEditContent>
       secondaryValue: false,
       primaryFirst: true,
     );
-    if (accepted == true && mounted) {
+    if ((accepted ?? false) && mounted) {
       context.read<UserProfileBloc>().add(
         const UserProfileEvent.accountDeletionRequested(),
       );
@@ -263,7 +256,6 @@ class _UserProfileEditContentState extends State<_UserProfileEditContent>
 
   Future<bool?> _showVerifyPhoneBottomSheet(UserPhoneNumber phoneNumber) {
     return BaseBottomSheet.show<bool?>(
-      isScrollControlled: false,
       routeName: 'phone_verification_request',
       title: context.l10n.profileEditPhoneVerificationRequestTitle,
       context: context,

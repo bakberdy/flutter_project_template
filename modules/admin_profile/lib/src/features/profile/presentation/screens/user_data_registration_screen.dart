@@ -72,7 +72,6 @@ class _UserDataRegistrationScreenState extends State<UserDataRegistrationScreen>
         switch (state.saveStatus) {
           case ErrorStateStatus(:final failure):
             await handleFailure(failure, context);
-            break;
           case SuccessStateStatus():
             BaseSnackbar.success(
               context,
@@ -81,7 +80,6 @@ class _UserDataRegistrationScreenState extends State<UserDataRegistrationScreen>
             context.read<CoreNavigationBloc>().add(
               const CoreNavigationEvent.refreshUser(),
             );
-            break;
           default:
             break;
         }

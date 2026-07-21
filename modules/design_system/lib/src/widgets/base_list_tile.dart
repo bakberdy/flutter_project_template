@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 class BaseListTile extends StatelessWidget {
   const BaseListTile({
+    required this.title,
     super.key,
     this.onTap,
-    required this.title,
     this.subtitle,
     this.leading,
     this.trailing,
@@ -58,33 +58,35 @@ class BaseListTile extends StatelessWidget {
             children: [
               ?leading,
               const SizedBox(width: DesignSpacingTokens.sm),
-              subtitle != null
-                  ? Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            softWrap: true,
-                            title,
-                            style: context.designTextTheme.titleMedium
-                                ?.copyWith(color: foregroundColor),
-                          ),
-                          Text(
-                            softWrap: true,
-                            subtitle!,
-                            style: context.designTextTheme.bodySmall?.copyWith(
-                              color: foregroundColor,
-                            ),
-                          ),
-                        ],
+              if (subtitle != null)
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        softWrap: true,
+                        title,
+                        style: context.designTextTheme.titleMedium?.copyWith(
+                          color: foregroundColor,
+                        ),
                       ),
-                    )
-                  : Text(
-                      title,
-                      style: context.designTextTheme.titleMedium?.copyWith(
-                        color: foregroundColor,
+                      Text(
+                        softWrap: true,
+                        subtitle!,
+                        style: context.designTextTheme.bodySmall?.copyWith(
+                          color: foregroundColor,
+                        ),
                       ),
-                    ),
+                    ],
+                  ),
+                )
+              else
+                Text(
+                  title,
+                  style: context.designTextTheme.titleMedium?.copyWith(
+                    color: foregroundColor,
+                  ),
+                ),
               const Spacer(),
               ?trailing,
             ],

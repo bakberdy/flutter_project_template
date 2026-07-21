@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('parses user payload with backend snake_case keys', () {
-    final user = AdminUserModel.fromJson({
+    final user = AdminUserModel.fromJson(const {
       'id': '11111111-1111-1111-1111-111111111111',
       'email': 'admin@example.com',
       'role': 'admin',
@@ -26,7 +26,7 @@ void main() {
   });
 
   test('parses user profile payload with nested snake_case keys', () {
-    final profile = AdminUserProfileModel.fromJson({
+    final profile = AdminUserProfileModel.fromJson(const {
       'user_id': '11111111-1111-1111-1111-111111111111',
       'full_name': 'Admin User',
       'phone_number': {

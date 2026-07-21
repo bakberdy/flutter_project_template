@@ -81,6 +81,11 @@ class AdminUsersLocalizationsRu extends AdminUsersLocalizations {
   String get usersCreatedAtFilterAll => 'Все даты';
 
   @override
+  String usersActiveFilter(String label, String value) {
+    return '$label: $value';
+  }
+
+  @override
   String usersSearchResults(String search) {
     return 'Результаты для \"$search\"';
   }

@@ -1,5 +1,5 @@
-import '../analytics.dart';
-import '../analytics_events.dart';
+import 'package:core/monitoring/analytics/analytics.dart';
+import 'package:core/monitoring/analytics/analytics_events.dart';
 
 /// Firebase Analytics provider implementation
 /// To use: Add firebase_analytics package to pubspec.yaml

@@ -9,7 +9,7 @@ part of 'admin_user_phone_number_model.dart';
 AdminUserPhoneNumberModel _$AdminUserPhoneNumberModelFromJson(
   Map<String, dynamic> json,
 ) => AdminUserPhoneNumberModel(
-  countryCode: json['country_code'] as String?,
   dialCode: json['dial_code'] as String,
   number: json['number'] as String,
+  countryCode: json['country_code'] as String?,
 );

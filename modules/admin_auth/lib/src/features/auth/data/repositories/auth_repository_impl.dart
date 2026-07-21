@@ -11,10 +11,10 @@ import 'package:injectable/injectable.dart';
 
 @Singleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
+  AuthRepositoryImpl(this._remoteDataSource, this._tokenStorage);
+
   final AuthRemoteDataSource _remoteDataSource;
   final TokenStorage _tokenStorage;
-
-  AuthRepositoryImpl(this._remoteDataSource, this._tokenStorage);
 
   @override
   FutureEither<LoginResponse> login(String email) async {

@@ -24,6 +24,7 @@
   "usersProfileCompletedFilterLabel": "Профиль",
   "usersProfileCompletedFilterAll": "Все профили",
   "usersCreatedAtFilterAll": "Все даты",
+  "usersActiveFilter": "{label}: {value}",
   "usersSearchResults": "Результаты для \"{search}\"",
   "@usersSearchResults": {
     "placeholders": {

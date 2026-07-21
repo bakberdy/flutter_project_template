@@ -6,10 +6,6 @@ import 'package:injectable/injectable.dart';
 import 'package:shared/shared.dart';
 
 class UpdateUserProfileParams extends Equatable {
-  final String? fullName;
-  final UserPhoneNumber? phoneNumber;
-  final bool includeFullName;
-  final bool includePhoneNumber;
 
   const UpdateUserProfileParams({
     this.fullName,
@@ -17,6 +13,10 @@ class UpdateUserProfileParams extends Equatable {
     this.includeFullName = false,
     this.includePhoneNumber = false,
   });
+  final String? fullName;
+  final UserPhoneNumber? phoneNumber;
+  final bool includeFullName;
+  final bool includePhoneNumber;
 
   @override
   List<Object?> get props => [
@@ -30,9 +30,9 @@ class UpdateUserProfileParams extends Equatable {
 @lazySingleton
 class UpdateUserProfileUseCase
     extends UseCase<UserProfile, UpdateUserProfileParams> {
-  final UserProfileRepository _repository;
 
   UpdateUserProfileUseCase(this._repository);
+  final UserProfileRepository _repository;
 
   @override
   FutureEither<UserProfile> call(UpdateUserProfileParams params) {

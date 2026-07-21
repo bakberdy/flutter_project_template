@@ -6,9 +6,7 @@ import 'package:flutter/material.dart';
 
 class UsersStatusFilter extends StatelessWidget {
   const UsersStatusFilter({
-    super.key,
-    required this.value,
-    required this.onChanged,
+    required this.value, required this.onChanged, super.key,
     this.enabled = true,
   });
 
@@ -47,7 +45,6 @@ class UsersStatusFilter extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: borderRadius),
       itemBuilder: (context) => [
         PopupMenuItem<AdminUserStatus?>(
-          value: null,
           child: Text(l10n.usersStatusFilterAll),
         ),
         ...AdminUserStatus.values.map(

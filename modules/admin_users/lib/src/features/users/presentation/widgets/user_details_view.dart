@@ -13,13 +13,13 @@ import 'package:intl/intl.dart';
 
 class UserDetailsView extends StatelessWidget {
   const UserDetailsView({
-    super.key,
     required this.user,
     required this.profile,
     required this.actionLoading,
     required this.onApproveDeletionRequest,
     required this.onBlockUser,
     required this.onUnblockUser,
+    super.key,
   });
 
   final AdminUser user;

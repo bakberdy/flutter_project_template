@@ -1,9 +1,8 @@
+import 'package:core/api/models/api_exception.dart';
+import 'package:core/shared/entities/failure.dart';
 import 'package:core/shared/mappers/http_error_mapper.dart';
 import 'package:core/shared/models/http_error_model.dart';
 import 'package:core/utils/typedef.dart';
-
-import '../../api/models/api_exception.dart';
-import '../entities/failure.dart';
 
 extension ExceptionX on Exception {
   Future<Failure> toFailure({required String source}) async {
@@ -19,7 +18,7 @@ extension ExceptionX on Exception {
       HttpErrorModel? error;
       try {
         error = HttpErrorModel.fromJson(data ?? {});
-      } catch (_) {
+      } on Exception catch (_) {
         error = null;
       }
       return error?.toFailure(source) ??

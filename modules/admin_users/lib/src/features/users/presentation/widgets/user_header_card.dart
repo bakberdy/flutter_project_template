@@ -7,7 +7,7 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
 class UserHeaderCard extends StatelessWidget {
-  const UserHeaderCard({super.key, required this.user, required this.profile});
+  const UserHeaderCard({required this.user, required this.profile, super.key});
 
   final AdminUser user;
   final AdminUserProfile? profile;

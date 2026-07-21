@@ -1,13 +1,6 @@
 import 'package:equatable/equatable.dart';
 
 class AuthDeviceInfo extends Equatable {
-  final String deviceId;
-  final String os;
-  final String osVersion;
-  final String model;
-  final String appVersion;
-  final String? pushProvider;
-  final String? pushToken;
 
   const AuthDeviceInfo({
     required this.deviceId,
@@ -18,6 +11,13 @@ class AuthDeviceInfo extends Equatable {
     this.pushProvider,
     this.pushToken,
   });
+  final String deviceId;
+  final String os;
+  final String osVersion;
+  final String model;
+  final String appVersion;
+  final String? pushProvider;
+  final String? pushToken;
 
   @override
   List<Object?> get props => [
@@ -32,10 +32,10 @@ class AuthDeviceInfo extends Equatable {
 }
 
 class AuthLoginRequest extends Equatable {
-  final String email;
-  final AuthDeviceInfo device;
 
   const AuthLoginRequest({required this.email, required this.device});
+  final String email;
+  final AuthDeviceInfo device;
 
   @override
   List<Object?> get props => [email, device];

@@ -8,13 +8,13 @@ import 'package:intl/intl.dart';
 
 class UsersActiveFiltersBar extends StatelessWidget {
   const UsersActiveFiltersBar({
-    super.key,
     required this.query,
     required this.onStatusCleared,
     required this.onRoleCleared,
     required this.onIsVerifiedCleared,
     required this.onIsProfileCompletedCleared,
     required this.onCreatedAtRangeCleared,
+    super.key,
   });
 
   final UsersQuery query;
@@ -36,31 +36,42 @@ class UsersActiveFiltersBar extends StatelessWidget {
       children: [
         if (query.status case final AdminUserStatus status)
           _FilterChip(
-            label:
-                '${l10n.usersStatusFilterLabel}: ${status.localizedName(l10n)}',
+            label: l10n.usersActiveFilter(
+              l10n.usersStatusFilterLabel,
+              status.localizedName(l10n),
+            ),
             onDeleted: onStatusCleared,
           ),
         if (query.role case final AdminUserRole role)
           _FilterChip(
-            label: '${l10n.usersRoleFilterLabel}: ${role.localizedName(l10n)}',
+            label: l10n.usersActiveFilter(
+              l10n.usersRoleFilterLabel,
+              role.localizedName(l10n),
+            ),
             onDeleted: onRoleCleared,
           ),
         if (query.isVerified case final bool isVerified)
           _FilterChip(
-            label:
-                '${l10n.usersVerifiedFilterLabel}: ${isVerified ? l10n.usersYes : l10n.usersNo}',
+            label: l10n.usersActiveFilter(
+              l10n.usersVerifiedFilterLabel,
+              isVerified ? l10n.usersYes : l10n.usersNo,
+            ),
             onDeleted: onIsVerifiedCleared,
           ),
         if (query.isProfileCompleted case final bool isProfileCompleted)
           _FilterChip(
-            label:
-                '${l10n.usersProfileCompletedFilterLabel}: ${isProfileCompleted ? l10n.usersYes : l10n.usersNo}',
+            label: l10n.usersActiveFilter(
+              l10n.usersProfileCompletedFilterLabel,
+              isProfileCompleted ? l10n.usersYes : l10n.usersNo,
+            ),
             onDeleted: onIsProfileCompletedCleared,
           ),
         if (query.createdAtFrom != null || query.createdAtTo != null)
           _FilterChip(
-            label:
-                '${l10n.usersColumnCreatedAt}: ${_dateRangeLabel(context, query)}',
+            label: l10n.usersActiveFilter(
+              l10n.usersColumnCreatedAt,
+              _dateRangeLabel(context, query),
+            ),
             onDeleted: onCreatedAtRangeCleared,
           ),
       ],

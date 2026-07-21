@@ -8,9 +8,9 @@ import 'package:injectable/injectable.dart';
 
 @LazySingleton()
 class GetUserLanguageUseCase extends UseCase<UserLanguage?, NoParams> {
-  final UserPreferencesRepository _repo;
 
   GetUserLanguageUseCase(this._repo);
+  final UserPreferencesRepository _repo;
 
   @override
   FutureEither<UserLanguage?> call(NoParams params) async {

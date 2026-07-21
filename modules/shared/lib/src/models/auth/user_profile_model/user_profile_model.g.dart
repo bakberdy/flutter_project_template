@@ -1,5 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
+// ignore_for_file: unnecessary_null_checks, document_ignores
+
 part of 'user_profile_model.dart';
 
 // **************************************************************************
@@ -10,14 +12,14 @@ UserProfileModel _$UserProfileModelFromJson(Map<String, dynamic> json) =>
     UserProfileModel(
       userId: json['user_id'] as String,
       fullName: json['full_name'] as String,
+      createdAt: DateTime.parse(json['created_at'] as String),
+      updatedAt: DateTime.parse(json['updated_at'] as String),
       phoneNumberDto: json['phone_number'] == null
           ? null
           : UserPhoneNumberModel.fromJson(
               json['phone_number'] as Map<String, dynamic>,
             ),
       avatarUrl: json['avatar_url'] as String?,
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
       completedAt: json['completed_at'] == null
           ? null
           : DateTime.parse(json['completed_at'] as String),

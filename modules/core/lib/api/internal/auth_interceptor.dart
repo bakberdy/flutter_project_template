@@ -1,8 +1,7 @@
+import 'package:core/api/internal/auth_token_refresher.dart';
+import 'package:core/api/storage/token_storage.dart';
+import 'package:core/utils/constants/api_constants.dart';
 import 'package:dio/dio.dart';
-
-import '../../utils/constants/api_constants.dart';
-import '../storage/token_storage.dart';
-import 'auth_token_refresher.dart';
 
 class AuthInterceptor extends QueuedInterceptor {
   AuthInterceptor(
@@ -34,7 +33,7 @@ class AuthInterceptor extends QueuedInterceptor {
         options.headers[ApiConstants.authorizationHeader] =
             '${ApiConstants.bearerPrefix} $token';
       }
-    } catch (_) {}
+    } on Exception catch (_) {}
 
     return handler.next(options);
   }
@@ -70,7 +69,7 @@ class AuthInterceptor extends QueuedInterceptor {
 
       final response = await _retry(err.requestOptions);
       return handler.resolve(response);
-    } catch (_) {
+    } on Exception catch (_) {
       await _handleUnauthorized();
       return handler.reject(_toUnauthorizedError(err));
     }

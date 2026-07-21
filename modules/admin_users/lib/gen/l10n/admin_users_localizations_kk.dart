@@ -81,6 +81,11 @@ class AdminUsersLocalizationsKk extends AdminUsersLocalizations {
   String get usersCreatedAtFilterAll => 'Барлық күндер';
 
   @override
+  String usersActiveFilter(String label, String value) {
+    return '$label: $value';
+  }
+
+  @override
   String usersSearchResults(String search) {
     return '\"$search\" бойынша нәтижелер';
   }

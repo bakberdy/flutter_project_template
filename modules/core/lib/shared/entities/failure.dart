@@ -2,26 +2,24 @@ import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 class Failure extends Equatable {
-  final String? message;
-  final String source;
-  final FailureReason reason;
-  final FailureDetails? details;
 
   const Failure({
-    this.message,
-    required this.source,
+    required this.source, this.message,
     this.reason = FailureReason.unknown,
     this.details,
   });
 
   factory Failure.requestCancelled(String source) {
     return Failure(
-      message: null,
       source: source,
       reason: FailureReason.cancelled,
       details: const FailureDetails(statusCode: 0, type: FailureType.silent),
     );
   }
+  final String? message;
+  final String source;
+  final FailureReason reason;
+  final FailureDetails? details;
 
   @override
   List<Object?> get props => [message, source, reason, details];

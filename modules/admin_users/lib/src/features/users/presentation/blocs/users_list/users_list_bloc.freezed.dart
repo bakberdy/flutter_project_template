@@ -374,7 +374,7 @@ as AdminUserRole?,
 
 
 class _IsVerifiedChanged implements UsersListEvent {
-  const _IsVerifiedChanged(this.isVerified);
+  const _IsVerifiedChanged({this.isVerified});
   
 
  final  bool? isVerified;
@@ -428,7 +428,7 @@ class __$IsVerifiedChangedCopyWithImpl<$Res>
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? isVerified = freezed,}) {
   return _then(_IsVerifiedChanged(
-freezed == isVerified ? _self.isVerified : isVerified // ignore: cast_nullable_to_non_nullable
+isVerified: freezed == isVerified ? _self.isVerified : isVerified // ignore: cast_nullable_to_non_nullable
 as bool?,
   ));
 }
@@ -440,7 +440,7 @@ as bool?,
 
 
 class _IsProfileCompletedChanged implements UsersListEvent {
-  const _IsProfileCompletedChanged(this.isProfileCompleted);
+  const _IsProfileCompletedChanged({this.isProfileCompleted});
   
 
  final  bool? isProfileCompleted;
@@ -494,7 +494,7 @@ class __$IsProfileCompletedChangedCopyWithImpl<$Res>
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? isProfileCompleted = freezed,}) {
   return _then(_IsProfileCompletedChanged(
-freezed == isProfileCompleted ? _self.isProfileCompleted : isProfileCompleted // ignore: cast_nullable_to_non_nullable
+isProfileCompleted: freezed == isProfileCompleted ? _self.isProfileCompleted : isProfileCompleted // ignore: cast_nullable_to_non_nullable
 as bool?,
   ));
 }

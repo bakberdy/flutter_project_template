@@ -7,17 +7,17 @@ import 'package:core/core.dart';
 import 'package:injectable/injectable.dart';
 
 class SetUserLanguageUseCaseParams {
-  final UserLanguage language;
 
   const SetUserLanguageUseCaseParams({required this.language});
+  final UserLanguage language;
 }
 
 @LazySingleton()
 class SetUserLanguageUseCase
     extends UseCase<void, SetUserLanguageUseCaseParams> {
-  final UserPreferencesRepository _repo;
 
   SetUserLanguageUseCase(this._repo);
+  final UserPreferencesRepository _repo;
 
   @override
   FutureEither<void> call(SetUserLanguageUseCaseParams params) => _repo

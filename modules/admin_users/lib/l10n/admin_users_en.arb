@@ -24,6 +24,13 @@
   "usersProfileCompletedFilterLabel": "Profile",
   "usersProfileCompletedFilterAll": "All profiles",
   "usersCreatedAtFilterAll": "All dates",
+  "usersActiveFilter": "{label}: {value}",
+  "@usersActiveFilter": {
+    "placeholders": {
+      "label": { "type": "String" },
+      "value": { "type": "String" }
+    }
+  },
   "usersSearchResults": "Results for \"{search}\"",
   "@usersSearchResults": {
     "placeholders": {

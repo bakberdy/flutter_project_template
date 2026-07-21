@@ -13,10 +13,10 @@ import 'package:intl/intl.dart';
 
 class UsersDataTable extends StatelessWidget {
   const UsersDataTable({
-    super.key,
     required this.users,
     required this.query,
     required this.onSortChanged,
+    super.key,
   });
 
   final List<AdminUser> users;
@@ -110,7 +110,7 @@ class UsersDataTable extends StatelessWidget {
             ),
           ),
           tooltip: l10n.usersColumnCreatedAt,
-          columnWidth: const FlexColumnWidth(1),
+          columnWidth: const FlexColumnWidth(),
           onSort: (_, _) => onSortChanged(UsersSortField.createdAt),
         ),
       ],

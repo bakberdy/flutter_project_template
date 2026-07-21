@@ -8,9 +8,9 @@ import 'package:intl/intl.dart';
 
 class UsersFiltersMenuButton extends StatelessWidget {
   const UsersFiltersMenuButton({
-    super.key,
     required this.query,
     required this.onChanged,
+    super.key,
     this.enabled = true,
   });
 
@@ -170,8 +170,9 @@ class UsersFiltersMenuButton extends StatelessWidget {
                 allLabel: l10n.usersCreatedAtFilterAll,
                 label: l10n.usersColumnCreatedAt,
                 onChanged: (from, to) => setState(() {
-                  draft.createdAtFrom = from;
-                  draft.createdAtTo = to;
+                  draft
+                    ..createdAtFrom = from
+                    ..createdAtTo = to;
                 }),
               ),
             ],
@@ -195,13 +196,6 @@ class _UsersFilterDraft {
     this.createdAtTo,
   });
 
-  AdminUserStatus? status;
-  AdminUserRole? role;
-  bool? isVerified;
-  bool? isProfileCompleted;
-  DateTime? createdAtFrom;
-  DateTime? createdAtTo;
-
   factory _UsersFilterDraft.fromQuery(UsersQuery query) => _UsersFilterDraft(
     status: query.status,
     role: query.role,
@@ -210,6 +204,13 @@ class _UsersFilterDraft {
     createdAtFrom: query.createdAtFrom,
     createdAtTo: query.createdAtTo,
   );
+
+  AdminUserStatus? status;
+  AdminUserRole? role;
+  bool? isVerified;
+  bool? isProfileCompleted;
+  DateTime? createdAtFrom;
+  DateTime? createdAtTo;
 
   void clear() {
     status = null;
@@ -265,7 +266,7 @@ class _FilterDropdown<T extends Object> extends StatelessWidget {
       isExpanded: true,
       decoration: InputDecoration(labelText: label),
       items: [
-        DropdownMenuItem<T?>(value: null, child: Text(allLabel)),
+        DropdownMenuItem<T?>(child: Text(allLabel)),
         ...options.map(
           (option) => DropdownMenuItem<T?>(
             value: option.value,

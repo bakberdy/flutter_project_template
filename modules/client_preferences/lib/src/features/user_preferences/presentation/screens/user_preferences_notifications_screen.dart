@@ -17,7 +17,9 @@ class UserPreferencesNotificationsScreen extends StatelessWidget
   @override
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider(
-      create: (context) => context.di<NotificationsBloc>()..start(),
+      create: (context) =>
+          context.di<NotificationsBloc>()
+            ..add(const NotificationsEvent.started()),
       child: this,
     );
   }
@@ -51,9 +53,11 @@ class UserPreferencesNotificationsScreen extends StatelessWidget
                             UserPreferencesNotificationType.push &&
                         state.status.isLoading,
                     onChanged: (value) {
-                      context.read<NotificationsBloc>().setNotification(
-                        UserPreferencesNotificationType.push,
-                        value,
+                      context.read<NotificationsBloc>().add(
+                        NotificationsEvent.changed(
+                          type: UserPreferencesNotificationType.push,
+                          enabled: value,
+                        ),
                       );
                     },
                   ),
@@ -72,9 +76,11 @@ class UserPreferencesNotificationsScreen extends StatelessWidget
                             UserPreferencesNotificationType.email &&
                         state.status.isLoading,
                     onChanged: (value) {
-                      context.read<NotificationsBloc>().setNotification(
-                        UserPreferencesNotificationType.email,
-                        value,
+                      context.read<NotificationsBloc>().add(
+                        NotificationsEvent.changed(
+                          type: UserPreferencesNotificationType.email,
+                          enabled: value,
+                        ),
                       );
                     },
                   ),
@@ -92,9 +98,11 @@ class UserPreferencesNotificationsScreen extends StatelessWidget
                             UserPreferencesNotificationType.marketing &&
                         state.status.isLoading,
                     onChanged: (value) {
-                      context.read<NotificationsBloc>().setNotification(
-                        UserPreferencesNotificationType.marketing,
-                        value,
+                      context.read<NotificationsBloc>().add(
+                        NotificationsEvent.changed(
+                          type: UserPreferencesNotificationType.marketing,
+                          enabled: value,
+                        ),
                       );
                     },
                   ),

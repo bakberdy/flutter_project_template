@@ -12,8 +12,6 @@ part 'auth_state.dart';
 
 @injectable
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final AuthLoginUseCase _authLoginUseCase;
-  final AuthVerifyUseCase _authVerifyUseCase;
   AuthBloc(this._authLoginUseCase, this._authVerifyUseCase)
     : super(const AuthState()) {
     on<_EmailChanged>(_onEmailChanged);
@@ -22,6 +20,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<_SubmitOtp>(_onSubmitOtp);
     on<_BackToEmail>(_onBackToEmail);
   }
+  final AuthLoginUseCase _authLoginUseCase;
+  final AuthVerifyUseCase _authVerifyUseCase;
 
   Future<void> _onEmailChanged(
     _EmailChanged event,

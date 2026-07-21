@@ -9,9 +9,9 @@ abstract class UserPreferencesLocalDataSource {
 @Singleton(as: UserPreferencesLocalDataSource)
 class UserPreferencesLocalDataSourceImpl
     implements UserPreferencesLocalDataSource {
-  final LocalStorage localStorage;
 
   UserPreferencesLocalDataSourceImpl({required this.localStorage});
+  final LocalStorage localStorage;
 
   @override
   Future<void> setUserPreference({

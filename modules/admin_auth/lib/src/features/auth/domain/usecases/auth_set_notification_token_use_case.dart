@@ -8,8 +8,9 @@ import 'package:injectable/injectable.dart';
 @lazySingleton
 class AuthSetNotificationTokenUseCase
     extends UseCase<void, AuthSetNotificationTokenParams> {
-  final AuthRepository _repository;
   AuthSetNotificationTokenUseCase(this._repository);
+
+  final AuthRepository _repository;
 
   @override
   FutureEither<void> call(AuthSetNotificationTokenParams params) async {

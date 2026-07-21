@@ -1,4 +1,4 @@
-import 'app_info.dart';
+import 'package:core/shared/entities/app_info.dart';
 
 class AppDeviceInfo {
   const AppDeviceInfo({

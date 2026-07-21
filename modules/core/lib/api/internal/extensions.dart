@@ -1,3 +1,5 @@
+// ignore_for_file: document_ignores
+
 import 'package:core/api/api.dart';
 import 'package:dio/dio.dart';
 
@@ -23,8 +25,8 @@ extension DioExceptionTypeX on DioExceptionType {
   };
 }
 
-extension DioResponseX on Response {
-  ApiResponse<T> toApiResponse<T>() => ApiResponse<T>(
+extension DioResponseX<T> on Response<T> {
+  ApiResponse<T> toApiResponse() => ApiResponse<T>(
     data: data,
     statusCode: statusCode ?? 0,
     statusMessage: statusMessage,

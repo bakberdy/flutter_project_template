@@ -7,23 +7,23 @@ import 'package:core/core.dart';
 import 'package:injectable/injectable.dart';
 
 class SetUserNotificationsUseCaseParams {
-  final bool? pushNotificationsEnabled;
-  final bool? emailNotificationsEnabled;
-  final bool? marketingNotificationsEnabled;
 
   const SetUserNotificationsUseCaseParams({
     this.pushNotificationsEnabled,
     this.emailNotificationsEnabled,
     this.marketingNotificationsEnabled,
   });
+  final bool? pushNotificationsEnabled;
+  final bool? emailNotificationsEnabled;
+  final bool? marketingNotificationsEnabled;
 }
 
 @LazySingleton()
 class SetUserNotificationsUseCase
     extends UseCase<UserPreferences, SetUserNotificationsUseCaseParams> {
-  final UserPreferencesRepository _repo;
 
   SetUserNotificationsUseCase(this._repo);
+  final UserPreferencesRepository _repo;
 
   @override
   FutureEither<UserPreferences> call(

@@ -4,9 +4,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 @Singleton(as: LocalStorage)
 class SharedPreferencesStorage implements LocalStorage {
-  final SharedPreferences _sharedPreferences;
 
   SharedPreferencesStorage(this._sharedPreferences);
+  final SharedPreferences _sharedPreferences;
   @override
   Future<bool> containsKey({required String key}) =>
       Future.sync(() => _sharedPreferences.containsKey(key));
@@ -25,7 +25,7 @@ class SharedPreferencesStorage implements LocalStorage {
   @override
   Future<Map<String, String>> readAll() => Future.sync(() {
     final allKeys = _sharedPreferences.getKeys();
-    final Map<String, String> allValues = {};
+    final allValues = <String, String>{};
     for (final key in allKeys) {
       final value = _sharedPreferences.getString(key);
       if (value != null) {

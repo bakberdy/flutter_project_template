@@ -8,10 +8,10 @@ import 'package:shared/shared.dart';
 
 @Singleton(as: UserProfileRepository)
 class UserProfileRepositoryImpl implements UserProfileRepository {
+  UserProfileRepositoryImpl(this._remoteDataSource, this._tokenStorage);
+
   final UserProfileRemoteDataSource _remoteDataSource;
   final TokenStorage _tokenStorage;
-
-  UserProfileRepositoryImpl(this._remoteDataSource, this._tokenStorage);
 
   @override
   FutureEither<User> getCurrentUser({ApiCancelToken? cancelToken}) async {

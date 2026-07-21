@@ -17,7 +17,7 @@ void main() {
     provider = _MockCrashProvider();
     when(
       () => provider.recordError(
-        any(),
+        any<Object?>(),
         any(),
         reason: any(named: 'reason'),
         data: any(named: 'data'),
@@ -54,7 +54,7 @@ void main() {
 
       final reasons = verify(
         () => provider.recordError(
-          any(),
+          any<Object?>(),
           any(),
           reason: captureAny(named: 'reason'),
           data: any(named: 'data'),

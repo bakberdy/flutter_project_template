@@ -8,8 +8,7 @@ import 'package:shared/shared.dart';
 
 class UserProfileAppBar extends StatelessWidget {
   const UserProfileAppBar({
-    super.key,
-    required this.fullName,
+    required this.fullName, super.key,
     this.onShare,
     this.onEdit,
     this.onViewAvatar,
@@ -37,7 +36,6 @@ class UserProfileAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      floating: false,
       pinned: true,
       leading: IconButton(icon: const Icon(Icons.share), onPressed: onShare),
       actions: [IconButton(icon: const Icon(Icons.edit), onPressed: onEdit)],
@@ -111,7 +109,7 @@ class UserProfileAppBar extends StatelessWidget {
 }
 
 class CollapsedTitle extends StatelessWidget {
-  const CollapsedTitle({super.key, required this.fullName});
+  const CollapsedTitle({required this.fullName, super.key});
 
   final String? fullName;
 
@@ -139,8 +137,7 @@ class CollapsedTitle extends StatelessWidget {
 
 class ExpandedHeader extends StatelessWidget {
   const ExpandedHeader({
-    super.key,
-    required this.fullName,
+    required this.fullName, super.key,
     this.avatarUrl,
     this.avatarLoading = false,
     this.avatarLoadingProgress,

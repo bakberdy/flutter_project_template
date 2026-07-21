@@ -1,3 +1,5 @@
+// ignore_for_file: use_setters_to_change_properties, document_ignores
+
 part of 'api_client.dart';
 
 class ApiClientFactory {

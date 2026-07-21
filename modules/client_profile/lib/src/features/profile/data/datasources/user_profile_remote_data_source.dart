@@ -33,9 +33,9 @@ abstract class UserProfileRemoteDataSource {
 
 @Singleton(as: UserProfileRemoteDataSource)
 class UserProfileRemoteDataSourceImpl implements UserProfileRemoteDataSource {
-  final ApiClient _apiClient;
 
   UserProfileRemoteDataSourceImpl(@Named('protectedApiClient') this._apiClient);
+  final ApiClient _apiClient;
 
   @override
   Future<UserModel> getCurrentUser({ApiCancelToken? cancelToken}) async {

@@ -24,7 +24,8 @@ class _NotificationsDialogViewState extends State<NotificationsDialogView>
   @override
   void initState() {
     super.initState();
-    _bloc = context.di<NotificationsBloc>()..start();
+    _bloc = context.di<NotificationsBloc>();
+    _bloc.add(const NotificationsEvent.started());
   }
 
   @override
@@ -60,9 +61,11 @@ class _NotificationsDialogViewState extends State<NotificationsDialogView>
                         UserPreferencesNotificationType.push &&
                     state.status.isLoading,
                 onChanged: (value) {
-                  context.read<NotificationsBloc>().setNotification(
-                    UserPreferencesNotificationType.push,
-                    value,
+                  context.read<NotificationsBloc>().add(
+                    NotificationsEvent.changed(
+                      type: UserPreferencesNotificationType.push,
+                      enabled: value,
+                    ),
                   );
                 },
               ),
@@ -81,9 +84,11 @@ class _NotificationsDialogViewState extends State<NotificationsDialogView>
                         UserPreferencesNotificationType.email &&
                     state.status.isLoading,
                 onChanged: (value) {
-                  context.read<NotificationsBloc>().setNotification(
-                    UserPreferencesNotificationType.email,
-                    value,
+                  context.read<NotificationsBloc>().add(
+                    NotificationsEvent.changed(
+                      type: UserPreferencesNotificationType.email,
+                      enabled: value,
+                    ),
                   );
                 },
               ),
@@ -101,9 +106,11 @@ class _NotificationsDialogViewState extends State<NotificationsDialogView>
                         UserPreferencesNotificationType.marketing &&
                     state.status.isLoading,
                 onChanged: (value) {
-                  context.read<NotificationsBloc>().setNotification(
-                    UserPreferencesNotificationType.marketing,
-                    value,
+                  context.read<NotificationsBloc>().add(
+                    NotificationsEvent.changed(
+                      type: UserPreferencesNotificationType.marketing,
+                      enabled: value,
+                    ),
                   );
                 },
               ),

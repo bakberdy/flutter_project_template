@@ -17,12 +17,12 @@ const _requestTimeout = Duration(seconds: 10);
 
 @injectable
 class UserBloc extends Bloc<UserEvent, UserState> {
-  final GetCurrentUserUseCase getUserUseCase;
-  final LogOutUseCase logOutUseCase;
 
   UserBloc(this.getUserUseCase, this.logOutUseCase) : super(const UserState()) {
     on<UserEvent>(_onEvent, transformer: restartable());
   }
+  final GetCurrentUserUseCase getUserUseCase;
+  final LogOutUseCase logOutUseCase;
 
   ApiCancelToken? _getCurrentUserCancelToken;
 

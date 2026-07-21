@@ -18,14 +18,6 @@ enum UserLanguage {
 enum UserTheme { system, light, dark }
 
 class UserPreferences extends Equatable {
-  final String userId;
-  final UserLanguage language;
-  final UserTheme theme;
-  final bool pushNotificationsEnabled;
-  final bool emailNotificationsEnabled;
-  final bool marketingNotificationsEnabled;
-  final DateTime createdAt;
-  final DateTime updatedAt;
 
   const UserPreferences({
     required this.userId,
@@ -37,6 +29,14 @@ class UserPreferences extends Equatable {
     required this.createdAt,
     required this.updatedAt,
   });
+  final String userId;
+  final UserLanguage language;
+  final UserTheme theme;
+  final bool pushNotificationsEnabled;
+  final bool emailNotificationsEnabled;
+  final bool marketingNotificationsEnabled;
+  final DateTime createdAt;
+  final DateTime updatedAt;
 
   UserPreferences copyWith({
     String? userId,

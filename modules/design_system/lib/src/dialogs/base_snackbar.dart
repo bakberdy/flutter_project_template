@@ -126,7 +126,6 @@ class BaseSnackbar {
   }) => show(
     context,
     message: message,
-    type: BaseSnackbarType.info,
     actionLabel: actionLabel,
     onAction: onAction,
     duration: duration,

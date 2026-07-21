@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 
 class UserActions extends StatelessWidget {
   const UserActions({
-    super.key,
     required this.user,
     required this.loading,
     required this.onApproveDeletionRequest,
     required this.onBlockUser,
     required this.onUnblockUser,
+    super.key,
   });
 
   final AdminUser user;

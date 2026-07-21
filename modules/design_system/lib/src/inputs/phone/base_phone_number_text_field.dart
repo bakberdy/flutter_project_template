@@ -8,12 +8,12 @@ import 'package:flutter/material.dart';
 
 class BasePhoneNumberTextField extends StatelessWidget {
   const BasePhoneNumberTextField({
-    super.key,
     required this.controller,
     required this.layerLink,
     required this.labelText,
     required this.dialCode,
     required this.onCountryCodeTap,
+    super.key,
     this.maxDigits = 10,
     this.showVerificationPrompt = false,
     this.showVerified = false,

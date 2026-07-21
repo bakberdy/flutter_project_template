@@ -1,8 +1,7 @@
+import 'package:admin_profile/src/common/config/di/admin_profile_di.module.dart';
 import 'package:core/core.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
-
-import 'admin_profile_di.module.dart';
 
 @InjectableInit.microPackage(
   ignoreUnregisteredTypes: [

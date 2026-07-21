@@ -6,9 +6,9 @@ import 'package:shared/shared.dart';
 
 @lazySingleton
 class GetCurrentUserProfileUseCase extends UseCase<UserProfile, void> {
-  final UserProfileRepository _repository;
 
   GetCurrentUserProfileUseCase(this._repository);
+  final UserProfileRepository _repository;
 
   @override
   FutureEither<UserProfile> call(void params) {

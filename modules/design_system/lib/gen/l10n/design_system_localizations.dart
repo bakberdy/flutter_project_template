@@ -102,6 +102,12 @@ abstract class DesignSystemLocalizations {
     Locale('kk'),
     Locale('ru'),
   ];
+
+  /// No description provided for @countryDialCodeOption.
+  ///
+  /// In en, this message translates to:
+  /// **'{dialCode} ({countryCode})'**
+  String countryDialCodeOption(String dialCode, String countryCode);
 }
 
 class _DesignSystemLocalizationsDelegate

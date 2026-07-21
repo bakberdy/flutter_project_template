@@ -28,8 +28,6 @@ UserTheme _resolveAppliedThemeMode(
 
 @Injectable()
 class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
-  final GetUserThemeUseCase _getUserThemeUseCase;
-  final SetUserThemeUseCase _setUserThemeUseCase;
 
   ThemeBloc(this._getUserThemeUseCase, this._setUserThemeUseCase)
     : super(const ThemeState()) {
@@ -37,6 +35,8 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
     on<ThemeModeChanged>(_onModeChanged);
     on<ThemeSystemRefreshed>(_onSystemRefreshed);
   }
+  final GetUserThemeUseCase _getUserThemeUseCase;
+  final SetUserThemeUseCase _setUserThemeUseCase;
 
   void setThemeMode(UserTheme mode) {
     add(ThemeEvent.modeChanged(mode));

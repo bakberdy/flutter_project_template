@@ -49,7 +49,6 @@ class _AuthOtpScreenState extends State<AuthOtpScreen>
         switch (state.status) {
           case ErrorStateStatus(:final failure):
             await handleFailure(failure, context);
-            break;
           default:
             break;
         }

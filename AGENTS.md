@@ -37,6 +37,7 @@ tests stay with their owning package.
 - `cd <package> && dart run build_runner build --delete-conflicting-outputs`:
   regenerate package code.
 - `cd <package> && flutter gen-l10n`: regenerate package-local localization.
+- when after analyzing you faced error with max width 80 and error is about text to show then try to fix it using parametrized localization
 
 ## Coding Style & Naming Conventions
 

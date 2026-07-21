@@ -254,6 +254,12 @@ cat >"$module_directory/build.yaml" <<'EOF'
 targets:
   $default:
     builders:
+      source_gen:combining_builder:
+        options:
+          ignore_for_file:
+            - unnecessary_null_checks
+            - document_ignores
+
       json_serializable:
         options:
           field_rename: snake

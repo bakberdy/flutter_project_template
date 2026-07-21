@@ -15,7 +15,6 @@ part 'user_profile_edit_state.dart';
 @Injectable()
 class UserProfileEditBloc
     extends Bloc<UserProfileEditEvent, UserProfileEditState> {
-  final UpdateUserProfileUseCase _updateUserProfileUseCase;
 
   UserProfileEditBloc(this._updateUserProfileUseCase)
     : super(const UserProfileEditState()) {
@@ -28,6 +27,7 @@ class UserProfileEditBloc
     on<UserProfileEditSaveChangesRequested>(_onSaveChangesRequested);
     on<UserProfileEditResetAfterSave>(_onResetAfterSave);
   }
+  final UpdateUserProfileUseCase _updateUserProfileUseCase;
 
   void _onStarted(
     UserProfileEditStarted event,
@@ -53,8 +53,6 @@ class UserProfileEditBloc
         fullName: FieldState<String>(
           value: event.profile.fullName,
           status: FieldStatus.valid,
-          error: null,
-          isDirty: false,
         ),
         phoneNumber: _validatedPhoneNumberField(
           resolvedPhoneNumber,
@@ -96,7 +94,6 @@ class UserProfileEditBloc
           status: event.value.trim().isEmpty
               ? FieldStatus.invalid
               : FieldStatus.valid,
-          error: null,
         ),
       ),
     );

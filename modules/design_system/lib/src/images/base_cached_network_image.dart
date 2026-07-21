@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 
 class BaseCachedNetworkImage extends StatelessWidget {
   const BaseCachedNetworkImage({
-    super.key,
-    required this.imageUrl,
+    required this.imageUrl, super.key,
     this.baseUrl,
     this.fit,
     this.placeholder,
@@ -44,7 +43,7 @@ class BaseCachedNetworkImage extends StatelessWidget {
       return value;
     }
 
-    final originUri = baseUri.replace(path: '/', query: null, fragment: null);
+    final originUri = baseUri.replace(path: '/');
     final originPath = value.startsWith('/') ? value : '/$value';
     return originUri.resolve(originPath).toString();
   }

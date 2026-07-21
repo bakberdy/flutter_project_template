@@ -208,8 +208,9 @@ _RefreshState _stubRefreshAdapter(
 
 void _stubTokenStorage(_MockTokenStorage storage, _TokenState state) {
   when(() => storage.clearTokens()).thenAnswer((_) async {
-    state.accessToken = null;
-    state.refreshToken = null;
+    state
+      ..accessToken = null
+      ..refreshToken = null;
   });
   when(
     () => storage.containsRefreshToken(),

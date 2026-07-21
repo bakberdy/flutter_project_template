@@ -14,16 +14,15 @@ abstract class DeviceInfoRepository {
 
 @LazySingleton(as: DeviceInfoRepository)
 class DeviceInfoRepositoryImpl implements DeviceInfoRepository {
-  final DeviceInfoService _deviceInfoService;
-
   DeviceInfoRepositoryImpl(this._deviceInfoService);
+  final DeviceInfoService _deviceInfoService;
 
   @override
   FutureEither<AppDeviceInfo> getDeviceInfo() async {
     try {
       final deviceInfo = await _deviceInfoService.getDeviceInfo();
       return Right(deviceInfo);
-    } catch (e) {
+    } on Exception catch (e) {
       return Left(
         Failure(
           message: 'Failed to get device info: $e',
@@ -38,7 +37,7 @@ class DeviceInfoRepositoryImpl implements DeviceInfoRepository {
     try {
       final appInfo = await _deviceInfoService.getAppInfo();
       return Right(appInfo);
-    } catch (e) {
+    } on Exception catch (e) {
       return Left(
         Failure(
           message: 'Failed to get app info: $e',

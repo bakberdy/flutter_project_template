@@ -8,9 +8,9 @@ import 'package:injectable/injectable.dart';
 
 @LazySingleton()
 class GetUserThemeUseCase extends UseCase<UserTheme?, NoParams> {
-  final UserPreferencesRepository _repo;
-
   GetUserThemeUseCase(this._repo);
+
+  final UserPreferencesRepository _repo;
 
   @override
   FutureEither<UserTheme?> call(NoParams params) async {

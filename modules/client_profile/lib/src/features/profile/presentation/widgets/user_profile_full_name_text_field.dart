@@ -5,8 +5,7 @@ import 'package:flutter/services.dart';
 
 class UserProfileFullNameTextField extends StatelessWidget {
   const UserProfileFullNameTextField({
-    super.key,
-    required this.controller,
+    required this.controller, super.key,
     this.onChanged,
     this.errorText,
   });
@@ -19,7 +18,6 @@ class UserProfileFullNameTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseInputField(
       label: context.l10n.profileEditFullNameLabel,
-      autofocus: false,
       controller: controller,
       onChanged: onChanged,
       textInputAction: TextInputAction.next,

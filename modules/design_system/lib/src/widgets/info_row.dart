@@ -5,9 +5,9 @@ import 'package:flutter/services.dart';
 
 class InfoRow extends StatelessWidget {
   const InfoRow({
-    super.key,
-    required this.label,
     required this.value,
+    required this.label,
+    super.key,
     this.showCopyIcon = true,
   });
   final String label;

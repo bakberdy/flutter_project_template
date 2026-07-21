@@ -79,9 +79,6 @@ class _UserProfileEditScreenState extends State<UserProfileEditScreen>
         hasUnsavedChanges: editState.hasUnsavedChanges,
         canSaveChanges: editState.canSaveChanges,
         accountDeletionStatus: profileState.accountDeletionStatus,
-        showPhoneVerificationPrompt:
-            false, //editState.showPhoneVerificationPrompt,
-        showPhoneVerified: false, //editState.showPhoneVerified,
         dialCode: _dialCodeFromPhoneNumber(editState.phoneNumber.value),
         isInitialLoading:
             profileState.profileStatus.isLoading &&
@@ -121,7 +118,6 @@ class _UserProfileEditScreenState extends State<UserProfileEditScreen>
         context.read<UserProfileBloc>().add(
           const UserProfileEvent.accountDeletionStatusReset(),
         );
-        break;
       case SuccessStateStatus():
         context.read<UserProfileBloc>().add(
           const UserProfileEvent.accountDeletionStatusReset(),
@@ -129,7 +125,6 @@ class _UserProfileEditScreenState extends State<UserProfileEditScreen>
         context.read<CoreNavigationBloc>().add(
           const CoreNavigationEvent.refreshUser(),
         );
-        break;
       default:
         break;
     }
@@ -149,10 +144,8 @@ class _UserProfileEditScreenState extends State<UserProfileEditScreen>
     switch (state.saveStatus) {
       case ErrorStateStatus(:final failure):
         await handleFailure(failure, context);
-        break;
       case SuccessStateStatus():
         _handleSaveSuccess(context);
-        break;
       default:
         break;
     }
@@ -205,7 +198,7 @@ class _UserProfileEditScreenState extends State<UserProfileEditScreen>
       secondaryValue: false,
       primaryFirst: true,
     );
-    if (accepted == true && mounted) {
+    if ((accepted ?? false) && mounted) {
       context.read<CoreNavigationBloc>().add(
         const CoreNavigationEvent.loggedOut(),
       );
@@ -223,7 +216,7 @@ class _UserProfileEditScreenState extends State<UserProfileEditScreen>
       secondaryValue: false,
       primaryFirst: true,
     );
-    if (accepted == true && mounted) {
+    if ((accepted ?? false) && mounted) {
       context.read<UserProfileBloc>().add(
         const UserProfileEvent.accountDeletionRequested(),
       );
@@ -272,7 +265,6 @@ class _UserProfileEditScreenState extends State<UserProfileEditScreen>
 
   Future<bool?> _showVerifyPhoneBottomSheet(UserPhoneNumber phoneNumber) {
     return BaseBottomSheet.show<bool?>(
-      isScrollControlled: false,
       routeName: 'phone_verification_request',
       title: context.l10n.profileEditPhoneVerificationRequestTitle,
       context: context,

@@ -1,4 +1,4 @@
-import 'analytics_events.dart';
+import 'package:core/monitoring/analytics/analytics_events.dart';
 
 abstract class AnalyticsProvider {
   Future<void> track(AnalyticsEvent event);

@@ -9,8 +9,8 @@ import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class AuthVerifyUseCase extends UseCase<VerifyResponse, VerifyRequest> {
-  final AuthRepository _repository;
   AuthVerifyUseCase(this._repository);
+  final AuthRepository _repository;
 
   @override
   FutureEither<VerifyResponse> call(VerifyRequest params) async {

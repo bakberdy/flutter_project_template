@@ -1,8 +1,7 @@
+import 'package:client_auth/src/common/config/di/client_auth_di.module.dart';
 import 'package:core/core.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
-
-import 'client_auth_di.module.dart';
 
 @InjectableInit.microPackage(
   ignoreUnregisteredTypes: [

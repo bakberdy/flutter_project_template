@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 class BaseRadioListTile<T> extends StatelessWidget {
   const BaseRadioListTile({
-    super.key,
     required this.title,
-    this.subtitle,
     required this.value,
+    super.key,
+    this.subtitle,
     this.icon,
     this.loading = false,
     this.disableTopRadius = false,

@@ -11,13 +11,13 @@ class HttpErrorModel {
     this.details,
   });
 
+  factory HttpErrorModel.fromJson(Map<String, dynamic> json) =>
+      _$HttpErrorModelFromJson(json);
+
   final String message;
   final int code;
   @JsonKey(fromJson: _detailsFromJson)
   final HttpErrorDetailsModel? details;
-
-  factory HttpErrorModel.fromJson(Map<String, dynamic> json) =>
-      _$HttpErrorModelFromJson(json);
 
   static HttpErrorDetailsModel? _detailsFromJson(Object? json) {
     if (json is Map<String, dynamic> && json['status_code'] != null) {
@@ -35,21 +35,21 @@ class HttpErrorDetailsModel {
     this.type = FailureType.snackbar,
   });
 
+  factory HttpErrorDetailsModel.fromJson(Map<String, dynamic> json) =>
+      _$HttpErrorDetailsModelFromJson(json);
+
   final int statusCode;
   final List<FieldErrorModel>? fieldErrors;
   final FailureType type;
-
-  factory HttpErrorDetailsModel.fromJson(Map<String, dynamic> json) =>
-      _$HttpErrorDetailsModelFromJson(json);
 }
 
 @JsonSerializable(createToJson: false)
 class FieldErrorModel {
   const FieldErrorModel({required this.fieldName, required this.message});
 
-  final String fieldName;
-  final String message;
-
   factory FieldErrorModel.fromJson(Map<String, dynamic> json) =>
       _$FieldErrorModelFromJson(json);
+
+  final String fieldName;
+  final String message;
 }

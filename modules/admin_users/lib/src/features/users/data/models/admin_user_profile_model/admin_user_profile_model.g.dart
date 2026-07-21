@@ -11,12 +11,12 @@ AdminUserProfileModel _$AdminUserProfileModelFromJson(
 ) => AdminUserProfileModel(
   userId: json['user_id'] as String,
   fullName: json['full_name'] as String,
+  createdAt: DateTime.parse(json['created_at'] as String),
+  updatedAt: DateTime.parse(json['updated_at'] as String),
   phoneNumber: const AdminUserPhoneNumberModelConverter().fromJson(
     json['phone_number'] as Map<String, dynamic>?,
   ),
   avatarUrl: json['avatar_url'] as String?,
-  createdAt: DateTime.parse(json['created_at'] as String),
-  updatedAt: DateTime.parse(json['updated_at'] as String),
   completedAt: json['completed_at'] == null
       ? null
       : DateTime.parse(json['completed_at'] as String),

@@ -1,4 +1,5 @@
 import 'package:design_system/src/extensions/build_context_design_x.dart';
+import 'package:design_system/src/extensions/design_system_localization_x.dart';
 import 'package:design_system/src/inputs/phone/base_country_dial_code_prefix_button.dart';
 import 'package:design_system/src/inputs/phone/country_dial_code_option.dart';
 import 'package:design_system/src/tokens/design_tokens.dart';
@@ -50,11 +51,11 @@ class BaseCountryDialCodeSelectorOverlay {
 
 class BaseCountryDialCodeSelector extends StatelessWidget {
   const BaseCountryDialCodeSelector({
-    super.key,
     required this.dialCodes,
     required this.layerLink,
     required this.onDismiss,
     required this.onSelected,
+    super.key,
   });
 
   final List<CountryDialCodeOption> dialCodes;
@@ -99,7 +100,10 @@ class BaseCountryDialCodeSelector extends StatelessWidget {
                                 countryDialCodeFlag(context, dialCode),
                                 const SizedBox(width: DesignSpacingTokens.xs),
                                 Text(
-                                  '${dialCode.dialCode} (${dialCode.countryCode})',
+                                  context.designL10n.countryDialCodeOption(
+                                    dialCode.dialCode,
+                                    dialCode.countryCode,
+                                  ),
                                   style: context.designTextTheme.bodyLarge,
                                 ),
                               ],

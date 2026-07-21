@@ -7,4 +7,9 @@ import 'design_system_localizations.dart';
 /// The translations for Kazakh (`kk`).
 class DesignSystemLocalizationsKk extends DesignSystemLocalizations {
   DesignSystemLocalizationsKk([String locale = 'kk']) : super(locale);
+
+  @override
+  String countryDialCodeOption(String dialCode, String countryCode) {
+    return '$dialCode ($countryCode)';
+  }
 }

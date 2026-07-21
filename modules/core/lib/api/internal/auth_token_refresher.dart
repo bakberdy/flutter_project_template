@@ -1,7 +1,6 @@
+import 'package:core/api/storage/token_storage.dart';
+import 'package:core/utils/constants/api_constants.dart';
 import 'package:dio/dio.dart';
-
-import '../../utils/constants/api_constants.dart';
-import '../storage/token_storage.dart';
 
 class AuthTokenRefresher {
   AuthTokenRefresher(this._dio, this._tokenStorage);

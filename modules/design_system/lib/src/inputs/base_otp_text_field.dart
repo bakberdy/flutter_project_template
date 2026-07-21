@@ -6,8 +6,7 @@ import 'package:flutter/services.dart';
 
 class BaseOtpTextField extends StatelessWidget {
   const BaseOtpTextField({
-    super.key,
-    required this.controller,
+    required this.controller, super.key,
     this.length = 6,
     this.autofocus = true,
     this.enabled = true,

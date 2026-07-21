@@ -1,19 +1,18 @@
+import 'package:core/api/client/api_config.dart';
+import 'package:core/api/client/api_request_headers_provider.dart';
+import 'package:core/api/internal/auth_interceptor.dart';
+import 'package:core/api/internal/auth_token_refresher.dart';
+import 'package:core/api/internal/extensions.dart';
+import 'package:core/api/models/api_cancel_token.dart';
+import 'package:core/api/models/api_form_data.dart';
+import 'package:core/api/models/api_options.dart';
+import 'package:core/api/models/api_progress_callback.dart';
+import 'package:core/api/models/api_response.dart';
+import 'package:core/api/storage/token_storage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:talker/talker.dart';
 import 'package:talker_dio_logger/talker_dio_logger.dart';
-
-import '../internal/auth_interceptor.dart';
-import '../internal/auth_token_refresher.dart';
-import '../internal/extensions.dart';
-import '../models/api_cancel_token.dart';
-import '../models/api_form_data.dart';
-import '../models/api_options.dart';
-import '../models/api_progress_callback.dart';
-import '../models/api_response.dart';
-import '../storage/token_storage.dart';
-import 'api_config.dart';
-import 'api_request_headers_provider.dart';
 
 part 'api_client_factory.dart';
 
@@ -132,7 +131,7 @@ class ApiClient {
     ),
   );
 
-  Future<ApiResponse> download(
+  Future<ApiResponse<dynamic>> download(
     String urlPath,
     dynamic savePath, {
     ApiProgressCallback? onReceiveProgress,
@@ -141,25 +140,26 @@ class ApiClient {
     bool deleteOnError = true,
     Object? data,
     ApiOptions? options,
-  }) => _send(
-    () => _dio.download(
-      urlPath,
-      savePath,
-      onReceiveProgress: onReceiveProgress,
-      queryParameters: queryParameters,
-      cancelToken: cancelToken?.toCancelToken(),
-      deleteOnError: deleteOnError,
-      data: _normalizeData(data),
-      options: options?.toOptions(),
-    ),
-  );
-
-  // ── Internal ────────────────────────────────────────────────────────────────
+  }) async {
+    final response = await _send(
+      () => _dio.download(
+        urlPath,
+        savePath,
+        onReceiveProgress: onReceiveProgress,
+        queryParameters: queryParameters,
+        cancelToken: cancelToken?.toCancelToken(),
+        deleteOnError: deleteOnError,
+        data: _normalizeData(data),
+        options: options?.toOptions(),
+      ),
+    );
+    return response;
+  }
 
   Future<ApiResponse<T>> _send<T>(Future<Response<T>> Function() call) async {
     try {
       final response = await call();
-      return response.toApiResponse<T>();
+      return response.toApiResponse();
     } on DioException catch (e) {
       throw e.toApiException();
     } catch (e) {

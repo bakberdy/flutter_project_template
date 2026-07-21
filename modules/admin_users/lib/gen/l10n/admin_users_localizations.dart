@@ -247,6 +247,12 @@ abstract class AdminUsersLocalizations {
   /// **'All dates'**
   String get usersCreatedAtFilterAll;
 
+  /// No description provided for @usersActiveFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'{label}: {value}'**
+  String usersActiveFilter(String label, String value);
+
   /// No description provided for @usersSearchResults.
   ///
   /// In en, this message translates to:

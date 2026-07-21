@@ -5,10 +5,8 @@ class AdminUserProfile extends Equatable {
   const AdminUserProfile({
     required this.userId,
     required this.fullName,
-    this.phoneNumber,
+    required this.createdAt, required this.updatedAt, this.phoneNumber,
     this.avatarUrl,
-    required this.createdAt,
-    required this.updatedAt,
     this.completedAt,
   });
 

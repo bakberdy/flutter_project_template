@@ -12,9 +12,9 @@ typedef GetCurrentUserParams = ({
 
 @lazySingleton
 class GetCurrentUserUseCase extends UseCase<User, GetCurrentUserParams> {
-  final UserProfileRepository _repository;
 
   GetCurrentUserUseCase(this._repository);
+  final UserProfileRepository _repository;
 
   @override
   FutureEither<User> call(GetCurrentUserParams params) {

@@ -7,8 +7,8 @@ import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class RevokeAllSessionsUseCase extends UseCase<void, NoParams> {
-  final SessionsRepository _repository;
   RevokeAllSessionsUseCase(this._repository);
+  final SessionsRepository _repository;
 
   @override
   FutureEither<void> call(NoParams params) async {

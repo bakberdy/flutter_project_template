@@ -2,7 +2,7 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
 class UserInfoCard extends StatelessWidget {
-  const UserInfoCard({super.key, required this.title, required this.rows});
+  const UserInfoCard({required this.title, required this.rows, super.key});
 
   final String title;
   final List<Widget> rows;

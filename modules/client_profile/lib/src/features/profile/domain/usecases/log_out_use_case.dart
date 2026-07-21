@@ -7,9 +7,9 @@ import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class LogOutUseCase extends UseCase<void, NoParams> {
-  final UserProfileRepository _repository;
 
   LogOutUseCase(this._repository);
+  final UserProfileRepository _repository;
 
   @override
   FutureEither<void> call(NoParams params) async {

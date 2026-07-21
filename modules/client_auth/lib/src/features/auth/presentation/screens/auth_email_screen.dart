@@ -55,12 +55,10 @@ class _AuthEmailScreenState extends State<AuthEmailScreen>
         switch (state.status) {
           case ErrorStateStatus(:final failure):
             await handleFailure(failure, context);
-            break;
           case SuccessStateStatus():
             if (state.step == AuthStep.otp) {
               await context.router.push(const AuthOtpRoute());
             }
-            break;
           default:
             break;
         }

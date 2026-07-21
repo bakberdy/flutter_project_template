@@ -180,7 +180,8 @@ void main() {
     'filters by verification state and resets the page',
     build: () => UsersListBloc(GetUsersUseCase(repository)),
     seed: () => const UsersListState(query: UsersQuery(pageNumber: 3)),
-    act: (bloc) => bloc.add(const UsersListEvent.isVerifiedChanged(false)),
+    act: (bloc) =>
+        bloc.add(const UsersListEvent.isVerifiedChanged(isVerified: false)),
     verify: (_) {
       final query = _capturedQuery(repository);
       expect(query.pageNumber, 1);
@@ -192,8 +193,9 @@ void main() {
     'filters by profile completed state and resets the page',
     build: () => UsersListBloc(GetUsersUseCase(repository)),
     seed: () => const UsersListState(query: UsersQuery(pageNumber: 3)),
-    act: (bloc) =>
-        bloc.add(const UsersListEvent.isProfileCompletedChanged(true)),
+    act: (bloc) => bloc.add(
+      const UsersListEvent.isProfileCompletedChanged(isProfileCompleted: true),
+    ),
     verify: (_) {
       final query = _capturedQuery(repository);
       expect(query.pageNumber, 1);
@@ -206,14 +208,14 @@ void main() {
     build: () => UsersListBloc(GetUsersUseCase(repository)),
     seed: () => const UsersListState(query: UsersQuery(pageNumber: 3)),
     act: (bloc) {
-      final from = DateTime.utc(2026, 6, 1);
+      final from = DateTime.utc(2026, 6);
       final to = DateTime.utc(2026, 6, 24);
       bloc.add(UsersListEvent.createdAtRangeChanged(from: from, to: to));
     },
     verify: (_) {
       final query = _capturedQuery(repository);
       expect(query.pageNumber, 1);
-      expect(query.createdAtFrom, DateTime.utc(2026, 6, 1));
+      expect(query.createdAtFrom, DateTime.utc(2026, 6));
       expect(query.createdAtTo, DateTime.utc(2026, 6, 24));
     },
   );
@@ -230,7 +232,7 @@ void main() {
           role: AdminUserRole.admin,
           isVerified: true,
           isProfileCompleted: false,
-          createdAtFrom: DateTime.utc(2026, 6, 1),
+          createdAtFrom: DateTime.utc(2026, 6),
           createdAtTo: DateTime.utc(2026, 6, 24),
         ),
       ),
@@ -242,7 +244,7 @@ void main() {
       expect(query.role, AdminUserRole.admin);
       expect(query.isVerified, isTrue);
       expect(query.isProfileCompleted, isFalse);
-      expect(query.createdAtFrom, DateTime.utc(2026, 6, 1));
+      expect(query.createdAtFrom, DateTime.utc(2026, 6));
       expect(query.createdAtTo, DateTime.utc(2026, 6, 24));
     },
   );

@@ -11,9 +11,8 @@ void main() {
 
   group('CoreNavigationBloc', () {
     test('push updates the stack and queues a push command', () async {
-      final bloc = CoreNavigationBloc();
-
-      bloc.add(const CoreNavigationEvent.push(home));
+      final bloc = CoreNavigationBloc()
+        ..add(const CoreNavigationEvent.push(home));
       await expectLater(
         bloc.stream,
         emits(
@@ -33,14 +32,13 @@ void main() {
     });
 
     test('navigatePath queues a path navigation command', () async {
-      final bloc = CoreNavigationBloc();
-
-      bloc.add(
-        const CoreNavigationEvent.navigatePath(
-          '/home/profile/edit',
-          includePrefixMatches: true,
-        ),
-      );
+      final bloc = CoreNavigationBloc()
+        ..add(
+          const CoreNavigationEvent.navigatePath(
+            '/home/profile/edit',
+            includePrefixMatches: true,
+          ),
+        );
       await expectLater(
         bloc.stream,
         emits(
@@ -62,9 +60,8 @@ void main() {
     });
 
     test('commandHandled removes the acknowledged pending command', () async {
-      final bloc = CoreNavigationBloc();
-
-      bloc.add(const CoreNavigationEvent.push(home));
+      final bloc = CoreNavigationBloc()
+        ..add(const CoreNavigationEvent.push(home));
       await expectLater(bloc.stream, emits(isA<CoreNavigationState>()));
 
       bloc.add(const CoreNavigationEvent.commandHandled(0));
@@ -83,9 +80,7 @@ void main() {
     });
 
     test('replace changes the current route', () async {
-      final bloc = CoreNavigationBloc();
-
-      bloc
+      final bloc = CoreNavigationBloc()
         ..add(const CoreNavigationEvent.push(home))
         ..add(const CoreNavigationEvent.replace(details));
 
@@ -114,9 +109,8 @@ void main() {
 
     test('popUntil keeps the matched route as the top of the stack', () async {
       const settings = PageRouteInfo<void>.named('SettingsRoute');
-      final bloc = CoreNavigationBloc();
-
-      bloc.add(const CoreNavigationEvent.replaceAll([home, details, settings]));
+      final bloc = CoreNavigationBloc()
+        ..add(const CoreNavigationEvent.replaceAll([home, details, settings]));
       await expectLater(bloc.stream, emits(isA<CoreNavigationState>()));
 
       bloc.add(const CoreNavigationEvent.popUntil(details));
@@ -162,9 +156,8 @@ void main() {
     );
 
     test('authenticated queues an authenticated command', () async {
-      final bloc = CoreNavigationBloc();
-
-      bloc.add(const CoreNavigationEvent.authenticated());
+      final bloc = CoreNavigationBloc()
+        ..add(const CoreNavigationEvent.authenticated());
       await expectLater(
         bloc.stream,
         emits(
@@ -184,9 +177,8 @@ void main() {
     });
 
     test('unAuthenticated queues an unauthenticated command', () async {
-      final bloc = CoreNavigationBloc();
-
-      bloc.add(const CoreNavigationEvent.loggedOut());
+      final bloc = CoreNavigationBloc()
+        ..add(const CoreNavigationEvent.loggedOut());
       await expectLater(
         bloc.stream,
         emits(
@@ -206,9 +198,8 @@ void main() {
     });
 
     test('refreshUser queues a refresh-user command', () async {
-      final bloc = CoreNavigationBloc();
-
-      bloc.add(const CoreNavigationEvent.refreshUser());
+      final bloc = CoreNavigationBloc()
+        ..add(const CoreNavigationEvent.refreshUser());
       await expectLater(
         bloc.stream,
         emits(

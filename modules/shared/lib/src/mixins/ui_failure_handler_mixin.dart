@@ -50,8 +50,6 @@ mixin UiFailureHandlerMixin {
   Future<void> _showFullscreen(BuildContext context, String message) {
     return showGeneralDialog<void>(
       context: context,
-      barrierDismissible: false,
-      transitionDuration: const Duration(milliseconds: 200),
       transitionBuilder: (_, animation, _, child) => FadeTransition(
         opacity: CurvedAnimation(parent: animation, curve: Curves.easeOut),
         child: child,

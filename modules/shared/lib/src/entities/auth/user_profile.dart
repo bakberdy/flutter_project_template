@@ -2,6 +2,15 @@ import 'package:equatable/equatable.dart';
 import 'package:shared/src/entities/auth/user_phone_number.dart';
 
 class UserProfile extends Equatable {
+  const UserProfile({
+    required this.userId,
+    required this.fullName,
+    required this.updatedAt,
+    required this.createdAt,
+    this.phoneNumber,
+    this.avatarUrl,
+    this.completedAt,
+  });
   final String userId;
   final String fullName;
   final UserPhoneNumber? phoneNumber;
@@ -9,16 +18,6 @@ class UserProfile extends Equatable {
   final DateTime createdAt;
   final DateTime updatedAt;
   final DateTime? completedAt;
-
-  const UserProfile({
-    required this.userId,
-    required this.fullName,
-    this.phoneNumber,
-    this.avatarUrl,
-    required this.createdAt,
-    required this.updatedAt,
-    this.completedAt,
-  });
 
   @override
   List<Object?> get props => [

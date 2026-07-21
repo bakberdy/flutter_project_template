@@ -11,8 +11,9 @@ typedef GetSessionsParams = ({int? pageNumber, int? limit, bool? isActive});
 @lazySingleton
 class GetSessionsUseCase
     extends UseCase<PaginatedResponse<Session>, GetSessionsParams> {
-  final SessionsRepository _repository;
   GetSessionsUseCase(this._repository);
+
+  final SessionsRepository _repository;
 
   @override
   FutureEither<PaginatedResponse<Session>> call(

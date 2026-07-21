@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 
 class BaseOtpVerificationBottomSheet extends StatefulWidget {
   const BaseOtpVerificationBottomSheet({
-    super.key,
-    required this.description,
+    required this.description, super.key,
     this.buttonLabel,
     this.errorText,
     this.otpLength = 6,

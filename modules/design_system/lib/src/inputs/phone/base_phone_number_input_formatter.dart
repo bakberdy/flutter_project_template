@@ -24,8 +24,9 @@ class BasePhoneNumberInputFormatter extends TextInputFormatter {
     }
 
     if (remaining.length == 4) {
-      buffer.write(' ${remaining.substring(0, 2)}');
-      buffer.write(' ${remaining.substring(2)}');
+      buffer
+        ..write(' ${remaining.substring(0, 2)}')
+        ..write(' ${remaining.substring(2)}');
     } else if (remaining.isNotEmpty) {
       buffer.write(' $remaining');
     }

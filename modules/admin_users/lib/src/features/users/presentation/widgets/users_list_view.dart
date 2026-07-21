@@ -80,11 +80,11 @@ class UsersListView extends StatelessWidget {
                     const UsersListEvent.roleChanged(null),
                   ),
                   onIsVerifiedCleared: () => context.read<UsersListBloc>().add(
-                    const UsersListEvent.isVerifiedChanged(null),
+                    const UsersListEvent.isVerifiedChanged(),
                   ),
                   onIsProfileCompletedCleared: () =>
                       context.read<UsersListBloc>().add(
-                        const UsersListEvent.isProfileCompletedChanged(null),
+                        const UsersListEvent.isProfileCompletedChanged(),
                       ),
                   onCreatedAtRangeCleared: () => context
                       .read<UsersListBloc>()

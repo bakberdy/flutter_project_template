@@ -10,11 +10,11 @@ sealed class UsersListEvent with _$UsersListEvent {
   const factory UsersListEvent.statusChanged(AdminUserStatus? status) =
       _StatusChanged;
   const factory UsersListEvent.roleChanged(AdminUserRole? role) = _RoleChanged;
-  const factory UsersListEvent.isVerifiedChanged(bool? isVerified) =
+  const factory UsersListEvent.isVerifiedChanged({bool? isVerified}) =
       _IsVerifiedChanged;
-  const factory UsersListEvent.isProfileCompletedChanged(
+  const factory UsersListEvent.isProfileCompletedChanged({
     bool? isProfileCompleted,
-  ) = _IsProfileCompletedChanged;
+  }) = _IsProfileCompletedChanged;
   const factory UsersListEvent.createdAtRangeChanged({
     DateTime? from,
     DateTime? to,

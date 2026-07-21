@@ -1,17 +1,16 @@
+import 'package:core/api/storage/token_storage.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 
-import 'token_storage.dart';
-
 @Singleton(as: TokenStorage)
 class TokenStorageImpl implements TokenStorage {
+
+  const TokenStorageImpl(this._storage);
   final FlutterSecureStorage _storage;
 
   static const _accessKey = 'auth_token';
   static const _refreshKey = 'refresh_token';
   static const _expiryKey = 'token_expiry';
-
-  const TokenStorageImpl(this._storage);
 
   @override
   Future<void> saveAccessToken(String token) =>

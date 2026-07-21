@@ -1,14 +1,6 @@
 import 'package:equatable/equatable.dart';
 
 class Device extends Equatable {
-  final String id;
-  final String clientDeviceId;
-  final String os;
-  final String osVersion;
-  final String model;
-  final String appVersion;
-  final String? pushProvider;
-  final bool hasNotificationToken;
 
   const Device({
     required this.id,
@@ -17,9 +9,16 @@ class Device extends Equatable {
     required this.osVersion,
     required this.model,
     required this.appVersion,
-    this.pushProvider,
-    required this.hasNotificationToken,
+    required this.hasNotificationToken, this.pushProvider,
   });
+  final String id;
+  final String clientDeviceId;
+  final String os;
+  final String osVersion;
+  final String model;
+  final String appVersion;
+  final String? pushProvider;
+  final bool hasNotificationToken;
 
   @override
   List<Object?> get props => [

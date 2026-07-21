@@ -1,13 +1,13 @@
+import 'package:core/storage/secure/secure_storage.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
-import 'secure_storage.dart';
 
 /// Implementation of SecureStorage using flutter_secure_storage package
 @LazySingleton(as: SecureStorage)
 class FlutterSecureStorageImpl implements SecureStorage {
-  final FlutterSecureStorage _storage;
 
   FlutterSecureStorageImpl(this._storage);
+  final FlutterSecureStorage _storage;
 
   @override
   Future<void> write({required String key, required String value}) =>

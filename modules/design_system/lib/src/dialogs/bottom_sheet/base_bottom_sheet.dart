@@ -69,7 +69,7 @@ class BaseBottomSheet {
     return result;
   }
 
-  static Future<void> showList({
+  static Future<void> showList<T extends Object?>({
     required BuildContext context,
     required List<BottomSheetListItem> items,
     bool isDismissible = true,
@@ -82,7 +82,7 @@ class BaseBottomSheet {
     String? routeName,
     bool? rootNavigator,
   }) async {
-    await show(
+    await show<T>(
       rootNavigator: rootNavigator,
       routeName: routeName,
       isScrollControlled: isScrollControlled,

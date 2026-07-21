@@ -5,9 +5,7 @@ import 'package:flutter/material.dart';
 
 class UsersPagination extends StatelessWidget {
   const UsersPagination({
-    super.key,
-    required this.pagination,
-    required this.onPageChanged,
+    required this.pagination, required this.onPageChanged, super.key,
     this.loading = false,
   });
 
@@ -22,7 +20,6 @@ class UsersPagination extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         BaseButton.secondary(
-          expand: false,
           onPressed: pagination.hasPrevious
               ? () => onPageChanged(pagination.page - 1)
               : null,
@@ -34,7 +31,6 @@ class UsersPagination extends StatelessWidget {
         Text(l10n.usersPagination(pagination.page, pagination.totalPages)),
         const SizedBox(width: DesignSpacingTokens.md),
         BaseButton.secondary(
-          expand: false,
           onPressed: pagination.hasNext
               ? () => onPageChanged(pagination.page + 1)
               : null,

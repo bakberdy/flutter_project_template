@@ -27,11 +27,10 @@ abstract class UserPreferencesRemoteDataSource {
 @Singleton(as: UserPreferencesRemoteDataSource)
 class UserPreferencesRemoteDataSourceImpl
     implements UserPreferencesRemoteDataSource {
-  final ApiClient _apiClient;
-
   UserPreferencesRemoteDataSourceImpl(
     @Named('protectedApiClient') this._apiClient,
   );
+  final ApiClient _apiClient;
 
   @override
   Future<UserPreferencesModel> getPreferences() async {
