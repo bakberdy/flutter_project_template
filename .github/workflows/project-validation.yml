@@ -1,0 +1,84 @@
+name: Project Validation
+on:
+  workflow_call:
+
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+concurrency:
+  group: project-validation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  format:
+    name: Format
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Set up Flutter
+        uses: ./.github/actions/setup-flutter
+
+      - name: Check formatting
+        run: dart format --output=none --set-exit-if-changed .
+
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Set up Flutter
+        uses: ./.github/actions/setup-flutter
+
+      - name: Analyze workspace
+        run: flutter analyze --no-pub
+
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Set up Flutter
+        uses: ./.github/actions/setup-flutter
+
+      - name: Run all tests
+        run: ./tool/scripts/run_all_tests.sh
+
+  module-dependencies:
+    name: Module Dependencies
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Set up Flutter
+        uses: ./.github/actions/setup-flutter
+
+      - name: Validate module dependencies
+        run: dart run tool/validation/validate_module_dependencies.dart
+
+  hardcoded-texts:
+    name: Hardcoded Texts
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Set up Flutter
+        uses: ./.github/actions/setup-flutter
+
+      - name: Validate hardcoded text
+        run: dart run tool/validation/check_hardcoded_ui_strings.dart
