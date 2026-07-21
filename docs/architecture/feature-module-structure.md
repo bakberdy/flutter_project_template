@@ -1,34 +1,35 @@
-# Структура feature-модулей
+# Feature Module Structure
 
-## Назначение
+## Purpose
 
-Этот документ определяет единую структуру и правила для бизнес-модулей Flutter
-workspace.
+This document defines a consistent structure and set of rules for business
+modules in the Flutter workspace.
 
-Правила распространяются на:
+The rules apply to:
 
 - `modules/admin_auth`
 - `modules/admin_users`
 - `modules/client_auth`
 - `modules/client_profile`
 - `modules/client_preferences`
-- новые бизнес-модули, которые будут добавлены в `modules/`
+- new business modules added under `modules/`
 
-Правила не требуют от `core`, `design_system` и приложений повторять структуру
-feature-модулей. У этих пакетов другая ответственность.
+These rules do not require `core`, `design_system`, or applications to follow
+the feature-module structure. Those packages have different responsibilities.
 
-## Основные принципы
+## Core principles
 
-1. Модуль полностью владеет своими constants, endpoints, navigation paths,
-   assets, localization, DI, routes, data, domain, presentation и tests.
-2. У каждой module-level concern есть одно каноническое имя и расположение.
-3. Модули не импортируют `src/` других модулей.
-4. Приложение собирает несколько модулей, но не хранит их внутреннюю логику.
-5. Пустые архитектурные wrappers и capability-папки не создаются.
-6. Generated-файлы не редактируются вручную.
-7. Public barrel содержит только минимальный внешний API.
+1. A module fully owns its constants, endpoints, navigation paths, assets,
+   localization, DI, routes, data, domain, presentation, and tests.
+2. Every module-level concern has one canonical name and location.
+3. Modules do not import another module's `src/` directory.
+4. An application composes multiple modules but does not contain their internal
+   logic.
+5. Empty architectural wrappers and capability directories are not created.
+6. Generated files are never edited manually.
+7. The public barrel exposes only the minimal external API.
 
-## Каноническое дерево
+## Canonical tree
 
 ```text
 modules/<module_name>/
@@ -94,30 +95,29 @@ modules/<module_name>/
 └── pubspec.yaml
 ```
 
-Папки `interceptors`, `mappers`, `services`, `router` и другие capabilities
-создаются только при наличии реального кода. Пустые файлы и wrappers для
-выравнивания дерева не создаются.
+Directories such as `interceptors`, `mappers`, `services`, `router`, and other
+capabilities are created only when they contain real code. Empty files and
+wrappers are not created merely to align directory trees.
 
-При наличии concern используется только указанное выше имя и расположение.
+When a concern exists, only the name and location specified above are used.
 
-## Границы модулей
+## Module boundaries
 
-Feature-модуль может использовать другой модуль только через его публичный
-entry point:
+A feature module may use another module only through its public entry point:
 
 ```dart
 import 'package:client_profile/client_profile.dart';
 ```
 
-Запрещено:
+The following is forbidden:
 
 ```dart
 import 'package:client_profile/src/features/profile/...';
 ```
 
-Внутри собственного пакета импорт `package:<same_module>/src/...` разрешён.
+Within its own package, importing `package:<same_module>/src/...` is allowed.
 
-Общие технические abstractions находятся в `core`:
+Shared technical abstractions belong in `core`:
 
 - API client abstractions;
 - storage abstractions;
@@ -127,35 +127,35 @@ import 'package:client_profile/src/features/profile/...';
 - navigation primitives;
 - shared typedefs.
 
-Общие визуальные элементы находятся в `design_system`:
+Shared visual elements belong in `design_system`:
 
-- theme и design tokens;
-- базовые widgets;
-- общие icons/images;
-- dialogs, buttons и inputs.
+- themes and design tokens;
+- base widgets;
+- shared icons and images;
+- dialogs, buttons, and inputs.
 
-Feature-модули могут использовать общие assets дизайн-системы через
-`context.designAssets`. Такие assets не копируются в feature-модуль и не
-оборачиваются повторно в module assets.
+Feature modules may use shared design-system assets through
+`context.designAssets`. Such assets are not copied into a feature module or
+wrapped again as module assets.
 
-App-level composition остаётся в приложении:
+App-level composition remains in the application:
 
-- root navigation tree;
-- сборка нескольких feature routes;
+- the root navigation tree;
+- composition of routes from multiple features;
 - app theme composition;
 - app localization delegates;
-- app version и support UI;
-- экраны, одновременно объединяющие несколько модулей.
+- app version and support UI;
+- screens that combine multiple modules at once.
 
 ## Module context extension
 
-Каждый feature-модуль содержит ровно один внутренний context extension:
+Every feature module contains exactly one internal context extension:
 
 ```text
 lib/src/common/<module_name>_context_x.dart
 ```
 
-Пример для `client_profile`:
+Example for `client_profile`:
 
 ```dart
 import 'package:client_profile/gen/assets.gen.dart';
@@ -170,20 +170,20 @@ extension ClientProfileContextX on BuildContext {
 }
 ```
 
-`assets` возвращает только тип и значение, сгенерированные FlutterGen.
-Рукописные asset classes, facades, wrappers и строковые пути запрещены, в том
-числе когда у модуля пока нет runtime assets.
+The `assets` getter returns only the type and value generated by FlutterGen.
+Handwritten asset classes, facades, wrappers, and string paths are forbidden,
+including when the module does not yet have runtime assets.
 
-Обязательные имена:
+Required names:
 
-| Элемент | Формат |
+| Element | Format |
 |---|---|
-| Файл | `<module_name>_context_x.dart` |
+| File | `<module_name>_context_x.dart` |
 | Extension | `<ModuleName>ContextX` |
 | Localization getter | `l10n` |
 | Asset getter | `assets` |
 
-Внутри presentation используется:
+Presentation code uses:
 
 ```dart
 context.l10n.profileTitle;
@@ -191,23 +191,23 @@ context.assets.icons.edit;
 context.designAssets.icons.general.locationPoint;
 ```
 
-Не используется:
+It does not use:
 
 ```dart
 ClientProfileLocalizations.of(context).profileTitle;
 Assets.icons.edit;
 ```
 
-Context extension и `assets.gen.dart` не экспортируются из package barrel. Это
-предотвращает конфликт одинаковых `context.l10n` и `context.assets` между
-модулями.
+The context extension and `assets.gen.dart` are not exported from the package
+barrel. This prevents collisions between identical `context.l10n` and
+`context.assets` extensions from different modules.
 
-`context.assets` всегда означает assets текущего feature-модуля.
-`context.designAssets` всегда означает общие assets из `design_system`.
+`context.assets` always means assets owned by the current feature module.
+`context.designAssets` always means shared assets from `design_system`.
 
 ## Assets
 
-Каждый feature-модуль имеет собственный `assets/` root.
+Every feature module has its own `assets/` root.
 
 ```text
 assets/
@@ -217,24 +217,24 @@ assets/
     └── files/
 ```
 
-Правила:
+Rules:
 
-- модуль не использует assets другого feature-модуля;
-- app-only assets остаются в приложении;
-- reusable visual assets переносятся в `design_system`;
-- assets из `design_system` используются через `context.designAssets`;
-- design-system assets не копируются в module assets и не проксируются через
+- a module does not use assets from another feature module;
+- app-only assets remain in the application;
+- reusable visual assets are moved to `design_system`;
+- assets from `design_system` are accessed through `context.designAssets`;
+- design-system assets are not copied into module assets or proxied through
   `context.assets`;
-- строковые пути до assets в Dart запрещены;
-- presentation получает module-owned assets через `context.assets`;
-- `lib/gen/assets.gen.dart` не экспортируется;
-- `context.assets` возвращает generated module group из `assets.gen.dart`;
-- рукописные asset classes, facades и wrappers запрещены;
-- FlutterGen настраивается во всех feature-модулях;
-- пустой модуль хранит только `.gitkeep` в generated module group; этот marker
-  не используется как runtime asset.
+- string asset paths in Dart are forbidden;
+- presentation accesses module-owned assets through `context.assets`;
+- `lib/gen/assets.gen.dart` is not exported;
+- `context.assets` returns the generated module group from `assets.gen.dart`;
+- handwritten asset classes, facades, and wrappers are forbidden;
+- FlutterGen is configured in every feature module;
+- an empty module stores only `.gitkeep` in the generated module group; this
+  marker is not used as a runtime asset.
 
-Настройка в `pubspec.yaml`:
+Configuration in `pubspec.yaml`:
 
 ```yaml
 flutter:
@@ -248,7 +248,7 @@ flutter_gen:
       package_parameter_enabled: true
 ```
 
-Настройка в `build.yaml`:
+Configuration in `build.yaml`:
 
 ```yaml
 flutter_gen_runner:
@@ -259,21 +259,21 @@ flutter_gen_runner:
 
 ## Feature-specific theme extensions
 
-По умолчанию feature-модуль использует theme, colors и tokens из
-`design_system`. Создание собственной темы модуля не является обычным способом
-стилизации.
+By default, a feature module uses themes, colors, and tokens from
+`design_system`. Creating a module-specific theme is not the standard styling
+approach.
 
-Feature-specific theme extension допускается только в редком случае, когда у
-feature есть устойчивые семантические значения, которых нет и не должно быть в
-общей дизайн-системе.
+A feature-specific theme extension is allowed only in the rare case where a
+feature has stable semantic values that do not and should not belong in the
+shared design system.
 
-Расположение:
+Location:
 
 ```text
 lib/src/common/config/theme/<module_name>_theme_x.dart
 ```
 
-Пример:
+Example:
 
 ```dart
 import 'package:flutter/material.dart';
@@ -299,33 +299,32 @@ extension ClientProfileThemeContextX on BuildContext {
 }
 ```
 
-Правила:
+Rules:
 
-- сначала проверяется возможность использовать существующие design-system
-  tokens и theme extensions;
-- расширение создаётся только для feature-specific semantic values;
-- файл называется `<module_name>_theme_x.dart`;
-- extension и getter имеют module prefix, например `clientProfileTheme`;
-- generic getters вроде `theme`, `colors` или `appTheme` запрещены;
-- extension находится в `common/config/theme`, а не в widgets или domain;
-- extension не содержит business logic и mutable state;
-- extension не экспортируется без реальной необходимости внешнего потребителя;
-- если значение становится общим для нескольких модулей, оно переносится в
-  `design_system`.
+- first check whether existing design-system tokens and theme extensions can be
+  used;
+- create the extension only for feature-specific semantic values;
+- name the file `<module_name>_theme_x.dart`;
+- give the extension and getter a module prefix, such as
+  `clientProfileTheme`;
+- generic getters such as `theme`, `colors`, or `appTheme` are forbidden;
+- keep the extension in `common/config/theme`, not in widgets or domain;
+- do not put business logic or mutable state in the extension;
+- do not export the extension without a real external consumer requirement;
+- when a value becomes shared by multiple modules, move it to `design_system`.
 
-Не следует создавать feature theme extension только для aliases уже
-существующих `context.colorScheme`, `context.textTheme` или design-system
-tokens.
+Do not create a feature theme extension merely to alias existing
+`context.colorScheme`, `context.textTheme`, or design-system tokens.
 
 ## Constants
 
-Во всём модуле допускается один module-level constants-файл:
+Only one module-level constants file is allowed in a module:
 
 ```text
 lib/src/common/config/<module_name>_constants.dart
 ```
 
-Пример:
+Example:
 
 ```dart
 abstract final class ClientProfileConstants {
@@ -341,7 +340,7 @@ abstract final class ClientProfileAnalyticsEvents {
 }
 ```
 
-В этот файл входят:
+This file contains:
 
 - validation limits;
 - storage keys;
@@ -351,9 +350,9 @@ abstract final class ClientProfileAnalyticsEvents {
 - shared regular expressions;
 - static lookup lists;
 - dial codes;
-- pagination и retry limits.
+- pagination and retry limits.
 
-Запрещены параллельные файлы:
+Parallel files are forbidden:
 
 ```text
 locale_constants.dart
@@ -363,24 +362,24 @@ validation_consts.dart
 analytics_constants.dart
 ```
 
-Private constant, используемая только одним implementation-классом, остаётся
-рядом с этим классом:
+A private constant used by only one implementation class remains next to that
+class:
 
 ```dart
 static const _authorizationHeader = 'Authorization';
 ```
 
-Endpoints и navigation paths не помещаются в constants-файл.
+Endpoints and navigation paths do not belong in the constants file.
 
 ## API endpoints
 
-Во всём модуле допускается один endpoint-файл:
+Only one endpoint file is allowed in a module:
 
 ```text
 lib/src/common/config/<module_name>_api_endpoints.dart
 ```
 
-Пример:
+Example:
 
 ```dart
 abstract final class ClientProfileApiEndpoints {
@@ -393,24 +392,25 @@ abstract final class ClientProfileApiEndpoints {
 }
 ```
 
-Правила:
+Rules:
 
-- endpoints всех внутренних features находятся в одном файле;
-- class называется `<ModuleName>ApiEndpoints`;
-- parameterized endpoints оформляются methods;
-- файл импортируется только data layer этого модуля;
-- файл не экспортируется;
-- feature-level `configs/` и дополнительные endpoints-файлы запрещены.
+- endpoints for all internal features live in one file;
+- name the class `<ModuleName>ApiEndpoints`;
+- define parameterized endpoints as methods;
+- only the module's data layer imports this file;
+- do not export this file;
+- feature-level `configs/` directories and additional endpoint files are
+  forbidden.
 
 ## Navigation paths
 
-Во всём модуле допускается один path-файл:
+Only one path file is allowed in a module:
 
 ```text
 lib/src/common/config/<module_name>_navigation_paths.dart
 ```
 
-Пример:
+Example:
 
 ```dart
 abstract final class ClientProfileNavigationPaths {
@@ -423,19 +423,19 @@ abstract final class ClientProfileNavigationPaths {
 }
 ```
 
-Правила:
+Rules:
 
-- class называется `<ModuleName>NavigationPaths`;
-- все paths модуля находятся в одном файле;
-- paths не объявляются непосредственно в router;
-- paths не смешиваются с general constants;
-- feature-level path-файлы запрещены;
-- файл остаётся внутренним, если внешний path contract не требуется;
-- для navigation events предпочтительны generated `PageRouteInfo`.
+- name the class `<ModuleName>NavigationPaths`;
+- keep all module paths in one file;
+- do not declare paths directly in the router;
+- do not mix paths with general constants;
+- feature-level path files are forbidden;
+- keep the file internal unless an external path contract is required;
+- prefer generated `PageRouteInfo` objects for navigation events.
 
 ## Dependency injection
 
-DI всегда находится в:
+DI always lives in:
 
 ```text
 lib/src/common/config/di/
@@ -443,7 +443,7 @@ lib/src/common/config/di/
 └── <module_name>_di.module.dart
 ```
 
-Пример:
+Example:
 
 ```dart
 @InjectableInit.microPackage(
@@ -460,19 +460,19 @@ Future<void> configureClientProfileDependencies() async =>
     );
 ```
 
-Правила:
+Rules:
 
-- используется constructor injection;
-- module services регистрируются через `injectable` annotations;
-- core-owned dependencies перечисляются в `ignoreUnregisteredTypes`;
-- приложение подключает generated `<ModuleName>PackageModule`;
-- приложение не регистрирует вручную repositories, use cases, data sources и
-  BLoCs модуля;
-- generated `*.module.dart` не редактируется вручную.
+- use constructor injection;
+- register module services with `injectable` annotations;
+- list core-owned dependencies in `ignoreUnregisteredTypes`;
+- the application installs the generated `<ModuleName>PackageModule`;
+- the application does not manually register module repositories, use cases,
+  data sources, or BLoCs;
+- never edit generated `*.module.dart` files manually.
 
 ## Routing
 
-Если модуль владеет navigable screens, router находится в:
+If a module owns navigable screens, its router lives in:
 
 ```text
 lib/src/common/config/router/
@@ -480,7 +480,7 @@ lib/src/common/config/router/
 └── <module_name>_router.gr.dart
 ```
 
-Пример:
+Example:
 
 ```dart
 part 'client_profile_router.gr.dart';
@@ -499,17 +499,17 @@ final List<AutoRoute> clientProfileRoutes = [
 ];
 ```
 
-Правила:
+Rules:
 
-- используется AutoRoute;
-- navigable screen имеет `@RoutePage()`;
-- screen-файл заканчивается на `_screen.dart`;
-- screen class заканчивается на `Screen`;
-- generated route class заканчивается на `Route`;
-- router читает paths только из module path-файла;
-- root route composition остаётся в приложении;
-- пустой router wrapper не создаётся;
-- generated `*.gr.dart` не редактируется вручную.
+- use AutoRoute;
+- annotate every navigable screen with `@RoutePage()`;
+- screen filenames end with `_screen.dart`;
+- screen class names end with `Screen`;
+- generated route class names end with `Route`;
+- the router reads paths only from the module path file;
+- root route composition remains in the application;
+- do not create an empty router wrapper;
+- never edit generated `*.gr.dart` files manually.
 
 ## Feature layers
 
@@ -525,17 +525,17 @@ data/
 └── services/
 ```
 
-Data layer отвечает за:
+The data layer is responsible for:
 
-- API и local storage calls;
+- API and local-storage calls;
 - serialization;
-- request/response models;
-- model/domain mapping;
+- request and response models;
+- model-to-domain mapping;
 - exception handling;
 - repository implementations.
 
-Exceptions не выходят за границу repository implementation. Они преобразуются
-в `Failure`.
+Exceptions do not cross the repository implementation boundary. They are
+converted into `Failure` objects.
 
 ### Domain
 
@@ -548,7 +548,7 @@ domain/
 └── usecases/
 ```
 
-Domain layer отвечает за:
+The domain layer is responsible for:
 
 - business entities;
 - repository contracts;
@@ -556,9 +556,9 @@ Domain layer отвечает за:
 - domain services;
 - typed analytics events.
 
-Domain не импортирует Flutter, data models или presentation.
+Domain does not import Flutter, data models, or presentation.
 
-Analytics tracking выполняется внутри use cases, а не в BLoCs и data sources.
+Analytics tracking happens inside use cases, not in BLoCs or data sources.
 
 ### Presentation
 
@@ -571,19 +571,19 @@ presentation/
 └── widgets/
 ```
 
-Presentation layer отвечает за:
+The presentation layer is responsible for:
 
 - BLoC state management;
 - screens;
 - feature widgets;
 - UI-only extensions;
-- validation и formatting helpers.
+- validation and formatting helpers.
 
-Presentation не импортирует data layer.
+Presentation does not import the data layer.
 
-## Models и mappers
+## Models and mappers
 
-Serializable model находится в собственной папке:
+A serializable model lives in its own directory:
 
 ```text
 data/models/session_model/
@@ -591,19 +591,19 @@ data/models/session_model/
 └── session_model.g.dart
 ```
 
-Правила:
+Rules:
 
-- model class имеет suffix `Model`;
-- model file и directory имеют одинаковое base name;
-- JSON generation выполняется через `json_serializable`;
-- `_json.dart` не используется вместо request/response model;
-- mapping не находится в screens, BLoCs или data sources;
-- отдельный mapper размещается в `data/mappers`, если преобразование не
-  выражено самим model contract.
+- model class names have the `Model` suffix;
+- a model file and its directory use the same base name;
+- generate JSON code with `json_serializable`;
+- do not use `_json.dart` instead of a request or response model;
+- mapping does not belong in screens, BLoCs, or data sources;
+- place a separate mapper in `data/mappers` when the conversion is not
+  expressed by the model contract itself.
 
 ## BLoCs
 
-Используется только `presentation/blocs`, не `presentation/bloc`.
+Use only `presentation/blocs`, never `presentation/bloc`.
 
 ```text
 presentation/blocs/<topic>/
@@ -613,7 +613,7 @@ presentation/blocs/<topic>/
 └── <topic>_bloc.freezed.dart
 ```
 
-Например:
+Example:
 
 ```text
 presentation/blocs/user_profile/
@@ -623,26 +623,26 @@ presentation/blocs/user_profile/
 └── user_profile_bloc.freezed.dart
 ```
 
-Directory не повторяет suffix `_bloc`:
+The directory does not repeat the `_bloc` suffix:
 
 ```text
-blocs/user_profile/       # правильно
-blocs/user_profile_bloc/  # неправильно
+blocs/user_profile/       # correct
+blocs/user_profile_bloc/  # incorrect
 ```
 
-Правила:
+Rules:
 
-- используется `Bloc<Event, State>`, не Cubit;
-- bloc, event и state находятся в разных файлах;
-- BLoC использует domain entities и use cases;
-- data models не импортируются;
-- async state моделируется через `StateStatus`;
-- editable inputs моделируются через `FieldState<T>`;
-- generated Freezed-файлы не редактируются вручную.
+- use `Bloc<Event, State>`, not Cubit;
+- keep bloc, event, and state in separate files;
+- BLoCs use domain entities and use cases;
+- do not import data models;
+- model asynchronous state with `StateStatus`;
+- model editable inputs with `FieldState<T>`;
+- never edit generated Freezed files manually.
 
 ## Localization
 
-Каждый модуль владеет одним ARB-набором:
+Every module owns one ARB set:
 
 ```text
 lib/l10n/<module_name>_en.arb
@@ -650,17 +650,17 @@ lib/l10n/<module_name>_kk.arb
 lib/l10n/<module_name>_ru.arb
 ```
 
-Правила:
+Rules:
 
-- во всех locales одинаковый набор keys;
-- модуль содержит только используемые им строки;
-- строки sibling-модулей не дублируются;
-- app composition strings остаются в приложении;
-- UI использует `context.l10n`;
-- consuming app регистрирует localization delegate каждого модуля;
-- context extension не экспортируется.
+- all locales contain the same set of keys;
+- a module contains only the strings it uses;
+- do not duplicate strings from sibling modules;
+- app-composition strings remain in the application;
+- UI accesses localization through `context.l10n`;
+- the consuming application registers each module's localization delegate;
+- do not export the context extension.
 
-Канонический `l10n.yaml`:
+Canonical `l10n.yaml`:
 
 ```yaml
 arb-dir: lib/l10n
@@ -673,42 +673,42 @@ nullable-getter: false
 
 ## Public package API
 
-Единственный package entry point:
+The package has a single entry point:
 
 ```text
 lib/<module_name>.dart
 ```
 
-Допустимые exports:
+Allowed exports:
 
-- generated localization class, если приложению нужен delegate;
-- DI initializer и generated package module;
-- public route classes и route lists;
-- BLoCs, которые создаёт или наблюдает приложение;
-- entities в public signatures;
-- widgets, используемые app-level composition.
+- the generated localization class when the application needs its delegate;
+- the DI initializer and generated package module;
+- public route classes and route lists;
+- BLoCs created or observed by the application;
+- entities used in public signatures;
+- widgets used by app-level composition.
 
-Запрещённые exports:
+Forbidden exports:
 
 - `<module_name>_context_x.dart`;
 - `gen/assets.gen.dart`;
-- handwritten asset classes, facades и wrappers;
-- feature-specific theme extension без явного внешнего контракта;
+- handwritten asset classes, facades, and wrappers;
+- a feature-specific theme extension without an explicit external contract;
 - constants;
 - API endpoints;
-- navigation paths без явного public contract;
+- navigation paths without an explicit public contract;
 - data sources;
 - repository implementations;
 - internal services;
-- internal mappers и helpers;
+- internal mappers and helpers;
 - internal use cases;
-- generated JSON и Freezed files.
+- generated JSON and Freezed files.
 
-После перемещения или удаления source-файла stale export удаляется сразу.
+Remove a stale export immediately after moving or deleting its source file.
 
 ## Generator configuration
 
-`build.yaml` всех модулей использует одинаковые paths и options:
+Every module's `build.yaml` uses the same paths and options:
 
 ```yaml
 targets:
@@ -747,24 +747,25 @@ targets:
           - lib/src/common/config/router/<module_name>_router.dart
 ```
 
-AutoRoute builders не добавляются в модуль без routes. FlutterGen builder
-обязателен для каждого feature-модуля: asset API никогда не пишется вручную.
+Do not add AutoRoute builders to a module without routes. The FlutterGen
+builder is mandatory for every feature module: the asset API is never written
+manually.
 
 ## Pubspec
 
-Правила для `pubspec.yaml`:
+Rules for `pubspec.yaml`:
 
-- workspace package использует `resolution: workspace`;
-- dependency groups имеют одинаковый порядок;
-- добавляются только реально используемые dependencies;
-- после переноса feature старые dependencies удаляются;
-- generator dependency добавляется только вместе с соответствующим builder;
-- `flutter.generate` включён для localization;
-- module assets объявлены package-local path.
+- a workspace package uses `resolution: workspace`;
+- dependency groups use a consistent order;
+- add only dependencies that are actually used;
+- remove old dependencies after moving a feature;
+- add a generator dependency only together with its corresponding builder;
+- enable `flutter.generate` for localization;
+- declare module assets with package-local paths.
 
 ## Tests
 
-Tests зеркалируют source features:
+Tests mirror source features:
 
 ```text
 test/features/<feature_name>/
@@ -773,35 +774,35 @@ test/features/<feature_name>/
 └── presentation/
 ```
 
-В зависимости от изменения добавляются:
+Depending on the change, add:
 
 - model parsing tests;
 - mapper tests;
 - repository tests;
 - use-case tests;
 - BLoC tests;
-- route/path tests;
-- localization/context widget smoke tests.
+- route and path tests;
+- localization and context widget smoke tests.
 
-Пустые и устаревшие test directories удаляются после переноса feature.
+Remove empty and obsolete test directories after moving a feature.
 
 ## Module README
 
-Каждый feature-модуль содержит `README.md` со следующими разделами:
+Every feature module contains a `README.md` with the following sections:
 
-- ответственность модуля;
-- внутренние features;
+- module responsibilities;
+- internal features;
 - public API;
 - external DI dependencies;
 - routes;
 - endpoints;
 - assets;
 - localization;
-- запрещённые зависимости.
+- forbidden dependencies.
 
-## Пример разделения client auth/profile
+## Example client auth/profile separation
 
-`client_auth` владеет только процессом авторизации:
+`client_auth` owns only the authorization process:
 
 ```text
 features/auth/
@@ -815,7 +816,7 @@ features/auth/
         └── auth_wrapper_screen.dart
 ```
 
-`client_profile` владеет данными и состоянием текущего клиента:
+`client_profile` owns the current client's data and state:
 
 ```text
 features/
@@ -824,120 +825,123 @@ features/
 └── sessions/
 ```
 
-В `client_profile` находятся:
+`client_profile` contains:
 
-- current user/profile loading;
+- current user and profile loading;
 - profile registration;
 - profile editing;
 - avatar operations;
-- account deletion request;
-- blocked/deletion-requested presentation;
+- account-deletion requests;
+- blocked and deletion-requested presentation;
 - device sessions.
 
-В `client_auth` не должны оставаться profile/session endpoints, localization,
-routes, DI registrations, assets, dependencies или exports.
+`client_auth` must not retain profile or session endpoints, localization,
+routes, DI registrations, assets, dependencies, or exports.
 
-## Checklist нового модуля
+## New module checklist
 
-Новый модуль создаётся repository generator tool:
+Create a new module with the repository generator tool:
 
 ```bash
 dart run tool/generation/create_feature_module.dart <module_name>
 ```
 
-При необходимости имя первой feature-зоны задаётся отдельно:
+When necessary, provide the first feature-area name separately:
 
 ```bash
 dart run tool/generation/create_feature_module.dart admin_reports \
   --feature reports
 ```
 
-Dart tool валидирует `snake_case`, не перезаписывает существующий package,
-добавляет модуль в root workspace, создаёт canonical scaffold и запускает
-localization, FlutterGen, DI generation, format и analyze. `--no-codegen`
-используется только когда генерация намеренно будет выполнена позже.
+The Dart tool validates `snake_case`, does not overwrite an existing package,
+adds the module to the root workspace, creates the canonical scaffold, and runs
+localization, FlutterGen, DI generation, format, and analyze. Use
+`--no-codegen` only when generation will intentionally run later.
 
-- [ ] Package добавлен в root workspace.
-- [ ] Package добавлен в dependencies consuming app.
-- [ ] Создан минимальный public barrel.
-- [ ] Создан `<module_name>_context_x.dart`.
-- [ ] Добавлены `context.l10n` и `context.assets`.
-- [ ] Общие design-system assets используются через `context.designAssets`.
-- [ ] Создан собственный `assets/` root.
-- [ ] Настроен FlutterGen; `context.assets` возвращает generated module group.
-- [ ] Нет рукописных asset classes, facades, wrappers и строковых путей.
-- [ ] Создан собственный ARB-набор.
-- [ ] Настроен `l10n.yaml`.
-- [ ] Создан один constants-файл при наличии module constants.
-- [ ] Создан один endpoints-файл при наличии remote API.
-- [ ] Создан один paths-файл при наличии routes.
-- [ ] Настроен micro-package DI.
-- [ ] External core dependencies добавлены в `ignoreUnregisteredTypes`.
-- [ ] Router создан только при наличии navigable screens.
-- [ ] Features разделены на data/domain/presentation.
-- [ ] Добавлена mirrored test structure.
-- [ ] Создан module README.
-- [ ] Нет imports из `src/` других modules.
-- [ ] Нет exports context/assets/internal config.
-- [ ] Feature theme extension добавлен только при отсутствии подходящих
-      design-system tokens.
+- [ ] The package is added to the root workspace.
+- [ ] The package is added to the consuming application's dependencies.
+- [ ] A minimal public barrel is created.
+- [ ] `<module_name>_context_x.dart` is created.
+- [ ] `context.l10n` and `context.assets` are added.
+- [ ] Shared design-system assets are accessed through
+      `context.designAssets`.
+- [ ] The module has its own `assets/` root.
+- [ ] FlutterGen is configured; `context.assets` returns the generated module
+      group.
+- [ ] There are no handwritten asset classes, facades, wrappers, or string
+      paths.
+- [ ] The module has its own ARB set.
+- [ ] `l10n.yaml` is configured.
+- [ ] One constants file exists when the module has module-level constants.
+- [ ] One endpoint file exists when the module has a remote API.
+- [ ] One path file exists when the module has routes.
+- [ ] Micro-package DI is configured.
+- [ ] External core dependencies are added to `ignoreUnregisteredTypes`.
+- [ ] A router exists only when the module has navigable screens.
+- [ ] Features are divided into data, domain, and presentation.
+- [ ] A mirrored test structure is added.
+- [ ] The module README is created.
+- [ ] There are no imports from another module's `src/` directory.
+- [ ] Context, assets, and internal configuration are not exported.
+- [ ] A feature theme extension exists only when suitable design-system tokens
+      do not exist.
 
-## Checklist перемещения feature
+## Feature migration checklist
 
-- [ ] Source перенесён в нового владельца.
-- [ ] Package imports заменены на новый module name.
-- [ ] Endpoints объединены в endpoint-файл нового модуля.
-- [ ] Constants объединены в constants-файл нового модуля.
-- [ ] Paths объединены в path-файл нового модуля.
-- [ ] Localization keys и assets перенесены новому владельцу.
-- [ ] DI registrations перенесены и перегенерированы.
-- [ ] Routes перенесены и перегенерированы.
-- [ ] Public API consuming apps обновлён.
-- [ ] Старые exports удалены.
-- [ ] Старые dependencies удалены.
-- [ ] Старые localization keys и generated registrations отсутствуют.
-- [ ] Пустые folders удалены.
-- [ ] Tests перенесены или добавлены.
+- [ ] Source code is moved to the new owner.
+- [ ] Package imports use the new module name.
+- [ ] Endpoints are merged into the new module's endpoint file.
+- [ ] Constants are merged into the new module's constants file.
+- [ ] Paths are merged into the new module's path file.
+- [ ] Localization keys and assets are moved to the new owner.
+- [ ] DI registrations are moved and regenerated.
+- [ ] Routes are moved and regenerated.
+- [ ] The consuming applications' public API usage is updated.
+- [ ] Old exports are removed.
+- [ ] Old dependencies are removed.
+- [ ] Old localization keys and generated registrations are absent.
+- [ ] Empty directories are removed.
+- [ ] Tests are moved or added.
 
-## Проверка изменений
+## Validating changes
 
-Команды запускаются из конкретного package root.
+Run commands from the relevant package root.
 
-После изменения workspace или pubspec:
+After changing the workspace or a pubspec:
 
 ```sh
 flutter pub get
 ```
 
-После изменения ARB или `l10n.yaml`:
+After changing an ARB file or `l10n.yaml`:
 
 ```sh
 flutter gen-l10n
 ```
 
-После перемещения файлов между packages или изменения DI, routes, Freezed и
-JSON models:
+After moving files between packages or changing DI, routes, Freezed, or JSON
+models:
 
 ```sh
 dart run build_runner clean
 dart run build_runner build
 ```
 
-Форматирование и анализ:
+Formatting and analysis:
 
 ```sh
 dart format lib test
 flutter analyze lib
 ```
 
-Тесты:
+Tests:
 
 ```sh
 flutter test
 ```
 
-При изменении public API, DI, routes, localization delegates или assets также
-проверяется consuming app:
+When changing the public API, DI, routes, localization delegates, or assets,
+also validate the consuming application:
 
 ```sh
 flutter analyze lib
@@ -945,6 +949,6 @@ flutter test
 flutter build apk --debug
 ```
 
-Перенос feature не считается завершённым, пока старый модуль содержит imports,
-endpoints, constants, paths, localization keys, assets, dependencies, generated
-registrations или exports, принадлежащие новому модулю.
+A feature migration is not complete while the old module still contains
+imports, endpoints, constants, paths, localization keys, assets, dependencies,
+generated registrations, or exports that belong to the new module.
