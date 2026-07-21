@@ -72,4 +72,4 @@ admin-prod:
 	cd $(ADMIN_APP) && flutter run --dart-define-from-file=$(ADMIN_CONFIG_PRODUCTION)
 
 check-hardcoded-ui:
-	dart run tools/validation/check_hardcoded_ui_strings.dart
+	dart run tool/validation/check_hardcoded_ui_strings.dart

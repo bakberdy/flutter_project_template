@@ -842,13 +842,13 @@ routes, DI registrations, assets, dependencies или exports.
 Новый модуль создаётся repository generator tool:
 
 ```bash
-dart run tools/generation/create_feature_module.dart <module_name>
+dart run tool/generation/create_feature_module.dart <module_name>
 ```
 
 При необходимости имя первой feature-зоны задаётся отдельно:
 
 ```bash
-dart run tools/generation/create_feature_module.dart admin_reports \
+dart run tool/generation/create_feature_module.dart admin_reports \
   --feature reports
 ```
 

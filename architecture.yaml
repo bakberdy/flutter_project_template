@@ -1,0 +1,111 @@
+version: 1
+
+groups:
+  core:
+    - core
+
+  ui:
+    - design_system
+
+  shared:
+    - shared
+
+  features:
+    - admin_auth
+    - admin_preferences
+    - admin_profile
+    - admin_users
+    - client_auth
+    - client_preferences
+    - client_profile
+
+  admin_profile_dependencies:
+    - admin_auth
+
+modules:
+  core:
+    path: modules/core
+    allow:
+      groups: []
+
+  design_system:
+    path: modules/design_system
+    allow:
+      groups: []
+
+  shared:
+    path: modules/shared
+    allow:
+      groups:
+        - core
+        - ui
+
+  admin_auth:
+    path: modules/admin_auth
+    allow:
+      groups:
+        - core
+        - ui
+        - shared
+
+  admin_preferences:
+    path: modules/admin_preferences
+    allow:
+      groups:
+        - core
+        - ui
+        - shared
+
+  admin_profile:
+    path: modules/admin_profile
+    allow:
+      groups:
+        - core
+        - ui
+        - shared
+        - admin_profile_dependencies
+
+  admin_users:
+    path: modules/admin_users
+    allow:
+      groups:
+        - core
+        - ui
+        - shared
+
+  client_auth:
+    path: modules/client_auth
+    allow:
+      groups:
+        - core
+        - ui
+        - shared
+
+  client_preferences:
+    path: modules/client_preferences
+    allow:
+      groups:
+        - core
+        - ui
+        - shared
+
+  client_profile:
+    path: modules/client_profile
+    allow:
+      groups:
+        - core
+        - ui
+        - shared
+
+rules:
+  dependencies:
+    enabled: true
+
+  imports:
+    enabled: false
+
+  relative_imports:
+    enabled: false
+
+  circular_dependencies:
+    enabled: false

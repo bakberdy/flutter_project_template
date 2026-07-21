@@ -4,7 +4,7 @@ const _usage = '''
 Create a feature module using the repository architecture contract.
 
 Usage:
-  dart run tools/generation/create_feature_module.dart <module_name> [options]
+  dart run tool/generation/create_feature_module.dart <module_name> [options]
 
 Options:
   --feature <feature_name>  Initial feature directory. Defaults to module_name.
@@ -14,8 +14,8 @@ Options:
   -h, --help                Show this help.
 
 Examples:
-  dart run tools/generation/create_feature_module.dart client_orders
-  dart run tools/generation/create_feature_module.dart admin_reports --feature reports
+  dart run tool/generation/create_feature_module.dart client_orders
+  dart run tool/generation/create_feature_module.dart admin_reports --feature reports
 ''';
 
 Future<void> main(List<String> arguments) async {
