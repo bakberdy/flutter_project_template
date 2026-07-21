@@ -17,5 +17,7 @@ void initializeCoreMonitoring(
   Crashlytics.initialize([
     TalkerCrashProvider(talker),
   ], enableCrashlytics: enableCrashlytics);
-  Bloc.observer = TalkerBlocObserver(talker: talker);
+  Bloc.observer = MultiBlocObserver(
+    observers: [TalkerBlocObserver(talker: talker)],
+  );
 }
