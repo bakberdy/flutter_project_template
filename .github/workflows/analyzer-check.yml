@@ -26,7 +26,7 @@ jobs:
           cache: true
       - run: flutter pub get
       - name: Check hardcoded UI strings
-        run: dart run tool/check_hardcoded_ui_strings.dart
+        run: ./scripts/check_hardcoded_ui_strings.sh
       - run: flutter analyze --no-pub
       - name: Report success-analyze
         if: success()

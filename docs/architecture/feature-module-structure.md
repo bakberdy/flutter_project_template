@@ -842,13 +842,13 @@ routes, DI registrations, assets, dependencies или exports.
 Новый модуль создаётся repository generator-скриптом:
 
 ```bash
-dart run tool/create_feature_module.dart <module_name>
+./scripts/create_feature_module.sh <module_name>
 ```
 
 При необходимости имя первой feature-зоны задаётся отдельно:
 
 ```bash
-dart run tool/create_feature_module.dart admin_reports --feature reports
+./scripts/create_feature_module.sh admin_reports --feature reports
 ```
 
 Скрипт валидирует `snake_case`, не перезаписывает существующий package,
