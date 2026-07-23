@@ -25,6 +25,37 @@ folders only when they contain real code. Keep one responsibility per file,
 avoid empty wrappers, and expose a minimal public API. Assets, ARB files, and
 tests stay with their owning package.
 
+## Task Scope & Context Discipline
+
+Treat the domain, module, feature, file, behavior, or command named in the
+prompt as the primary scope. Work as deeply as needed within that scope, starting
+from the named source and following only the direct dependencies, contracts, and
+validation paths required to complete the request.
+
+- Keep working context task-relevant. Retain only the facts, decisions, and
+  evidence needed for the current request; do not analyze unrelated modules,
+  features, history, or architecture.
+- Use [`docs/README.md`](docs/README.md) as the documentation index when the
+  requested domain needs additional context. Read only the guide relevant to
+  the prompt, then inspect the source needed to apply it; do not load every
+  document preemptively.
+- Expand the scope only when a required dependency, shared contract, root
+  configuration, or blocking failure makes it necessary. State why the
+  expansion is required.
+- Do not fix, refactor, validate, or report incidental issues outside the
+  requested scope unless they block completion. Preserve unrelated existing
+  changes.
+- Reuse source inspection, search results, decisions, and validation output
+  already gathered during the task. Do not repeat reads, searches, commands, or
+  completed work unless relevant state changed or the earlier result was
+  incomplete.
+- Validate proportionally: check changed files, affected packages, and relevant
+  tests first. Run workspace-wide checks only when requested or when a shared or
+  root-level change can affect the whole workspace.
+- If an unrelated problem is discovered, mention it briefly only when it affects
+  the requested outcome; do not turn it into a separate investigation without
+  being asked.
+
 ## Build, Test, and Development Commands
 
 - `flutter pub get`: resolve the workspace from the repository root.
@@ -62,56 +93,26 @@ Keep Blocs and Cubits focused on state coordination; never call
 owning use case after the repository result, with event definitions under that
 feature's `domain/analytics/` directory.
 
-Failure handling follows these rules:
+## Domain-Specific Guidelines
 
-- Represent failures with concrete `Failure` subclasses, never reason enums.
-- Keep core failures under `modules/core/lib/domain/failures/`. Create every
-  feature-specific failure under the owning feature's
-  `lib/src/features/<feature>/domain/failures/` directory. Never place a
-  feature-specific failure in `core` or `shared`; expose only the failure types
-  required by that feature package's public contract.
-- Use shared core failure types for reusable transport conditions such as no
-  connection, timeout, invalid response, and service unavailability. Create an
-  operation-specific or business-specific failure, such as
-  `GetAppInfoFailure`, when a local operation fails for its own reason.
-- Only `BackendFailure` may carry a user-facing `message`. Only
-  `BackendFieldFailure` may carry a backend field-validation message; no other
-  failure type may store localized or diagnostic text.
-- Represent every distinct locally produced, user-visible error condition with
-  its own concrete failure class in the module that owns the operation. Do not
-  pass an error string through state or reuse one generic failure with a reason
-  enum. For example, represent "Email is too short" with
-  `EmailTooShortFailure`; field-specific validation failures must extend
-  `FieldFailure`.
-- A failure may carry the raw, non-localized values required to render its
-  message. For example,
-  `StartDateCannotBeBiggerThanEndDateFailure(startDate: ..., endDate: ...)`
-  may carry both dates. Include those values in equality and map the failure
-  type and values to a parameterized ARB message in the owning presentation
-  layer. Never store the rendered, localized, or diagnostic message in a local
-  failure.
-- Put feature-specific failures in the owning feature's `domain/failures/`
-  directory and name them by the precise condition they represent. Do not infer
-  a typed failure from backend prose; use a stable backend error code when one
-  is available, otherwise preserve it as a `BackendFieldFailure`.
-- Resolve backend field messages through `FieldFailuresX`, using
-  `backendMessageForField` or `backendMessageForAnyField`. Do not duplicate
-  loops that filter `BackendFieldFailure` by `fieldName` in feature code.
-- Convert exceptions to typed failures in the data or repository boundary. Do
-  not pass exceptions or locally generated error strings into presentation.
-- Map non-backend failure types to ARB messages in presentation code. Preserve
-  a non-empty `BackendFailure.message` exactly as returned by the backend. Do
-  not introduce a localization data source into repositories or use cases.
-- Keep generic failure-to-UI mapping in `shared`. Resolve feature-specific
-  failures inside their owning feature; `shared` must not import feature
-  packages.
+Read and follow the relevant document before changing code in these domains:
 
-Treat logout as an explicit user action. Whenever the user can see and activate
-a localized logout label, dispatch `CoreNavigationEvent.loggedOut()` through
-`CoreNavigationBloc`. Never use the logout event for account deletion or any
-other non-logout operation. After those operations change the current user's
-state, dispatch `CoreNavigationEvent.refreshUser()` through
-`CoreNavigationBloc` instead.
+- When creating a business feature module, first read
+  [`docs/architecture/feature-module-structure.md`](docs/architecture/feature-module-structure.md),
+  then create it with
+  `dart run tool/generation/create_feature_module.dart <module_name>`.
+  Do not hand-scaffold a module that the generator supports.
+- For workspace layout, package ownership, module placement, or structural
+  changes, read
+  [`docs/architecture/workspace_structure.md`](docs/architecture/workspace_structure.md).
+  For business-module internals or dependencies, also read the feature-module
+  guide and consult `architecture.yaml`.
+- For failures, exceptions, backend errors, field validation, or
+  failure-to-UI mapping, read
+  [`docs/agent-guidelines/failure-handling.md`](docs/agent-guidelines/failure-handling.md).
+- For logout, account deletion, or navigation caused by user/session state
+  changes, read
+  [`docs/agent-guidelines/session-navigation.md`](docs/agent-guidelines/session-navigation.md).
 
 ## Testing Guidelines
 

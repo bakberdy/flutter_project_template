@@ -1,5 +1,12 @@
 # Project Documentation
 
+## Agent Guidelines
+
+- [Failure handling](agent-guidelines/failure-handling.md) — failure ownership,
+  backend and field errors, message rules, and presentation boundaries.
+- [Session navigation](agent-guidelines/session-navigation.md) — logout and
+  account-state navigation events.
+
 ## Architecture
 
 - [Workspace structure](architecture/workspace_structure.md) — locations of
