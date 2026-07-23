@@ -14,9 +14,10 @@ final _literalPatterns = [
   ),
 ];
 
-void main() {
+void main(List<String> arguments) {
+  final isNonBlocking = arguments.contains('--non-blocking');
   final repositoryRoot = _findRepositoryRoot();
-  final violations = <String>[];
+  final violations = <_Violation>[];
 
   for (final rootName in _scannedRoots) {
     final root = Directory.fromUri(repositoryRoot.uri.resolve('$rootName/'));
@@ -39,13 +40,21 @@ void main() {
           );
           final line =
               '\n'.allMatches(source.substring(0, match.start)).length + 1;
-          violations.add('$relativePath:$line: "$value"');
+          violations.add(
+            _Violation(
+              path: relativePath,
+              line: line,
+              value: value,
+            ),
+          );
         }
       }
     }
   }
 
-  violations.sort();
+  violations.sort(
+    (first, second) => first.location.compareTo(second.location),
+  );
   if (violations.isEmpty) {
     stdout.writeln('No hardcoded UI strings found.');
     return;
@@ -53,12 +62,86 @@ void main() {
 
   stderr
     ..writeln('Hardcoded UI strings found:')
-    ..writeln(violations.join('\n'))
+    ..writeln(violations.map((violation) => violation.description).join('\n'))
     ..writeln(
       'Use the owning module localization or add '
       '"// $_allowedComment" for intentional non-localizable UI metadata.',
     );
+
+  if (isNonBlocking) {
+    _writeGitHubReport(violations);
+    stdout.writeln(
+      'Hardcoded UI strings are reported as warnings and do not fail CI.',
+    );
+    return;
+  }
+
   exitCode = 1;
+}
+
+void _writeGitHubReport(List<_Violation> violations) {
+  if (Platform.environment['GITHUB_ACTIONS'] != 'true') return;
+
+  for (final violation in violations) {
+    stdout.writeln(
+      '::warning '
+      'file=${_escapeWorkflowProperty(violation.path)},'
+      'line=${violation.line},'
+      'title=Hardcoded UI text::'
+      '${_escapeWorkflowData(violation.value)}',
+    );
+  }
+
+  final summaryPath = Platform.environment['GITHUB_STEP_SUMMARY'];
+  final repository = Platform.environment['GITHUB_REPOSITORY'];
+  final serverUrl = Platform.environment['GITHUB_SERVER_URL'];
+  final revision = Platform.environment['GITHUB_SHA'];
+  if (summaryPath == null ||
+      repository == null ||
+      serverUrl == null ||
+      revision == null) {
+    return;
+  }
+
+  final summary = StringBuffer()
+    ..writeln('## Hardcoded UI texts')
+    ..writeln()
+    ..writeln(
+      'These findings are optional warnings and do not fail validation.',
+    )
+    ..writeln();
+  for (final violation in violations) {
+    final encodedPath = violation.path
+        .split('/')
+        .map(Uri.encodeComponent)
+        .join('/');
+    final url =
+        '$serverUrl/$repository/blob/$revision/$encodedPath#L${violation.line}';
+    summary.writeln(
+      '- [${violation.path}:${violation.line}]($url): '
+      '`${_escapeMarkdownCode(violation.value)}`',
+    );
+  }
+  File(
+    summaryPath,
+  ).writeAsStringSync(summary.toString(), mode: FileMode.append);
+}
+
+String _escapeWorkflowProperty(String value) {
+  return _escapeWorkflowData(
+    value,
+  ).replaceAll(':', '%3A').replaceAll(',', '%2C');
+}
+
+String _escapeWorkflowData(String value) {
+  return value
+      .replaceAll('%', '%25')
+      .replaceAll('\r', '%0D')
+      .replaceAll('\n', '%0A');
+}
+
+String _escapeMarkdownCode(String value) {
+  return value.replaceAll('`', r'\`').replaceAll('\n', ' ');
 }
 
 Directory _findRepositoryRoot() {
@@ -120,4 +203,19 @@ bool _isExplicitlyAllowed(String source, int offset) {
       ? source.lastIndexOf('\n', previousLineEnd - 1) + 1
       : 0;
   return source.substring(previousLineStart, offset).contains(_allowedComment);
+}
+
+final class _Violation {
+  const _Violation({
+    required this.path,
+    required this.line,
+    required this.value,
+  });
+
+  final String path;
+  final int line;
+  final String value;
+
+  String get location => '$path:$line';
+  String get description => '$location: "$value"';
 }

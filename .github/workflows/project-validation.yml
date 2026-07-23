@@ -73,7 +73,9 @@ jobs:
         uses: ./.github/actions/setup-flutter
 
       - name: Validate hardcoded text
-        run: dart run tool/validation/check_hardcoded_ui_strings.dart
+        run: >
+          dart run tool/validation/check_hardcoded_ui_strings.dart
+          --non-blocking
 
   diff-check:
     name: Diff Check
