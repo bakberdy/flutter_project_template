@@ -21,7 +21,7 @@ class AuthLocaleMenu extends StatelessWidget {
     return PopupMenuButton<String>(
       initialValue: languageCode,
       enabled: !state.status.isLoading,
-      tooltip: context.l10n.language,
+      tooltip: 'Language',
       position: PopupMenuPosition.under,
       offset: const Offset(0, DesignSpacingTokens.xs),
       shape: RoundedRectangleBorder(
