@@ -8,3 +8,6 @@ Repository automation is split by responsibility:
 - `generation/` contains Dart tools that create or transform repository files.
 
 Use `snake_case` for both shell and Dart filenames.
+
+`validation/run_changed_tests.dart` runs tests only in changed testable
+packages. Pass the comparison revision with `--base <git-revision>`.

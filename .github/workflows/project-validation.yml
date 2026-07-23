@@ -42,18 +42,24 @@ jobs:
         run: dart analyze
 
   tests:
-    name: Tests
+    name: Changed Package Tests
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
       - name: Check out repository
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
       - name: Set up Flutter
         uses: ./.github/actions/setup-flutter
 
-      - name: Run all tests
-        run: ./tool/scripts/run_all_tests.sh
+      - name: Run tests for changed packages
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          dart run tool/validation/run_changed_tests.dart \
+            --base "${BASE_SHA}"
 
   hardcoded-texts:
     name: Hardcoded Texts
