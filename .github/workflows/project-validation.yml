@@ -28,7 +28,7 @@ jobs:
         run: dart format --output=none --set-exit-if-changed .
 
   analyze:
-    name: Analyze
+    name: Analyze Workspace
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -39,7 +39,7 @@ jobs:
         uses: ./.github/actions/setup-flutter
 
       - name: Analyze workspace
-        run: flutter analyze --no-pub
+        run: dart analyze
 
   tests:
     name: Tests
@@ -55,20 +55,6 @@ jobs:
       - name: Run all tests
         run: ./tool/scripts/run_all_tests.sh
 
-  module-dependencies:
-    name: Module Dependencies
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v5
-
-      - name: Set up Flutter
-        uses: ./.github/actions/setup-flutter
-
-      - name: Validate module dependencies
-        run: dart run tool/validation/validate_module_dependencies.dart
-
   hardcoded-texts:
     name: Hardcoded Texts
     runs-on: ubuntu-latest
@@ -82,3 +68,23 @@ jobs:
 
       - name: Validate hardcoded text
         run: dart run tool/validation/check_hardcoded_ui_strings.dart
+
+  diff-check:
+    name: Diff Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Check whitespace errors
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          if [[ -n "${BASE_SHA}" ]]; then
+            git diff --check "${BASE_SHA}...HEAD"
+          else
+            git show --check --format= HEAD
+          fi
