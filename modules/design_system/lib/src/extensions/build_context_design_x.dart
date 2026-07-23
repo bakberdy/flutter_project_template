@@ -6,7 +6,8 @@ extension BuildContextDesignX on BuildContext {
   ThemeData get designTheme => Theme.of(this);
   ColorScheme get designColors => designTheme.colorScheme;
   DesignSemanticColors get designSemanticColors =>
-      designTheme.extension<DesignSemanticColors>()!;
+      designTheme.extension<DesignSemanticColors>() ??
+      (throw StateError('DesignSemanticColors is not registered'));
   TextTheme get designTextTheme => designTheme.textTheme;
   BottomSheetThemeData get designBottomSheetTheme =>
       designTheme.bottomSheetTheme;

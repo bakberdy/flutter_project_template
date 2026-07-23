@@ -30,6 +30,7 @@ class BaseListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final subtitle = this.subtitle;
     const defaultRadiues = Radius.circular(DesignRadiusTokens.lg);
     return Card(
       shape: RoundedRectangleBorder(
@@ -72,7 +73,7 @@ class BaseListTile extends StatelessWidget {
                       ),
                       Text(
                         softWrap: true,
-                        subtitle!,
+                        subtitle,
                         style: context.designTextTheme.bodySmall?.copyWith(
                           color: foregroundColor,
                         ),

@@ -24,10 +24,11 @@ class GetCurrentUserUseCase
   @override
   FutureEither<GetCurrentUserResult> call(GetCurrentUserParams params) {
     final result = _getCurrentUser(cancelToken: params.cancelToken);
-    return params.timeout == null
+    final timeout = params.timeout;
+    return timeout == null
         ? result
         : result.timeout(
-            params.timeout!,
+            timeout,
             onTimeout: () => const Left(
               TimeoutFailure(
                 source: 'GetCurrentUserUseCase.timeout',

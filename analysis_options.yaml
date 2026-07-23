@@ -4,6 +4,7 @@ plugins:
   project_lints:
     path: ./packages/project_lints
     diagnostics:
+      avoid_force_unwrap: error
       class_name_matches_file_name: error
       common_feature_import: error
       cross_feature_import: error

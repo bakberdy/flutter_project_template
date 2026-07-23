@@ -183,6 +183,7 @@ class BaseButton extends StatelessWidget {
   }
 
   ButtonStyle? _secondaryStyle() {
+    final borderRadius = this.borderRadius;
     if (borderRadius == null && padding == null) {
       return null;
     }
@@ -192,12 +193,13 @@ class BaseButton extends StatelessWidget {
       shape: borderRadius == null
           ? null
           : WidgetStateProperty.all(
-              RoundedRectangleBorder(borderRadius: borderRadius!),
+              RoundedRectangleBorder(borderRadius: borderRadius),
             ),
     );
   }
 
   ButtonStyle _destructiveStyle(BuildContext context) {
+    final borderRadius = this.borderRadius;
     final s = context.designColors;
     final semanticColors = context.designSemanticColors;
     return ButtonStyle(
@@ -226,7 +228,7 @@ class BaseButton extends StatelessWidget {
       shape: borderRadius == null
           ? null
           : WidgetStateProperty.all(
-              RoundedRectangleBorder(borderRadius: borderRadius!),
+              RoundedRectangleBorder(borderRadius: borderRadius),
             ),
     );
   }
@@ -285,14 +287,14 @@ class _ButtonContent extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        if (leading != null) ...[
-          leading!,
+        if (leading case final leading?) ...[
+          leading,
           const SizedBox(width: DesignSpacingTokens.xs),
         ],
         Text(label),
-        if (trailing != null) ...[
+        if (trailing case final trailing?) ...[
           const SizedBox(width: DesignSpacingTokens.xs),
-          trailing!,
+          trailing,
         ],
       ],
     );

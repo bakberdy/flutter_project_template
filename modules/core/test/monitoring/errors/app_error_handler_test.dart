@@ -38,10 +38,10 @@ void main() {
     'records framework, platform, and zone errors with their source',
     () async {
       await AppErrorHandler.run(() async {
-        FlutterError.onError!(
+        FlutterError.onError?.call(
           FlutterErrorDetails(exception: StateError('framework')),
         );
-        PlatformDispatcher.instance.onError!(
+        PlatformDispatcher.instance.onError?.call(
           StateError('platform'),
           StackTrace.current,
         );

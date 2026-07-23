@@ -42,6 +42,7 @@ class BasePhoneNumberTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dialCode = this.dialCode;
     return CompositedTransformTarget(
       link: layerLink,
       child: Column(
@@ -61,7 +62,7 @@ class BasePhoneNumberTextField extends StatelessWidget {
               prefix: dialCode == null
                   ? const SizedBox.shrink()
                   : BaseCountryDialCodePrefixButton(
-                      dialCode: dialCode!,
+                      dialCode: dialCode,
                       onTap: onCountryCodeTap,
                     ),
               prefixStyle: context.designTextTheme.bodyLarge?.copyWith(),

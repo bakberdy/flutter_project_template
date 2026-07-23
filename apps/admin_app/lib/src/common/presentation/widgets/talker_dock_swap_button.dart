@@ -24,7 +24,6 @@ class TalkerDockSwapButton extends StatelessWidget {
         height: 30,
         child: Material(
           color: context.designColors.surfaceBright,
-          elevation: 0,
           shape: const CircleBorder(),
           child: IconButton(
             onPressed: onPressed,

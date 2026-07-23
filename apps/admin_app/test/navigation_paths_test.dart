@@ -27,7 +27,7 @@ void main() {
       final matches = router.matcher.match(path, includePrefixMatches: true);
 
       expect(matches, isNotNull);
-      expect(matches!.expand((match) => match.flattened).last.name, routeName);
+      expect(matches?.expand((match) => match.flattened).last.name, routeName);
     });
   }
 }

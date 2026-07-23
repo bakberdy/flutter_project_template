@@ -3,6 +3,39 @@ import 'package:core/core.dart';
 export 'package:core/core.dart' show AppConfigException;
 
 class AppConfig implements CoreAppConfig {
+  AppConfig._internal({
+    required this.baseUrl,
+    required this.environment,
+    required this.enableLogging,
+    required this.enableAnalytics,
+    required this.enableCrashlytics,
+    this.connectTimeout = const Duration(seconds: 30),
+    this.receiveTimeout = const Duration(seconds: 30),
+    this.sendTimeout = const Duration(seconds: 30),
+  });
+
+  factory AppConfig._fromEnvironment() => AppConfig._internal(
+    baseUrl: _readRequiredString('API_URL', _baseUrl),
+    environment: _readRequiredString('ENVIRONMENT', _environment),
+    enableLogging: _readRequiredBool('ENABLE_LOGGING', _enableLogging),
+    enableAnalytics: _readRequiredBool('ENABLE_ANALYTICS', _enableAnalytics),
+    enableCrashlytics: _readRequiredBool(
+      'ENABLE_CRASHLYTICS',
+      _enableCrashlytics,
+    ),
+    connectTimeout: _readRequiredDuration(
+      'CONNECT_TIMEOUT_SECONDS',
+      _connectTimeoutSeconds,
+    ),
+    receiveTimeout: _readRequiredDuration(
+      'RECEIVE_TIMEOUT_SECONDS',
+      _receiveTimeoutSeconds,
+    ),
+    sendTimeout: _readRequiredDuration(
+      'SEND_TIMEOUT_SECONDS',
+      _sendTimeoutSeconds,
+    ),
+  );
   static const String _baseUrl = String.fromEnvironment('API_URL');
   static const String _environment = String.fromEnvironment('ENVIRONMENT');
   static const String _enableLogging = String.fromEnvironment('ENABLE_LOGGING');
@@ -48,43 +81,7 @@ class AppConfig implements CoreAppConfig {
     return config;
   }
 
-  static Future<void> load() async => _instance = _fromEnvironment();
-
-  AppConfig._internal({
-    required this.baseUrl,
-    required this.environment,
-    required this.enableLogging,
-    required this.enableAnalytics,
-    required this.enableCrashlytics,
-    this.connectTimeout = const Duration(seconds: 30),
-    this.receiveTimeout = const Duration(seconds: 30),
-    this.sendTimeout = const Duration(seconds: 30),
-  });
-
-  static AppConfig _fromEnvironment() {
-    return AppConfig._internal(
-      baseUrl: _readRequiredString('API_URL', _baseUrl),
-      environment: _readRequiredString('ENVIRONMENT', _environment),
-      enableLogging: _readRequiredBool('ENABLE_LOGGING', _enableLogging),
-      enableAnalytics: _readRequiredBool('ENABLE_ANALYTICS', _enableAnalytics),
-      enableCrashlytics: _readRequiredBool(
-        'ENABLE_CRASHLYTICS',
-        _enableCrashlytics,
-      ),
-      connectTimeout: _readRequiredDuration(
-        'CONNECT_TIMEOUT_SECONDS',
-        _connectTimeoutSeconds,
-      ),
-      receiveTimeout: _readRequiredDuration(
-        'RECEIVE_TIMEOUT_SECONDS',
-        _receiveTimeoutSeconds,
-      ),
-      sendTimeout: _readRequiredDuration(
-        'SEND_TIMEOUT_SECONDS',
-        _sendTimeoutSeconds,
-      ),
-    );
-  }
+  static Future<void> load() async => _instance = AppConfig._fromEnvironment();
 
   static String _readRequiredString(String name, String value) {
     if (value.isEmpty) {

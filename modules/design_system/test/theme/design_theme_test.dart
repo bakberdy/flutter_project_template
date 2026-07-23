@@ -35,19 +35,31 @@ void main() {
   test('configures input decoration theme from the active color scheme', () {
     for (final theme in themes) {
       final inputTheme = theme.inputDecorationTheme;
+      final enabledBorder = switch (inputTheme.enabledBorder) {
+        final OutlineInputBorder border => border,
+        _ => throw StateError('Expected an enabled outline border'),
+      };
+      final focusedBorder = switch (inputTheme.focusedBorder) {
+        final OutlineInputBorder border => border,
+        _ => throw StateError('Expected a focused outline border'),
+      };
+      final errorBorder = switch (inputTheme.errorBorder) {
+        final OutlineInputBorder border => border,
+        _ => throw StateError('Expected an error outline border'),
+      };
 
       expect(inputTheme.filled, isTrue);
       expect(inputTheme.fillColor, theme.colorScheme.surface);
       expect(
-        (inputTheme.enabledBorder! as OutlineInputBorder).borderSide.color,
+        enabledBorder.borderSide.color,
         theme.colorScheme.outlineVariant,
       );
       expect(
-        (inputTheme.focusedBorder! as OutlineInputBorder).borderSide.color,
+        focusedBorder.borderSide.color,
         theme.colorScheme.primary,
       );
       expect(
-        (inputTheme.errorBorder! as OutlineInputBorder).borderSide.color,
+        errorBorder.borderSide.color,
         theme.colorScheme.error,
       );
     }
@@ -75,7 +87,10 @@ void main() {
 
   test('configures interactive component state colors', () {
     for (final theme in themes) {
-      final semanticColors = theme.extension<DesignSemanticColors>()!;
+      final semanticColors = switch (theme.extension<DesignSemanticColors>()) {
+        final DesignSemanticColors colors => colors,
+        _ => throw StateError('Expected semantic colors'),
+      };
       final disabled = {WidgetState.disabled};
       final selected = {WidgetState.selected};
 

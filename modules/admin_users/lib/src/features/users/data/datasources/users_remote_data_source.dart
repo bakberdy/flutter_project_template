@@ -62,7 +62,7 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
     }
     return PaginatedResponseModel.fromJson(
       data,
-      (json) => UserModel.fromJson(json! as Map<String, dynamic>),
+      (json) => UserModel.fromJson(_requireJsonMap(json)),
     );
   }
 
@@ -127,5 +127,12 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
       throw const FormatException('Missing user response data');
     }
     return data;
+  }
+
+  Map<String, dynamic> _requireJsonMap(Object? json) {
+    if (json case final Map<String, dynamic> value) {
+      return value;
+    }
+    throw const FormatException('Invalid user response data');
   }
 }

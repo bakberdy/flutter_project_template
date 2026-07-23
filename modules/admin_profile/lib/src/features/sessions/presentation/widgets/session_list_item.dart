@@ -35,7 +35,7 @@ class SessionListItem extends StatelessWidget {
                   ? Radius.zero
                   : const Radius.circular(DesignRadiusTokens.lg),
             ),
-            onPressed: onRevoke == null ? null : (_) => onRevoke!(),
+            onPressed: onRevoke == null ? null : (_) => onRevoke?.call(),
             backgroundColor: context.designColors.error,
             foregroundColor: context.designColors.onError,
             icon: Icons.cancel_outlined,

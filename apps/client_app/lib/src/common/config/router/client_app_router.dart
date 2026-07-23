@@ -5,8 +5,8 @@ import 'package:client_app/src/common/presentation/screens/root_navigation_scree
 import 'package:client_app/src/common/presentation/screens/splash_screen.dart';
 import 'package:client_app/src/common/presentation/screens/user_profile_screen.dart';
 import 'package:client_auth/client_auth.dart';
-import 'package:client_profile/client_profile.dart';
 import 'package:client_preferences/client_preferences.dart';
+import 'package:client_profile/client_profile.dart';
 
 part 'client_app_router.gr.dart';
 
@@ -30,7 +30,7 @@ class ClientAppRouter extends RootStackRouter {
               page: ClientHomeRoute.page,
               path: '',
               initial: true,
-              meta: {'showBottomNav': true},
+              meta: const {'showBottomNav': true},
             ),
             AutoRoute(
               page: ProfileTabShellRoute.page,
@@ -40,7 +40,7 @@ class ClientAppRouter extends RootStackRouter {
                   page: UserProfileRoute.page,
                   path: '',
                   initial: true,
-                  meta: {'showBottomNav': true},
+                  meta: const {'showBottomNav': true},
                 ),
                 AutoRoute(page: UserProfileEditRoute.page, path: 'edit'),
                 ...clientPreferencesRoutes,

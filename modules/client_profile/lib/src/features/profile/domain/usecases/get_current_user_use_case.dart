@@ -21,10 +21,11 @@ class GetCurrentUserUseCase extends UseCase<User, GetCurrentUserParams> {
       _repository.getCurrentUser(cancelToken: params.cancelToken),
       'get_current_user',
     );
-    return params.timeout == null
+    final timeout = params.timeout;
+    return timeout == null
         ? result
         : result.timeout(
-            params.timeout!,
+            timeout,
             onTimeout: () => const Left(
               TimeoutFailure(
                 source: 'GetCurrentUserUseCase.timeout',

@@ -1,3 +1,4 @@
+import 'package:admin_app/di/di.config.dart';
 import 'package:admin_app/src/common/config/app_config.dart';
 import 'package:admin_auth/admin_auth.dart';
 import 'package:admin_preferences/admin_preferences.dart';
@@ -7,8 +8,6 @@ import 'package:core/core.dart'
     show ApiClientFactory, ApiRequestHeadersProvider, CoreAppConfig, sl;
 import 'package:core/di/injection.module.dart';
 import 'package:injectable/injectable.dart';
-
-import 'di.config.dart';
 
 @InjectableInit(
   externalPackageModulesBefore: [

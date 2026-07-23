@@ -32,7 +32,10 @@ class BaseDialog {
           ),
           constraints: width == null && height == null
               ? null
-              : BoxConstraints.tightFor(width: width, height: height),
+              : BoxConstraints.tightFor(
+                  width: width,
+                  height: height,
+                ),
           title: title == null
               ? null
               : Row(
@@ -84,6 +87,7 @@ class BaseDialog {
             },
             child: Text(primaryLabel),
           );
+
     final secondary = secondaryLabel == null
         ? null
         : TextButton(
@@ -94,15 +98,14 @@ class BaseDialog {
             child: Text(secondaryLabel),
           );
 
-    if (primary == null && secondary == null) {
-      return const [];
-    }
-    if (primary == null) {
-      return [secondary!];
-    }
-    if (secondary == null) {
-      return [primary];
-    }
-    return primaryFirst ? [primary, secondary] : [secondary, primary];
+    return primaryFirst
+        ? [
+            ?primary,
+            ?secondary,
+          ]
+        : [
+            ?secondary,
+            ?primary,
+          ];
   }
 }

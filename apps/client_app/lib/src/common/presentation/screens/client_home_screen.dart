@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:client_app/src/common/client_app_localization_x.dart';
 import 'package:client_app/src/common/presentation/providers/scroll_to_top_provider.dart';
@@ -42,10 +44,12 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
     if (!_scrollController.hasClients) {
       return;
     }
-    _scrollController.animateTo(
-      0,
-      duration: const Duration(milliseconds: 250),
-      curve: Curves.easeOut,
+    unawaited(
+      _scrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 250),
+        curve: Curves.easeOut,
+      ),
     );
   }
 }

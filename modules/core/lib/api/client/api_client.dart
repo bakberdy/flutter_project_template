@@ -175,14 +175,15 @@ class ApiClient {
     return FormData.fromMap(
       data.toMap().map((key, value) {
         if (value is ApiMultipartFile) {
+          final contentType = value.contentType;
           return MapEntry(
             key,
             MultipartFile.fromBytes(
               value.bytes,
               filename: value.filename,
-              contentType: value.contentType == null
+              contentType: contentType == null
                   ? null
-                  : DioMediaType.parse(value.contentType!),
+                  : DioMediaType.parse(contentType),
             ),
           );
         }

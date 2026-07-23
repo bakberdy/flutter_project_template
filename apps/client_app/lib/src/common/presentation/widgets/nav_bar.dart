@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({
-    super.key,
     required this.initialPage,
     required this.onPageChanged,
     required this.items,
+    super.key,
     this.isSliding = true,
     this.itemWidth = 80,
     this.sliderColor,
@@ -145,14 +145,13 @@ class _NavBarState extends State<NavBar> {
                     Row(
                       spacing: spacing,
                       mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: widget.items
                           .map(
                             (e) => NavBarEntry(
                               icon: e.icon,
                               width: widget.itemWidth,
                               onTap: () {
-                                final int newPage = widget.items.indexOf(e);
+                                final newPage = widget.items.indexOf(e);
                                 if (_currentPage != newPage) {
                                   setState(() => _currentPage = newPage);
                                 }

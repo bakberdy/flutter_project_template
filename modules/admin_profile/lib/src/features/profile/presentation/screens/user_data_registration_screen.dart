@@ -63,10 +63,11 @@ class _UserDataRegistrationScreenState extends State<UserDataRegistrationScreen>
           ErrorStateStatus(:final failure) => failure,
           _ => null,
         };
+        final fieldErrors = failure?.details?.fieldErrors;
         if (failure != null &&
             failure.details?.type == FailureType.inline &&
-            failure.details?.fieldErrors != null &&
-            failure.details!.fieldErrors!.isNotEmpty) {
+            fieldErrors != null &&
+            fieldErrors.isNotEmpty) {
           return;
         }
         switch (state.saveStatus) {

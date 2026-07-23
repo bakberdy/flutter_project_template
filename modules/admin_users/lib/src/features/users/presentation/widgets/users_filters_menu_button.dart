@@ -339,10 +339,19 @@ class _CreatedAtRangeTile extends StatelessWidget {
     if (from == null && to == null) {
       return allLabel;
     }
+
     final format = DateFormat.yMd(Localizations.localeOf(context).toString());
-    final start = from == null ? '' : format.format(from!.toLocal());
-    final end = to == null ? '' : format.format(to!.toLocal());
-    return '$start - $end';
+
+    return switch ((from, to)) {
+      (final from?, final to?) =>
+        '${format.format(from.toLocal())} - ${format.format(to.toLocal())}',
+
+      (final from?, null) => '${format.format(from.toLocal())} - ',
+
+      (null, final to?) => ' - ${format.format(to.toLocal())}',
+
+      (null, null) => allLabel,
+    };
   }
 
   DateTime _startOfDay(DateTime value) =>

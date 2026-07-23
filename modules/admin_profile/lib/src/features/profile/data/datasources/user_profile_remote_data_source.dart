@@ -41,7 +41,7 @@ class UserProfileRemoteDataSourceImpl implements UserProfileRemoteDataSource {
       AdminProfileApiEndpoints.me,
       cancelToken: cancelToken,
     );
-    return UserModel.fromJson(response.data!);
+    return UserModel.fromJson(_requireData(response.data));
   }
 
   @override
@@ -49,7 +49,7 @@ class UserProfileRemoteDataSourceImpl implements UserProfileRemoteDataSource {
     final response = await _apiClient.get<Map<String, dynamic>>(
       AdminProfileApiEndpoints.profile,
     );
-    return UserProfileModel.fromJson(response.data!);
+    return UserProfileModel.fromJson(_requireData(response.data));
   }
 
   @override
@@ -61,7 +61,7 @@ class UserProfileRemoteDataSourceImpl implements UserProfileRemoteDataSource {
       AdminProfileApiEndpoints.profile,
       data: {'full_name': fullName, 'phone_number': ?phoneNumber?.toJson()},
     );
-    return UserProfileModel.fromJson(response.data!);
+    return UserProfileModel.fromJson(_requireData(response.data));
   }
 
   @override
@@ -73,7 +73,7 @@ class UserProfileRemoteDataSourceImpl implements UserProfileRemoteDataSource {
       AdminProfileApiEndpoints.profile,
       data: {'full_name': ?fullName, 'phone_number': ?phoneNumber?.toJson()},
     );
-    return UserProfileModel.fromJson(response.data!);
+    return UserProfileModel.fromJson(_requireData(response.data));
   }
 
   @override
@@ -95,7 +95,7 @@ class UserProfileRemoteDataSourceImpl implements UserProfileRemoteDataSource {
       options: const ApiOptions(contentType: 'multipart/form-data'),
       onSendProgress: onSendProgress,
     );
-    return UserProfileModel.fromJson(response.data!);
+    return UserProfileModel.fromJson(_requireData(response.data));
   }
 
   @override
@@ -103,7 +103,7 @@ class UserProfileRemoteDataSourceImpl implements UserProfileRemoteDataSource {
     final response = await _apiClient.delete<Map<String, dynamic>>(
       AdminProfileApiEndpoints.avatar,
     );
-    return UserProfileModel.fromJson(response.data!);
+    return UserProfileModel.fromJson(_requireData(response.data));
   }
 
   @override
@@ -111,7 +111,7 @@ class UserProfileRemoteDataSourceImpl implements UserProfileRemoteDataSource {
     final response = await _apiClient.post<Map<String, dynamic>>(
       AdminProfileApiEndpoints.accountDeletion,
     );
-    return UserModel.fromJson(response.data!);
+    return UserModel.fromJson(_requireData(response.data));
   }
 
   @override
@@ -120,4 +120,7 @@ class UserProfileRemoteDataSourceImpl implements UserProfileRemoteDataSource {
       AdminProfileApiEndpoints.logOut,
     );
   }
+
+  Map<String, dynamic> _requireData(Map<String, dynamic>? data) =>
+      data ?? (throw const FormatException('Missing user response data'));
 }

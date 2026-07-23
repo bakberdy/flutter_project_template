@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:admin_app/app/theme/app_theme_scope.dart';
 import 'package:admin_app/src/common/admin_app_localization_x.dart';
 import 'package:admin_app/src/common/config/localization/app_localization_config.dart';
@@ -6,10 +8,10 @@ import 'package:admin_app/src/common/presentation/widgets/admin_debug_overlay.da
 import 'package:admin_preferences/admin_preferences.dart';
 import 'package:admin_profile/admin_profile.dart';
 import 'package:core/core.dart';
-import 'package:shared/shared.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared/shared.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
 class App extends StatefulWidget {
@@ -45,9 +47,9 @@ class _AppState extends State<App> {
   void dispose() {
     _apiClientFactory.unregisterUnauthorizedHandler(_unauthorizedHandler);
     _showTalkerDock.dispose();
-    _navigationBloc.close();
-    _userBloc.close();
-    _localeBloc.close();
+    unawaited(_navigationBloc.close());
+    unawaited(_userBloc.close());
+    unawaited(_localeBloc.close());
     _appRouter.dispose();
     super.dispose();
   }
@@ -94,9 +96,10 @@ class _AppState extends State<App> {
                 localizationsDelegates:
                     AppLocalizationConfig.appLocalizationsDelegates,
                 supportedLocales: AppLocalizationConfig.supportedLocales,
-                locale: localeState.languageCode == null
-                    ? null
-                    : Locale(localeState.languageCode!),
+                locale: switch (localeState.languageCode) {
+                  final String languageCode => Locale(languageCode),
+                  null => null,
+                },
                 localeResolutionCallback: (deviceLocale, supportedLocales) =>
                     resolveSupportedLocale(
                       deviceLocale,

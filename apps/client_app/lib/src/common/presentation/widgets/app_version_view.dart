@@ -1,5 +1,5 @@
-import 'package:design_system/design_system.dart';
 import 'package:client_app/src/common/client_app_localization_x.dart';
+import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
 class AppVersionView extends StatelessWidget {
@@ -23,6 +23,8 @@ class AppVersionView extends StatelessWidget {
     final textStyle = context.designTextTheme.bodyMedium;
     final version = this.version;
     final buildNumber = this.buildNumber;
+    final appName = this.appName;
+    final packageName = this.packageName;
     return SliverFillRemaining(
       hasScrollBody: false,
       child: Column(
@@ -38,12 +40,12 @@ class AppVersionView extends StatelessWidget {
             const SizedBox(height: DesignSpacingTokens.sm),
             if (appName != null)
               SelectableText(
-                context.l10n.appNameValue(appName!),
+                context.l10n.appNameValue(appName),
                 style: textStyle,
               ),
             if (packageName != null)
               SelectableText(
-                context.l10n.appPackageNameValue(packageName!),
+                context.l10n.appPackageNameValue(packageName),
                 style: textStyle,
               ),
             if (buildNumber != null)

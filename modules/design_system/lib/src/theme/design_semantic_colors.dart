@@ -113,48 +113,48 @@ class DesignSemanticColors extends ThemeExtension<DesignSemanticColors> {
       return this;
     }
     return DesignSemanticColors(
-      success: Color.lerp(success, other.success, t)!,
-      onSuccess: Color.lerp(onSuccess, other.onSuccess, t)!,
-      successContainer: Color.lerp(
+      success: _lerpColor(success, other.success, t),
+      onSuccess: _lerpColor(onSuccess, other.onSuccess, t),
+      successContainer: _lerpColor(
         successContainer,
         other.successContainer,
         t,
-      )!,
-      onSuccessContainer: Color.lerp(
+      ),
+      onSuccessContainer: _lerpColor(
         onSuccessContainer,
         other.onSuccessContainer,
         t,
-      )!,
-      warning: Color.lerp(warning, other.warning, t)!,
-      onWarning: Color.lerp(onWarning, other.onWarning, t)!,
-      warningContainer: Color.lerp(
+      ),
+      warning: _lerpColor(warning, other.warning, t),
+      onWarning: _lerpColor(onWarning, other.onWarning, t),
+      warningContainer: _lerpColor(
         warningContainer,
         other.warningContainer,
         t,
-      )!,
-      onWarningContainer: Color.lerp(
+      ),
+      onWarningContainer: _lerpColor(
         onWarningContainer,
         other.onWarningContainer,
         t,
-      )!,
-      info: Color.lerp(info, other.info, t)!,
-      onInfo: Color.lerp(onInfo, other.onInfo, t)!,
-      infoContainer: Color.lerp(infoContainer, other.infoContainer, t)!,
-      onInfoContainer: Color.lerp(onInfoContainer, other.onInfoContainer, t)!,
-      destructive: Color.lerp(destructive, other.destructive, t)!,
-      onDestructive: Color.lerp(onDestructive, other.onDestructive, t)!,
-      destructiveContainer: Color.lerp(
+      ),
+      info: _lerpColor(info, other.info, t),
+      onInfo: _lerpColor(onInfo, other.onInfo, t),
+      infoContainer: _lerpColor(infoContainer, other.infoContainer, t),
+      onInfoContainer: _lerpColor(onInfoContainer, other.onInfoContainer, t),
+      destructive: _lerpColor(destructive, other.destructive, t),
+      onDestructive: _lerpColor(onDestructive, other.onDestructive, t),
+      destructiveContainer: _lerpColor(
         destructiveContainer,
         other.destructiveContainer,
         t,
-      )!,
-      onDestructiveContainer: Color.lerp(
+      ),
+      onDestructiveContainer: _lerpColor(
         onDestructiveContainer,
         other.onDestructiveContainer,
         t,
-      )!,
-      disabled: Color.lerp(disabled, other.disabled, t)!,
-      onDisabled: Color.lerp(onDisabled, other.onDisabled, t)!,
+      ),
+      disabled: _lerpColor(disabled, other.disabled, t),
+      onDisabled: _lerpColor(onDisabled, other.onDisabled, t),
     );
   }
 
@@ -177,3 +177,6 @@ class DesignSemanticColors extends ThemeExtension<DesignSemanticColors> {
   final Color disabled;
   final Color onDisabled;
 }
+
+Color _lerpColor(Color begin, Color end, double t) =>
+    Color.lerp(begin, end, t) ?? end;

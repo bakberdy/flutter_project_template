@@ -1,12 +1,12 @@
-import 'package:design_system/design_system.dart';
 import 'package:client_app/src/common/client_app_localization_x.dart';
+import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
 class AppSupportItemsList extends StatelessWidget {
   const AppSupportItemsList({
-    super.key,
     required this.onFAQTap,
     required this.onSupportTap,
+    super.key,
   });
   final VoidCallback onFAQTap;
   final VoidCallback onSupportTap;

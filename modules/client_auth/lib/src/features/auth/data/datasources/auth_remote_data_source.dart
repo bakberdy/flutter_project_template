@@ -23,7 +23,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       ClientAuthApiEndpoints.login,
       data: request.toJson(),
     );
-    return AuthLoginResponseModel.fromJson(response.data!);
+    return AuthLoginResponseModel.fromJson(_requireData(response.data));
   }
 
   @override
@@ -32,7 +32,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       ClientAuthApiEndpoints.verifyEmail,
       data: request.toJson(),
     );
-    return AuthVerifyResponseModel.fromJson(response.data!);
+    return AuthVerifyResponseModel.fromJson(_requireData(response.data));
   }
 
   @override
@@ -44,6 +44,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         headers: {_authorizationHeader: '$_bearerPrefix $refreshToken'},
       ),
     );
-    return AuthVerifyResponseModel.fromJson(response.data!);
+    return AuthVerifyResponseModel.fromJson(_requireData(response.data));
   }
+
+  Map<String, dynamic> _requireData(Map<String, dynamic>? data) =>
+      data ?? (throw const FormatException('Missing auth response data'));
 }

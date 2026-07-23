@@ -1,13 +1,13 @@
-import 'package:design_system/design_system.dart';
 import 'package:client_app/src/common/client_app_localization_x.dart';
+import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
 class UserPreferencesItemsList extends StatelessWidget {
   const UserPreferencesItemsList({
-    super.key,
     required this.onNotificationsTap,
     required this.onAppearanceTap,
     required this.onLanguageTap,
+    super.key,
   });
   final VoidCallback onNotificationsTap;
   final VoidCallback onAppearanceTap;

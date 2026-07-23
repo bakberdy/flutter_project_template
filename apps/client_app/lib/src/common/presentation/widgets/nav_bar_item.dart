@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class NavBarItem {
-  const NavBarItem({this.label, required this.icon});
+  const NavBarItem({required this.icon, this.label});
 
   final String? label;
   final Widget icon;

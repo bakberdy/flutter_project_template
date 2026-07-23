@@ -53,7 +53,9 @@ class UserAvatar extends StatelessWidget {
                 ),
                 child: _hasAvatar
                     ? BaseCachedNetworkImage(
-                        imageUrl: avatarUrl!,
+                        imageUrl:
+                            avatarUrl ??
+                            (throw StateError('Avatar URL is missing')),
                         baseUrl: baseUrl,
                         fit: BoxFit.cover,
                         placeholder: (context, url) =>

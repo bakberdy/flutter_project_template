@@ -41,9 +41,9 @@ class SessionsRemoteDataSourceImpl implements SessionsRemoteDataSource {
       cancelToken: cancelToken,
     );
     return PaginatedResponseModel<UserSession>.fromJson(
-      response.data!,
-      (Object? json) =>
-          UserSessionModel.fromJson(json! as Map<String, dynamic>),
+      response.data ??
+          (throw const FormatException('Missing sessions response data')),
+      (Object? json) => UserSessionModel.fromJson(_requireJsonMap(json)),
     );
   }
 
@@ -56,4 +56,11 @@ class SessionsRemoteDataSourceImpl implements SessionsRemoteDataSource {
   Future<void> revokeAllSessions() async {
     await _apiClient.delete<void>(ClientProfileApiEndpoints.sessions);
   }
+}
+
+Map<String, dynamic> _requireJsonMap(Object? json) {
+  if (json case final Map<String, dynamic> value) {
+    return value;
+  }
+  throw const FormatException('Invalid session response data');
 }

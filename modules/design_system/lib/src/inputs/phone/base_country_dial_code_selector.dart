@@ -39,7 +39,7 @@ class BaseCountryDialCodeSelectorOverlay {
   void hide() {
     final entry = _entry;
     if (entry?.mounted ?? false) {
-      entry!.remove();
+      entry?.remove();
     }
     _entry = null;
   }

@@ -23,12 +23,14 @@ class BottomSheetList extends StatefulWidget {
 class _BottomSheetListState extends State<BottomSheetList> {
   @override
   Widget build(BuildContext context) {
+    final title = widget.title;
+    final footer = widget.footer;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         const SizedBox(height: 20),
-        if (widget.title != null) ...[
-          Text(widget.title!, style: context.designTextTheme.titleMedium),
+        if (title != null) ...[
+          Text(title, style: context.designTextTheme.titleMedium),
           const SizedBox(height: 10),
         ],
         ListView.separated(
@@ -40,12 +42,13 @@ class _BottomSheetListState extends State<BottomSheetList> {
           separatorBuilder: (context, index) => widget.divider,
           itemBuilder: (context, index) {
             final item = widget.items[index];
+            final onTap = item.onTap;
             return ListTile(
-              onTap: item.onTap == null
+              onTap: onTap == null
                   ? null
                   : () {
                       Navigator.of(context).pop();
-                      item.onTap!();
+                      onTap();
                     },
               leading: item.leading,
               trailing: item.trailing,
@@ -53,7 +56,7 @@ class _BottomSheetListState extends State<BottomSheetList> {
             );
           },
         ),
-        if (widget.footer != null) widget.footer!,
+        ?footer,
       ],
     );
   }

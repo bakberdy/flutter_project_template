@@ -11,12 +11,13 @@ void main() {
   });
 
   test('declares email and OTP child routes from module paths', () {
-    final children = adminAuthRoutes.single.children!;
+    final children = adminAuthRoutes.single.children;
 
+    expect(children, isNotNull);
     expect(children, hasLength(2));
-    expect(children.first.path, AdminAuthNavigationPaths.email);
-    expect(children.first.page.name, AdminSignInRoute.name);
-    expect(children.last.path, AdminAuthNavigationPaths.otp);
-    expect(children.last.page.name, AdminOtpRoute.name);
+    expect(children?.first.path, AdminAuthNavigationPaths.email);
+    expect(children?.first.page.name, AdminSignInRoute.name);
+    expect(children?.last.path, AdminAuthNavigationPaths.otp);
+    expect(children?.last.page.name, AdminOtpRoute.name);
   });
 }

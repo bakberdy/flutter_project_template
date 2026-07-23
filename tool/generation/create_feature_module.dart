@@ -32,9 +32,10 @@ Future<void> main(List<String> arguments) async {
   final featureName = options.featureName ?? moduleName;
   _validateName(featureName, 'feature_name');
 
-  final repositoryRoot = options.repositoryRoot == null
+  final repositoryRootPath = options.repositoryRoot;
+  final repositoryRoot = repositoryRootPath == null
       ? _findRepositoryRoot()
-      : _resolveRepositoryRoot(options.repositoryRoot!);
+      : _resolveRepositoryRoot(repositoryRootPath);
   _validateRepositoryRoot(repositoryRoot);
 
   final moduleDirectory = Directory.fromUri(

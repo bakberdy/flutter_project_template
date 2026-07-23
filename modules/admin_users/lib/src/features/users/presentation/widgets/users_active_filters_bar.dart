@@ -80,12 +80,12 @@ class UsersActiveFiltersBar extends StatelessWidget {
 
   String _dateRangeLabel(BuildContext context, UsersQuery query) {
     final format = DateFormat.yMd(Localizations.localeOf(context).toString());
-    final start = query.createdAtFrom == null
+    final createdAtFrom = query.createdAtFrom;
+    final createdAtTo = query.createdAtTo;
+    final start = createdAtFrom == null
         ? ''
-        : format.format(query.createdAtFrom!.toLocal());
-    final end = query.createdAtTo == null
-        ? ''
-        : format.format(query.createdAtTo!.toLocal());
+        : format.format(createdAtFrom.toLocal());
+    final end = createdAtTo == null ? '' : format.format(createdAtTo.toLocal());
     return '$start - $end';
   }
 }

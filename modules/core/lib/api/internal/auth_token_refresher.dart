@@ -27,12 +27,13 @@ class AuthTokenRefresher {
       ),
     );
 
-    if (response.statusCode != 200 || response.data == null) {
+    final data = response.data;
+    if (response.statusCode != 200 || data == null) {
       throw StateError('Token refresh failed');
     }
 
-    final newAccessToken = response.data!['access_token'] as String?;
-    final newRefreshToken = response.data!['refresh_token'] as String?;
+    final newAccessToken = data['access_token'] as String?;
+    final newRefreshToken = data['refresh_token'] as String?;
     if (newAccessToken == null) {
       throw StateError('Missing access_token in response');
     }

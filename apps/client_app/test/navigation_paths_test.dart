@@ -1,7 +1,7 @@
 import 'package:client_app/src/common/config/router/client_app_navigation_paths.dart';
 import 'package:client_app/src/common/config/router/client_app_router.dart';
-import 'package:client_profile/client_profile.dart';
 import 'package:client_preferences/client_preferences.dart';
+import 'package:client_profile/client_profile.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -25,7 +25,7 @@ void main() {
       final matches = router.matcher.match(path, includePrefixMatches: true);
 
       expect(matches, isNotNull);
-      expect(matches!.expand((match) => match.flattened).last.name, routeName);
+      expect(matches?.expand((match) => match.flattened).last.name, routeName);
     });
   }
 }

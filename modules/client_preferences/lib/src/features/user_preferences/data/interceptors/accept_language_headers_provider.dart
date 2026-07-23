@@ -20,11 +20,12 @@ class AcceptLanguageHeadersProvider implements ApiRequestHeadersProvider {
       key: ClientPreferencesConstants.localeStorageKey,
     );
     final normalized = stored?.trim().toLowerCase();
-    final isSupported = ClientPreferencesConstants.supportedLocales.any(
-      (locale) => locale.languageCode == normalized,
-    );
-    return isSupported
-        ? normalized!
-        : ClientPreferencesConstants.defaultLocale.languageCode;
+    if (normalized != null &&
+        ClientPreferencesConstants.supportedLocales.any(
+          (locale) => locale.languageCode == normalized,
+        )) {
+      return normalized;
+    }
+    return ClientPreferencesConstants.defaultLocale.languageCode;
   }
 }

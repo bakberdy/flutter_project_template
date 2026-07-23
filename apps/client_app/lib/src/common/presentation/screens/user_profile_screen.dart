@@ -3,13 +3,13 @@ import 'package:client_app/src/common/client_app_localization_x.dart';
 import 'package:client_app/src/common/presentation/widgets/app_support_items_list.dart';
 import 'package:client_app/src/common/presentation/widgets/app_version_view.dart';
 import 'package:client_app/src/common/presentation/widgets/user_preferences_items_list.dart';
-import 'package:client_profile/client_profile.dart';
 import 'package:client_preferences/client_preferences.dart';
+import 'package:client_profile/client_profile.dart';
 import 'package:core/core.dart';
-import 'package:shared/shared.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared/shared.dart';
 
 @RoutePage()
 class UserProfileScreen extends StatelessWidget with UiFailureHandlerMixin {
@@ -117,13 +117,11 @@ class UserProfileScreen extends StatelessWidget with UiFailureHandlerMixin {
     switch (state.avatarStatus) {
       case ErrorStateStatus(:final failure):
         await handleFailure(failure, context);
-        break;
       case SuccessStateStatus():
         final message = state.avatarAction == UserProfileAvatarAction.remove
             ? context.l10n.profileAvatarRemovedSuccessMessage
             : context.l10n.profileAvatarUpdatedSuccessMessage;
         BaseSnackbar.success(context, message: message);
-        break;
       default:
         return;
     }

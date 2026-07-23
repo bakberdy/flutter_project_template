@@ -36,7 +36,7 @@ class UserPreferencesRemoteDataSourceImpl
     final response = await _apiClient.get<Map<String, dynamic>>(
       ClientPreferencesApiEndpoints.myPreferences,
     );
-    return UserPreferencesModel.fromJson(response.data!);
+    return UserPreferencesModel.fromJson(_requireData(response.data));
   }
 
   @override
@@ -57,7 +57,7 @@ class UserPreferencesRemoteDataSourceImpl
         'marketing_notifications_enabled': marketingNotificationsEnabled,
       },
     );
-    return UserPreferencesModel.fromJson(response.data!);
+    return UserPreferencesModel.fromJson(_requireData(response.data));
   }
 
   @override
@@ -78,6 +78,10 @@ class UserPreferencesRemoteDataSourceImpl
         'marketing_notifications_enabled': ?marketingNotificationsEnabled,
       },
     );
-    return UserPreferencesModel.fromJson(response.data!);
+    return UserPreferencesModel.fromJson(_requireData(response.data));
   }
+
+  Map<String, dynamic> _requireData(Map<String, dynamic>? data) =>
+      data ??
+      (throw const FormatException('Missing user preferences response data'));
 }

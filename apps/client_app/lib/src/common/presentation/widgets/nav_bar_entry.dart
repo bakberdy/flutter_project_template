@@ -78,6 +78,7 @@ class _NavBarEntryState extends State<NavBarEntry>
 
   @override
   Widget build(BuildContext context) {
+    final label = widget.label;
     final bottomTheme = context.designBottomNavigationBarTheme;
     final showLabel =
         widget.label != null &&
@@ -90,7 +91,7 @@ class _NavBarEntryState extends State<NavBarEntry>
       onTapDown: (_) => _tapController.forward(from: 0),
       onTapUp: (_) async {
         await _tapController.reverse();
-        if (bottomTheme.enableFeedback == true) {
+        if (bottomTheme.enableFeedback ?? false) {
           await HapticFeedback.lightImpact();
         }
         widget.onTap();
@@ -117,13 +118,13 @@ class _NavBarEntryState extends State<NavBarEntry>
                 ),
                 child: widget.icon,
               ),
-              if (showLabel)
+              if (showLabel && label != null)
                 AnimatedBuilder(
                   animation: _tapController,
                   builder: (context, child) =>
                       Transform.scale(scale: _tapScale.value, child: child),
                   child: Text(
-                    widget.label!,
+                    label,
                     style: widget.isSelected
                         ? bottomTheme.selectedLabelStyle
                         : bottomTheme.unselectedLabelStyle,

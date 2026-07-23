@@ -12,5 +12,7 @@ Analyzer lints backed by the workspace `architecture.yaml`.
 - `class_name_matches_file_name` requires every public class to match its
   `snake_case.dart` file name. Analytics `*_events.dart` files and libraries
   using `part` or `part of` are excluded.
+- `avoid_force_unwrap` prevents postfix null assertions (`value!`) so nullable
+  values must be handled explicitly.
 
 The workspace enables these rules in the root `analysis_options.yaml`.

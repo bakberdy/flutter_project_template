@@ -116,6 +116,7 @@ class CollapsedTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final fullName = this.fullName;
     return Align(
       alignment: Alignment.bottomCenter,
       child: Padding(
@@ -125,7 +126,7 @@ class CollapsedTitle extends StatelessWidget {
             : SizedBox(
                 width: 200,
                 child: Text(
-                  fullName!,
+                  fullName,
                   style: context.designTextTheme.titleLarge?.copyWith(
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -158,6 +159,9 @@ class ExpandedHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final fullName = this.fullName;
+    final email = this.email;
+    final phoneNumber = this.phoneNumber;
     return Padding(
       padding: const EdgeInsets.only(top: 70, bottom: 12),
       child: FittedBox(
@@ -178,7 +182,7 @@ class ExpandedHeader extends StatelessWidget {
               ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 200),
                 child: Text(
-                  fullName!,
+                  fullName,
                   style: context.designTextTheme.titleLarge?.copyWith(
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -188,7 +192,7 @@ class ExpandedHeader extends StatelessWidget {
             if (email != null) ...[
               const SizedBox(height: 4),
               Text(
-                email!,
+                email,
                 style: context.designTextTheme.bodyMedium?.copyWith(
                   color: context.designColors.onSurfaceVariant,
                 ),
@@ -197,7 +201,7 @@ class ExpandedHeader extends StatelessWidget {
             if (phoneNumber != null) ...[
               const SizedBox(height: 4),
               Text(
-                phoneNumber!,
+                phoneNumber,
                 style: context.designTextTheme.bodyMedium?.copyWith(
                   color: context.designColors.onSurfaceVariant,
                 ),

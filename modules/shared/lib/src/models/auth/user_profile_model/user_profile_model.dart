@@ -16,17 +16,20 @@ class UserProfileModel extends UserProfile {
     super.completedAt,
   }) : super(phoneNumber: phoneNumber);
 
-  factory UserProfileModel.fromEntity(UserProfile profile) => UserProfileModel(
-    userId: profile.userId,
-    fullName: profile.fullName,
-    phoneNumber: profile.phoneNumber == null
-        ? null
-        : UserPhoneNumberModel.fromEntity(profile.phoneNumber!),
-    avatarUrl: profile.avatarUrl,
-    createdAt: profile.createdAt,
-    updatedAt: profile.updatedAt,
-    completedAt: profile.completedAt,
-  );
+  factory UserProfileModel.fromEntity(UserProfile profile) {
+    final phoneNumber = profile.phoneNumber;
+    return UserProfileModel(
+      userId: profile.userId,
+      fullName: profile.fullName,
+      phoneNumber: phoneNumber == null
+          ? null
+          : UserPhoneNumberModel.fromEntity(phoneNumber),
+      avatarUrl: profile.avatarUrl,
+      createdAt: profile.createdAt,
+      updatedAt: profile.updatedAt,
+      completedAt: profile.completedAt,
+    );
+  }
 
   factory UserProfileModel.fromJson(Map<String, dynamic> json) =>
       _$UserProfileModelFromJson(json);

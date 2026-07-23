@@ -7,10 +7,9 @@ typedef AppThemeScopeBuilder =
     Widget Function(BuildContext context, ThemeMode themeMode, Widget? child);
 
 class AppThemeScope extends StatelessWidget {
+  const AppThemeScope({required this.builder, this.child, super.key});
   final AppThemeScopeBuilder builder;
   final Widget? child;
-
-  const AppThemeScope({required this.builder, this.child, super.key});
 
   @override
   Widget build(BuildContext context) => BlocProvider<ThemeBloc>(
