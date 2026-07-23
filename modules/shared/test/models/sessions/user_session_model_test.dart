@@ -27,6 +27,8 @@ void main() {
     final session = UserSessionModel.fromJson(json);
 
     expect(session.device.clientDeviceId, 'client-device-1');
+    expect(session.device.hasNotificationToken, isTrue);
+    expect(session.device.pushToken, isNull);
     expect(session.lastActive, DateTime.utc(2026, 7, 23, 9));
     expect(session.toJson(), json);
   });
@@ -40,7 +42,7 @@ void main() {
       expiresAt: DateTime.utc(2026, 8, 23, 8),
       lastActive: DateTime.utc(2026, 7, 23, 9),
       isRevoked: false,
-      device: const UserSessionDevice(
+      device: const UserDevice(
         id: 'device-1',
         clientDeviceId: 'client-device-1',
         os: 'iOS',
@@ -54,7 +56,7 @@ void main() {
 
     final model = UserSessionModel.fromEntity(entity);
 
-    expect(model.device, isA<UserSessionDeviceModel>());
+    expect(model.device, isA<UserDeviceModel>());
     expect(model.toJson(), json);
   });
 }

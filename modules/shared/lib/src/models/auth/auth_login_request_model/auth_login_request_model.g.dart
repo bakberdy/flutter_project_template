@@ -12,7 +12,7 @@ AuthLoginRequestModel _$AuthLoginRequestModelFromJson(
   Map<String, dynamic> json,
 ) => AuthLoginRequestModel(
   email: json['email'] as String,
-  device: AuthDeviceInfoModel.fromJson(json['device'] as Map<String, dynamic>),
+  device: UserDeviceModel.fromJson(json['device'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$AuthLoginRequestModelToJson(

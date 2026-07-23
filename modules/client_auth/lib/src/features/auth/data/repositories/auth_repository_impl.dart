@@ -20,7 +20,7 @@ class AuthRepositoryImpl implements AuthRepository {
   FutureEither<AuthLoginResponse> login(String email) async {
     try {
       final deviceInfo = await _deviceInfoService.getDeviceInfo();
-      final device = AuthDeviceInfo(
+      final device = UserDevice(
         deviceId: deviceInfo.deviceId,
         os: deviceInfo.os,
         osVersion: deviceInfo.osVersion,

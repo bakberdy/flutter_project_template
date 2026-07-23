@@ -5,12 +5,14 @@ void main() {
   test('serializes login request with nested snake case device fields', () {
     const entity = AuthLoginRequest(
       email: 'user@example.com',
-      device: AuthDeviceInfo(
+      device: UserDevice(
         deviceId: 'device-id',
         os: 'ios',
         osVersion: '18',
         model: 'iPhone',
         appVersion: '1.0.0',
+        pushProvider: 'apns',
+        pushToken: 'push-token',
       ),
     );
 
@@ -22,6 +24,8 @@ void main() {
         'os_version': '18',
         'model': 'iPhone',
         'app_version': '1.0.0',
+        'push_provider': 'apns',
+        'push_token': 'push-token',
       },
     });
   });

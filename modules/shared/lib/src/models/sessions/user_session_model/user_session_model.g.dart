@@ -17,9 +17,7 @@ UserSessionModel _$UserSessionModelFromJson(Map<String, dynamic> json) =>
       expiresAt: DateTime.parse(json['expires_at'] as String),
       lastActive: DateTime.parse(json['last_active'] as String),
       isRevoked: json['is_revoked'] as bool,
-      device: UserSessionDeviceModel.fromJson(
-        json['device'] as Map<String, dynamic>,
-      ),
+      device: UserDeviceModel.fromJson(json['device'] as Map<String, dynamic>),
       revokedAt: json['revoked_at'] == null
           ? null
           : DateTime.parse(json['revoked_at'] as String),

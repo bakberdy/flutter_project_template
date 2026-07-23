@@ -15,7 +15,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   FutureEither<AuthLoginResponse> login(String email) async {
     try {
-      const device = AuthDeviceInfo(
+      const device = UserDevice(
         deviceId: 'web',
         os: 'web',
         osVersion: '',

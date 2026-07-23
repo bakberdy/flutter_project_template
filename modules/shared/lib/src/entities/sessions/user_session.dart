@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:shared/src/entities/sessions/user_session_device.dart';
+import 'package:shared/src/entities/device/user_device.dart';
 
 class UserSession extends Equatable {
   const UserSession({
@@ -22,7 +22,7 @@ class UserSession extends Equatable {
   final DateTime lastActive;
   final DateTime? revokedAt;
   final bool isRevoked;
-  final UserSessionDevice device;
+  final UserDevice device;
 
   @override
   List<Object?> get props => [

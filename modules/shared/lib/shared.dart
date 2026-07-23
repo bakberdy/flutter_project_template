@@ -1,7 +1,6 @@
 library;
 
 export 'gen/l10n/shared_localizations.dart';
-export 'src/entities/auth/auth_device_info.dart';
 export 'src/entities/auth/auth_login_request.dart';
 export 'src/entities/auth/auth_login_response.dart';
 export 'src/entities/auth/auth_verify_request.dart';
@@ -12,15 +11,14 @@ export 'src/entities/auth/user_phone_number.dart';
 export 'src/entities/auth/user_profile.dart';
 export 'src/entities/auth/user_role.dart';
 export 'src/entities/auth/user_status.dart';
+export 'src/entities/device/user_device.dart';
 export 'src/entities/preferences/user_preferences.dart';
 export 'src/entities/sessions/user_session.dart';
-export 'src/entities/sessions/user_session_device.dart';
 export 'src/extensions/di_context_x.dart';
 export 'src/extensions/failure_ui_x.dart';
 export 'src/extensions/string_x.dart';
 export 'src/localization/supported_locale_resolver.dart';
 export 'src/mixins/ui_failure_handler_mixin.dart';
-export 'src/models/auth/auth_device_info_model/auth_device_info_model.dart';
 export 'src/models/auth/auth_login_request_model/auth_login_request_model.dart';
 export 'src/models/auth/auth_login_response_model/auth_login_response_model.dart';
 export 'src/models/auth/auth_verify_request_model/auth_verify_request_model.dart';
@@ -28,8 +26,8 @@ export 'src/models/auth/auth_verify_response_model/auth_verify_response_model.da
 export 'src/models/auth/user_model/user_model.dart';
 export 'src/models/auth/user_phone_number_model/user_phone_number_model.dart';
 export 'src/models/auth/user_profile_model/user_profile_model.dart';
+export 'src/models/device/user_device_model/user_device_model.dart';
 export 'src/models/preferences/user_preferences_model/user_preferences_model.dart';
-export 'src/models/sessions/user_session_device_model/user_session_device_model.dart';
 export 'src/models/sessions/user_session_model/user_session_model.dart';
 export 'src/navigation/core_navigation_listener.dart';
 export 'src/widgets/debug_overlay.dart';

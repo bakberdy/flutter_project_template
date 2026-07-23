@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:shared/src/entities/sessions/user_session.dart';
-import 'package:shared/src/models/sessions/user_session_device_model/user_session_device_model.dart';
+import 'package:shared/src/models/device/user_device_model/user_device_model.dart';
 
 part 'user_session_model.g.dart';
 
@@ -14,7 +14,7 @@ class UserSessionModel extends UserSession {
     required super.expiresAt,
     required super.lastActive,
     required super.isRevoked,
-    required UserSessionDeviceModel device,
+    required UserDeviceModel device,
     super.revokedAt,
   }) : super(device: device);
 
@@ -29,12 +29,12 @@ class UserSessionModel extends UserSession {
     expiresAt: entity.expiresAt,
     lastActive: entity.lastActive,
     isRevoked: entity.isRevoked,
-    device: UserSessionDeviceModel.fromEntity(entity.device),
+    device: UserDeviceModel.fromEntity(entity.device),
     revokedAt: entity.revokedAt,
   );
 
   @override
-  UserSessionDeviceModel get device => super.device as UserSessionDeviceModel;
+  UserDeviceModel get device => super.device as UserDeviceModel;
 
   Map<String, dynamic> toJson() => _$UserSessionModelToJson(this);
 }

@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:shared/src/entities/auth/auth_login_request.dart';
-import 'package:shared/src/models/auth/auth_device_info_model/auth_device_info_model.dart';
+import 'package:shared/src/models/device/user_device_model/user_device_model.dart';
 
 part 'auth_login_request_model.g.dart';
 
@@ -8,20 +8,20 @@ part 'auth_login_request_model.g.dart';
 class AuthLoginRequestModel extends AuthLoginRequest {
   const AuthLoginRequestModel({
     required super.email,
-    required AuthDeviceInfoModel device,
+    required UserDeviceModel device,
   }) : super(device: device);
 
   factory AuthLoginRequestModel.fromEntity(AuthLoginRequest entity) =>
       AuthLoginRequestModel(
         email: entity.email,
-        device: AuthDeviceInfoModel.fromEntity(entity.device),
+        device: UserDeviceModel.fromEntity(entity.device),
       );
 
   factory AuthLoginRequestModel.fromJson(Map<String, dynamic> json) =>
       _$AuthLoginRequestModelFromJson(json);
 
   @override
-  AuthDeviceInfoModel get device => super.device as AuthDeviceInfoModel;
+  UserDeviceModel get device => super.device as UserDeviceModel;
 
   Map<String, dynamic> toJson() => _$AuthLoginRequestModelToJson(this);
 }
