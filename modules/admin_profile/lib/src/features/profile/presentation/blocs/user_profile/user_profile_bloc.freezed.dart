@@ -113,7 +113,7 @@ class UserProfileAvatarUploadRequested implements UserProfileEvent {
   const UserProfileAvatarUploadRequested(this.avatar);
   
 
- final  UserAvatarUpload avatar;
+ final  AppPickedFile avatar;
 
 /// Create a copy of UserProfileEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -145,7 +145,7 @@ abstract mixin class $UserProfileAvatarUploadRequestedCopyWith<$Res> implements 
   factory $UserProfileAvatarUploadRequestedCopyWith(UserProfileAvatarUploadRequested value, $Res Function(UserProfileAvatarUploadRequested) _then) = _$UserProfileAvatarUploadRequestedCopyWithImpl;
 @useResult
 $Res call({
- UserAvatarUpload avatar
+ AppPickedFile avatar
 });
 
 
@@ -165,7 +165,7 @@ class _$UserProfileAvatarUploadRequestedCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') $Res call({Object? avatar = null,}) {
   return _then(UserProfileAvatarUploadRequested(
 null == avatar ? _self.avatar : avatar // ignore: cast_nullable_to_non_nullable
-as UserAvatarUpload,
+as AppPickedFile,
   ));
 }
 

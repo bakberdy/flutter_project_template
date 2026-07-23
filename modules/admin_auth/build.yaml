@@ -7,10 +7,6 @@ targets:
             - unnecessary_null_checks
             - document_ignores
 
-      json_serializable:
-        options:
-          field_rename: snake
-
       freezed:
         generate_for:
           - lib/src/features/**/domain/entities/**.dart

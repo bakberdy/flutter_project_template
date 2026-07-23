@@ -147,14 +147,7 @@ class UserProfileScreen extends StatelessWidget with UiFailureHandlerMixin {
     }
 
     context.read<UserProfileBloc>().add(
-      UserProfileEvent.avatarUploadRequested(
-        UserAvatarUpload(
-          bytes: file.bytes,
-          filename: file.filename,
-          sourcePath: file.sourcePath,
-          contentType: file.contentType,
-        ),
-      ),
+      UserProfileEvent.avatarUploadRequested(file),
     );
   }
 

@@ -1,4 +1,3 @@
-import 'package:client_profile/src/features/profile/domain/entities/user_avatar_upload.dart';
 import 'package:client_profile/src/features/profile/domain/usecases/get_current_user_profile_use_case.dart';
 import 'package:client_profile/src/features/profile/domain/usecases/get_current_user_use_case.dart';
 import 'package:client_profile/src/features/profile/domain/usecases/remove_user_avatar_use_case.dart';

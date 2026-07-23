@@ -4,22 +4,22 @@ import 'package:shared/src/models/auth/user_phone_number_model/user_phone_number
 
 part 'user_profile_model.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class UserProfileModel extends UserProfile {
   const UserProfileModel({
     required super.userId,
     required super.fullName,
     required super.createdAt,
     required super.updatedAt,
-    this.phoneNumberDto,
+    UserPhoneNumberModel? phoneNumber,
     super.avatarUrl,
     super.completedAt,
-  }) : super(phoneNumber: phoneNumberDto);
+  }) : super(phoneNumber: phoneNumber);
 
   factory UserProfileModel.fromEntity(UserProfile profile) => UserProfileModel(
     userId: profile.userId,
     fullName: profile.fullName,
-    phoneNumberDto: profile.phoneNumber == null
+    phoneNumber: profile.phoneNumber == null
         ? null
         : UserPhoneNumberModel.fromEntity(profile.phoneNumber!),
     avatarUrl: profile.avatarUrl,
@@ -30,8 +30,10 @@ class UserProfileModel extends UserProfile {
 
   factory UserProfileModel.fromJson(Map<String, dynamic> json) =>
       _$UserProfileModelFromJson(json);
-  @JsonKey(name: 'phone_number')
-  final UserPhoneNumberModel? phoneNumberDto;
+
+  @override
+  UserPhoneNumberModel? get phoneNumber =>
+      super.phoneNumber as UserPhoneNumberModel?;
 
   Map<String, dynamic> toJson() => _$UserProfileModelToJson(this);
 }

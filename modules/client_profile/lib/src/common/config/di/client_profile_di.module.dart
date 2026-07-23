@@ -53,67 +53,95 @@ import 'package:core/core.dart' as _i494;
 import 'package:injectable/injectable.dart' as _i526;
 
 class ClientProfilePackageModule extends _i526.MicroPackageModule {
-// initializes the registration of main-scope dependencies inside of GetIt
+  // initializes the registration of main-scope dependencies inside of GetIt
   @override
   _i687.FutureOr<void> init(_i526.GetItHelper gh) {
-    gh.singleton<_i694.UserProfileRemoteDataSource>(() =>
-        _i694.UserProfileRemoteDataSourceImpl(
-            gh<_i494.ApiClient>(instanceName: 'protectedApiClient')));
-    gh.singleton<_i279.SessionsRemoteDataSource>(() =>
-        _i279.SessionsRemoteDataSourceImpl(
-            gh<_i494.ApiClient>(instanceName: 'protectedApiClient')));
+    gh.singleton<_i694.UserProfileRemoteDataSource>(
+      () => _i694.UserProfileRemoteDataSourceImpl(
+        gh<_i494.ApiClient>(instanceName: 'protectedApiClient'),
+      ),
+    );
+    gh.singleton<_i279.SessionsRemoteDataSource>(
+      () => _i279.SessionsRemoteDataSourceImpl(
+        gh<_i494.ApiClient>(instanceName: 'protectedApiClient'),
+      ),
+    );
     gh.singleton<_i569.UserProfileRepository>(
-        () => _i328.UserProfileRepositoryImpl(
-              gh<_i694.UserProfileRemoteDataSource>(),
-              gh<_i494.TokenStorage>(),
-            ));
-    gh.singleton<_i481.SessionsRepository>(() => _i814.SessionsRepositoryImpl(
-          gh<_i279.SessionsRemoteDataSource>(),
-          gh<_i494.TokenStorage>(),
-        ));
+      () => _i328.UserProfileRepositoryImpl(
+        gh<_i694.UserProfileRemoteDataSource>(),
+        gh<_i494.TokenStorage>(),
+      ),
+    );
+    gh.singleton<_i481.SessionsRepository>(
+      () => _i814.SessionsRepositoryImpl(
+        gh<_i279.SessionsRemoteDataSource>(),
+        gh<_i494.TokenStorage>(),
+      ),
+    );
     gh.lazySingleton<_i956.GetSessionsUseCase>(
-        () => _i956.GetSessionsUseCase(gh<_i481.SessionsRepository>()));
+      () => _i956.GetSessionsUseCase(gh<_i481.SessionsRepository>()),
+    );
     gh.lazySingleton<_i57.RevokeAllSessionsUseCase>(
-        () => _i57.RevokeAllSessionsUseCase(gh<_i481.SessionsRepository>()));
+      () => _i57.RevokeAllSessionsUseCase(gh<_i481.SessionsRepository>()),
+    );
     gh.lazySingleton<_i764.RevokeSessionUseCase>(
-        () => _i764.RevokeSessionUseCase(gh<_i481.SessionsRepository>()));
-    gh.lazySingleton<_i243.CreateUserProfileUseCase>(() =>
-        _i243.CreateUserProfileUseCase(gh<_i569.UserProfileRepository>()));
-    gh.lazySingleton<_i722.GetCurrentUserProfileUseCase>(() =>
-        _i722.GetCurrentUserProfileUseCase(gh<_i569.UserProfileRepository>()));
+      () => _i764.RevokeSessionUseCase(gh<_i481.SessionsRepository>()),
+    );
+    gh.lazySingleton<_i243.CreateUserProfileUseCase>(
+      () => _i243.CreateUserProfileUseCase(gh<_i569.UserProfileRepository>()),
+    );
+    gh.lazySingleton<_i722.GetCurrentUserProfileUseCase>(
+      () =>
+          _i722.GetCurrentUserProfileUseCase(gh<_i569.UserProfileRepository>()),
+    );
     gh.lazySingleton<_i225.GetCurrentUserUseCase>(
-        () => _i225.GetCurrentUserUseCase(gh<_i569.UserProfileRepository>()));
+      () => _i225.GetCurrentUserUseCase(gh<_i569.UserProfileRepository>()),
+    );
     gh.lazySingleton<_i527.LogOutUseCase>(
-        () => _i527.LogOutUseCase(gh<_i569.UserProfileRepository>()));
+      () => _i527.LogOutUseCase(gh<_i569.UserProfileRepository>()),
+    );
     gh.lazySingleton<_i133.RemoveUserAvatarUseCase>(
-        () => _i133.RemoveUserAvatarUseCase(gh<_i569.UserProfileRepository>()));
-    gh.lazySingleton<_i61.RequestAccountDeletionUseCase>(() =>
-        _i61.RequestAccountDeletionUseCase(gh<_i569.UserProfileRepository>()));
-    gh.lazySingleton<_i1046.UpdateUserAvatarUseCase>(() =>
-        _i1046.UpdateUserAvatarUseCase(gh<_i569.UserProfileRepository>()));
-    gh.lazySingleton<_i302.UpdateUserProfileUseCase>(() =>
-        _i302.UpdateUserProfileUseCase(gh<_i569.UserProfileRepository>()));
-    gh.factory<_i100.UserBloc>(() => _i100.UserBloc(
-          gh<_i225.GetCurrentUserUseCase>(),
-          gh<_i527.LogOutUseCase>(),
-        ));
-    gh.factory<_i922.UserProfileBloc>(() => _i922.UserProfileBloc(
-          gh<_i494.GetAppInfoUseCase>(),
-          gh<_i225.GetCurrentUserUseCase>(),
-          gh<_i722.GetCurrentUserProfileUseCase>(),
-          gh<_i1046.UpdateUserAvatarUseCase>(),
-          gh<_i133.RemoveUserAvatarUseCase>(),
-          gh<_i61.RequestAccountDeletionUseCase>(),
-          gh<_i494.CoreAppConfig>(),
-        ));
+      () => _i133.RemoveUserAvatarUseCase(gh<_i569.UserProfileRepository>()),
+    );
+    gh.lazySingleton<_i61.RequestAccountDeletionUseCase>(
+      () =>
+          _i61.RequestAccountDeletionUseCase(gh<_i569.UserProfileRepository>()),
+    );
+    gh.lazySingleton<_i1046.UpdateUserAvatarUseCase>(
+      () => _i1046.UpdateUserAvatarUseCase(gh<_i569.UserProfileRepository>()),
+    );
+    gh.lazySingleton<_i302.UpdateUserProfileUseCase>(
+      () => _i302.UpdateUserProfileUseCase(gh<_i569.UserProfileRepository>()),
+    );
+    gh.factory<_i100.UserBloc>(
+      () => _i100.UserBloc(
+        gh<_i225.GetCurrentUserUseCase>(),
+        gh<_i527.LogOutUseCase>(),
+      ),
+    );
+    gh.factory<_i922.UserProfileBloc>(
+      () => _i922.UserProfileBloc(
+        gh<_i494.GetAppInfoUseCase>(),
+        gh<_i225.GetCurrentUserUseCase>(),
+        gh<_i722.GetCurrentUserProfileUseCase>(),
+        gh<_i1046.UpdateUserAvatarUseCase>(),
+        gh<_i133.RemoveUserAvatarUseCase>(),
+        gh<_i61.RequestAccountDeletionUseCase>(),
+        gh<_i494.CoreAppConfig>(),
+      ),
+    );
     gh.factory<_i149.UserProfileEditBloc>(
-        () => _i149.UserProfileEditBloc(gh<_i302.UpdateUserProfileUseCase>()));
-    gh.factory<_i773.CreateUserProfileBloc>(() =>
-        _i773.CreateUserProfileBloc(gh<_i243.CreateUserProfileUseCase>()));
-    gh.factory<_i186.SessionsBloc>(() => _i186.SessionsBloc(
-          gh<_i956.GetSessionsUseCase>(),
-          gh<_i764.RevokeSessionUseCase>(),
-          gh<_i57.RevokeAllSessionsUseCase>(),
-        ));
+      () => _i149.UserProfileEditBloc(gh<_i302.UpdateUserProfileUseCase>()),
+    );
+    gh.factory<_i773.CreateUserProfileBloc>(
+      () => _i773.CreateUserProfileBloc(gh<_i243.CreateUserProfileUseCase>()),
+    );
+    gh.factory<_i186.SessionsBloc>(
+      () => _i186.SessionsBloc(
+        gh<_i956.GetSessionsUseCase>(),
+        gh<_i764.RevokeSessionUseCase>(),
+        gh<_i57.RevokeAllSessionsUseCase>(),
+      ),
+    );
   }
 }

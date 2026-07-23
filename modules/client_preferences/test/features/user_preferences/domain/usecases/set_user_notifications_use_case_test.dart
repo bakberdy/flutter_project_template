@@ -1,10 +1,10 @@
-import 'package:client_preferences/src/features/user_preferences/domain/entities/user_preferences.dart';
 import 'package:client_preferences/src/features/user_preferences/domain/repositories/user_preferences_repository.dart';
 import 'package:client_preferences/src/features/user_preferences/domain/usecases/set_user_notifications_use_case.dart';
 import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:shared/shared.dart';
 
 void main() {
   late _MockAnalyticsProvider analyticsProvider;

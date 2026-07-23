@@ -1,20 +1,20 @@
-import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
 import 'package:admin_users/src/features/users/domain/entities/users_query.dart';
+import 'package:shared/shared.dart';
 
-extension AdminUserRoleApiMapper on AdminUserRole {
+extension AdminUserRoleApiMapper on UserRole {
   String get apiValue => switch (this) {
-    AdminUserRole.superAdmin => 'super_admin',
-    AdminUserRole.admin => 'admin',
-    AdminUserRole.user => 'user',
+    UserRole.superAdmin => 'super_admin',
+    UserRole.admin => 'admin',
+    UserRole.user => 'user',
   };
 }
 
-extension AdminUserStatusApiMapper on AdminUserStatus {
+extension AdminUserStatusApiMapper on UserStatus {
   String get apiValue => switch (this) {
-    AdminUserStatus.active => 'active',
-    AdminUserStatus.blocked => 'blocked',
-    AdminUserStatus.deletionRequested => 'deletion_requested',
-    AdminUserStatus.deleted => 'deleted',
+    UserStatus.active => 'active',
+    UserStatus.blocked => 'blocked',
+    UserStatus.deletionRequested => 'deletion_requested',
+    UserStatus.deleted => 'deleted',
   };
 }
 

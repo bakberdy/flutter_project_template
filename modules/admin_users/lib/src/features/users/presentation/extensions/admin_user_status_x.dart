@@ -1,19 +1,19 @@
-import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/shared.dart';
 
-extension AdminUserStatusX on AdminUserStatus {
+extension AdminUserStatusX on UserStatus {
   Color get color {
     switch (this) {
-      case AdminUserStatus.active:
+      case UserStatus.active:
         return const Color(0xFF22C55E); // Green 500
 
-      case AdminUserStatus.blocked:
+      case UserStatus.blocked:
         return const Color(0xFFF59E0B); // Amber 500
 
-      case AdminUserStatus.deleted:
+      case UserStatus.deleted:
         return const Color(0xFFEF4444); // Red 500
 
-      case AdminUserStatus.deletionRequested:
+      case UserStatus.deletionRequested:
         return const Color(0xFF3B82F6); // Blue 500
     }
   }

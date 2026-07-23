@@ -6,7 +6,7 @@ class UserPhoneNumber extends Equatable {
     required this.dialCode,
     required this.number,
   });
-  final String countryCode;
+  final String? countryCode;
   final String dialCode;
   final String number;
 

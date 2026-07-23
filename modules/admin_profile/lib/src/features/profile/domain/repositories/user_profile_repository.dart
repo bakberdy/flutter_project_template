@@ -1,4 +1,3 @@
-import 'package:admin_profile/src/features/profile/domain/entities/user_avatar_upload.dart';
 import 'package:core/core.dart';
 import 'package:shared/shared.dart';
 
@@ -20,7 +19,7 @@ abstract class UserProfileRepository {
   });
 
   FutureEither<UserProfile> updateAvatar(
-    UserAvatarUpload avatar, {
+    AppPickedFile avatar, {
     ApiProgressCallback? onSendProgress,
   });
 

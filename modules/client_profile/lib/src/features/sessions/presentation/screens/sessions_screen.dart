@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:client_profile/src/common/presentation/extensions/client_profile_context_x.dart';
-import 'package:client_profile/src/features/sessions/domain/entities/session.dart';
 import 'package:client_profile/src/features/sessions/presentation/blocs/sessions/sessions_bloc.dart';
 import 'package:client_profile/src/features/sessions/presentation/widgets/session_list_item.dart';
 import 'package:core/core.dart';
@@ -182,7 +181,7 @@ class SessionsScreen extends StatelessWidget
     );
   }
 
-  String _sessionTitle(Session session) {
+  String _sessionTitle(UserSession session) {
     final device = session.device;
     return '${device.model} - ${device.os} ${device.osVersion}';
   }

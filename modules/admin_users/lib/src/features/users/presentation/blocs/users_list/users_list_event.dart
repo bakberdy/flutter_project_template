@@ -7,9 +7,9 @@ sealed class UsersListEvent with _$UsersListEvent {
   const factory UsersListEvent.sortChanged(UsersSortField field) = _SortChanged;
   const factory UsersListEvent.searchSubmitted(String search) =
       _SearchSubmitted;
-  const factory UsersListEvent.statusChanged(AdminUserStatus? status) =
+  const factory UsersListEvent.statusChanged(UserStatus? status) =
       _StatusChanged;
-  const factory UsersListEvent.roleChanged(AdminUserRole? role) = _RoleChanged;
+  const factory UsersListEvent.roleChanged(UserRole? role) = _RoleChanged;
   const factory UsersListEvent.isVerifiedChanged({bool? isVerified}) =
       _IsVerifiedChanged;
   const factory UsersListEvent.isProfileCompletedChanged({

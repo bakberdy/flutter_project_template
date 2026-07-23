@@ -1,4 +1,3 @@
-import 'package:client_profile/src/features/profile/domain/entities/user_avatar_upload.dart';
 import 'package:client_profile/src/features/profile/domain/repositories/user_profile_repository.dart';
 import 'package:client_profile/src/features/profile/domain/usecases/user_profile_use_case_tracking.dart';
 import 'package:core/core.dart';
@@ -8,7 +7,7 @@ import 'package:shared/shared.dart';
 
 class UpdateUserAvatarParams extends Equatable {
   const UpdateUserAvatarParams({required this.avatar, this.onSendProgress});
-  final UserAvatarUpload avatar;
+  final AppPickedFile avatar;
   final ApiProgressCallback? onSendProgress;
 
   @override

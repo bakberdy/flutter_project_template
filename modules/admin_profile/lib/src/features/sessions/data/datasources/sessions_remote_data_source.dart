@@ -1,11 +1,10 @@
 import 'package:admin_profile/src/common/config/constants/admin_profile_api_endpoints.dart';
-import 'package:admin_profile/src/features/sessions/data/models/session_model/session_model.dart';
-import 'package:admin_profile/src/features/sessions/domain/entities/session.dart';
 import 'package:core/core.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared/shared.dart';
 
 abstract class SessionsRemoteDataSource {
-  Future<PaginatedResponse<Session>> getSessions({
+  Future<PaginatedResponse<UserSession>> getSessions({
     required int pageNumber,
     required int limit,
     bool? isActive,
@@ -22,7 +21,7 @@ class SessionsRemoteDataSourceImpl implements SessionsRemoteDataSource {
   final ApiClient _apiClient;
 
   @override
-  Future<PaginatedResponse<Session>> getSessions({
+  Future<PaginatedResponse<UserSession>> getSessions({
     required int pageNumber,
     required int limit,
     bool? isActive,
@@ -38,9 +37,10 @@ class SessionsRemoteDataSourceImpl implements SessionsRemoteDataSource {
       AdminProfileApiEndpoints.sessions,
       queryParameters: queryParameters,
     );
-    return PaginatedResponseModel<Session>.fromJson(
+    return PaginatedResponseModel<UserSession>.fromJson(
       response.data!,
-      (Object? json) => SessionModel.fromJson(json! as Map<String, dynamic>),
+      (Object? json) =>
+          UserSessionModel.fromJson(json! as Map<String, dynamic>),
     );
   }
 

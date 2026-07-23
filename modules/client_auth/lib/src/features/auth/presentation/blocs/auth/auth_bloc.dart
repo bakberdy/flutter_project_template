@@ -1,10 +1,10 @@
-import 'package:client_auth/src/features/auth/domain/entities/verify_request.dart';
 import 'package:client_auth/src/features/auth/domain/usecases/auth_login_use_case.dart';
 import 'package:client_auth/src/features/auth/domain/usecases/auth_verify_use_case.dart';
 import 'package:core/core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared/shared.dart';
 
 part 'auth_bloc.freezed.dart';
 part 'auth_event.dart';
@@ -101,7 +101,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
     emit(state.copyWith(status: const StateStatus.loading()));
     final result = await _authVerifyUseCase(
-      VerifyRequest(
+      AuthVerifyRequest(
         loginRequestId: loginRequestId,
         email: email,
         code: otpCode,

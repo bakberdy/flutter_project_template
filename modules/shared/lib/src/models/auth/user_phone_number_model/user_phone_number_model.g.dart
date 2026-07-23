@@ -11,7 +11,7 @@ part of 'user_phone_number_model.dart';
 UserPhoneNumberModel _$UserPhoneNumberModelFromJson(
   Map<String, dynamic> json,
 ) => UserPhoneNumberModel(
-  countryCode: json['country_code'] as String,
+  countryCode: json['country_code'] as String?,
   dialCode: json['dial_code'] as String,
   number: json['number'] as String,
 );

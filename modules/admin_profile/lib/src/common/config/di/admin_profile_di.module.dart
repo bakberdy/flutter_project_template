@@ -53,64 +53,93 @@ import 'package:core/core.dart' as _i494;
 import 'package:injectable/injectable.dart' as _i526;
 
 class AdminProfilePackageModule extends _i526.MicroPackageModule {
-// initializes the registration of main-scope dependencies inside of GetIt
+  // initializes the registration of main-scope dependencies inside of GetIt
   @override
   _i687.FutureOr<void> init(_i526.GetItHelper gh) {
-    gh.singleton<_i176.SessionsRemoteDataSource>(() =>
-        _i176.SessionsRemoteDataSourceImpl(
-            gh<_i494.ApiClient>(instanceName: 'protectedApiClient')));
-    gh.singleton<_i1034.UserProfileRemoteDataSource>(() =>
-        _i1034.UserProfileRemoteDataSourceImpl(
-            gh<_i494.ApiClient>(instanceName: 'protectedApiClient')));
+    gh.singleton<_i176.SessionsRemoteDataSource>(
+      () => _i176.SessionsRemoteDataSourceImpl(
+        gh<_i494.ApiClient>(instanceName: 'protectedApiClient'),
+      ),
+    );
+    gh.singleton<_i1034.UserProfileRemoteDataSource>(
+      () => _i1034.UserProfileRemoteDataSourceImpl(
+        gh<_i494.ApiClient>(instanceName: 'protectedApiClient'),
+      ),
+    );
     gh.singleton<_i967.UserProfileRepository>(
-        () => _i411.UserProfileRepositoryImpl(
-              gh<_i1034.UserProfileRemoteDataSource>(),
-              gh<_i494.TokenStorage>(),
-            ));
-    gh.lazySingleton<_i160.CreateUserProfileUseCase>(() =>
-        _i160.CreateUserProfileUseCase(gh<_i967.UserProfileRepository>()));
-    gh.lazySingleton<_i501.GetCurrentUserProfileUseCase>(() =>
-        _i501.GetCurrentUserProfileUseCase(gh<_i967.UserProfileRepository>()));
+      () => _i411.UserProfileRepositoryImpl(
+        gh<_i1034.UserProfileRemoteDataSource>(),
+        gh<_i494.TokenStorage>(),
+      ),
+    );
+    gh.lazySingleton<_i160.CreateUserProfileUseCase>(
+      () => _i160.CreateUserProfileUseCase(gh<_i967.UserProfileRepository>()),
+    );
+    gh.lazySingleton<_i501.GetCurrentUserProfileUseCase>(
+      () =>
+          _i501.GetCurrentUserProfileUseCase(gh<_i967.UserProfileRepository>()),
+    );
     gh.lazySingleton<_i1040.GetCurrentUserUseCase>(
-        () => _i1040.GetCurrentUserUseCase(gh<_i967.UserProfileRepository>()));
+      () => _i1040.GetCurrentUserUseCase(gh<_i967.UserProfileRepository>()),
+    );
     gh.lazySingleton<_i775.LogOutUseCase>(
-        () => _i775.LogOutUseCase(gh<_i967.UserProfileRepository>()));
+      () => _i775.LogOutUseCase(gh<_i967.UserProfileRepository>()),
+    );
     gh.lazySingleton<_i657.RemoveUserAvatarUseCase>(
-        () => _i657.RemoveUserAvatarUseCase(gh<_i967.UserProfileRepository>()));
-    gh.lazySingleton<_i535.RequestAccountDeletionUseCase>(() =>
-        _i535.RequestAccountDeletionUseCase(gh<_i967.UserProfileRepository>()));
+      () => _i657.RemoveUserAvatarUseCase(gh<_i967.UserProfileRepository>()),
+    );
+    gh.lazySingleton<_i535.RequestAccountDeletionUseCase>(
+      () => _i535.RequestAccountDeletionUseCase(
+        gh<_i967.UserProfileRepository>(),
+      ),
+    );
     gh.lazySingleton<_i112.UpdateUserAvatarUseCase>(
-        () => _i112.UpdateUserAvatarUseCase(gh<_i967.UserProfileRepository>()));
-    gh.lazySingleton<_i647.UpdateUserProfileUseCase>(() =>
-        _i647.UpdateUserProfileUseCase(gh<_i967.UserProfileRepository>()));
-    gh.singleton<_i248.SessionsRepository>(() => _i389.SessionsRepositoryImpl(
-          gh<_i176.SessionsRemoteDataSource>(),
-          gh<_i494.TokenStorage>(),
-        ));
-    gh.factory<_i333.UserProfileBloc>(() => _i333.UserProfileBloc(
-          gh<_i501.GetCurrentUserProfileUseCase>(),
-          gh<_i112.UpdateUserAvatarUseCase>(),
-          gh<_i657.RemoveUserAvatarUseCase>(),
-          gh<_i535.RequestAccountDeletionUseCase>(),
-        ));
-    gh.factory<_i705.CreateUserProfileBloc>(() =>
-        _i705.CreateUserProfileBloc(gh<_i160.CreateUserProfileUseCase>()));
+      () => _i112.UpdateUserAvatarUseCase(gh<_i967.UserProfileRepository>()),
+    );
+    gh.lazySingleton<_i647.UpdateUserProfileUseCase>(
+      () => _i647.UpdateUserProfileUseCase(gh<_i967.UserProfileRepository>()),
+    );
+    gh.singleton<_i248.SessionsRepository>(
+      () => _i389.SessionsRepositoryImpl(
+        gh<_i176.SessionsRemoteDataSource>(),
+        gh<_i494.TokenStorage>(),
+      ),
+    );
+    gh.factory<_i333.UserProfileBloc>(
+      () => _i333.UserProfileBloc(
+        gh<_i501.GetCurrentUserProfileUseCase>(),
+        gh<_i112.UpdateUserAvatarUseCase>(),
+        gh<_i657.RemoveUserAvatarUseCase>(),
+        gh<_i535.RequestAccountDeletionUseCase>(),
+      ),
+    );
+    gh.factory<_i705.CreateUserProfileBloc>(
+      () => _i705.CreateUserProfileBloc(gh<_i160.CreateUserProfileUseCase>()),
+    );
     gh.factory<_i410.UserProfileEditBloc>(
-        () => _i410.UserProfileEditBloc(gh<_i647.UpdateUserProfileUseCase>()));
-    gh.factory<_i62.UserBloc>(() => _i62.UserBloc(
-          gh<_i1040.GetCurrentUserUseCase>(),
-          gh<_i775.LogOutUseCase>(),
-        ));
+      () => _i410.UserProfileEditBloc(gh<_i647.UpdateUserProfileUseCase>()),
+    );
+    gh.factory<_i62.UserBloc>(
+      () => _i62.UserBloc(
+        gh<_i1040.GetCurrentUserUseCase>(),
+        gh<_i775.LogOutUseCase>(),
+      ),
+    );
     gh.lazySingleton<_i575.GetSessionsUseCase>(
-        () => _i575.GetSessionsUseCase(gh<_i248.SessionsRepository>()));
+      () => _i575.GetSessionsUseCase(gh<_i248.SessionsRepository>()),
+    );
     gh.lazySingleton<_i704.RevokeAllSessionsUseCase>(
-        () => _i704.RevokeAllSessionsUseCase(gh<_i248.SessionsRepository>()));
+      () => _i704.RevokeAllSessionsUseCase(gh<_i248.SessionsRepository>()),
+    );
     gh.lazySingleton<_i880.RevokeSessionUseCase>(
-        () => _i880.RevokeSessionUseCase(gh<_i248.SessionsRepository>()));
-    gh.factory<_i311.SessionsBloc>(() => _i311.SessionsBloc(
-          gh<_i575.GetSessionsUseCase>(),
-          gh<_i880.RevokeSessionUseCase>(),
-          gh<_i704.RevokeAllSessionsUseCase>(),
-        ));
+      () => _i880.RevokeSessionUseCase(gh<_i248.SessionsRepository>()),
+    );
+    gh.factory<_i311.SessionsBloc>(
+      () => _i311.SessionsBloc(
+        gh<_i575.GetSessionsUseCase>(),
+        gh<_i880.RevokeSessionUseCase>(),
+        gh<_i704.RevokeAllSessionsUseCase>(),
+      ),
+    );
   }
 }

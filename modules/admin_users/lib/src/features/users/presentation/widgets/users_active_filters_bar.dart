@@ -1,10 +1,10 @@
 import 'package:admin_users/src/common/presentation/extensions/admin_users_context_x.dart';
-import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
 import 'package:admin_users/src/features/users/domain/entities/users_query.dart';
 import 'package:admin_users/src/features/users/presentation/extensions/admin_user_localization_x.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared/shared.dart';
 
 class UsersActiveFiltersBar extends StatelessWidget {
   const UsersActiveFiltersBar({
@@ -34,7 +34,7 @@ class UsersActiveFiltersBar extends StatelessWidget {
       spacing: DesignSpacingTokens.xs,
       runSpacing: DesignSpacingTokens.xs,
       children: [
-        if (query.status case final AdminUserStatus status)
+        if (query.status case final UserStatus status)
           _FilterChip(
             label: l10n.usersActiveFilter(
               l10n.usersStatusFilterLabel,
@@ -42,7 +42,7 @@ class UsersActiveFiltersBar extends StatelessWidget {
             ),
             onDeleted: onStatusCleared,
           ),
-        if (query.role case final AdminUserRole role)
+        if (query.role case final UserRole role)
           _FilterChip(
             label: l10n.usersActiveFilter(
               l10n.usersRoleFilterLabel,

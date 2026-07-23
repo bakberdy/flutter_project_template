@@ -1,21 +1,20 @@
-import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
-import 'package:admin_users/src/features/users/domain/entities/admin_user_profile.dart';
 import 'package:admin_users/src/features/users/domain/entities/users_query.dart';
 import 'package:core/core.dart';
+import 'package:shared/shared.dart';
 
 abstract class UsersRepository {
-  FutureEither<PaginatedResponse<AdminUser>> getUsers(UsersQuery query);
+  FutureEither<PaginatedResponse<User>> getUsers(UsersQuery query);
 
-  FutureEither<AdminUser> getUser(String userId);
+  FutureEither<User> getUser(String userId);
 
-  FutureEither<AdminUserProfile> getUserProfile(String userId);
+  FutureEither<UserProfile> getUserProfile(String userId);
 
-  FutureEither<AdminUser> changeUserStatus(
+  FutureEither<User> changeUserStatus(
     String userId,
-    AdminUserStatus status,
+    UserStatus status,
   );
 
-  FutureEither<AdminUser> changeUserRole(String userId, AdminUserRole role);
+  FutureEither<User> changeUserRole(String userId, UserRole role);
 
-  FutureEither<AdminUser> approveDeletionRequest(String userId);
+  FutureEither<User> approveDeletionRequest(String userId);
 }

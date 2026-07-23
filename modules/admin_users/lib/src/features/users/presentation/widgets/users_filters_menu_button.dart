@@ -1,10 +1,10 @@
 import 'package:admin_users/src/common/presentation/extensions/admin_users_context_x.dart';
-import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
 import 'package:admin_users/src/features/users/domain/entities/users_query.dart';
 import 'package:admin_users/src/features/users/presentation/extensions/admin_user_localization_x.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared/shared.dart';
 
 class UsersFiltersMenuButton extends StatelessWidget {
   const UsersFiltersMenuButton({
@@ -102,11 +102,11 @@ class UsersFiltersMenuButton extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: DesignSpacingTokens.sm),
-              _FilterDropdown<AdminUserStatus>(
+              _FilterDropdown<UserStatus>(
                 label: l10n.usersStatusFilterLabel,
                 value: draft.status,
                 allLabel: l10n.usersStatusFilterAll,
-                options: AdminUserStatus.values
+                options: UserStatus.values
                     .map(
                       (status) => _FilterOption(
                         value: status,
@@ -117,11 +117,11 @@ class UsersFiltersMenuButton extends StatelessWidget {
                 onChanged: (status) => setState(() => draft.status = status),
               ),
               const SizedBox(height: DesignSpacingTokens.md),
-              _FilterDropdown<AdminUserRole>(
+              _FilterDropdown<UserRole>(
                 label: l10n.usersRoleFilterLabel,
                 value: draft.role,
                 allLabel: l10n.usersRoleFilterAll,
-                options: AdminUserRole.values
+                options: UserRole.values
                     .map(
                       (role) => _FilterOption(
                         value: role,
@@ -205,8 +205,8 @@ class _UsersFilterDraft {
     createdAtTo: query.createdAtTo,
   );
 
-  AdminUserStatus? status;
-  AdminUserRole? role;
+  UserStatus? status;
+  UserRole? role;
   bool? isVerified;
   bool? isProfileCompleted;
   DateTime? createdAtFrom;

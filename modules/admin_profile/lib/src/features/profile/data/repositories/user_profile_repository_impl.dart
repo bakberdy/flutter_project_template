@@ -1,5 +1,4 @@
 import 'package:admin_profile/src/features/profile/data/datasources/user_profile_remote_data_source.dart';
-import 'package:admin_profile/src/features/profile/domain/entities/user_avatar_upload.dart';
 import 'package:admin_profile/src/features/profile/domain/repositories/user_profile_repository.dart';
 import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
@@ -85,7 +84,7 @@ class UserProfileRepositoryImpl implements UserProfileRepository {
 
   @override
   FutureEither<UserProfile> updateAvatar(
-    UserAvatarUpload avatar, {
+    AppPickedFile avatar, {
     ApiProgressCallback? onSendProgress,
   }) async {
     try {

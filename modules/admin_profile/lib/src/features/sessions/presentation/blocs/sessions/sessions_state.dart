@@ -3,7 +3,7 @@ part of 'sessions_bloc.dart';
 @freezed
 sealed class SessionsState with _$SessionsState {
   const factory SessionsState({
-    @Default(<Session>[]) List<Session> sessions,
+    @Default(<UserSession>[]) List<UserSession> sessions,
     @Default(StateStatus.initial()) StateStatus listStatus,
     Failure? transientActionFailure,
     String? revokingSessionId,

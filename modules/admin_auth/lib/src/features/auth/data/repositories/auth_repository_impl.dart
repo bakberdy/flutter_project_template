@@ -1,14 +1,9 @@
 import 'package:admin_auth/src/features/auth/data/datasources/auth_remote_data_source.dart';
-import 'package:admin_auth/src/features/auth/data/models/auth_login_request_model/auth_login_request_model.dart';
-import 'package:admin_auth/src/features/auth/data/models/verify_request_model/verify_request_model.dart';
-import 'package:admin_auth/src/features/auth/domain/entities/auth_login_request.dart';
-import 'package:admin_auth/src/features/auth/domain/entities/login_response.dart';
-import 'package:admin_auth/src/features/auth/domain/entities/verify_request.dart';
-import 'package:admin_auth/src/features/auth/domain/entities/verify_response.dart';
 import 'package:admin_auth/src/features/auth/domain/repositories/auth_repository.dart';
 import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared/shared.dart';
 
 @Singleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
@@ -18,7 +13,7 @@ class AuthRepositoryImpl implements AuthRepository {
   final TokenStorage _tokenStorage;
 
   @override
-  FutureEither<LoginResponse> login(String email) async {
+  FutureEither<AuthLoginResponse> login(String email) async {
     try {
       const device = AuthDeviceInfo(
         deviceId: 'web',
@@ -38,10 +33,10 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  FutureEither<VerifyResponse> verify(VerifyRequest request) async {
+  FutureEither<AuthVerifyResponse> verify(AuthVerifyRequest request) async {
     try {
       final model = await _remoteDataSource.verify(
-        VerifyRequestModel.fromEntity(request),
+        AuthVerifyRequestModel.fromEntity(request),
       );
       await _tokenStorage.saveAccessToken(model.accessToken);
       await _tokenStorage.saveRefreshToken(model.refreshToken);
@@ -52,7 +47,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  FutureEither<VerifyResponse> refreshToken() async {
+  FutureEither<AuthVerifyResponse> refreshToken() async {
     try {
       final refresh = await _tokenStorage.getRefreshToken();
       if (refresh == null) {

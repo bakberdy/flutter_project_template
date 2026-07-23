@@ -1,15 +1,12 @@
 import 'package:client_auth/src/common/config/constants/client_auth_api_endpoints.dart';
-import 'package:client_auth/src/features/auth/data/models/auth_login_request_model/auth_login_request_model.dart';
-import 'package:client_auth/src/features/auth/data/models/login_response_model/login_response_model.dart';
-import 'package:client_auth/src/features/auth/data/models/verify_request_model/verify_request_model.dart';
-import 'package:client_auth/src/features/auth/data/models/verify_response_model/verify_response_model.dart';
 import 'package:core/core.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared/shared.dart';
 
 abstract class AuthRemoteDataSource {
-  Future<LoginResponseModel> login(AuthLoginRequestModel request);
-  Future<VerifyResponseModel> verify(VerifyRequestModel request);
-  Future<VerifyResponseModel> refreshToken(String refreshToken);
+  Future<AuthLoginResponseModel> login(AuthLoginRequestModel request);
+  Future<AuthVerifyResponseModel> verify(AuthVerifyRequestModel request);
+  Future<AuthVerifyResponseModel> refreshToken(String refreshToken);
 }
 
 @Singleton(as: AuthRemoteDataSource)
@@ -21,25 +18,25 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final ApiClient _publicApiClient;
 
   @override
-  Future<LoginResponseModel> login(AuthLoginRequestModel request) async {
+  Future<AuthLoginResponseModel> login(AuthLoginRequestModel request) async {
     final response = await _publicApiClient.post<Map<String, dynamic>>(
       ClientAuthApiEndpoints.login,
       data: request.toJson(),
     );
-    return LoginResponseModel.fromJson(response.data!);
+    return AuthLoginResponseModel.fromJson(response.data!);
   }
 
   @override
-  Future<VerifyResponseModel> verify(VerifyRequestModel request) async {
+  Future<AuthVerifyResponseModel> verify(AuthVerifyRequestModel request) async {
     final response = await _publicApiClient.post<Map<String, dynamic>>(
       ClientAuthApiEndpoints.verifyEmail,
       data: request.toJson(),
     );
-    return VerifyResponseModel.fromJson(response.data!);
+    return AuthVerifyResponseModel.fromJson(response.data!);
   }
 
   @override
-  Future<VerifyResponseModel> refreshToken(String refreshToken) async {
+  Future<AuthVerifyResponseModel> refreshToken(String refreshToken) async {
     final response = await _publicApiClient.post<Map<String, dynamic>>(
       ClientAuthApiEndpoints.refresh,
       data: {'refresh_token': refreshToken},
@@ -47,6 +44,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         headers: {_authorizationHeader: '$_bearerPrefix $refreshToken'},
       ),
     );
-    return VerifyResponseModel.fromJson(response.data!);
+    return AuthVerifyResponseModel.fromJson(response.data!);
   }
 }

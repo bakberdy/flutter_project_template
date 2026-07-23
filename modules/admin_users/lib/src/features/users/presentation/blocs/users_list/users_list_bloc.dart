@@ -1,4 +1,3 @@
-import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
 import 'package:admin_users/src/features/users/domain/entities/users_query.dart';
 import 'package:admin_users/src/features/users/domain/usecases/get_users_use_case.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
@@ -6,6 +5,7 @@ import 'package:core/core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared/shared.dart';
 
 part 'users_list_bloc.freezed.dart';
 part 'users_list_event.dart';

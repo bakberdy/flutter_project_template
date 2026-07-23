@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:client_preferences/src/features/user_preferences/domain/analytics/user_preferences_events.dart';
-import 'package:client_preferences/src/features/user_preferences/domain/entities/user_preferences.dart';
 import 'package:client_preferences/src/features/user_preferences/domain/repositories/user_preferences_repository.dart';
 import 'package:core/core.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared/shared.dart';
 
 class SetUserLanguageUseCaseParams {
   const SetUserLanguageUseCaseParams({required this.language});

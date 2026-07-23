@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:admin_profile/src/common/presentation/extensions/admin_profile_context_x.dart';
-import 'package:admin_profile/src/features/sessions/domain/entities/session.dart';
 import 'package:admin_profile/src/features/sessions/presentation/blocs/sessions/sessions_bloc.dart';
 import 'package:admin_profile/src/features/sessions/presentation/widgets/session_list_item.dart';
 import 'package:auto_route/auto_route.dart';
@@ -182,7 +181,7 @@ class _DevicesDialogViewState extends State<DevicesDialogView>
         primaryFirst: true,
       );
 
-  String _sessionTitle(Session session) {
+  String _sessionTitle(UserSession session) {
     final device = session.device;
     return '${device.model} - ${device.os} ${device.osVersion}';
   }

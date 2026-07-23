@@ -245,7 +245,7 @@ class _StatusChanged implements UsersListEvent {
   const _StatusChanged(this.status);
   
 
- final  AdminUserStatus? status;
+ final  UserStatus? status;
 
 /// Create a copy of UsersListEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -277,7 +277,7 @@ abstract mixin class _$StatusChangedCopyWith<$Res> implements $UsersListEventCop
   factory _$StatusChangedCopyWith(_StatusChanged value, $Res Function(_StatusChanged) _then) = __$StatusChangedCopyWithImpl;
 @useResult
 $Res call({
- AdminUserStatus? status
+ UserStatus? status
 });
 
 
@@ -297,7 +297,7 @@ class __$StatusChangedCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') $Res call({Object? status = freezed,}) {
   return _then(_StatusChanged(
 freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as AdminUserStatus?,
+as UserStatus?,
   ));
 }
 
@@ -311,7 +311,7 @@ class _RoleChanged implements UsersListEvent {
   const _RoleChanged(this.role);
   
 
- final  AdminUserRole? role;
+ final  UserRole? role;
 
 /// Create a copy of UsersListEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -343,7 +343,7 @@ abstract mixin class _$RoleChangedCopyWith<$Res> implements $UsersListEventCopyW
   factory _$RoleChangedCopyWith(_RoleChanged value, $Res Function(_RoleChanged) _then) = __$RoleChangedCopyWithImpl;
 @useResult
 $Res call({
- AdminUserRole? role
+ UserRole? role
 });
 
 
@@ -363,7 +363,7 @@ class __$RoleChangedCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') $Res call({Object? role = freezed,}) {
   return _then(_RoleChanged(
 freezed == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
-as AdminUserRole?,
+as UserRole?,
   ));
 }
 
@@ -705,7 +705,7 @@ as int,
 /// @nodoc
 mixin _$UsersListState {
 
- List<AdminUser> get users; UsersQuery get query; StateStatus get status; PaginationMeta? get pagination;
+ List<User> get users; UsersQuery get query; StateStatus get status; PaginationMeta? get pagination;
 /// Create a copy of UsersListState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -736,7 +736,7 @@ abstract mixin class $UsersListStateCopyWith<$Res>  {
   factory $UsersListStateCopyWith(UsersListState value, $Res Function(UsersListState) _then) = _$UsersListStateCopyWithImpl;
 @useResult
 $Res call({
- List<AdminUser> users, UsersQuery query, StateStatus status, PaginationMeta? pagination
+ List<User> users, UsersQuery query, StateStatus status, PaginationMeta? pagination
 });
 
 
@@ -756,7 +756,7 @@ class _$UsersListStateCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? users = null,Object? query = null,Object? status = null,Object? pagination = freezed,}) {
   return _then(_self.copyWith(
 users: null == users ? _self.users : users // ignore: cast_nullable_to_non_nullable
-as List<AdminUser>,query: null == query ? _self.query : query // ignore: cast_nullable_to_non_nullable
+as List<User>,query: null == query ? _self.query : query // ignore: cast_nullable_to_non_nullable
 as UsersQuery,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as StateStatus,pagination: freezed == pagination ? _self.pagination : pagination // ignore: cast_nullable_to_non_nullable
 as PaginationMeta?,
@@ -780,11 +780,11 @@ $StateStatusCopyWith<$Res> get status {
 
 
 class _UsersListState implements UsersListState {
-  const _UsersListState({final  List<AdminUser> users = const <AdminUser>[], this.query = const UsersQuery(), this.status = const StateStatus.initial(), this.pagination}): _users = users;
+  const _UsersListState({final  List<User> users = const <User>[], this.query = const UsersQuery(), this.status = const StateStatus.initial(), this.pagination}): _users = users;
   
 
- final  List<AdminUser> _users;
-@override@JsonKey() List<AdminUser> get users {
+ final  List<User> _users;
+@override@JsonKey() List<User> get users {
   if (_users is EqualUnmodifiableListView) return _users;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_users);
@@ -824,7 +824,7 @@ abstract mixin class _$UsersListStateCopyWith<$Res> implements $UsersListStateCo
   factory _$UsersListStateCopyWith(_UsersListState value, $Res Function(_UsersListState) _then) = __$UsersListStateCopyWithImpl;
 @override @useResult
 $Res call({
- List<AdminUser> users, UsersQuery query, StateStatus status, PaginationMeta? pagination
+ List<User> users, UsersQuery query, StateStatus status, PaginationMeta? pagination
 });
 
 
@@ -844,7 +844,7 @@ class __$UsersListStateCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? users = null,Object? query = null,Object? status = null,Object? pagination = freezed,}) {
   return _then(_UsersListState(
 users: null == users ? _self._users : users // ignore: cast_nullable_to_non_nullable
-as List<AdminUser>,query: null == query ? _self.query : query // ignore: cast_nullable_to_non_nullable
+as List<User>,query: null == query ? _self.query : query // ignore: cast_nullable_to_non_nullable
 as UsersQuery,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as StateStatus,pagination: freezed == pagination ? _self.pagination : pagination // ignore: cast_nullable_to_non_nullable
 as PaginationMeta?,

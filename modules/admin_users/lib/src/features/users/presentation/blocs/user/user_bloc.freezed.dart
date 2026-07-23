@@ -340,7 +340,7 @@ as String,
 /// @nodoc
 mixin _$UserState {
 
- AdminUser? get user; AdminUserProfile? get profile; StateStatus get status; StateStatus get actionStatus;
+ User? get user; UserProfile? get profile; StateStatus get status; StateStatus get actionStatus;
 /// Create a copy of UserState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -371,7 +371,7 @@ abstract mixin class $UserStateCopyWith<$Res>  {
   factory $UserStateCopyWith(UserState value, $Res Function(UserState) _then) = _$UserStateCopyWithImpl;
 @useResult
 $Res call({
- AdminUser? user, AdminUserProfile? profile, StateStatus status, StateStatus actionStatus
+ User? user, UserProfile? profile, StateStatus status, StateStatus actionStatus
 });
 
 
@@ -391,8 +391,8 @@ class _$UserStateCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? user = freezed,Object? profile = freezed,Object? status = null,Object? actionStatus = null,}) {
   return _then(_self.copyWith(
 user: freezed == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
-as AdminUser?,profile: freezed == profile ? _self.profile : profile // ignore: cast_nullable_to_non_nullable
-as AdminUserProfile?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as User?,profile: freezed == profile ? _self.profile : profile // ignore: cast_nullable_to_non_nullable
+as UserProfile?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as StateStatus,actionStatus: null == actionStatus ? _self.actionStatus : actionStatus // ignore: cast_nullable_to_non_nullable
 as StateStatus,
   ));
@@ -427,8 +427,8 @@ class _UserState implements UserState {
   const _UserState({this.user, this.profile, this.status = const StateStatus.initial(), this.actionStatus = const StateStatus.initial()});
   
 
-@override final  AdminUser? user;
-@override final  AdminUserProfile? profile;
+@override final  User? user;
+@override final  UserProfile? profile;
 @override@JsonKey() final  StateStatus status;
 @override@JsonKey() final  StateStatus actionStatus;
 
@@ -462,7 +462,7 @@ abstract mixin class _$UserStateCopyWith<$Res> implements $UserStateCopyWith<$Re
   factory _$UserStateCopyWith(_UserState value, $Res Function(_UserState) _then) = __$UserStateCopyWithImpl;
 @override @useResult
 $Res call({
- AdminUser? user, AdminUserProfile? profile, StateStatus status, StateStatus actionStatus
+ User? user, UserProfile? profile, StateStatus status, StateStatus actionStatus
 });
 
 
@@ -482,8 +482,8 @@ class __$UserStateCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? user = freezed,Object? profile = freezed,Object? status = null,Object? actionStatus = null,}) {
   return _then(_UserState(
 user: freezed == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
-as AdminUser?,profile: freezed == profile ? _self.profile : profile // ignore: cast_nullable_to_non_nullable
-as AdminUserProfile?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as User?,profile: freezed == profile ? _self.profile : profile // ignore: cast_nullable_to_non_nullable
+as UserProfile?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as StateStatus,actionStatus: null == actionStatus ? _self.actionStatus : actionStatus // ignore: cast_nullable_to_non_nullable
 as StateStatus,
   ));

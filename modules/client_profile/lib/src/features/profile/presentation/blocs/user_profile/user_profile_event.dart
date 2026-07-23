@@ -7,7 +7,7 @@ sealed class UserProfileEvent with _$UserProfileEvent {
   const factory UserProfileEvent.profileLoaded() = UserProfileProfileLoaded;
 
   const factory UserProfileEvent.avatarUploadRequested(
-    UserAvatarUpload avatar,
+    AppPickedFile avatar,
   ) = UserProfileAvatarUploadRequested;
 
   const factory UserProfileEvent.avatarRemoveRequested() =

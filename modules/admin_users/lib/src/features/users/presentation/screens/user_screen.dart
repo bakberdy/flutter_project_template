@@ -1,5 +1,4 @@
 import 'package:admin_users/src/common/presentation/extensions/admin_users_context_x.dart';
-import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
 import 'package:admin_users/src/features/users/presentation/blocs/user/user_bloc.dart';
 import 'package:admin_users/src/features/users/presentation/widgets/user_details_view.dart';
 import 'package:auto_route/auto_route.dart';
@@ -97,7 +96,7 @@ class _UserScreenState extends State<UserScreen> {
                         ],
                       ),
                     ),
-                    (final AdminUser user, _) => UserDetailsView(
+                    (final User user, _) => UserDetailsView(
                       user: user,
                       profile: state.profile,
                       actionLoading: state.actionStatus.isLoading,

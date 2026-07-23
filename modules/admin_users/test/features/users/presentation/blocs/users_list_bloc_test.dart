@@ -1,4 +1,3 @@
-import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
 import 'package:admin_users/src/features/users/domain/entities/users_query.dart';
 import 'package:admin_users/src/features/users/domain/repositories/users_repository.dart';
 import 'package:admin_users/src/features/users/domain/usecases/get_users_use_case.dart';
@@ -8,6 +7,7 @@ import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:shared/shared.dart';
 
 void main() {
   late _MockUsersRepository repository;
@@ -40,8 +40,8 @@ void main() {
     seed: () => const UsersListState(
       query: UsersQuery(
         pageNumber: 3,
-        status: AdminUserStatus.blocked,
-        role: AdminUserRole.admin,
+        status: UserStatus.blocked,
+        role: UserRole.admin,
         isVerified: true,
         isProfileCompleted: false,
         search: 'admin@example.com',
@@ -62,8 +62,8 @@ void main() {
       expect(query.pageNumber, 1);
       expect(query.sortField, UsersSortField.email);
       expect(query.sortDirection, UsersSortDirection.ascending);
-      expect(query.status, AdminUserStatus.blocked);
-      expect(query.role, AdminUserRole.admin);
+      expect(query.status, UserStatus.blocked);
+      expect(query.role, UserRole.admin);
       expect(query.isVerified, isTrue);
       expect(query.isProfileCompleted, isFalse);
       expect(query.search, 'admin@example.com');
@@ -131,11 +131,11 @@ void main() {
     build: () => UsersListBloc(GetUsersUseCase(repository)),
     seed: () => const UsersListState(query: UsersQuery(pageNumber: 3)),
     act: (bloc) =>
-        bloc.add(const UsersListEvent.statusChanged(AdminUserStatus.active)),
+        bloc.add(const UsersListEvent.statusChanged(UserStatus.active)),
     verify: (_) {
       final query = _capturedQuery(repository);
       expect(query.pageNumber, 1);
-      expect(query.status, AdminUserStatus.active);
+      expect(query.status, UserStatus.active);
     },
   );
 
@@ -143,7 +143,7 @@ void main() {
     'clears the active status and resets the page',
     build: () => UsersListBloc(GetUsersUseCase(repository)),
     seed: () => const UsersListState(
-      query: UsersQuery(pageNumber: 3, status: AdminUserStatus.active),
+      query: UsersQuery(pageNumber: 3, status: UserStatus.active),
     ),
     act: (bloc) => bloc.add(const UsersListEvent.statusChanged(null)),
     verify: (_) {
@@ -157,9 +157,9 @@ void main() {
     'does not request the active status again',
     build: () => UsersListBloc(GetUsersUseCase(repository)),
     seed: () =>
-        const UsersListState(query: UsersQuery(status: AdminUserStatus.active)),
+        const UsersListState(query: UsersQuery(status: UserStatus.active)),
     act: (bloc) =>
-        bloc.add(const UsersListEvent.statusChanged(AdminUserStatus.active)),
+        bloc.add(const UsersListEvent.statusChanged(UserStatus.active)),
     verify: (_) => _verifyNoGetUsers(repository),
   );
 
@@ -167,12 +167,11 @@ void main() {
     'filters by role and resets the page',
     build: () => UsersListBloc(GetUsersUseCase(repository)),
     seed: () => const UsersListState(query: UsersQuery(pageNumber: 3)),
-    act: (bloc) =>
-        bloc.add(const UsersListEvent.roleChanged(AdminUserRole.admin)),
+    act: (bloc) => bloc.add(const UsersListEvent.roleChanged(UserRole.admin)),
     verify: (_) {
       final query = _capturedQuery(repository);
       expect(query.pageNumber, 1);
-      expect(query.role, AdminUserRole.admin);
+      expect(query.role, UserRole.admin);
     },
   );
 
@@ -228,8 +227,8 @@ void main() {
       UsersListEvent.filtersChanged(
         UsersQuery(
           pageNumber: 3,
-          status: AdminUserStatus.active,
-          role: AdminUserRole.admin,
+          status: UserStatus.active,
+          role: UserRole.admin,
           isVerified: true,
           isProfileCompleted: false,
           createdAtFrom: DateTime.utc(2026, 6),
@@ -240,8 +239,8 @@ void main() {
     verify: (_) {
       final query = _capturedQuery(repository);
       expect(query.pageNumber, 1);
-      expect(query.status, AdminUserStatus.active);
-      expect(query.role, AdminUserRole.admin);
+      expect(query.status, UserStatus.active);
+      expect(query.role, UserRole.admin);
       expect(query.isVerified, isTrue);
       expect(query.isProfileCompleted, isFalse);
       expect(query.createdAtFrom, DateTime.utc(2026, 6));
@@ -250,7 +249,7 @@ void main() {
   );
 }
 
-const _emptyUsersPage = Right<Failure, PaginatedResponse<AdminUser>>(
+const _emptyUsersPage = Right<Failure, PaginatedResponse<User>>(
   PaginatedResponse(
     items: [],
     pagination: PaginationMeta(

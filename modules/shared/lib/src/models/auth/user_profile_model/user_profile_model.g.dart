@@ -14,7 +14,7 @@ UserProfileModel _$UserProfileModelFromJson(Map<String, dynamic> json) =>
       fullName: json['full_name'] as String,
       createdAt: DateTime.parse(json['created_at'] as String),
       updatedAt: DateTime.parse(json['updated_at'] as String),
-      phoneNumberDto: json['phone_number'] == null
+      phoneNumber: json['phone_number'] == null
           ? null
           : UserPhoneNumberModel.fromJson(
               json['phone_number'] as Map<String, dynamic>,
@@ -33,5 +33,5 @@ Map<String, dynamic> _$UserProfileModelToJson(UserProfileModel instance) =>
       'created_at': instance.createdAt.toIso8601String(),
       'updated_at': instance.updatedAt.toIso8601String(),
       'completed_at': instance.completedAt?.toIso8601String(),
-      'phone_number': instance.phoneNumberDto,
+      'phone_number': instance.phoneNumber?.toJson(),
     };

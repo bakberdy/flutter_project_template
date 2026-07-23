@@ -1,8 +1,7 @@
 import 'package:client_preferences/src/common/config/constants/client_preferences_api_endpoints.dart';
-import 'package:client_preferences/src/features/user_preferences/data/models/user_preferences_model/user_preferences_model.dart';
-import 'package:client_preferences/src/features/user_preferences/domain/entities/user_preferences.dart';
 import 'package:core/core.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared/shared.dart';
 
 abstract class UserPreferencesRemoteDataSource {
   Future<UserPreferencesModel> getPreferences();

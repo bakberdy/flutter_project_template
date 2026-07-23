@@ -3,12 +3,11 @@ import 'dart:async';
 import 'package:client_preferences/src/common/config/constants/client_preferences_constants.dart';
 import 'package:client_preferences/src/features/user_preferences/data/datasources/user_preferences_local_data_source.dart';
 import 'package:client_preferences/src/features/user_preferences/data/datasources/user_preferences_remote_data_source.dart';
-import 'package:client_preferences/src/features/user_preferences/data/models/user_preferences_model/user_preferences_model.dart';
-import 'package:client_preferences/src/features/user_preferences/domain/entities/user_preferences.dart';
 import 'package:client_preferences/src/features/user_preferences/domain/repositories/user_preferences_repository.dart';
 import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared/shared.dart';
 
 @Singleton(as: UserPreferencesRepository)
 class UserPreferencesRepositoryImpl implements UserPreferencesRepository {

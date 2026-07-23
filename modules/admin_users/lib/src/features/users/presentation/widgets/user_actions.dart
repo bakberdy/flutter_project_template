@@ -1,7 +1,7 @@
 import 'package:admin_users/src/common/presentation/extensions/admin_users_context_x.dart';
-import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/shared.dart';
 
 class UserActions extends StatelessWidget {
   const UserActions({
@@ -13,7 +13,7 @@ class UserActions extends StatelessWidget {
     super.key,
   });
 
-  final AdminUser user;
+  final User user;
   final bool loading;
   final VoidCallback onApproveDeletionRequest;
   final VoidCallback onBlockUser;
@@ -22,11 +22,10 @@ class UserActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final canApproveDeletion = user.status == AdminUserStatus.deletionRequested;
+    final canApproveDeletion = user.status == UserStatus.deletionRequested;
     final canBlock =
-        user.status != AdminUserStatus.blocked &&
-        user.status != AdminUserStatus.deleted;
-    final canUnblock = user.status == AdminUserStatus.blocked;
+        user.status != UserStatus.blocked && user.status != UserStatus.deleted;
+    final canUnblock = user.status == UserStatus.blocked;
 
     if (!canApproveDeletion && !canBlock && !canUnblock) {
       return const SizedBox.shrink();

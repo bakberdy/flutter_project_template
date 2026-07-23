@@ -1,8 +1,5 @@
 import 'package:admin_users/gen/l10n/admin_users_localizations.dart';
 import 'package:admin_users/src/common/presentation/extensions/admin_users_context_x.dart';
-import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
-import 'package:admin_users/src/features/users/domain/entities/admin_user_phone_number.dart';
-import 'package:admin_users/src/features/users/domain/entities/admin_user_profile.dart';
 import 'package:admin_users/src/features/users/presentation/extensions/admin_user_localization_x.dart';
 import 'package:admin_users/src/features/users/presentation/widgets/user_actions.dart';
 import 'package:admin_users/src/features/users/presentation/widgets/user_header_card.dart';
@@ -10,6 +7,7 @@ import 'package:admin_users/src/features/users/presentation/widgets/user_info_ca
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared/shared.dart';
 
 class UserDetailsView extends StatelessWidget {
   const UserDetailsView({
@@ -22,8 +20,8 @@ class UserDetailsView extends StatelessWidget {
     super.key,
   });
 
-  final AdminUser user;
-  final AdminUserProfile? profile;
+  final User user;
+  final UserProfile? profile;
   final bool actionLoading;
   final VoidCallback onApproveDeletionRequest;
   final VoidCallback onBlockUser;
@@ -35,7 +33,7 @@ class UserDetailsView extends StatelessWidget {
     final dateFormat = DateFormat.yMd(l10n.localeName).add_Hm();
     final profile = this.profile;
     final completedAt = profile?.completedAt;
-    final hasActions = user.status != AdminUserStatus.deleted;
+    final hasActions = user.status != UserStatus.deleted;
     final userCard = UserInfoCard(
       title: l10n.userCardTitle,
       rows: [
@@ -131,7 +129,7 @@ class UserDetailsView extends StatelessWidget {
   }
 
   String _phone(
-    AdminUserPhoneNumber? phoneNumber,
+    UserPhoneNumber? phoneNumber,
     AdminUsersLocalizations l10n,
   ) {
     if (phoneNumber == null) {

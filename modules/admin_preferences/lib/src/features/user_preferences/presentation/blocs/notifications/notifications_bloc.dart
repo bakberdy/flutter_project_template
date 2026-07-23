@@ -1,10 +1,10 @@
-import 'package:admin_preferences/src/features/user_preferences/domain/entities/user_preferences.dart';
 import 'package:admin_preferences/src/features/user_preferences/domain/usecases/get_user_preferences_use_case.dart';
 import 'package:admin_preferences/src/features/user_preferences/domain/usecases/set_user_notifications_use_case.dart';
 import 'package:core/core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared/shared.dart';
 
 part 'notifications_bloc.freezed.dart';
 part 'notifications_event.dart';

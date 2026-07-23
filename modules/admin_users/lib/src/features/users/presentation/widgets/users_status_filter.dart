@@ -1,8 +1,8 @@
 import 'package:admin_users/src/common/presentation/extensions/admin_users_context_x.dart';
-import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
 import 'package:admin_users/src/features/users/presentation/extensions/admin_user_localization_x.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/shared.dart';
 
 class UsersStatusFilter extends StatelessWidget {
   const UsersStatusFilter({
@@ -12,8 +12,8 @@ class UsersStatusFilter extends StatelessWidget {
     this.enabled = true,
   });
 
-  final AdminUserStatus? value;
-  final ValueChanged<AdminUserStatus?> onChanged;
+  final UserStatus? value;
+  final ValueChanged<UserStatus?> onChanged;
   final bool enabled;
 
   @override
@@ -37,7 +37,7 @@ class UsersStatusFilter extends StatelessWidget {
         : colorScheme.primaryContainer.withValues(alpha: 0.24);
     final borderRadius = BorderRadius.circular(DesignRadiusTokens.md);
 
-    return PopupMenuButton<AdminUserStatus?>(
+    return PopupMenuButton<UserStatus?>(
       enabled: enabled,
       tooltip: l10n.usersStatusFilterLabel,
       offset: const Offset(0, DesignSpacingTokens.xs),
@@ -46,11 +46,11 @@ class UsersStatusFilter extends StatelessWidget {
       borderRadius: borderRadius,
       shape: RoundedRectangleBorder(borderRadius: borderRadius),
       itemBuilder: (context) => [
-        PopupMenuItem<AdminUserStatus?>(
+        PopupMenuItem<UserStatus?>(
           child: Text(l10n.usersStatusFilterAll),
         ),
-        ...AdminUserStatus.values.map(
-          (status) => PopupMenuItem<AdminUserStatus?>(
+        ...UserStatus.values.map(
+          (status) => PopupMenuItem<UserStatus?>(
             value: status,
             child: Text(status.localizedName(l10n)),
           ),

@@ -1,11 +1,10 @@
 import 'package:admin_users/src/features/users/data/datasources/users_remote_data_source.dart';
 import 'package:admin_users/src/features/users/data/services/users_repository_request_handler.dart';
-import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
-import 'package:admin_users/src/features/users/domain/entities/admin_user_profile.dart';
 import 'package:admin_users/src/features/users/domain/entities/users_query.dart';
 import 'package:admin_users/src/features/users/domain/repositories/users_repository.dart';
 import 'package:core/core.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared/shared.dart';
 
 @Singleton(as: UsersRepository)
 class UsersRepositoryImpl implements UsersRepository {
@@ -15,48 +14,46 @@ class UsersRepositoryImpl implements UsersRepository {
   final UsersRepositoryRequestHandler _handler;
 
   @override
-  FutureEither<PaginatedResponse<AdminUser>> getUsers(UsersQuery query) =>
+  FutureEither<PaginatedResponse<User>> getUsers(UsersQuery query) =>
       _handler.execute(() async {
         final response = await _remoteDataSource.getUsers(query);
-        return PaginatedResponse<AdminUser>(
+        return PaginatedResponse<User>(
           items: response.items,
           pagination: response.pagination,
         );
       }, source: '$runtimeType.getUsers');
 
   @override
-  FutureEither<AdminUser> getUser(String userId) => _handler.execute(
+  FutureEither<User> getUser(String userId) => _handler.execute(
     () => _remoteDataSource.getUser(userId),
     source: '$runtimeType.getUser',
   );
 
   @override
-  FutureEither<AdminUserProfile> getUserProfile(String userId) =>
-      _handler.execute(
-        () => _remoteDataSource.getUserProfile(userId),
-        source: '$runtimeType.getUserProfile',
-      );
+  FutureEither<UserProfile> getUserProfile(String userId) => _handler.execute(
+    () => _remoteDataSource.getUserProfile(userId),
+    source: '$runtimeType.getUserProfile',
+  );
 
   @override
-  FutureEither<AdminUser> changeUserStatus(
+  FutureEither<User> changeUserStatus(
     String userId,
-    AdminUserStatus status,
+    UserStatus status,
   ) => _handler.execute(
     () => _remoteDataSource.changeUserStatus(userId, status),
     source: '$runtimeType.changeUserStatus',
   );
 
   @override
-  FutureEither<AdminUser> changeUserRole(String userId, AdminUserRole role) =>
+  FutureEither<User> changeUserRole(String userId, UserRole role) =>
       _handler.execute(
         () => _remoteDataSource.changeUserRole(userId, role),
         source: '$runtimeType.changeUserRole',
       );
 
   @override
-  FutureEither<AdminUser> approveDeletionRequest(String userId) =>
-      _handler.execute(
-        () => _remoteDataSource.approveDeletionRequest(userId),
-        source: '$runtimeType.approveDeletionRequest',
-      );
+  FutureEither<User> approveDeletionRequest(String userId) => _handler.execute(
+    () => _remoteDataSource.approveDeletionRequest(userId),
+    source: '$runtimeType.approveDeletionRequest',
+  );
 }

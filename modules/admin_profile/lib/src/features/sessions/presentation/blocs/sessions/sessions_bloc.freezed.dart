@@ -239,7 +239,7 @@ String toString() {
 /// @nodoc
 mixin _$SessionsState {
 
- List<Session> get sessions; StateStatus get listStatus; Failure? get transientActionFailure; String? get revokingSessionId; bool get revokingAll; bool get navigateToAuthAfterRevokeAll;
+ List<UserSession> get sessions; StateStatus get listStatus; Failure? get transientActionFailure; String? get revokingSessionId; bool get revokingAll; bool get navigateToAuthAfterRevokeAll;
 /// Create a copy of SessionsState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -270,7 +270,7 @@ abstract mixin class $SessionsStateCopyWith<$Res>  {
   factory $SessionsStateCopyWith(SessionsState value, $Res Function(SessionsState) _then) = _$SessionsStateCopyWithImpl;
 @useResult
 $Res call({
- List<Session> sessions, StateStatus listStatus, Failure? transientActionFailure, String? revokingSessionId, bool revokingAll, bool navigateToAuthAfterRevokeAll
+ List<UserSession> sessions, StateStatus listStatus, Failure? transientActionFailure, String? revokingSessionId, bool revokingAll, bool navigateToAuthAfterRevokeAll
 });
 
 
@@ -290,7 +290,7 @@ class _$SessionsStateCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? sessions = null,Object? listStatus = null,Object? transientActionFailure = freezed,Object? revokingSessionId = freezed,Object? revokingAll = null,Object? navigateToAuthAfterRevokeAll = null,}) {
   return _then(_self.copyWith(
 sessions: null == sessions ? _self.sessions : sessions // ignore: cast_nullable_to_non_nullable
-as List<Session>,listStatus: null == listStatus ? _self.listStatus : listStatus // ignore: cast_nullable_to_non_nullable
+as List<UserSession>,listStatus: null == listStatus ? _self.listStatus : listStatus // ignore: cast_nullable_to_non_nullable
 as StateStatus,transientActionFailure: freezed == transientActionFailure ? _self.transientActionFailure : transientActionFailure // ignore: cast_nullable_to_non_nullable
 as Failure?,revokingSessionId: freezed == revokingSessionId ? _self.revokingSessionId : revokingSessionId // ignore: cast_nullable_to_non_nullable
 as String?,revokingAll: null == revokingAll ? _self.revokingAll : revokingAll // ignore: cast_nullable_to_non_nullable
@@ -316,11 +316,11 @@ $StateStatusCopyWith<$Res> get listStatus {
 
 
 class _SessionsState implements SessionsState {
-  const _SessionsState({final  List<Session> sessions = const <Session>[], this.listStatus = const StateStatus.initial(), this.transientActionFailure, this.revokingSessionId, this.revokingAll = false, this.navigateToAuthAfterRevokeAll = false}): _sessions = sessions;
+  const _SessionsState({final  List<UserSession> sessions = const <UserSession>[], this.listStatus = const StateStatus.initial(), this.transientActionFailure, this.revokingSessionId, this.revokingAll = false, this.navigateToAuthAfterRevokeAll = false}): _sessions = sessions;
   
 
- final  List<Session> _sessions;
-@override@JsonKey() List<Session> get sessions {
+ final  List<UserSession> _sessions;
+@override@JsonKey() List<UserSession> get sessions {
   if (_sessions is EqualUnmodifiableListView) return _sessions;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_sessions);
@@ -362,7 +362,7 @@ abstract mixin class _$SessionsStateCopyWith<$Res> implements $SessionsStateCopy
   factory _$SessionsStateCopyWith(_SessionsState value, $Res Function(_SessionsState) _then) = __$SessionsStateCopyWithImpl;
 @override @useResult
 $Res call({
- List<Session> sessions, StateStatus listStatus, Failure? transientActionFailure, String? revokingSessionId, bool revokingAll, bool navigateToAuthAfterRevokeAll
+ List<UserSession> sessions, StateStatus listStatus, Failure? transientActionFailure, String? revokingSessionId, bool revokingAll, bool navigateToAuthAfterRevokeAll
 });
 
 
@@ -382,7 +382,7 @@ class __$SessionsStateCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? sessions = null,Object? listStatus = null,Object? transientActionFailure = freezed,Object? revokingSessionId = freezed,Object? revokingAll = null,Object? navigateToAuthAfterRevokeAll = null,}) {
   return _then(_SessionsState(
 sessions: null == sessions ? _self._sessions : sessions // ignore: cast_nullable_to_non_nullable
-as List<Session>,listStatus: null == listStatus ? _self.listStatus : listStatus // ignore: cast_nullable_to_non_nullable
+as List<UserSession>,listStatus: null == listStatus ? _self.listStatus : listStatus // ignore: cast_nullable_to_non_nullable
 as StateStatus,transientActionFailure: freezed == transientActionFailure ? _self.transientActionFailure : transientActionFailure // ignore: cast_nullable_to_non_nullable
 as Failure?,revokingSessionId: freezed == revokingSessionId ? _self.revokingSessionId : revokingSessionId // ignore: cast_nullable_to_non_nullable
 as String?,revokingAll: null == revokingAll ? _self.revokingAll : revokingAll // ignore: cast_nullable_to_non_nullable

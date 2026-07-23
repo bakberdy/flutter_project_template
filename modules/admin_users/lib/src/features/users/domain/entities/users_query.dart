@@ -1,5 +1,5 @@
-import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
 import 'package:equatable/equatable.dart';
+import 'package:shared/shared.dart';
 
 enum UsersSortDirection { ascending, descending }
 
@@ -32,8 +32,8 @@ class UsersQuery extends Equatable {
   final int limit;
   final UsersSortDirection sortDirection;
   final UsersSortField sortField;
-  final AdminUserStatus? status;
-  final AdminUserRole? role;
+  final UserStatus? status;
+  final UserRole? role;
   final bool? isVerified;
   final bool? isProfileCompleted;
   final DateTime? createdAtFrom;
@@ -45,8 +45,8 @@ class UsersQuery extends Equatable {
     int? limit,
     UsersSortDirection? sortDirection,
     UsersSortField? sortField,
-    AdminUserStatus? status,
-    AdminUserRole? role,
+    UserStatus? status,
+    UserRole? role,
     bool? isVerified,
     bool? isProfileCompleted,
     DateTime? createdAtFrom,
@@ -66,9 +66,9 @@ class UsersQuery extends Equatable {
   );
 
   UsersQuery copyWithFilters({
-    AdminUserStatus? status,
+    UserStatus? status,
     bool clearStatus = false,
-    AdminUserRole? role,
+    UserRole? role,
     bool clearRole = false,
     bool? isVerified,
     bool clearIsVerified = false,

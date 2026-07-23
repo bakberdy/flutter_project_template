@@ -1,5 +1,3 @@
-import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
-import 'package:admin_users/src/features/users/domain/entities/admin_user_profile.dart';
 import 'package:admin_users/src/features/users/domain/usecases/approve_user_deletion_request_use_case.dart';
 import 'package:admin_users/src/features/users/domain/usecases/change_user_status_use_case.dart';
 import 'package:admin_users/src/features/users/domain/usecases/get_user_profile_use_case.dart';
@@ -9,6 +7,7 @@ import 'package:core/core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared/shared.dart';
 
 part 'user_bloc.freezed.dart';
 part 'user_event.dart';
@@ -94,16 +93,16 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   Future<void> _onBlocked(_Blocked event, Emitter<UserState> emit) async {
-    await _changeStatus(event.userId, AdminUserStatus.blocked, emit);
+    await _changeStatus(event.userId, UserStatus.blocked, emit);
   }
 
   Future<void> _onUnblocked(_Unblocked event, Emitter<UserState> emit) async {
-    await _changeStatus(event.userId, AdminUserStatus.active, emit);
+    await _changeStatus(event.userId, UserStatus.active, emit);
   }
 
   Future<void> _changeStatus(
     String userId,
-    AdminUserStatus status,
+    UserStatus status,
     Emitter<UserState> emit,
   ) async {
     emit(state.copyWith(actionStatus: const StateStatus.loading()));

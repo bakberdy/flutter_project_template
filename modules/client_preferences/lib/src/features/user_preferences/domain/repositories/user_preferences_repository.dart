@@ -1,5 +1,5 @@
-import 'package:client_preferences/src/features/user_preferences/domain/entities/user_preferences.dart';
 import 'package:core/core.dart';
+import 'package:shared/shared.dart';
 
 abstract class UserPreferencesRepository {
   FutureEither<UserPreferences?> getPreferences();

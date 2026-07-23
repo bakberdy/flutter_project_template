@@ -37,46 +37,67 @@ import 'package:core/core.dart' as _i494;
 import 'package:injectable/injectable.dart' as _i526;
 
 class ClientPreferencesPackageModule extends _i526.MicroPackageModule {
-// initializes the registration of main-scope dependencies inside of GetIt
+  // initializes the registration of main-scope dependencies inside of GetIt
   @override
   _i687.FutureOr<void> init(_i526.GetItHelper gh) {
-    gh.singleton<_i937.UserPreferencesLocalDataSource>(() =>
-        _i937.UserPreferencesLocalDataSourceImpl(
-            localStorage: gh<_i494.LocalStorage>()));
-    gh.singleton<_i669.UserPreferencesRemoteDataSource>(() =>
-        _i669.UserPreferencesRemoteDataSourceImpl(
-            gh<_i494.ApiClient>(instanceName: 'protectedApiClient')));
+    gh.singleton<_i937.UserPreferencesLocalDataSource>(
+      () => _i937.UserPreferencesLocalDataSourceImpl(
+        localStorage: gh<_i494.LocalStorage>(),
+      ),
+    );
+    gh.singleton<_i669.UserPreferencesRemoteDataSource>(
+      () => _i669.UserPreferencesRemoteDataSourceImpl(
+        gh<_i494.ApiClient>(instanceName: 'protectedApiClient'),
+      ),
+    );
     gh.lazySingleton<_i176.AcceptLanguageHeadersProvider>(
-        () => _i176.AcceptLanguageHeadersProvider(gh<_i494.LocalStorage>()));
+      () => _i176.AcceptLanguageHeadersProvider(gh<_i494.LocalStorage>()),
+    );
     gh.singleton<_i796.UserPreferencesRepository>(
-        () => _i233.UserPreferencesRepositoryImpl(
-              gh<_i937.UserPreferencesLocalDataSource>(),
-              gh<_i669.UserPreferencesRemoteDataSource>(),
-            ));
-    gh.lazySingleton<_i973.GetUserLanguageUseCase>(() =>
-        _i973.GetUserLanguageUseCase(gh<_i796.UserPreferencesRepository>()));
-    gh.lazySingleton<_i922.GetUserPreferencesUseCase>(() =>
-        _i922.GetUserPreferencesUseCase(gh<_i796.UserPreferencesRepository>()));
+      () => _i233.UserPreferencesRepositoryImpl(
+        gh<_i937.UserPreferencesLocalDataSource>(),
+        gh<_i669.UserPreferencesRemoteDataSource>(),
+      ),
+    );
+    gh.lazySingleton<_i973.GetUserLanguageUseCase>(
+      () => _i973.GetUserLanguageUseCase(gh<_i796.UserPreferencesRepository>()),
+    );
+    gh.lazySingleton<_i922.GetUserPreferencesUseCase>(
+      () => _i922.GetUserPreferencesUseCase(
+        gh<_i796.UserPreferencesRepository>(),
+      ),
+    );
     gh.lazySingleton<_i434.GetUserThemeUseCase>(
-        () => _i434.GetUserThemeUseCase(gh<_i796.UserPreferencesRepository>()));
-    gh.lazySingleton<_i73.SetUserLanguageUseCase>(() =>
-        _i73.SetUserLanguageUseCase(gh<_i796.UserPreferencesRepository>()));
-    gh.lazySingleton<_i189.SetUserNotificationsUseCase>(() =>
-        _i189.SetUserNotificationsUseCase(
-            gh<_i796.UserPreferencesRepository>()));
+      () => _i434.GetUserThemeUseCase(gh<_i796.UserPreferencesRepository>()),
+    );
+    gh.lazySingleton<_i73.SetUserLanguageUseCase>(
+      () => _i73.SetUserLanguageUseCase(gh<_i796.UserPreferencesRepository>()),
+    );
+    gh.lazySingleton<_i189.SetUserNotificationsUseCase>(
+      () => _i189.SetUserNotificationsUseCase(
+        gh<_i796.UserPreferencesRepository>(),
+      ),
+    );
     gh.lazySingleton<_i212.SetUserThemeUseCase>(
-        () => _i212.SetUserThemeUseCase(gh<_i796.UserPreferencesRepository>()));
-    gh.factory<_i1005.LocaleBloc>(() => _i1005.LocaleBloc(
-          gh<_i973.GetUserLanguageUseCase>(),
-          gh<_i73.SetUserLanguageUseCase>(),
-        ));
-    gh.factory<_i8.NotificationsBloc>(() => _i8.NotificationsBloc(
-          gh<_i922.GetUserPreferencesUseCase>(),
-          gh<_i189.SetUserNotificationsUseCase>(),
-        ));
-    gh.factory<_i86.ThemeBloc>(() => _i86.ThemeBloc(
-          gh<_i434.GetUserThemeUseCase>(),
-          gh<_i212.SetUserThemeUseCase>(),
-        ));
+      () => _i212.SetUserThemeUseCase(gh<_i796.UserPreferencesRepository>()),
+    );
+    gh.factory<_i1005.LocaleBloc>(
+      () => _i1005.LocaleBloc(
+        gh<_i973.GetUserLanguageUseCase>(),
+        gh<_i73.SetUserLanguageUseCase>(),
+      ),
+    );
+    gh.factory<_i8.NotificationsBloc>(
+      () => _i8.NotificationsBloc(
+        gh<_i922.GetUserPreferencesUseCase>(),
+        gh<_i189.SetUserNotificationsUseCase>(),
+      ),
+    );
+    gh.factory<_i86.ThemeBloc>(
+      () => _i86.ThemeBloc(
+        gh<_i434.GetUserThemeUseCase>(),
+        gh<_i212.SetUserThemeUseCase>(),
+      ),
+    );
   }
 }

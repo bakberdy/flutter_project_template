@@ -1,6 +1,5 @@
 import 'package:admin_preferences/src/common/config/constants/admin_preferences_constants.dart';
 import 'package:admin_preferences/src/common/presentation/extensions/admin_preferences_context_x.dart';
-import 'package:admin_preferences/src/features/user_preferences/domain/entities/user_preferences.dart';
 import 'package:admin_preferences/src/features/user_preferences/presentation/blocs/locale/locale_bloc.dart';
 import 'package:admin_preferences/src/features/user_preferences/presentation/blocs/theme/theme_bloc.dart';
 import 'package:core/core.dart';
