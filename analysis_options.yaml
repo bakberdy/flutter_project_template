@@ -1,5 +1,14 @@
 include: package:very_good_analysis/analysis_options.10.0.0.yaml
 
+plugins:
+  project_lints:
+    path: ./packages/project_lints
+    diagnostics:
+      class_name_matches_file_name: error
+      common_feature_import: error
+      cross_feature_import: error
+      invalid_module_dependency: error
+
 analyzer:
   errors:
     no_runtimetype_tostring: ignore
@@ -77,9 +86,3 @@ linter:
     public_member_api_docs: false
     sort_pub_dependencies: false
     
-
-
-
-
-
-

@@ -1,5 +1,5 @@
 import 'package:admin_auth/src/features/auth/data/models/auth_login_request_model/auth_login_request_model.dart';
-import 'package:admin_auth/src/features/auth/data/models/authorization_verify_request_model/authorization_verify_request_model.dart';
+import 'package:admin_auth/src/features/auth/data/models/verify_request_model/verify_request_model.dart';
 import 'package:admin_auth/src/features/auth/domain/entities/auth_login_request.dart';
 import 'package:admin_auth/src/features/auth/domain/entities/verify_request.dart';
 import 'package:flutter_test/flutter_test.dart';

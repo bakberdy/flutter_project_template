@@ -8,6 +8,7 @@ environment:
 workspace:
   - apps/client_app
   - apps/admin_app
+  - packages/project_lints
   - modules/core
   - modules/design_system
   - modules/shared

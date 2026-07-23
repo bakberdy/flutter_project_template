@@ -17,6 +17,7 @@ export 'src/dialogs/bottom_sheet/base_otp_verification_bottom_sheet.dart';
 export 'src/dialogs/bottom_sheet/bottom_sheet_list.dart';
 export 'src/extensions/build_context_design_x.dart';
 export 'src/extensions/design_system_localization_x.dart';
+export 'src/extensions/ds_context_assets.dart';
 export 'src/images/base_cached_network_image.dart';
 export 'src/images/user_avatar.dart';
 export 'src/inputs/base_input_field.dart';

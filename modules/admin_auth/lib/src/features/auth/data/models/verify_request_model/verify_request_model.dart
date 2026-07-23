@@ -1,7 +1,7 @@
 import 'package:admin_auth/src/features/auth/domain/entities/verify_request.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'authorization_verify_request_model.g.dart';
+part 'verify_request_model.g.dart';
 
 @JsonSerializable(createFactory: false, fieldRename: FieldRename.snake)
 class VerifyRequestModel {

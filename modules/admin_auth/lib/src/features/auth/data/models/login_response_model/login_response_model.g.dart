@@ -2,7 +2,7 @@
 
 // ignore_for_file: unnecessary_null_checks, document_ignores
 
-part of 'authorization_login_response_model.dart';
+part of 'login_response_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

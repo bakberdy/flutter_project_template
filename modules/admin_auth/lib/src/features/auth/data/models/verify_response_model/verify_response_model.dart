@@ -1,7 +1,7 @@
 import 'package:admin_auth/src/features/auth/domain/entities/verify_response.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'authorization_verify_response_model.g.dart';
+part 'verify_response_model.g.dart';
 
 @JsonSerializable(createToJson: false)
 class VerifyResponseModel extends VerifyResponse {

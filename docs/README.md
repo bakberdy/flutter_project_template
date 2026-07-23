@@ -19,14 +19,14 @@ Local module dependency rules are configured in the repository-root
 - `shared` may depend only on `core` and `design_system`.
 - Applications compose business modules through their public APIs.
 
-The validator checks `dependencies`, `dev_dependencies`, and
+The analyzer checks `dependencies`, `dev_dependencies`, and
 `dependency_overrides`. Packages not listed under `architecture.yaml.modules`
 are treated as external dependencies.
 
-Run the validator from the repository root:
+Run analysis from the repository root:
 
 ```bash
-dart run tool/validation/validate_module_dependencies.dart
+dart analyze
 ```
 
 When adding a business module:

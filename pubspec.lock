@@ -9,6 +9,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "96.0.0"
+  analysis_server_plugin:
+    dependency: transitive
+    description:
+      name: analysis_server_plugin
+      sha256: c9611c4b053f868434400e734c594a7e8464f307f8eaf7ff266d903cd2d615c0
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.10"
   analyzer:
     dependency: transitive
     description:
@@ -17,6 +25,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "10.2.0"
+  analyzer_plugin:
+    dependency: transitive
+    description:
+      name: analyzer_plugin
+      sha256: a886aaa94fb128ffe9cf5ee2495d9ef42ef129fe2e265b84b8820987ca15f4cd
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.14.4"
+  analyzer_testing:
+    dependency: transitive
+    description:
+      name: analyzer_testing
+      sha256: f786e7168661a8e6488fc2c21caba42467dc0061a24e0225b6470216977b4550
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.1"
   ansicolor:
     dependency: transitive
     description:
@@ -1602,6 +1626,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.3"
+  yaml_edit:
+    dependency: transitive
+    description:
+      name: yaml_edit
+      sha256: "07c9e63ba42519745182b88ca12264a7ba2484d8239958778dfe4d44fe760488"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.4"
 sdks:
   dart: ">=3.12.0 <4.0.0"
   flutter: ">=3.44.0"

@@ -6,10 +6,3 @@ final class GetAppInfoFailure extends Failure {
     super.details,
   });
 }
-
-final class GetDeviceInfoFailure extends Failure {
-  const GetDeviceInfoFailure({
-    required super.source,
-    super.details,
-  });
-}

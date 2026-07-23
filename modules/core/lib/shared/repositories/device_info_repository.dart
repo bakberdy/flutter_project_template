@@ -1,4 +1,5 @@
-import 'package:core/domain/failures/device_info_failure.dart';
+import 'package:core/domain/failures/get_app_info_failure.dart';
+import 'package:core/domain/failures/get_device_info_failure.dart';
 import 'package:core/shared/entities/app_device_info.dart';
 import 'package:core/shared/entities/app_info.dart';
 import 'package:core/shared/services/device_info_service.dart';

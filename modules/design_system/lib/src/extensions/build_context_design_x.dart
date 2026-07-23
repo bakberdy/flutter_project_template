@@ -1,4 +1,4 @@
-import 'package:design_system/gen/assets.gen.dart' as ds_assets;
+import 'package:design_system/src/extensions/ds_context_assets.dart';
 import 'package:design_system/src/theme/design_semantic_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -13,13 +13,4 @@ extension BuildContextDesignX on BuildContext {
   BottomNavigationBarThemeData get designBottomNavigationBarTheme =>
       designTheme.bottomNavigationBarTheme;
   DsContextAssets get designAssets => const DsContextAssets();
-}
-
-final class DsContextAssets {
-  const DsContextAssets();
-
-  ds_assets.$AssetsIconsGen get images => ds_assets.Assets.icons;
-  ds_assets.$AssetsIconsGen get icons => ds_assets.Assets.icons;
-  ds_assets.$AssetsLauncherIconGen get launcherIcon =>
-      ds_assets.Assets.launcherIcon;
 }

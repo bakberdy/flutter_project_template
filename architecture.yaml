@@ -98,7 +98,7 @@ rules:
     enabled: true
 
   imports:
-    enabled: false
+    enabled: true
 
   relative_imports:
     enabled: false

@@ -119,7 +119,6 @@ dart format .
 dart analyze
 ./tool/scripts/run_all_tests.sh
 dart run tool/validation/check_hardcoded_ui_strings.dart
-dart run tool/validation/validate_module_dependencies.dart
 git diff --check
 ```
 

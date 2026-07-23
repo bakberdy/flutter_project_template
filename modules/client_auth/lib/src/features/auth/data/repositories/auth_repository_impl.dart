@@ -1,5 +1,5 @@
 import 'package:client_auth/src/features/auth/data/datasources/auth_remote_data_source.dart';
-import 'package:client_auth/src/features/auth/data/models/authorization_verify_request_model/authorization_verify_request_model.dart';
+import 'package:client_auth/src/features/auth/data/models/authorization_verify_request_model/verify_request_model.dart';
 import 'package:client_auth/src/features/auth/domain/entities/auth_login_request.dart';
 import 'package:client_auth/src/features/auth/domain/entities/login_response.dart';
 import 'package:client_auth/src/features/auth/domain/entities/verify_request.dart';
