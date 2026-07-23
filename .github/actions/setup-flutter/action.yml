@@ -13,4 +13,6 @@ runs:
 
     - name: Resolve dependencies
       shell: bash
-      run: flutter pub get
+      run: |
+        flutter pub get
+        dart pub get --directory packages/project_lints
