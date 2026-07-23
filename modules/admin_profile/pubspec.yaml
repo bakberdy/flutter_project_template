@@ -12,8 +12,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-  admin_auth:
-    path: ../admin_auth
   auto_route: ^11.1.0
   bloc_concurrency: ^0.3.0
   core:

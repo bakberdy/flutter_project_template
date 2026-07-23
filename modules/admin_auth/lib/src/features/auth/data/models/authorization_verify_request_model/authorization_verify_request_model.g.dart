@@ -1,5 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
+// ignore_for_file: unnecessary_null_checks, document_ignores
+
 part of 'authorization_verify_request_model.dart';
 
 // **************************************************************************

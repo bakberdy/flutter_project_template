@@ -1,4 +1,4 @@
-import 'package:admin_auth/src/features/sessions/domain/entities/session.dart';
+import 'package:admin_profile/src/features/sessions/domain/entities/session.dart';
 import 'package:core/core.dart';
 
 abstract class SessionsRepository {

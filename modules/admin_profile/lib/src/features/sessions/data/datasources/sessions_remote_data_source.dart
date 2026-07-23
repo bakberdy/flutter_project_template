@@ -1,6 +1,6 @@
-import 'package:admin_auth/src/common/config/admin_auth_api_endpoints.dart';
-import 'package:admin_auth/src/features/sessions/data/models/session_model/session_model.dart';
-import 'package:admin_auth/src/features/sessions/domain/entities/session.dart';
+import 'package:admin_profile/src/common/config/admin_profile_api_endpoints.dart';
+import 'package:admin_profile/src/features/sessions/data/models/session_model/session_model.dart';
+import 'package:admin_profile/src/features/sessions/domain/entities/session.dart';
 import 'package:core/core.dart';
 import 'package:injectable/injectable.dart';
 
@@ -35,7 +35,7 @@ class SessionsRemoteDataSourceImpl implements SessionsRemoteDataSource {
       queryParameters['is_active'] = isActive;
     }
     final response = await _apiClient.get<Map<String, dynamic>>(
-      AdminAuthApiEndpoints.sessions,
+      AdminProfileApiEndpoints.sessions,
       queryParameters: queryParameters,
     );
     return PaginatedResponseModel<Session>.fromJson(
@@ -46,11 +46,11 @@ class SessionsRemoteDataSourceImpl implements SessionsRemoteDataSource {
 
   @override
   Future<void> revokeSession(String sessionId) async {
-    await _apiClient.delete<void>(AdminAuthApiEndpoints.session(sessionId));
+    await _apiClient.delete<void>(AdminProfileApiEndpoints.session(sessionId));
   }
 
   @override
   Future<void> revokeAllSessions() async {
-    await _apiClient.delete<void>(AdminAuthApiEndpoints.sessions);
+    await _apiClient.delete<void>(AdminProfileApiEndpoints.sessions);
   }
 }

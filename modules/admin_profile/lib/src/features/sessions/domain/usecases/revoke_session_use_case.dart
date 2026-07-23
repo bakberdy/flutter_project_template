@@ -1,24 +1,24 @@
 import 'dart:async';
 
-import 'package:admin_auth/src/features/sessions/domain/analytics/sessions_events.dart';
-import 'package:admin_auth/src/features/sessions/domain/repositories/sessions_repository.dart';
+import 'package:admin_profile/src/features/sessions/domain/analytics/sessions_events.dart';
+import 'package:admin_profile/src/features/sessions/domain/repositories/sessions_repository.dart';
 import 'package:core/core.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
-class RevokeAllSessionsUseCase extends UseCase<void, NoParams> {
-  RevokeAllSessionsUseCase(this._repository);
+class RevokeSessionUseCase extends UseCase<void, String> {
+  RevokeSessionUseCase(this._repository);
 
   final SessionsRepository _repository;
 
   @override
-  FutureEither<void> call(NoParams params) async {
-    final result = await _repository.revokeAllSessions();
+  FutureEither<void> call(String params) async {
+    final result = await _repository.revokeSession(params);
     return result.fold(
       (failure) {
         unawaited(
           Analytics.track(
-            RevokeAllSessionsUseCaseEvent.failure(
+            RevokeSessionUseCaseEvent.failure(
               properties: {
                 if (failure case BackendFailure(:final message))
                   AnalyticsPropertyKeys.failureMessage: message,
@@ -31,7 +31,7 @@ class RevokeAllSessionsUseCase extends UseCase<void, NoParams> {
         return result;
       },
       (_) {
-        unawaited(Analytics.track(RevokeAllSessionsUseCaseEvent.success()));
+        unawaited(Analytics.track(RevokeSessionUseCaseEvent.success()));
         return result;
       },
     );

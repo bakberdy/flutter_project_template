@@ -19,9 +19,6 @@ groups:
     - client_preferences
     - client_profile
 
-  admin_profile_dependencies:
-    - admin_auth
-
 modules:
   core:
     path: modules/core
@@ -63,7 +60,6 @@ modules:
         - core
         - ui
         - shared
-        - admin_profile_dependencies
 
   admin_users:
     path: modules/admin_users

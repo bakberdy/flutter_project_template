@@ -1,4 +1,4 @@
-import 'package:admin_auth/src/features/sessions/domain/entities/device.dart';
+import 'package:admin_profile/src/features/sessions/domain/entities/device.dart';
 import 'package:equatable/equatable.dart';
 
 class Session extends Equatable {

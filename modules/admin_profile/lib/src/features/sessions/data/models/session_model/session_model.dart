@@ -1,5 +1,5 @@
-import 'package:admin_auth/src/features/sessions/data/models/device_model/device_model.dart';
-import 'package:admin_auth/src/features/sessions/domain/entities/session.dart';
+import 'package:admin_profile/src/features/sessions/data/models/device_model/device_model.dart';
+import 'package:admin_profile/src/features/sessions/domain/entities/session.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'session_model.g.dart';

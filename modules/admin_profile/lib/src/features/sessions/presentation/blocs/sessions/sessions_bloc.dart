@@ -1,7 +1,7 @@
-import 'package:admin_auth/src/features/sessions/domain/entities/session.dart';
-import 'package:admin_auth/src/features/sessions/domain/usecases/get_sessions_use_case.dart';
-import 'package:admin_auth/src/features/sessions/domain/usecases/revoke_all_sessions_use_case.dart';
-import 'package:admin_auth/src/features/sessions/domain/usecases/revoke_session_use_case.dart';
+import 'package:admin_profile/src/features/sessions/domain/entities/session.dart';
+import 'package:admin_profile/src/features/sessions/domain/usecases/get_sessions_use_case.dart';
+import 'package:admin_profile/src/features/sessions/domain/usecases/revoke_all_sessions_use_case.dart';
+import 'package:admin_profile/src/features/sessions/domain/usecases/revoke_session_use_case.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:core/core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
