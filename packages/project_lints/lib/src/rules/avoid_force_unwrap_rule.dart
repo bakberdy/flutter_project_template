@@ -33,7 +33,7 @@ class AvoidForceUnwrapRule extends AnalysisRule {
     if (_isGeneratedFile(context.definingUnit.file.path)) {
       return;
     }
-    registry.addCompilationUnit(this, _AvoidForceUnwrapVisitor(this));
+    registry.addPostfixExpression(this, _AvoidForceUnwrapVisitor(this));
   }
 }
 
@@ -48,25 +48,14 @@ class _AvoidForceUnwrapVisitor extends SimpleAstVisitor<void> {
   final AvoidForceUnwrapRule rule;
 
   @override
-  void visitCompilationUnit(CompilationUnit node) {
-    final filePath = node.declaredFragment?.source.fullName;
+  void visitPostfixExpression(PostfixExpression node) {
+    final unit = node.thisOrAncestorOfType<CompilationUnit>();
+    final filePath = unit?.declaredFragment?.source.fullName;
     if (filePath != null && _isGeneratedFile(filePath)) {
       return;
     }
-    node.accept(_ForceUnwrapVisitor(rule));
-  }
-}
-
-class _ForceUnwrapVisitor extends RecursiveAstVisitor<void> {
-  const _ForceUnwrapVisitor(this.rule);
-
-  final AvoidForceUnwrapRule rule;
-
-  @override
-  void visitPostfixExpression(PostfixExpression node) {
     if (node.operator.lexeme == '!') {
       rule.reportAtToken(node.operator);
     }
-    super.visitPostfixExpression(node);
   }
 }

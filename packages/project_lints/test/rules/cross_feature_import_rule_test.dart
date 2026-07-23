@@ -84,9 +84,9 @@ ArchitecturePolicy _policy() {
   const modules = <String, ModuleConfig>{
     'test': ModuleConfig(name: 'test', path: 'test', allowedGroups: []),
   };
-  return const ArchitecturePolicy(
+  return ArchitecturePolicy(
     repositoryRoot: '/home',
-    config: ArchitectureConfig(
+    config: const ArchitectureConfig(
       version: 1,
       groups: groups,
       modules: modules,

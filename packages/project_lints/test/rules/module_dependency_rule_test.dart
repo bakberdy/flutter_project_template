@@ -71,9 +71,9 @@ ArchitecturePolicy _policy() {
       allowedGroups: ['core'],
     ),
   };
-  return const ArchitecturePolicy(
+  return ArchitecturePolicy(
     repositoryRoot: '/home',
-    config: ArchitectureConfig(
+    config: const ArchitectureConfig(
       version: 1,
       groups: groups,
       modules: modules,

@@ -7,36 +7,31 @@ typedef ArchitecturePolicyResolver =
     ArchitecturePolicy? Function(String filePath);
 
 class ArchitecturePolicy {
-  const ArchitecturePolicy({
+  ArchitecturePolicy({
     required this.repositoryRoot,
     required this.config,
-  });
+  }) : _moduleRoots = _buildModuleRoots(repositoryRoot, config),
+       _allowedDependencies = _buildAllowedDependencies(config);
 
   final String repositoryRoot;
   final ArchitectureConfig config;
+  final Map<String, String> _moduleRoots;
+  final Map<String, Set<String>> _allowedDependencies;
 
   ModuleConfig? moduleForPath(String filePath) {
     final normalizedFile = p.normalize(p.absolute(filePath));
-    for (final module in config.modules.values) {
-      final moduleRoot = p.normalize(
-        p.absolute(p.join(repositoryRoot, module.path)),
-      );
+    for (final MapEntry(key: moduleName, value: moduleRoot)
+        in _moduleRoots.entries) {
       if (normalizedFile == moduleRoot ||
           p.isWithin(moduleRoot, normalizedFile)) {
-        return module;
+        return config.modules[moduleName];
       }
     }
     return null;
   }
 
-  Set<String> allowedDependenciesFor(ModuleConfig module) {
-    final allowed = <String>{};
-    for (final groupName in module.allowedGroups) {
-      allowed.addAll(config.groups[groupName]?.modules ?? const []);
-    }
-    allowed.remove(module.name);
-    return allowed;
-  }
+  Set<String> allowedDependenciesFor(ModuleConfig module) =>
+      _allowedDependencies[module.name] ?? const {};
 
   bool isDependencyAllowed(ModuleConfig module, String dependencyName) {
     if (!config.modules.containsKey(dependencyName)) return true;
@@ -45,9 +40,8 @@ class ArchitecturePolicy {
   }
 
   String? featureForPath(ModuleConfig module, String filePath) {
-    final moduleRoot = p.normalize(
-      p.absolute(p.join(repositoryRoot, module.path)),
-    );
+    final moduleRoot = _moduleRoots[module.name];
+    if (moduleRoot == null) return null;
     final relativePath = p.relative(
       p.normalize(p.absolute(filePath)),
       from: moduleRoot,
@@ -93,15 +87,31 @@ class ArchitecturePolicy {
 }
 
 class ArchitecturePolicyLoader {
-  String? _cachedPath;
-  DateTime? _cachedModifiedAt;
-  ArchitecturePolicy? _cachedPolicy;
+  final Map<String, String> _configPathByDirectory = {};
+  final Map<String, ({DateTime modifiedAt, ArchitecturePolicy? policy})>
+  _policyByConfigPath = {};
 
   ArchitecturePolicy? resolve(String filePath) {
-    var directory = Directory(p.dirname(p.absolute(filePath)));
+    final startDirectory = p.normalize(p.dirname(p.absolute(filePath)));
+    final cachedConfigPath = _configPathByDirectory[startDirectory];
+    if (cachedConfigPath != null) {
+      final configFile = File(cachedConfigPath);
+      if (configFile.existsSync()) {
+        return _load(configFile, configFile.parent.path);
+      }
+      _configPathByDirectory.remove(startDirectory);
+      _policyByConfigPath.remove(cachedConfigPath);
+    }
+
+    final visitedDirectories = <String>[];
+    var directory = Directory(startDirectory);
     while (true) {
+      visitedDirectories.add(directory.path);
       final configFile = File(p.join(directory.path, 'architecture.yaml'));
       if (configFile.existsSync()) {
+        for (final path in visitedDirectories) {
+          _configPathByDirectory[path] = configFile.path;
+        }
         return _load(configFile, directory.path);
       }
 
@@ -114,8 +124,9 @@ class ArchitecturePolicyLoader {
   ArchitecturePolicy? _load(File configFile, String repositoryRoot) {
     try {
       final modifiedAt = configFile.lastModifiedSync();
-      if (_cachedPath == configFile.path && _cachedModifiedAt == modifiedAt) {
-        return _cachedPolicy;
+      final cached = _policyByConfigPath[configFile.path];
+      if (cached != null && cached.modifiedAt == modifiedAt) {
+        return cached.policy;
       }
 
       final result = ArchitectureConfigParser().parse(
@@ -126,12 +137,35 @@ class ArchitecturePolicyLoader {
       final policy = config == null
           ? null
           : ArchitecturePolicy(repositoryRoot: repositoryRoot, config: config);
-      _cachedPath = configFile.path;
-      _cachedModifiedAt = modifiedAt;
-      _cachedPolicy = policy;
+      _policyByConfigPath[configFile.path] = (
+        modifiedAt: modifiedAt,
+        policy: policy,
+      );
       return policy;
     } on FileSystemException {
       return null;
     }
   }
 }
+
+Map<String, String> _buildModuleRoots(
+  String repositoryRoot,
+  ArchitectureConfig config,
+) => {
+  for (final module in config.modules.values)
+    module.name: p.normalize(
+      p.absolute(p.join(repositoryRoot, module.path)),
+    ),
+};
+
+Map<String, Set<String>> _buildAllowedDependencies(
+  ArchitectureConfig config,
+) => {
+  for (final module in config.modules.values)
+    module.name: Set.unmodifiable(
+      {
+        for (final groupName in module.allowedGroups)
+          ...config.groups[groupName]?.modules ?? const <String>[],
+      }..remove(module.name),
+    ),
+};
