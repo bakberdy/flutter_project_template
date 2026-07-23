@@ -77,14 +77,23 @@ Failure handling follows these rules:
 - Only `BackendFailure` may carry a user-facing `message`. Only
   `BackendFieldFailure` may carry a backend field-validation message; no other
   failure type may store localized or diagnostic text.
-- Represent local field-validation errors with concrete `FieldFailure`
-  subclasses, never strings or reason enums. Put feature-specific field
-  failures in the owning feature's `domain/failures/` directory and name them
-  by field and reason, such as `EmailTooShortFieldFailure`. Keep these classes
-  message-free and map their types to ARB text in the owning presentation
-  layer. Do not infer a typed field failure from backend prose; use a stable
-  backend error code when one is available, otherwise preserve it as a
-  `BackendFieldFailure`.
+- Represent every distinct locally produced, user-visible error condition with
+  its own concrete failure class in the module that owns the operation. Do not
+  pass an error string through state or reuse one generic failure with a reason
+  enum. For example, represent "Email is too short" with
+  `EmailTooShortFailure`; field-specific validation failures must extend
+  `FieldFailure`.
+- A failure may carry the raw, non-localized values required to render its
+  message. For example,
+  `StartDateCannotBeBiggerThanEndDateFailure(startDate: ..., endDate: ...)`
+  may carry both dates. Include those values in equality and map the failure
+  type and values to a parameterized ARB message in the owning presentation
+  layer. Never store the rendered, localized, or diagnostic message in a local
+  failure.
+- Put feature-specific failures in the owning feature's `domain/failures/`
+  directory and name them by the precise condition they represent. Do not infer
+  a typed failure from backend prose; use a stable backend error code when one
+  is available, otherwise preserve it as a `BackendFieldFailure`.
 - Resolve backend field messages through `FieldFailuresX`, using
   `backendMessageForField` or `backendMessageForAnyField`. Do not duplicate
   loops that filter `BackendFieldFailure` by `fieldName` in feature code.
