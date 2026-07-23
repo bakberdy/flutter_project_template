@@ -2,19 +2,18 @@ name: project_lints
 description: Architecture lints for the Flutter project template workspace.
 version: 0.1.0
 publish_to: none
-resolution: workspace
 
 environment:
   sdk: ^3.12.0
 
 dependencies:
-  analysis_server_plugin: 0.3.10
-  analyzer: 10.2.0
-  analyzer_plugin: 0.14.4
+  analysis_server_plugin: 0.3.20
+  analyzer: 14.1.0
+  analyzer_plugin: 0.14.14
   path: ^1.9.1
   yaml: ^3.1.3
 
 dev_dependencies:
-  analyzer_testing: ^0.2.1
+  analyzer_testing: ^0.3.4
   test: ^1.31.0
   very_good_analysis: ^10.3.0

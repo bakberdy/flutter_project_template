@@ -4,7 +4,7 @@ import 'package:analyzer/analysis_rule/rule_visitor_registry.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:analyzer/error/error.dart';
-import 'package:path/path.dart' as p;
+import 'package:project_lints/src/rules/generated_file.dart';
 
 class AvoidForceUnwrapRule extends AnalysisRule {
   AvoidForceUnwrapRule()
@@ -30,28 +30,26 @@ class AvoidForceUnwrapRule extends AnalysisRule {
     RuleVisitorRegistry registry,
     RuleContext context,
   ) {
-    if (_isGeneratedFile(context.definingUnit.file.path)) {
+    if (isGeneratedCodeFile(context.definingUnit.file.path)) {
       return;
     }
-    registry.addPostfixExpression(this, _AvoidForceUnwrapVisitor(this));
+    registry.addPostfixExpression(
+      this,
+      _AvoidForceUnwrapVisitor(this, context),
+    );
   }
 }
 
-bool _isGeneratedFile(String filePath) {
-  final fileName = p.basename(filePath);
-  return fileName.contains('.g.') || fileName.contains('.freezed.');
-}
-
 class _AvoidForceUnwrapVisitor extends SimpleAstVisitor<void> {
-  const _AvoidForceUnwrapVisitor(this.rule);
+  const _AvoidForceUnwrapVisitor(this.rule, this.context);
 
   final AvoidForceUnwrapRule rule;
+  final RuleContext context;
 
   @override
   void visitPostfixExpression(PostfixExpression node) {
-    final unit = node.thisOrAncestorOfType<CompilationUnit>();
-    final filePath = unit?.declaredFragment?.source.fullName;
-    if (filePath != null && _isGeneratedFile(filePath)) {
+    final filePath = context.currentUnit?.file.path;
+    if (filePath != null && isGeneratedCodeFile(filePath)) {
       return;
     }
     if (node.operator.lexeme == '!') {

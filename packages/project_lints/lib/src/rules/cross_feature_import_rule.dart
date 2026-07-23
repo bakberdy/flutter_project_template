@@ -6,6 +6,7 @@ import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:analyzer/error/error.dart';
 import 'package:project_lints/src/architecture/architecture_config.dart';
 import 'package:project_lints/src/architecture/architecture_policy.dart';
+import 'package:project_lints/src/rules/generated_file.dart';
 
 class CrossFeatureImportRule extends AnalysisRule {
   CrossFeatureImportRule({ArchitecturePolicyResolver? policyResolver})
@@ -36,6 +37,7 @@ class CrossFeatureImportRule extends AnalysisRule {
     RuleContext context,
   ) {
     final sourcePath = context.definingUnit.file.path;
+    if (isGeneratedCodeFile(sourcePath)) return;
     final policy = policyResolver(sourcePath);
     if (policy == null || !policy.config.rules.importsEnabled) return;
     final module = policy.moduleForPath(sourcePath);

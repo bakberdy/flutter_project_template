@@ -7,6 +7,7 @@ import 'package:analyzer/error/error.dart';
 import 'package:path/path.dart' as p;
 import 'package:project_lints/src/architecture/architecture_config.dart';
 import 'package:project_lints/src/architecture/architecture_policy.dart';
+import 'package:project_lints/src/rules/generated_file.dart';
 
 class CommonFeatureImportRule extends AnalysisRule {
   CommonFeatureImportRule({ArchitecturePolicyResolver? policyResolver})
@@ -37,6 +38,7 @@ class CommonFeatureImportRule extends AnalysisRule {
     RuleContext context,
   ) {
     final sourcePath = context.definingUnit.file.path;
+    if (isGeneratedCodeFile(sourcePath)) return;
     final policy = policyResolver(sourcePath);
     if (policy == null || !policy.config.rules.importsEnabled) return;
     final module = policy.moduleForPath(sourcePath);

@@ -87,38 +87,66 @@ class ArchitecturePolicy {
 }
 
 class ArchitecturePolicyLoader {
-  final Map<String, String> _configPathByDirectory = {};
+  final Map<String, String?> _configPathByDirectory = {};
   final Map<String, ({DateTime modifiedAt, ArchitecturePolicy? policy})>
   _policyByConfigPath = {};
 
   ArchitecturePolicy? resolve(String filePath) {
-    final startDirectory = p.normalize(p.dirname(p.absolute(filePath)));
-    final cachedConfigPath = _configPathByDirectory[startDirectory];
-    if (cachedConfigPath != null) {
-      final configFile = File(cachedConfigPath);
-      if (configFile.existsSync()) {
-        return _load(configFile, configFile.parent.path);
-      }
-      _configPathByDirectory.remove(startDirectory);
-      _policyByConfigPath.remove(cachedConfigPath);
-    }
+    try {
+      final visitedDirectories = <String>[];
+      var directory = Directory(
+        p.normalize(p.dirname(p.absolute(filePath))),
+      );
+      while (true) {
+        final directoryPath = directory.path;
+        if (_configPathByDirectory.containsKey(directoryPath)) {
+          final cachedConfigPath = _configPathByDirectory[directoryPath];
+          if (cachedConfigPath == null) {
+            _cacheDirectories(visitedDirectories, null);
+            return null;
+          }
 
-    final visitedDirectories = <String>[];
-    var directory = Directory(startDirectory);
-    while (true) {
-      visitedDirectories.add(directory.path);
-      final configFile = File(p.join(directory.path, 'architecture.yaml'));
-      if (configFile.existsSync()) {
-        for (final path in visitedDirectories) {
-          _configPathByDirectory[path] = configFile.path;
+          final cachedConfigFile = File(cachedConfigPath);
+          if (cachedConfigFile.existsSync()) {
+            _cacheDirectories(visitedDirectories, cachedConfigPath);
+            return _load(
+              cachedConfigFile,
+              cachedConfigFile.parent.path,
+            );
+          }
+          _removeConfigPath(cachedConfigPath);
         }
-        return _load(configFile, directory.path);
-      }
 
-      final parent = directory.parent;
-      if (parent.path == directory.path) return null;
-      directory = parent;
+        visitedDirectories.add(directoryPath);
+        final configFile = File(p.join(directoryPath, 'architecture.yaml'));
+        if (configFile.existsSync()) {
+          _cacheDirectories(visitedDirectories, configFile.path);
+          return _load(configFile, directoryPath);
+        }
+
+        final parent = directory.parent;
+        if (parent.path == directoryPath) {
+          _cacheDirectories(visitedDirectories, null);
+          return null;
+        }
+        directory = parent;
+      }
+    } on FileSystemException {
+      return null;
     }
+  }
+
+  void _cacheDirectories(List<String> directories, String? configPath) {
+    for (final directory in directories) {
+      _configPathByDirectory[directory] = configPath;
+    }
+  }
+
+  void _removeConfigPath(String configPath) {
+    _configPathByDirectory.removeWhere(
+      (_, cachedConfigPath) => cachedConfigPath == configPath,
+    );
+    _policyByConfigPath.remove(configPath);
   }
 
   ArchitecturePolicy? _load(File configFile, String repositoryRoot) {
