@@ -1,4 +1,4 @@
-import 'package:admin_profile/src/common/config/admin_profile_constants.dart';
+import 'package:admin_profile/src/common/config/constants/admin_profile_constants.dart';
 import 'package:admin_profile/src/features/profile/domain/usecases/create_user_profile_use_case.dart';
 import 'package:admin_profile/src/features/profile/presentation/helpers/user_profile_phone_number_validation.dart';
 import 'package:core/core.dart';

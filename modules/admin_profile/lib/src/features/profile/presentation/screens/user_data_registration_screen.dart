@@ -1,5 +1,5 @@
-import 'package:admin_profile/src/common/admin_profile_context_x.dart';
-import 'package:admin_profile/src/common/config/admin_profile_constants.dart';
+import 'package:admin_profile/src/common/config/constants/admin_profile_constants.dart';
+import 'package:admin_profile/src/common/presentation/extensions/admin_profile_context_x.dart';
 import 'package:admin_profile/src/features/profile/presentation/blocs/create_user_profile/create_user_profile_bloc.dart';
 import 'package:admin_profile/src/features/profile/presentation/widgets/user_profile_edit_form.dart';
 import 'package:auto_route/auto_route.dart';

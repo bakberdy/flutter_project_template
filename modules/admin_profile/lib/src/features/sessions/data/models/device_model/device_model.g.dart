@@ -18,3 +18,15 @@ DeviceModel _$DeviceModelFromJson(Map<String, dynamic> json) => DeviceModel(
   pushProvider: json['push_provider'] as String?,
   hasNotificationToken: json['has_notification_token'] as bool? ?? false,
 );
+
+Map<String, dynamic> _$DeviceModelToJson(DeviceModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'client_device_id': instance.clientDeviceId,
+      'os': instance.os,
+      'os_version': instance.osVersion,
+      'model': instance.model,
+      'app_version': instance.appVersion,
+      'push_provider': instance.pushProvider,
+      'has_notification_token': instance.hasNotificationToken,
+    };

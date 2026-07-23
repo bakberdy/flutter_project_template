@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:client_preferences/src/common/config/client_preferences_navigation_paths.dart';
+import 'package:client_preferences/src/common/config/constants/client_preferences_navigation_paths.dart';
 import 'package:client_preferences/src/features/user_preferences/presentation/screens/user_preferences_appearance_screen.dart';
 import 'package:client_preferences/src/features/user_preferences/presentation/screens/user_preferences_locale_screen.dart';
 import 'package:client_preferences/src/features/user_preferences/presentation/screens/user_preferences_notifications_screen.dart';

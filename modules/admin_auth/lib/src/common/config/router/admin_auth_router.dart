@@ -1,4 +1,4 @@
-import 'package:admin_auth/src/common/config/admin_auth_navigation_paths.dart';
+import 'package:admin_auth/src/common/config/constants/admin_auth_navigation_paths.dart';
 import 'package:admin_auth/src/features/auth/presentation/screens/admin_auth_wrapper_screen.dart';
 import 'package:admin_auth/src/features/auth/presentation/screens/admin_otp_screen.dart';
 import 'package:admin_auth/src/features/auth/presentation/screens/admin_sign_in_screen.dart';

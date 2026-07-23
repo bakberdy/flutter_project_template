@@ -100,8 +100,18 @@ Create only folders that contain code.
   feature-only extensions stay in their feature.
 - Use public `context.design*` extensions and static tokens, not `Theme.of`,
   when a design-system role exists.
-- Models live in `data/models/<model_name>/` and use the `Model` suffix;
-  mapping stays out of screens, BLoCs, and data sources.
+- Models live in `data/models/<model_name>/`, use the `Model` suffix, extend
+  their corresponding domain entity, and use `@JsonSerializable`.
+- Entity-to-model conversion belongs in a `Model.fromEntity(...)` factory on
+  the model itself. Do not create mapper classes or extensions for
+  entity/model conversion.
+- Every model exposes generated `fromJson` and `toJson` entry points; their
+  bodies only delegate to `_$ModelFromJson` and `_$ModelToJson`. Never
+  handwrite JSON conversion logic; mapping stays out of screens, BLoCs, and
+  data sources.
+- Configure snake-case model fields once through `json_serializable` in the
+  package `build.yaml`; do not repeat `fieldRename` on model annotations.
+  `@JsonEnum(fieldRename: FieldRename.snake)` is allowed for enum wire values.
 - Use `presentation/blocs`, `Bloc<Event, State>`, `StateStatus`, and
   `FieldState<T>`; split Bloc, event, and state files.
 - Access module assets through FlutterGen and user-facing ARB text through
@@ -135,6 +145,8 @@ their sources change.
 - [ ] Internal features do not import each other.
 - [ ] Data, domain, and presentation dependencies point in the correct
       direction.
+- [ ] Every data model extends its domain entity, uses generated JSON
+      serialization, and owns any `fromEntity` conversion factory.
 - [ ] Configuration, context extensions, DI, and routing use canonical paths.
 - [ ] UI uses localization, generated assets, and design-system tokens.
 - [ ] The public barrel exposes only required external contracts.

@@ -1,13 +1,21 @@
-import 'package:admin_users/src/features/users/data/models/admin_user_model/admin_user_model.dart';
 import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
 import 'package:admin_users/src/features/users/domain/entities/users_query.dart';
 
 extension AdminUserRoleApiMapper on AdminUserRole {
-  String get apiValue => const AdminUserRoleJsonConverter().toJson(this);
+  String get apiValue => switch (this) {
+    AdminUserRole.superAdmin => 'super_admin',
+    AdminUserRole.admin => 'admin',
+    AdminUserRole.user => 'user',
+  };
 }
 
 extension AdminUserStatusApiMapper on AdminUserStatus {
-  String get apiValue => const AdminUserStatusJsonConverter().toJson(this);
+  String get apiValue => switch (this) {
+    AdminUserStatus.active => 'active',
+    AdminUserStatus.blocked => 'blocked',
+    AdminUserStatus.deletionRequested => 'deletion_requested',
+    AdminUserStatus.deleted => 'deleted',
+  };
 }
 
 extension UsersSortDirectionApiMapper on UsersSortDirection {

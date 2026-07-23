@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:admin_preferences/src/common/admin_preferences_context_x.dart';
+import 'package:admin_preferences/src/common/presentation/extensions/admin_preferences_context_x.dart';
 import 'package:admin_preferences/src/features/user_preferences/presentation/blocs/notifications/notifications_bloc.dart';
 import 'package:admin_preferences/src/features/user_preferences/presentation/widgets/user_preferences_notification_switch_card.dart';
 import 'package:core/core.dart';

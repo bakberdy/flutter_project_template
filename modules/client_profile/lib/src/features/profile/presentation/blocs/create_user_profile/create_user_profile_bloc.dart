@@ -1,4 +1,4 @@
-import 'package:client_profile/src/common/config/client_profile_constants.dart';
+import 'package:client_profile/src/common/config/constants/client_profile_constants.dart';
 import 'package:client_profile/src/features/profile/domain/usecases/create_user_profile_use_case.dart';
 import 'package:client_profile/src/features/profile/presentation/helpers/user_profile_phone_number_validation.dart';
 import 'package:core/core.dart';

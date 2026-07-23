@@ -23,35 +23,26 @@ import 'package:core/core.dart' as _i494;
 import 'package:injectable/injectable.dart' as _i526;
 
 class ClientAuthPackageModule extends _i526.MicroPackageModule {
-  // initializes the registration of main-scope dependencies inside of GetIt
+// initializes the registration of main-scope dependencies inside of GetIt
   @override
   _i687.FutureOr<void> init(_i526.GetItHelper gh) {
-    gh.singleton<_i279.AuthRemoteDataSource>(
-      () => _i279.AuthRemoteDataSourceImpl(
-        gh<_i494.ApiClient>(instanceName: 'publicApiClient'),
-      ),
-    );
-    gh.singleton<_i296.AuthRepository>(
-      () => _i201.AuthRepositoryImpl(
-        gh<_i279.AuthRemoteDataSource>(),
-        gh<_i494.TokenStorage>(),
-        gh<_i494.DeviceInfoService>(),
-      ),
-    );
+    gh.singleton<_i279.AuthRemoteDataSource>(() =>
+        _i279.AuthRemoteDataSourceImpl(
+            gh<_i494.ApiClient>(instanceName: 'publicApiClient')));
+    gh.singleton<_i296.AuthRepository>(() => _i201.AuthRepositoryImpl(
+          gh<_i279.AuthRemoteDataSource>(),
+          gh<_i494.TokenStorage>(),
+          gh<_i494.DeviceInfoService>(),
+        ));
     gh.lazySingleton<_i4.AuthLoginUseCase>(
-      () => _i4.AuthLoginUseCase(gh<_i296.AuthRepository>()),
-    );
+        () => _i4.AuthLoginUseCase(gh<_i296.AuthRepository>()));
     gh.lazySingleton<_i974.AuthRefreshTokenUseCase>(
-      () => _i974.AuthRefreshTokenUseCase(gh<_i296.AuthRepository>()),
-    );
+        () => _i974.AuthRefreshTokenUseCase(gh<_i296.AuthRepository>()));
     gh.lazySingleton<_i454.AuthVerifyUseCase>(
-      () => _i454.AuthVerifyUseCase(gh<_i296.AuthRepository>()),
-    );
-    gh.factory<_i376.AuthBloc>(
-      () => _i376.AuthBloc(
-        gh<_i4.AuthLoginUseCase>(),
-        gh<_i454.AuthVerifyUseCase>(),
-      ),
-    );
+        () => _i454.AuthVerifyUseCase(gh<_i296.AuthRepository>()));
+    gh.factory<_i376.AuthBloc>(() => _i376.AuthBloc(
+          gh<_i4.AuthLoginUseCase>(),
+          gh<_i454.AuthVerifyUseCase>(),
+        ));
   }
 }

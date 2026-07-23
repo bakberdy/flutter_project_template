@@ -1,5 +1,5 @@
-import 'package:admin_auth/src/common/admin_auth_context_x.dart';
 import 'package:admin_auth/src/common/config/router/admin_auth_router.dart';
+import 'package:admin_auth/src/common/presentation/extensions/admin_auth_context_x.dart';
 import 'package:admin_auth/src/features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:core/core.dart';

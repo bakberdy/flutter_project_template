@@ -21,3 +21,16 @@ SessionModel _$SessionModelFromJson(Map<String, dynamic> json) => SessionModel(
       ? null
       : DateTime.parse(json['revoked_at'] as String),
 );
+
+Map<String, dynamic> _$SessionModelToJson(SessionModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'user_id': instance.userId,
+      'refresh_token_hash': instance.refreshTokenHash,
+      'created_at': instance.createdAt.toIso8601String(),
+      'expires_at': instance.expiresAt.toIso8601String(),
+      'last_active': instance.lastActive.toIso8601String(),
+      'revoked_at': instance.revokedAt?.toIso8601String(),
+      'is_revoked': instance.isRevoked,
+      'device': instance.device.toJson(),
+    };

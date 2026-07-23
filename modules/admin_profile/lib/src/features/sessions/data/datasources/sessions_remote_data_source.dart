@@ -1,4 +1,4 @@
-import 'package:admin_profile/src/common/config/admin_profile_api_endpoints.dart';
+import 'package:admin_profile/src/common/config/constants/admin_profile_api_endpoints.dart';
 import 'package:admin_profile/src/features/sessions/data/models/session_model/session_model.dart';
 import 'package:admin_profile/src/features/sessions/domain/entities/session.dart';
 import 'package:core/core.dart';

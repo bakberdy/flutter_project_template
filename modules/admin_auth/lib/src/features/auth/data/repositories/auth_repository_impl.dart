@@ -1,4 +1,5 @@
 import 'package:admin_auth/src/features/auth/data/datasources/auth_remote_data_source.dart';
+import 'package:admin_auth/src/features/auth/data/models/auth_login_request_model/auth_login_request_model.dart';
 import 'package:admin_auth/src/features/auth/data/models/verify_request_model/verify_request_model.dart';
 import 'package:admin_auth/src/features/auth/domain/entities/auth_login_request.dart';
 import 'package:admin_auth/src/features/auth/domain/entities/login_response.dart';
@@ -27,7 +28,9 @@ class AuthRepositoryImpl implements AuthRepository {
         appVersion: '',
       );
       final request = AuthLoginRequest(email: email, device: device);
-      final model = await _remoteDataSource.login(request);
+      final model = await _remoteDataSource.login(
+        AuthLoginRequestModel.fromEntity(request),
+      );
       return Right(model);
     } on Exception catch (e) {
       return Left(await e.toFailure(source: '$runtimeType.login'));

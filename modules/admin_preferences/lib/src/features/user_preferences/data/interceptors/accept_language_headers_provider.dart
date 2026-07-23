@@ -1,4 +1,4 @@
-import 'package:admin_preferences/src/common/config/admin_preferences_constants.dart';
+import 'package:admin_preferences/src/common/config/constants/admin_preferences_constants.dart';
 import 'package:core/core.dart';
 import 'package:injectable/injectable.dart';
 

@@ -1,4 +1,4 @@
-import 'package:client_preferences/src/common/config/client_preferences_constants.dart';
+import 'package:client_preferences/src/common/config/constants/client_preferences_constants.dart';
 import 'package:core/core.dart';
 import 'package:injectable/injectable.dart';
 

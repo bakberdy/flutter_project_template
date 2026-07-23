@@ -9,8 +9,8 @@ void main() {
     final user = AdminUserModel.fromJson(const {
       'id': '11111111-1111-1111-1111-111111111111',
       'email': 'admin@example.com',
-      'role': 'admin',
-      'status': 'active',
+      'role': 'super_admin',
+      'status': 'deletion_requested',
       'is_verified': true,
       'created_at': '2026-06-21T10:00:00.000Z',
       'is_user_data_uploaded': false,
@@ -18,8 +18,8 @@ void main() {
 
     expect(user.id, '11111111-1111-1111-1111-111111111111');
     expect(user.email, 'admin@example.com');
-    expect(user.role, AdminUserRole.admin);
-    expect(user.status, AdminUserStatus.active);
+    expect(user.role, AdminUserRole.superAdmin);
+    expect(user.status, AdminUserStatus.deletionRequested);
     expect(user.isVerified, isTrue);
     expect(user.createdAt, DateTime.parse('2026-06-21T10:00:00.000Z'));
     expect(user.isUserDataUploaded, isFalse);

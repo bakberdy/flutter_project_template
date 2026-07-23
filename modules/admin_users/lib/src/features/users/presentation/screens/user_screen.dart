@@ -1,4 +1,4 @@
-import 'package:admin_users/src/common/admin_users_context_x.dart';
+import 'package:admin_users/src/common/presentation/extensions/admin_users_context_x.dart';
 import 'package:admin_users/src/features/users/domain/entities/admin_user.dart';
 import 'package:admin_users/src/features/users/presentation/blocs/user/user_bloc.dart';
 import 'package:admin_users/src/features/users/presentation/widgets/user_details_view.dart';

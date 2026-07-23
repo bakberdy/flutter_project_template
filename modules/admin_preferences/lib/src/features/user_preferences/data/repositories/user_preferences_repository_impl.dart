@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:admin_preferences/src/common/config/admin_preferences_constants.dart';
+import 'package:admin_preferences/src/common/config/constants/admin_preferences_constants.dart';
 import 'package:admin_preferences/src/features/user_preferences/data/datasources/user_preferences_local_data_source.dart';
 import 'package:admin_preferences/src/features/user_preferences/data/datasources/user_preferences_remote_data_source.dart';
 import 'package:admin_preferences/src/features/user_preferences/data/models/user_preferences_model/user_preferences_model.dart';
@@ -230,13 +230,13 @@ class UserPreferencesRepositoryImpl implements UserPreferencesRepository {
     if (value == null) {
       return null;
     }
-    return const UserLanguageJsonConverter().fromJson(value);
+    return UserLanguage.fromLanguageCode(value);
   }
 
   Future<void> _writeLocalLanguage(UserLanguage language) =>
       _localDataSource.setUserPreference(
         key: AdminPreferencesConstants.localeStorageKey,
-        value: const UserLanguageJsonConverter().toJson(language),
+        value: language.name,
       );
 
   Future<UserTheme?> _readLocalTheme() async {
@@ -246,12 +246,12 @@ class UserPreferencesRepositoryImpl implements UserPreferencesRepository {
     if (value == null) {
       return null;
     }
-    return const UserThemeJsonConverter().fromJson(value);
+    return UserTheme.values.byName(value);
   }
 
   Future<void> _writeLocalTheme(UserTheme theme) =>
       _localDataSource.setUserPreference(
         key: AdminPreferencesConstants.themeModeStorageKey,
-        value: const UserThemeJsonConverter().toJson(theme),
+        value: theme.name,
       );
 }

@@ -1,4 +1,4 @@
-import 'package:admin_profile/src/common/admin_profile_context_x.dart';
+import 'package:admin_profile/src/common/presentation/extensions/admin_profile_context_x.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';

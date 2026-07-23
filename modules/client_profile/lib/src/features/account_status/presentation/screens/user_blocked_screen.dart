@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:client_profile/src/common/client_profile_context_x.dart';
+import 'package:client_profile/src/common/presentation/extensions/client_profile_context_x.dart';
 import 'package:core/core_navigation/core_navigation_bloc.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';

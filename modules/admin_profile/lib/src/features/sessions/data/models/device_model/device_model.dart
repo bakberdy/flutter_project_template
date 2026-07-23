@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'device_model.g.dart';
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class DeviceModel extends Device {
   const DeviceModel({
     required super.id,
@@ -29,4 +29,6 @@ class DeviceModel extends Device {
     pushProvider: device.pushProvider,
     hasNotificationToken: device.hasNotificationToken,
   );
+
+  Map<String, dynamic> toJson() => _$DeviceModelToJson(this);
 }

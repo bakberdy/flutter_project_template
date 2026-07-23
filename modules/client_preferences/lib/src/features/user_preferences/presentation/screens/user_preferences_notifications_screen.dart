@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:client_preferences/src/common/client_preferences_context_x.dart';
+import 'package:client_preferences/src/common/presentation/extensions/client_preferences_context_x.dart';
 import 'package:client_preferences/src/features/user_preferences/presentation/blocs/notifications/notifications_bloc.dart';
 import 'package:client_preferences/src/features/user_preferences/presentation/widgets/user_preferences_notification_switch_card.dart';
 import 'package:core/core.dart';

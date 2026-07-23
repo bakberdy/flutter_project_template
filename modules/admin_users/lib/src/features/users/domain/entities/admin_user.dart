@@ -1,7 +1,10 @@
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+@JsonEnum(fieldRename: FieldRename.snake)
 enum AdminUserRole { superAdmin, admin, user }
 
+@JsonEnum(fieldRename: FieldRename.snake)
 enum AdminUserStatus { active, blocked, deletionRequested, deleted }
 
 class AdminUser extends Equatable {

@@ -1,5 +1,5 @@
-import 'package:admin_profile/src/common/admin_profile_context_x.dart';
-import 'package:admin_profile/src/common/config/admin_profile_constants.dart';
+import 'package:admin_profile/src/common/config/constants/admin_profile_constants.dart';
+import 'package:admin_profile/src/common/presentation/extensions/admin_profile_context_x.dart';
 import 'package:flutter/widgets.dart';
 
 const userProfilePhoneNumberInvalidFormatError = 'phone_number_invalid_format';

@@ -1,14 +1,13 @@
-import 'package:client_auth/src/common/config/client_auth_api_endpoints.dart';
-import 'package:client_auth/src/features/auth/data/models/auth_login_request_json.dart';
-import 'package:client_auth/src/features/auth/data/models/authorization_login_response_model/authorization_login_response_model.dart';
-import 'package:client_auth/src/features/auth/data/models/authorization_verify_request_model/verify_request_model.dart';
-import 'package:client_auth/src/features/auth/data/models/authorization_verify_response_model/authorization_verify_response_model.dart';
-import 'package:client_auth/src/features/auth/domain/entities/auth_login_request.dart';
+import 'package:client_auth/src/common/config/constants/client_auth_api_endpoints.dart';
+import 'package:client_auth/src/features/auth/data/models/auth_login_request_model/auth_login_request_model.dart';
+import 'package:client_auth/src/features/auth/data/models/login_response_model/login_response_model.dart';
+import 'package:client_auth/src/features/auth/data/models/verify_request_model/verify_request_model.dart';
+import 'package:client_auth/src/features/auth/data/models/verify_response_model/verify_response_model.dart';
 import 'package:core/core.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class AuthRemoteDataSource {
-  Future<LoginResponseModel> login(AuthLoginRequest request);
+  Future<LoginResponseModel> login(AuthLoginRequestModel request);
   Future<VerifyResponseModel> verify(VerifyRequestModel request);
   Future<VerifyResponseModel> refreshToken(String refreshToken);
 }
@@ -22,10 +21,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final ApiClient _publicApiClient;
 
   @override
-  Future<LoginResponseModel> login(AuthLoginRequest request) async {
+  Future<LoginResponseModel> login(AuthLoginRequestModel request) async {
     final response = await _publicApiClient.post<Map<String, dynamic>>(
       ClientAuthApiEndpoints.login,
-      data: AuthLoginRequestJson.toMap(request),
+      data: request.toJson(),
     );
     return LoginResponseModel.fromJson(response.data!);
   }

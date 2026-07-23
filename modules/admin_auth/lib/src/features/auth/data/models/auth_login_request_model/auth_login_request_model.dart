@@ -4,9 +4,12 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'auth_login_request_model.g.dart';
 
-@JsonSerializable(createFactory: false, explicitToJson: true)
-class AuthLoginRequestModel {
-  const AuthLoginRequestModel({required this.email, required this.device});
+@JsonSerializable(explicitToJson: true)
+class AuthLoginRequestModel extends AuthLoginRequest {
+  const AuthLoginRequestModel({
+    required super.email,
+    required AuthDeviceInfoModel device,
+  }) : super(device: device);
 
   factory AuthLoginRequestModel.fromEntity(AuthLoginRequest entity) =>
       AuthLoginRequestModel(
@@ -14,8 +17,11 @@ class AuthLoginRequestModel {
         device: AuthDeviceInfoModel.fromEntity(entity.device),
       );
 
-  final String email;
-  final AuthDeviceInfoModel device;
+  factory AuthLoginRequestModel.fromJson(Map<String, dynamic> json) =>
+      _$AuthLoginRequestModelFromJson(json);
+
+  @override
+  AuthDeviceInfoModel get device => super.device as AuthDeviceInfoModel;
 
   Map<String, dynamic> toJson() => _$AuthLoginRequestModelToJson(this);
 }

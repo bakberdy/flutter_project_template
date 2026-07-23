@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:admin_profile/src/common/admin_profile_context_x.dart';
+import 'package:admin_profile/src/common/presentation/extensions/admin_profile_context_x.dart';
 import 'package:admin_profile/src/features/sessions/domain/entities/session.dart';
 import 'package:admin_profile/src/features/sessions/presentation/blocs/sessions/sessions_bloc.dart';
 import 'package:admin_profile/src/features/sessions/presentation/widgets/session_list_item.dart';

@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:client_preferences/src/common/client_preferences_context_x.dart';
-import 'package:client_preferences/src/common/config/client_preferences_constants.dart';
+import 'package:client_preferences/src/common/config/constants/client_preferences_constants.dart';
+import 'package:client_preferences/src/common/presentation/extensions/client_preferences_context_x.dart';
 import 'package:client_preferences/src/features/user_preferences/presentation/blocs/locale/locale_bloc.dart';
 import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';

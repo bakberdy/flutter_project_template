@@ -1,4 +1,4 @@
-import 'package:client_preferences/src/common/config/client_preferences_api_endpoints.dart';
+import 'package:client_preferences/src/common/config/constants/client_preferences_api_endpoints.dart';
 import 'package:client_preferences/src/features/user_preferences/data/models/user_preferences_model/user_preferences_model.dart';
 import 'package:client_preferences/src/features/user_preferences/domain/entities/user_preferences.dart';
 import 'package:core/core.dart';
@@ -51,8 +51,8 @@ class UserPreferencesRemoteDataSourceImpl
     final response = await _apiClient.post<Map<String, dynamic>>(
       ClientPreferencesApiEndpoints.myPreferences,
       data: {
-        'language': const UserLanguageJsonConverter().toJson(language),
-        'theme': const UserThemeJsonConverter().toJson(theme),
+        'language': language.name,
+        'theme': theme.name,
         'push_notifications_enabled': pushNotificationsEnabled,
         'email_notifications_enabled': emailNotificationsEnabled,
         'marketing_notifications_enabled': marketingNotificationsEnabled,
@@ -72,10 +72,8 @@ class UserPreferencesRemoteDataSourceImpl
     final response = await _apiClient.patch<Map<String, dynamic>>(
       ClientPreferencesApiEndpoints.myPreferences,
       data: {
-        if (language != null)
-          'language': const UserLanguageJsonConverter().toJson(language),
-        if (theme != null)
-          'theme': const UserThemeJsonConverter().toJson(theme),
+        if (language != null) 'language': language.name,
+        if (theme != null) 'theme': theme.name,
         'push_notifications_enabled': ?pushNotificationsEnabled,
         'email_notifications_enabled': ?emailNotificationsEnabled,
         'marketing_notifications_enabled': ?marketingNotificationsEnabled,

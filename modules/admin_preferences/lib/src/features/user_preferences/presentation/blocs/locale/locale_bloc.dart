@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:admin_preferences/src/common/config/admin_preferences_constants.dart';
+import 'package:admin_preferences/src/common/config/constants/admin_preferences_constants.dart';
 import 'package:admin_preferences/src/features/user_preferences/domain/entities/user_preferences.dart';
 import 'package:admin_preferences/src/features/user_preferences/domain/usecases/get_user_language_use_case.dart';
 import 'package:admin_preferences/src/features/user_preferences/domain/usecases/set_user_language_use_case.dart';

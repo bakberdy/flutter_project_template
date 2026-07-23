@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'login_response_model.g.dart';
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class LoginResponseModel extends LoginResponse {
   const LoginResponseModel({
     required super.message,
@@ -13,4 +13,13 @@ class LoginResponseModel extends LoginResponse {
 
   factory LoginResponseModel.fromJson(Map<String, dynamic> json) =>
       _$LoginResponseModelFromJson(json);
+
+  factory LoginResponseModel.fromEntity(LoginResponse entity) =>
+      LoginResponseModel(
+        message: entity.message,
+        loginRequestId: entity.loginRequestId,
+        otpExpiresIn: entity.otpExpiresIn,
+      );
+
+  Map<String, dynamic> toJson() => _$LoginResponseModelToJson(this);
 }

@@ -3,24 +3,23 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'verify_request_model.g.dart';
 
-@JsonSerializable(createFactory: false, fieldRename: FieldRename.snake)
-class VerifyRequestModel {
+@JsonSerializable()
+class VerifyRequestModel extends VerifyRequest {
   const VerifyRequestModel({
-    required this.loginRequestId,
-    required this.email,
-    required this.code,
+    required super.loginRequestId,
+    required super.email,
+    required super.code,
   });
 
-  factory VerifyRequestModel.fromEntity(VerifyRequest request) =>
+  factory VerifyRequestModel.fromEntity(VerifyRequest entity) =>
       VerifyRequestModel(
-        loginRequestId: request.loginRequestId,
-        email: request.email,
-        code: request.code,
+        loginRequestId: entity.loginRequestId,
+        email: entity.email,
+        code: entity.code,
       );
 
-  final String loginRequestId;
-  final String email;
-  final String code;
+  factory VerifyRequestModel.fromJson(Map<String, dynamic> json) =>
+      _$VerifyRequestModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$VerifyRequestModelToJson(this);
 }

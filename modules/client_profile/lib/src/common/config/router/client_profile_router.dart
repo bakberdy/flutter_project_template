@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:client_profile/src/common/config/client_profile_navigation_paths.dart';
+import 'package:client_profile/src/common/config/constants/client_profile_navigation_paths.dart';
 import 'package:client_profile/src/features/account_status/presentation/screens/user_blocked_screen.dart';
 import 'package:client_profile/src/features/account_status/presentation/screens/user_deletion_requested_screen.dart';
 import 'package:client_profile/src/features/profile/presentation/screens/profile_tab_shell_screen.dart';

@@ -3,46 +3,6 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'user_preferences_model.g.dart';
 
-class UserLanguageJsonConverter implements JsonConverter<UserLanguage, String> {
-  const UserLanguageJsonConverter();
-
-  @override
-  UserLanguage fromJson(String json) => switch (json) {
-    'en' => UserLanguage.en,
-    'ru' => UserLanguage.ru,
-    'kk' => UserLanguage.kk,
-    _ => throw ArgumentError.value(json, 'json', 'Unsupported user language'),
-  };
-
-  @override
-  String toJson(UserLanguage object) => switch (object) {
-    UserLanguage.en => 'en',
-    UserLanguage.ru => 'ru',
-    UserLanguage.kk => 'kk',
-  };
-}
-
-class UserThemeJsonConverter implements JsonConverter<UserTheme, String> {
-  const UserThemeJsonConverter();
-
-  @override
-  UserTheme fromJson(String json) => switch (json) {
-    'system' => UserTheme.system,
-    'light' => UserTheme.light,
-    'dark' => UserTheme.dark,
-    _ => throw ArgumentError.value(json, 'json', 'Unsupported user theme'),
-  };
-
-  @override
-  String toJson(UserTheme object) => switch (object) {
-    UserTheme.system => 'system',
-    UserTheme.light => 'light',
-    UserTheme.dark => 'dark',
-  };
-}
-
-@UserLanguageJsonConverter()
-@UserThemeJsonConverter()
 @JsonSerializable()
 class UserPreferencesModel extends UserPreferences {
   const UserPreferencesModel({

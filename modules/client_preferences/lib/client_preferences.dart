@@ -1,7 +1,7 @@
 library;
 
 export 'gen/l10n/client_preferences_localizations.dart';
-export 'src/common/client_preferences_localization_config.dart';
+export 'src/common/config/constants/client_preferences_localization_config.dart';
 export 'src/common/config/di/client_preferences_di.dart';
 export 'src/common/config/di/client_preferences_di.module.dart';
 export 'src/common/config/router/client_preferences_router.dart';

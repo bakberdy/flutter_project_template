@@ -4,19 +4,37 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'admin_user_profile_model.g.dart';
 
-@AdminUserPhoneNumberModelConverter()
-@JsonSerializable(createToJson: false, fieldRename: FieldRename.snake)
+@JsonSerializable(explicitToJson: true)
 class AdminUserProfileModel extends AdminUserProfile {
   const AdminUserProfileModel({
     required super.userId,
     required super.fullName,
     required super.createdAt,
     required super.updatedAt,
-    super.phoneNumber,
+    AdminUserPhoneNumberModel? phoneNumber,
     super.avatarUrl,
     super.completedAt,
-  });
+  }) : super(phoneNumber: phoneNumber);
 
   factory AdminUserProfileModel.fromJson(Map<String, dynamic> json) =>
       _$AdminUserProfileModelFromJson(json);
+
+  factory AdminUserProfileModel.fromEntity(AdminUserProfile entity) =>
+      AdminUserProfileModel(
+        userId: entity.userId,
+        fullName: entity.fullName,
+        createdAt: entity.createdAt,
+        updatedAt: entity.updatedAt,
+        phoneNumber: entity.phoneNumber == null
+            ? null
+            : AdminUserPhoneNumberModel.fromEntity(entity.phoneNumber!),
+        avatarUrl: entity.avatarUrl,
+        completedAt: entity.completedAt,
+      );
+
+  @override
+  AdminUserPhoneNumberModel? get phoneNumber =>
+      super.phoneNumber as AdminUserPhoneNumberModel?;
+
+  Map<String, dynamic> toJson() => _$AdminUserProfileModelToJson(this);
 }

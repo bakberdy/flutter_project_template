@@ -1,4 +1,4 @@
-import 'package:admin_users/src/common/config/admin_users_api_endpoints.dart';
+import 'package:admin_users/src/common/config/constants/admin_users_api_endpoints.dart';
 import 'package:admin_users/src/features/users/data/mappers/users_api_mapper.dart';
 import 'package:admin_users/src/features/users/data/models/admin_user_model/admin_user_model.dart';
 import 'package:admin_users/src/features/users/data/models/admin_user_profile_model/admin_user_profile_model.dart';

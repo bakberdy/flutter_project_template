@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'admin_user_phone_number_model.g.dart';
 
-@JsonSerializable(createToJson: false, fieldRename: FieldRename.snake)
+@JsonSerializable()
 class AdminUserPhoneNumberModel extends AdminUserPhoneNumber {
   const AdminUserPhoneNumberModel({
     required super.dialCode,
@@ -13,17 +13,14 @@ class AdminUserPhoneNumberModel extends AdminUserPhoneNumber {
 
   factory AdminUserPhoneNumberModel.fromJson(Map<String, dynamic> json) =>
       _$AdminUserPhoneNumberModelFromJson(json);
-}
 
-class AdminUserPhoneNumberModelConverter
-    implements JsonConverter<AdminUserPhoneNumber?, Map<String, dynamic>?> {
-  const AdminUserPhoneNumberModelConverter();
+  factory AdminUserPhoneNumberModel.fromEntity(
+    AdminUserPhoneNumber entity,
+  ) => AdminUserPhoneNumberModel(
+    dialCode: entity.dialCode,
+    number: entity.number,
+    countryCode: entity.countryCode,
+  );
 
-  @override
-  AdminUserPhoneNumber? fromJson(Map<String, dynamic>? json) =>
-      json == null ? null : AdminUserPhoneNumberModel.fromJson(json);
-
-  @override
-  Map<String, dynamic>? toJson(AdminUserPhoneNumber? object) =>
-      throw UnsupportedError('Admin user profiles are read-only');
+  Map<String, dynamic> toJson() => _$AdminUserPhoneNumberModelToJson(this);
 }

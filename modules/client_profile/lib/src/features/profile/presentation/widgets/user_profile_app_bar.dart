@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:client_profile/src/common/client_profile_context_x.dart';
+import 'package:client_profile/src/common/presentation/extensions/client_profile_context_x.dart';
 import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';

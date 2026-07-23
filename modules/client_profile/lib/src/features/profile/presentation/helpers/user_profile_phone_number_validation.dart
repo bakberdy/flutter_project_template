@@ -1,5 +1,5 @@
-import 'package:client_profile/src/common/client_profile_context_x.dart';
-import 'package:client_profile/src/common/config/client_profile_constants.dart';
+import 'package:client_profile/src/common/config/constants/client_profile_constants.dart';
+import 'package:client_profile/src/common/presentation/extensions/client_profile_context_x.dart';
 import 'package:flutter/widgets.dart';
 
 const userProfilePhoneNumberInvalidFormatError = 'phone_number_invalid_format';

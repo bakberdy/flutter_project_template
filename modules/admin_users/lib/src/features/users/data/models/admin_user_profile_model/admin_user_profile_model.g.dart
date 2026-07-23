@@ -1,5 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
+// ignore_for_file: unnecessary_null_checks, document_ignores
+
 part of 'admin_user_profile_model.dart';
 
 // **************************************************************************
@@ -13,11 +15,25 @@ AdminUserProfileModel _$AdminUserProfileModelFromJson(
   fullName: json['full_name'] as String,
   createdAt: DateTime.parse(json['created_at'] as String),
   updatedAt: DateTime.parse(json['updated_at'] as String),
-  phoneNumber: const AdminUserPhoneNumberModelConverter().fromJson(
-    json['phone_number'] as Map<String, dynamic>?,
-  ),
+  phoneNumber: json['phone_number'] == null
+      ? null
+      : AdminUserPhoneNumberModel.fromJson(
+          json['phone_number'] as Map<String, dynamic>,
+        ),
   avatarUrl: json['avatar_url'] as String?,
   completedAt: json['completed_at'] == null
       ? null
       : DateTime.parse(json['completed_at'] as String),
 );
+
+Map<String, dynamic> _$AdminUserProfileModelToJson(
+  AdminUserProfileModel instance,
+) => <String, dynamic>{
+  'user_id': instance.userId,
+  'full_name': instance.fullName,
+  'avatar_url': instance.avatarUrl,
+  'created_at': instance.createdAt.toIso8601String(),
+  'updated_at': instance.updatedAt.toIso8601String(),
+  'completed_at': instance.completedAt?.toIso8601String(),
+  'phone_number': instance.phoneNumber?.toJson(),
+};

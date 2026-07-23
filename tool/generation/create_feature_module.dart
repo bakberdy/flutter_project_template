@@ -99,7 +99,7 @@ void _createScaffold({
     'lib/src/features/$featureName/data',
     'lib/src/features/$featureName/domain',
     'lib/src/features/$featureName/presentation',
-    'test/common',
+    'test/common/presentation/extensions',
     'test/features/$featureName',
   ];
   for (final path in directories) {
@@ -255,7 +255,7 @@ export 'src/common/config/di/${moduleName}_di.module.dart';
 
   _write(
     moduleDirectory,
-    'lib/src/common/${moduleName}_context_x.dart',
+    'lib/src/common/presentation/extensions/${moduleName}_context_x.dart',
     '''
 import 'package:$moduleName/gen/assets.gen.dart';
 import 'package:$moduleName/gen/l10n/${moduleName}_localizations.dart';
@@ -285,11 +285,11 @@ Future<void> configure${moduleClass}Dependencies() async =>
   );
   _write(
     moduleDirectory,
-    'test/common/${moduleName}_context_x_test.dart',
+    'test/common/presentation/extensions/${moduleName}_context_x_test.dart',
     '''
 import 'package:$moduleName/gen/assets.gen.dart';
 import 'package:$moduleName/gen/l10n/${moduleName}_localizations.dart';
-import 'package:$moduleName/src/common/${moduleName}_context_x.dart';
+import 'package:$moduleName/src/common/presentation/extensions/${moduleName}_context_x.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 

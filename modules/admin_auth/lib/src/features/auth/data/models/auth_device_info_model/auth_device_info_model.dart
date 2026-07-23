@@ -4,19 +4,17 @@ import 'package:json_annotation/json_annotation.dart';
 part 'auth_device_info_model.g.dart';
 
 @JsonSerializable(
-  createFactory: false,
-  fieldRename: FieldRename.snake,
   includeIfNull: false,
 )
-class AuthDeviceInfoModel {
+class AuthDeviceInfoModel extends AuthDeviceInfo {
   const AuthDeviceInfoModel({
-    required this.deviceId,
-    required this.os,
-    required this.osVersion,
-    required this.model,
-    required this.appVersion,
-    this.pushProvider,
-    this.pushToken,
+    required super.deviceId,
+    required super.os,
+    required super.osVersion,
+    required super.model,
+    required super.appVersion,
+    super.pushProvider,
+    super.pushToken,
   });
 
   factory AuthDeviceInfoModel.fromEntity(AuthDeviceInfo entity) =>
@@ -30,13 +28,8 @@ class AuthDeviceInfoModel {
         pushToken: entity.pushToken,
       );
 
-  final String deviceId;
-  final String os;
-  final String osVersion;
-  final String model;
-  final String appVersion;
-  final String? pushProvider;
-  final String? pushToken;
+  factory AuthDeviceInfoModel.fromJson(Map<String, dynamic> json) =>
+      _$AuthDeviceInfoModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$AuthDeviceInfoModelToJson(this);
 }
