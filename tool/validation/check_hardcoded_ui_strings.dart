@@ -68,8 +68,8 @@ void main(List<String> arguments) {
       '"// $_allowedComment" for intentional non-localizable UI metadata.',
     );
 
+  _writeGitHubReport(violations, isNonBlocking: isNonBlocking);
   if (isNonBlocking) {
-    _writeGitHubReport(violations);
     stdout.writeln(
       'Hardcoded UI strings are reported as warnings and do not fail CI.',
     );
@@ -79,12 +79,16 @@ void main(List<String> arguments) {
   exitCode = 1;
 }
 
-void _writeGitHubReport(List<_Violation> violations) {
+void _writeGitHubReport(
+  List<_Violation> violations, {
+  required bool isNonBlocking,
+}) {
   if (Platform.environment['GITHUB_ACTIONS'] != 'true') return;
 
+  final annotationLevel = isNonBlocking ? 'warning' : 'error';
   for (final violation in violations) {
     stdout.writeln(
-      '::warning '
+      '::$annotationLevel '
       'file=${_escapeWorkflowProperty(violation.path)},'
       'line=${violation.line},'
       'title=Hardcoded UI text::'
@@ -107,7 +111,9 @@ void _writeGitHubReport(List<_Violation> violations) {
     ..writeln('## Hardcoded UI texts')
     ..writeln()
     ..writeln(
-      'These findings are optional warnings and do not fail validation.',
+      isNonBlocking
+          ? 'These findings are optional warnings and do not fail validation.'
+          : 'These findings fail validation.',
     )
     ..writeln();
   for (final violation in violations) {
