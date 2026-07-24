@@ -2,6 +2,17 @@
 
 My App mobile client application.
 
+## Launcher icons
+
+Provide the flavor source images at:
+
+- `assets/launcher_icons/development.png`
+- `assets/launcher_icons/production.png`
+
+Then run `make client-icons` from the repository root. The flavor configurations
+are defined in `flutter_launcher_icons-development.yaml` and
+`flutter_launcher_icons-production.yaml`.
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.

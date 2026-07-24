@@ -1,6 +1,6 @@
 .PHONY: help \
 	check-hardcoded-ui \
-	client-dev client-prod client-apk-dev client-apk-prod client-ios-dev client-ios-prod \
+	client-dev client-prod client-apk-dev client-apk-prod client-ios-dev client-ios-prod client-icons \
 	client-android-deploy-dev client-android-deploy-prod \
 	client-ios-deploy-dev client-ios-deploy-prod \
 	admin-dev admin-prod
@@ -28,6 +28,7 @@ help:
 	@echo "  make client-apk-prod  Build release APK with production config"
 	@echo "  make client-ios-dev   Build iOS simulator app with development config"
 	@echo "  make client-ios-prod  Build iOS simulator app with production config"
+	@echo "  make client-icons     Generate Android and iOS icons for both flavors"
 	@echo "  make client-android-deploy-dev|prod   Upload AAB with Fastlane"
 	@echo "  make client-ios-deploy-dev|prod       Upload IPA to TestFlight with Fastlane (SPM)"
 	@echo ""
@@ -36,22 +37,25 @@ help:
 	@echo "  make admin-prod       Run admin app with production config"
 
 client-dev:
-	cd $(CLIENT_APP) && flutter run --dart-define-from-file=$(CLIENT_CONFIG_DEVELOPMENT)
+	cd $(CLIENT_APP) && flutter run --flavor development --dart-define-from-file=$(CLIENT_CONFIG_DEVELOPMENT)
 
 client-prod:
-	cd $(CLIENT_APP) && flutter run --dart-define-from-file=$(CLIENT_CONFIG_PRODUCTION)
+	cd $(CLIENT_APP) && flutter run --flavor production --dart-define-from-file=$(CLIENT_CONFIG_PRODUCTION)
 
 client-apk-dev:
-	cd $(CLIENT_APP) && flutter build apk --debug --dart-define-from-file=$(CLIENT_CONFIG_DEVELOPMENT)
+	cd $(CLIENT_APP) && flutter build apk --debug --flavor development --dart-define-from-file=$(CLIENT_CONFIG_DEVELOPMENT)
 
 client-apk-prod:
-	cd $(CLIENT_APP) && flutter build apk --release --dart-define-from-file=$(CLIENT_CONFIG_PRODUCTION)
+	cd $(CLIENT_APP) && flutter build apk --release --flavor production --dart-define-from-file=$(CLIENT_CONFIG_PRODUCTION)
 
 client-ios-dev:
-	cd $(CLIENT_APP) && flutter build ios --simulator --debug --no-codesign --dart-define-from-file=$(CLIENT_CONFIG_DEVELOPMENT)
+	cd $(CLIENT_APP) && flutter build ios --simulator --debug --no-codesign --flavor development --dart-define-from-file=$(CLIENT_CONFIG_DEVELOPMENT)
 
 client-ios-prod:
-	cd $(CLIENT_APP) && flutter build ios --simulator --debug --no-codesign --dart-define-from-file=$(CLIENT_CONFIG_PRODUCTION)
+	cd $(CLIENT_APP) && flutter build ios --simulator --debug --no-codesign --flavor production --dart-define-from-file=$(CLIENT_CONFIG_PRODUCTION)
+
+client-icons:
+	cd $(CLIENT_APP) && dart run flutter_launcher_icons
 
 client-android-deploy-dev:
 	cd $(CLIENT_APP)/android && bundle exec fastlane beta_development
