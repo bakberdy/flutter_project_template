@@ -391,7 +391,8 @@ BootstrapPlan createBootstrapPlan(
   for (final rootPath in ['apps/client_app/android', 'apps/client_app/ios']) {
     for (final file in _textFilesUnder(repositoryRoot, rootPath)) {
       final relativePath = _relativePath(repositoryRoot, file);
-      final source = file.readAsStringSync();
+      final source = _tryReadUtf8(file);
+      if (source == null) continue;
       androidIdentifierReplacements += _countOccurrences(
         source,
         previousAndroidApplicationId,
@@ -411,7 +412,8 @@ BootstrapPlan createBootstrapPlan(
 
   for (final file in _textFilesUnder(repositoryRoot, '.github')) {
     final relativePath = _relativePath(repositoryRoot, file);
-    final source = file.readAsStringSync();
+    final source = _tryReadUtf8(file);
+    if (source == null) continue;
     androidIdentifierReplacements += _countOccurrences(
       source,
       previousAndroidApplicationId,
@@ -648,6 +650,7 @@ Iterable<File> _textFilesUnder(Directory root, String relativeRoot) sync* {
         path.contains('/build/') ||
         path.contains('/.gradle/') ||
         path.contains('/Pods/') ||
+        path.contains('/xcuserdata/') ||
         _isBinaryFile(path)) {
       continue;
     }
@@ -655,9 +658,17 @@ Iterable<File> _textFilesUnder(Directory root, String relativeRoot) sync* {
   }
 }
 
+String? _tryReadUtf8(File file) {
+  try {
+    return utf8.decode(file.readAsBytesSync());
+  } on FormatException {
+    return null;
+  }
+}
+
 bool _isBinaryFile(String path) {
   return RegExp(
-    r'\.(?:aab|apk|gif|ico|jar|jpeg|jpg|jks|keystore|p12|p8|png|ttf|zip)$',
+    r'\.(?:aab|apk|gif|ico|jar|jpeg|jpg|jks|keystore|p12|p8|png|ttf|xcuserstate|zip)$',
     caseSensitive: false,
   ).hasMatch(path);
 }

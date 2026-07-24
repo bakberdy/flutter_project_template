@@ -3,12 +3,12 @@ require "shellwords"
 
 FLAVORS = {
   "development" => {
-    bundle_id:        "com.acme.myapp.development",
+    bundle_id:        "com.bakberdi.template.development",
     dart_define_file: "config/config.development.json",
     env_suffix:       "DEVELOPMENT",
   },
   "production" => {
-    bundle_id:        "com.acme.myapp",
+    bundle_id:        "com.bakberdi.template",
     dart_define_file: "config/config.production.json",
     env_suffix:       "PRODUCTION",
   },

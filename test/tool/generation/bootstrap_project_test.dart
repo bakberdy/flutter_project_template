@@ -191,6 +191,30 @@ applied:
     expect(applied?.applicationId, 'dev.example.nextapp');
   });
 
+  test('ignores binary files while scanning platform directories', () {
+    File.fromUri(
+        repository.uri.resolve(
+          'apps/client_app/ios/Runner.xcworkspace/xcuserdata/user.xcuserdatad/'
+          'UserInterfaceState.xcuserstate',
+        ),
+      )
+      ..createSync(recursive: true)
+      ..writeAsBytesSync([0xFF, 0xFE, 0x00, 0x80]);
+
+    expect(
+      () => createBootstrapPlan(
+        repository,
+        BootstrapConfig(
+          projectName: 'my_app',
+          displayName: 'My Product',
+          organization: 'com.acme',
+          iosTeam: 'ABCDE12345',
+        ),
+      ),
+      returnsNormally,
+    );
+  });
+
   test('derives a display name and validates identity inputs', () {
     final config = BootstrapConfig(
       projectName: 'sample_bank',

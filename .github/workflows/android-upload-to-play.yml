@@ -204,8 +204,8 @@ jobs:
         run: |
           set -euo pipefail
           case "${FLAVOR}" in
-            production)  PKG="com.acme.myapp" ;;
-            development) PKG="com.acme.myapp.development" ;;
+            production)  PKG="com.bakberdi.template" ;;
+            development) PKG="com.bakberdi.template.development" ;;
           esac
           echo "package_name=${PKG}" >> "${GITHUB_OUTPUT}"
 

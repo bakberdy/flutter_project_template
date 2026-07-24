@@ -3,12 +3,12 @@
 # The applied section is maintained by the script.
 name: "my_app"
 display_name: "My App"
-organization: "com.acme"
-application_id: "com.acme.myapp"
+organization: "com.bakberdi"
+application_id: "com.bakberdi.template"
 ios_team: "ABCDE12345"
 applied:
   name: "my_app"
   display_name: "My App"
-  organization: "com.acme"
-  application_id: "com.acme.myapp"
+  organization: "com.bakberdi"
+  application_id: "com.bakberdi.template"
   ios_team: "ABCDE12345"
