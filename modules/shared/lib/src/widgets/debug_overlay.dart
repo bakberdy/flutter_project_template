@@ -9,6 +9,7 @@ class DebugOverlay extends StatelessWidget {
     required this.child,
     required this.bannerColor,
     required this.environment,
+    this.debugMode = kDebugMode,
     super.key,
   });
 
@@ -17,10 +18,12 @@ class DebugOverlay extends StatelessWidget {
   final Widget child;
   final Color bannerColor;
   final String environment;
+  final bool debugMode;
 
   @override
   Widget build(BuildContext context) {
-    if (environment == 'production' && !kDebugMode) {
+    final isDevelopment = environment.trim().toLowerCase() == 'development';
+    if (!isDevelopment && !debugMode) {
       return child;
     }
 
