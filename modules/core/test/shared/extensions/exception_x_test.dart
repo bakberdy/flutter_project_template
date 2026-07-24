@@ -70,10 +70,10 @@ void main() {
       expect(failure.details?.type, FailureType.snackbar);
     });
 
-    test('keeps internet connection error for host lookup failures', () async {
+    test('maps unreachable networks to no connection', () async {
       const exception = ApiException(
         type: ApiExceptionType.connectionError,
-        error: 'SocketException: Failed host lookup',
+        error: 'SocketException: Network is unreachable (errno = 101)',
       );
 
       final failure = await exception.toFailure(source: 'auth.login');
@@ -81,6 +81,53 @@ void main() {
       expect(failure, isA<NoConnectionFailure>());
       expect(failure.details?.statusCode, 0);
       expect(failure.details?.type, FailureType.snackbar);
+    });
+
+    test('maps failed host lookup to service unavailable', () async {
+      const exception = ApiException(
+        type: ApiExceptionType.connectionError,
+        error: 'SocketException: Failed host lookup',
+      );
+
+      final failure = await exception.toFailure(source: 'auth.login');
+
+      expect(failure, isA<ServiceUnavailableFailure>());
+      expect(failure.details?.statusCode, 503);
+    });
+
+    test('maps reset connections to request failed', () async {
+      const exception = ApiException(
+        type: ApiExceptionType.connectionError,
+        error: 'SocketException: Connection reset by peer',
+      );
+
+      final failure = await exception.toFailure(source: 'auth.login');
+
+      expect(failure, isA<RequestFailedFailure>());
+      expect(failure.details?.statusCode, 0);
+    });
+
+    test('maps TLS handshake errors to secure connection failure', () async {
+      const exception = ApiException(
+        type: ApiExceptionType.connectionError,
+        error: 'HandshakeException: CERTIFICATE_VERIFY_FAILED',
+      );
+
+      final failure = await exception.toFailure(source: 'auth.login');
+
+      expect(failure, isA<SecureConnectionFailure>());
+    });
+
+    test('does not assume unknown connection errors mean offline', () async {
+      const exception = ApiException(
+        type: ApiExceptionType.connectionError,
+        error: 'XMLHttpRequest error',
+      );
+
+      final failure = await exception.toFailure(source: 'auth.login');
+
+      expect(failure, isA<RequestFailedFailure>());
+      expect(failure.details?.statusCode, 0);
     });
 
     test('maps http 503 responses to service unavailable', () async {

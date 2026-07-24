@@ -7,7 +7,7 @@ extension DioExceptionX on DioException {
   ApiException toApiException() => ApiException(
     type: type.toApiExceptionType(),
     response: response?.toApiResponse(),
-    error: error,
+    error: error ?? message,
   );
 }
 

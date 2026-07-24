@@ -60,6 +60,20 @@ void main() {
       );
     });
 
+    testWidgets('does not infer no connection from an unknown status code', (
+      tester,
+    ) async {
+      const failure = UnknownFailure(
+        source: 'test',
+        details: FailureDetails(statusCode: 0),
+      );
+
+      expect(
+        await _messageFor(tester, failure, const Locale('en')),
+        'Something went wrong. Try again.',
+      );
+    });
+
     testWidgets('maps app info failures using the active locale', (
       tester,
     ) async {

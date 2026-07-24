@@ -13,6 +13,9 @@ class UserProfileRepositoryImpl implements UserProfileRepository {
   final TokenStorage _tokenStorage;
 
   @override
+  Future<bool> hasSession() => _tokenStorage.containsRefreshToken();
+
+  @override
   FutureEither<User> getCurrentUser({ApiCancelToken? cancelToken}) async {
     try {
       return Right(

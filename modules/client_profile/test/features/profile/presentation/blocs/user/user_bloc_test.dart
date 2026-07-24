@@ -11,11 +11,41 @@ import 'package:mocktail/mocktail.dart';
 import 'package:shared/shared.dart';
 
 void main() {
+  test('clears the current user when the session is missing', () async {
+    final repository = _MockUserProfileRepository();
+    var hasSession = true;
+    when(repository.hasSession).thenAnswer((_) async => hasSession);
+    when(
+      () => repository.getCurrentUser(cancelToken: any(named: 'cancelToken')),
+    ).thenAnswer((_) async => Right<Failure, User>(_user));
+    final bloc = UserBloc(
+      GetCurrentUserUseCase(repository),
+      LogOutUseCase(repository),
+    );
+    addTearDown(bloc.close);
+
+    bloc.add(const UserEvent.refreshUser());
+    await bloc.stream.firstWhere(
+      (state) => state.status.isSuccess && state.user == _user,
+    );
+
+    hasSession = false;
+    bloc.add(const UserEvent.refreshUser());
+    await bloc.stream.firstWhere(
+      (state) => state.status.isSuccess && state.user == null,
+    );
+
+    verify(
+      () => repository.getCurrentUser(cancelToken: any(named: 'cancelToken')),
+    ).called(1);
+  });
+
   test(
     'logout cannot be overwritten by a late current-user response',
     () async {
       final repository = _MockUserProfileRepository();
       final currentUser = Completer<Either<Failure, User>>();
+      when(repository.hasSession).thenAnswer((_) async => true);
       when(
         () => repository.getCurrentUser(cancelToken: any(named: 'cancelToken')),
       ).thenAnswer((_) => currentUser.future);

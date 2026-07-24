@@ -2,6 +2,8 @@ import 'package:core/core.dart';
 import 'package:shared/shared.dart';
 
 abstract class UserProfileRepository {
+  Future<bool> hasSession();
+
   FutureEither<User> getCurrentUser({ApiCancelToken? cancelToken});
 
   FutureEither<UserProfile> getCurrentProfile();

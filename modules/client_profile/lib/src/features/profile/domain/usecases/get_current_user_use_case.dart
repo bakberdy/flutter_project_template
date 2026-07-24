@@ -11,12 +11,16 @@ typedef GetCurrentUserParams = ({
 });
 
 @lazySingleton
-class GetCurrentUserUseCase extends UseCase<User, GetCurrentUserParams> {
+class GetCurrentUserUseCase extends UseCase<User?, GetCurrentUserParams> {
   GetCurrentUserUseCase(this._repository);
   final UserProfileRepository _repository;
 
   @override
-  FutureEither<User> call(GetCurrentUserParams params) {
+  FutureEither<User?> call(GetCurrentUserParams params) async {
+    if (!await _repository.hasSession()) {
+      return const Right(null);
+    }
+
     final result = trackUserProfileUseCase(
       _repository.getCurrentUser(cancelToken: params.cancelToken),
       'get_current_user',

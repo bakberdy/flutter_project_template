@@ -37,12 +37,19 @@ extension ExceptionX on Exception {
 
   Failure? _clientApiFailure(ApiException e, String source) {
     return switch (e.type) {
+      ApiExceptionType.connectionError when e.isNoConnection =>
+        NoConnectionFailure(
+          source: source,
+          details: const FailureDetails(statusCode: 0),
+        ),
       ApiExceptionType.connectionError when e.isServiceUnavailable =>
         ServiceUnavailableFailure(
           source: source,
           details: const FailureDetails(statusCode: 503),
         ),
-      ApiExceptionType.connectionError => NoConnectionFailure(
+      ApiExceptionType.connectionError when e.isSecureConnectionFailure =>
+        SecureConnectionFailure(source: source),
+      ApiExceptionType.connectionError => RequestFailedFailure(
         source: source,
         details: const FailureDetails(statusCode: 0),
       ),
@@ -66,13 +73,37 @@ extension ExceptionX on Exception {
   }
 }
 
-extension _ApiExceptionServiceUnavailableX on ApiException {
+extension _ApiExceptionConnectionFailureX on ApiException {
+  String get errorDescription => error.toString().toLowerCase();
+
+  bool get isNoConnection {
+    final description = errorDescription;
+    return description.contains('network is unreachable') ||
+        description.contains('network is down') ||
+        description.contains('no route to host') ||
+        description.contains('not connected to the internet') ||
+        description.contains('internet connection appears to be offline') ||
+        description.contains('errno = 51') ||
+        description.contains('errno = 101') ||
+        description.contains('error 10050') ||
+        description.contains('error 10051') ||
+        description.contains('error 10065');
+  }
+
   bool get isServiceUnavailable {
-    final description = error.toString().toLowerCase();
+    final description = errorDescription;
     return description.contains('connection refused') ||
-        description.contains('connection reset') ||
-        description.contains('connection aborted') ||
-        description.contains('connection closed') ||
+        description.contains('failed host lookup') ||
+        description.contains('host not found') ||
+        description.contains('name or service not known') ||
+        description.contains('nodename nor servname provided') ||
         description.contains('http status error [503]');
+  }
+
+  bool get isSecureConnectionFailure {
+    final description = errorDescription;
+    return description.contains('handshakeexception') ||
+        description.contains('tls handshake') ||
+        description.contains('certificate_verify_failed');
   }
 }

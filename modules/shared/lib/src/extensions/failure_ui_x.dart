@@ -17,8 +17,7 @@ extension FailureUiX on Failure {
       UnauthorizedFailure() => l10n.errorUnauthorized,
       GetAppInfoFailure() => l10n.errorGetAppInfo,
       GetDeviceInfoFailure() => l10n.errorGetDeviceInfo,
-      RequestCancelledFailure() || UnknownFailure() =>
-        details?.statusCode == 0 ? l10n.errorNoConnection : l10n.errorUnknown,
+      RequestCancelledFailure() || UnknownFailure() => l10n.errorUnknown,
       _ => l10n.errorUnknown,
     };
   }
