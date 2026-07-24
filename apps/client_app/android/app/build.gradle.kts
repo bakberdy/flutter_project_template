@@ -63,7 +63,7 @@ val developmentKeyProps = loadKeyProps("key.development.properties")
 val sharedKeyProps = loadKeyProps("key.properties")
 
 android {
-    namespace = "com.example.client_app"
+    namespace = "com.acme.myapp"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -73,7 +73,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.client_app"
+        applicationId = "com.acme.myapp"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode

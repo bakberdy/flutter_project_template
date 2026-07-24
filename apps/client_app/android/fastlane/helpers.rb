@@ -3,12 +3,12 @@ require "fileutils"
 
 FLAVORS = {
   "development" => {
-    package_name:     "com.example.client_app.development",
+    package_name:     "com.acme.myapp.development",
     dart_define_file: "config/config.development.json",
     env_suffix:       "DEVELOPMENT",
   },
   "production" => {
-    package_name:     "com.example.client_app",
+    package_name:     "com.acme.myapp",
     dart_define_file: "config/config.production.json",
     env_suffix:       "PRODUCTION",
   },

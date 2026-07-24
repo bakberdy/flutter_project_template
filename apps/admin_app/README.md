@@ -1,6 +1,6 @@
-# admin_app
+# My App admin app
 
-Flutter web administration panel. This app is web-only and uses a persistent
+My App web administration panel. This app is web-only and uses a persistent
 sidebar with nested URL navigation.
 
 Run from this directory:

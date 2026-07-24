@@ -1,2 +1,2 @@
-app_identifier("com.example.clientApp")
-team_id("C466ZHPP34")
+app_identifier("com.acme.myapp")
+team_id("ABCDE12345")

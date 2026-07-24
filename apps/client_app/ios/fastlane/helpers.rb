@@ -3,12 +3,12 @@ require "shellwords"
 
 FLAVORS = {
   "development" => {
-    bundle_id:        "com.example.clientApp.development",
+    bundle_id:        "com.acme.myapp.development",
     dart_define_file: "config/config.development.json",
     env_suffix:       "DEVELOPMENT",
   },
   "production" => {
-    bundle_id:        "com.example.clientApp",
+    bundle_id:        "com.acme.myapp",
     dart_define_file: "config/config.production.json",
     env_suffix:       "PRODUCTION",
   },
@@ -206,7 +206,7 @@ def configure_project_signing(flavor)
   update_code_signing_settings(
     use_automatic_signing: false,
     path:                  File.join(IOS_DIR, "Runner.xcodeproj"),
-    team_id:               ENV.fetch("IOS_TEAM_ID", "C466ZHPP34"),
+    team_id:               ENV.fetch("IOS_TEAM_ID", "ABCDE12345"),
     bundle_identifier:     cfg[:bundle_id],
     profile_name:          provisioning_profile_name(flavor),
     build_configurations:  ["Release-#{flavor}"],

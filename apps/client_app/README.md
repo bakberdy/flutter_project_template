@@ -1,6 +1,6 @@
-# client_app
+# My App client app
 
-A new Flutter project.
+My App mobile client application.
 
 ## Getting Started
 

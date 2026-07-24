@@ -1,11 +1,11 @@
 {
-    "name": "Admin Panel",
-    "short_name": "Admin",
+    "name": "My App Admin",
+    "short_name": "My App Admin",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "Web administration panel.",
+    "description": "My App administration panel.",
     "prefer_related_applications": false,
     "icons": [
         {

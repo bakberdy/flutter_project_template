@@ -1,5 +1,5 @@
 name: admin_app
-description: Admin Flutter web application.
+description: "My App admin Flutter web application."
 publish_to: none
 version: 0.1.0+1
 resolution: workspace

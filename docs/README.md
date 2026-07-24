@@ -2,10 +2,11 @@
 
 ## Start a project from this template
 
-Use `tool/generation/bootstrap_project.dart` before feature development. Start
-with `--dry-run`, review the platform identifiers and file move, then run it
-again without `--dry-run`. See [Repository tools](../tool/README.md) for the
-complete command and behavior.
+Set the project identity in `project.yaml`, then run
+`tool/generation/bootstrap_project.dart`. Start with `--dry-run`, review the
+platform identifiers and file move, then run it again without `--dry-run`.
+Edit the same configuration and rerun the tool when the identity changes. See
+[Repository tools](../tool/README.md) for the complete command and behavior.
 
 ## Agent Guidelines
 

@@ -1,5 +1,5 @@
 name: client_app
-description: Client Flutter application.
+description: "My App client Flutter application."
 publish_to: none
 version: 0.1.0+1
 resolution: workspace

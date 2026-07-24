@@ -132,7 +132,7 @@ Play Console → the flavor's app → **Testing → Internal testing → Create 
 ```bash
 fastlane supply \
   --aab apps/client_app/build/app/outputs/bundle/productionRelease/app-production-release.aab \
-  --package_name com.example.client_app \
+  --package_name com.acme.myapp \
   --track internal \
   --json_key apps/client_app/android/keys/play-service-account.json \
   --skip_upload_metadata true \
@@ -146,7 +146,7 @@ fastlane supply \
 ```bash
 fastlane supply \
   --aab apps/client_app/build/app/outputs/bundle/developmentRelease/app-development-release.aab \
-  --package_name com.example.client_app.development \
+  --package_name com.acme.myapp.development \
   --track internal \
   --json_key apps/client_app/android/keys/play-service-account.json \
   --skip_upload_metadata true \
@@ -185,8 +185,8 @@ Each Flutter flavor uploads to a **separate** Play Console app, because each fla
 
 | Flutter flavor | Play `packageName`                    |
 | -------------- | ------------------------------------- |
-| `production`   | `com.example.client_app`             |
-| `development`  | `com.example.client_app.development` |
+| `production`   | `com.acme.myapp`             |
+| `development`  | `com.acme.myapp.development` |
 
 
 For each app:
@@ -225,7 +225,7 @@ The key now exists in Google Cloud, but Play doesn't know about it yet.
 1. **Play Console → Setup → API access**.
 2. **Link Google Cloud project** → choose the project from B2.1 (one-time per Play developer account; if it's already linked, skip).
 3. Under **Service accounts**, find the account from B2.1 (it auto-appears once the project is linked) → **Manage Play Console permissions**.
-4. **App permissions** tab → **Add app** → add **all flavor apps you ship** (`com.example.client_app`, `com.example.client_app.development`). The apps must already exist (Step B1).
+4. **App permissions** tab → **Add app** → add **all flavor apps you ship** (`com.acme.myapp`, `com.acme.myapp.development`). The apps must already exist (Step B1).
 5. **Account permissions** tab → enable at minimum:
   - **View app information and download bulk reports** (read access)
   - **Manage testing tracks and edit testers**
@@ -361,8 +361,8 @@ The App needs **Repository permissions → Contents = Read and write**, must be 
 
 | Flutter flavor | applicationId / Play `packageName`    | Config JSON (local / `dart-define-from-file`) |
 | -------------- | ------------------------------------- | --------------------------------------------- |
-| `development`  | `com.example.client_app.development` | `config/config.development.json`          |
-| `production`   | `com.example.client_app`             | `config/config.production.json`           |
+| `development`  | `com.acme.myapp.development` | `config/config.development.json`          |
+| `production`   | `com.acme.myapp`             | `config/config.production.json`           |
 
 
 

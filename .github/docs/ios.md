@@ -124,8 +124,8 @@ For a given workflow run, the workflow `inputs.flavor` must have its profile pai
 
 | Flutter flavor | Bundle ID                             | Config JSON (local / `dart-define-from-file`) |
 | -------------- | ------------------------------------- | --------------------------------------------- |
-| `development`  | `com.example.clientApp.development` | `config/config.development.json`          |
-| `production`   | `com.example.clientApp`             | `config/config.production.json`           |
+| `development`  | `com.acme.myapp.development` | `config/config.development.json`          |
+| `production`   | `com.acme.myapp`             | `config/config.production.json`           |
 
 
 

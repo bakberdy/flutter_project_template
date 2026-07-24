@@ -9,7 +9,7 @@ class AdminAppLocalizationsEn extends AdminAppLocalizations {
   AdminAppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get adminAppTitle => 'Admin Panel';
+  String get adminAppTitle => 'My App Admin';
 
   @override
   String get dashboard => 'Dashboard';

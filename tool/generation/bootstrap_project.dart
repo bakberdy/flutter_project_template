@@ -1,34 +1,28 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:yaml/yaml.dart';
+
 const _templateAndroidApplicationId = 'com.example.client_app';
 const _templateIosBundleId = 'com.example.clientApp';
 const _templateIosTeam = 'C466ZHPP34';
 
-const _usage = r'''
-Configure product and platform identity for a new project.
+const _usage = '''
+Apply product and platform identity from project.yaml.
 
 Usage:
-  dart run tool/generation/bootstrap_project.dart <project_name> [options]
-
-Required options:
-  --organization <domain>  Reverse-domain organization, for example com.acme.
-  --ios-team <team_id>     Ten-character Apple Developer team identifier.
+  dart run tool/generation/bootstrap_project.dart [options]
 
 Optional:
-  --display-name <text>    User-visible product name. Derived from project_name.
-  --application-id <id>   Android/iOS base identifier. Derived from the other
-                           inputs, for example com.acme.myapp.
+  --config <path>          Configuration path relative to the repository root.
+                           Defaults to project.yaml.
   --dry-run                Print planned changes without writing files.
   --no-codegen             Skip pub get, localization generation, and analysis.
   --root <path>            Repository root. Defaults to auto-detection.
   -h, --help               Show this help.
 
 Example:
-  dart run tool/generation/bootstrap_project.dart my_app \
-    --display-name "My App" \
-    --organization com.acme \
-    --ios-team ABCDE12345
+  dart run tool/generation/bootstrap_project.dart --dry-run
 ''';
 
 Future<void> main(List<String> arguments) async {
@@ -39,31 +33,21 @@ Future<void> main(List<String> arguments) async {
       return;
     }
 
-    final projectName = options.projectName;
-    final organization = options.organization;
-    final iosTeam = options.iosTeam;
-    if (projectName == null) {
-      throw const BootstrapException('project_name is required.');
-    }
-    if (organization == null) {
-      throw const BootstrapException('--organization is required.');
-    }
-    if (iosTeam == null) {
-      throw const BootstrapException('--ios-team is required.');
-    }
-
-    final config = BootstrapConfig(
-      projectName: projectName,
-      displayName: options.displayName,
-      organization: organization,
-      applicationId: options.applicationId,
-      iosTeam: iosTeam,
-    );
     final configuredRoot = options.repositoryRoot;
     final repositoryRoot = configuredRoot == null
         ? findRepositoryRoot()
         : resolveRepositoryRoot(configuredRoot);
-    final plan = createBootstrapPlan(repositoryRoot, config);
+    final projectFile = ProjectFile.load(
+      repositoryRoot,
+      options.configurationPath,
+    );
+    final config = projectFile.configuration;
+    final plan = createBootstrapPlan(
+      repositoryRoot,
+      config,
+      previousConfig: projectFile.appliedConfiguration,
+      configurationPath: options.configurationPath,
+    );
 
     stdout
       ..writeln('Repository: ${repositoryRoot.path}')
@@ -75,10 +59,17 @@ Future<void> main(List<String> arguments) async {
     for (final change in plan.fileChanges) {
       stdout.writeln('- ${change.relativePath}');
     }
-    stdout.writeln(
-      '- ${plan.mainActivityMove.sourceRelativePath} -> '
-      '${plan.mainActivityMove.targetRelativePath}',
-    );
+    final activityMove = plan.mainActivityMove;
+    if (activityMove != null) {
+      stdout.writeln(
+        '- ${activityMove.sourceRelativePath} -> '
+        '${activityMove.targetRelativePath}',
+      );
+    }
+    if (plan.isEmpty) {
+      stdout.writeln('- none\n\nConfiguration is already applied.');
+      return;
+    }
 
     if (options.dryRun) {
       stdout.writeln('\nDry run complete. No files were changed.');
@@ -193,6 +184,69 @@ final class BootstrapConfig {
   String get adminDisplayName => '$displayName Admin';
 }
 
+final class ProjectFile {
+  const ProjectFile({
+    required this.configuration,
+    required this.appliedConfiguration,
+  });
+
+  factory ProjectFile.load(Directory root, String relativePath) {
+    final file = File.fromUri(root.uri.resolve(relativePath));
+    if (!file.existsSync()) {
+      throw BootstrapException(
+        'Project configuration was not found: $relativePath',
+      );
+    }
+
+    final Object? document;
+    try {
+      document = loadYaml(file.readAsStringSync());
+    } on YamlException catch (error) {
+      throw BootstrapException(
+        'Invalid YAML in $relativePath: ${error.message}',
+      );
+    }
+    if (document is! YamlMap) {
+      throw BootstrapException('$relativePath must contain a YAML map.');
+    }
+
+    return ProjectFile(
+      configuration: _configFromYaml(document, relativePath),
+      appliedConfiguration: switch (document['applied']) {
+        final YamlMap applied => _configFromYaml(
+          applied,
+          '$relativePath applied',
+        ),
+        null => null,
+        _ => throw BootstrapException(
+          '$relativePath applied must be a YAML map.',
+        ),
+      },
+    );
+  }
+
+  final BootstrapConfig configuration;
+  final BootstrapConfig? appliedConfiguration;
+}
+
+BootstrapConfig _configFromYaml(YamlMap yaml, String source) {
+  return BootstrapConfig(
+    projectName: _requiredYamlString(yaml, 'name', source),
+    displayName: _requiredYamlString(yaml, 'display_name', source),
+    organization: _requiredYamlString(yaml, 'organization', source),
+    applicationId: _requiredYamlString(yaml, 'application_id', source),
+    iosTeam: _requiredYamlString(yaml, 'ios_team', source),
+  );
+}
+
+String _requiredYamlString(YamlMap yaml, String key, String source) {
+  final value = yaml[key];
+  if (value is! String || value.trim().isEmpty) {
+    throw BootstrapException('$source must define a non-empty "$key".');
+  }
+  return value;
+}
+
 final class BootstrapPlan {
   const BootstrapPlan({
     required this.repositoryRoot,
@@ -202,7 +256,9 @@ final class BootstrapPlan {
 
   final Directory repositoryRoot;
   final List<BootstrapFileChange> fileChanges;
-  final BootstrapFileMove mainActivityMove;
+  final BootstrapFileMove? mainActivityMove;
+
+  bool get isEmpty => fileChanges.isEmpty && mainActivityMove == null;
 
   void apply() {
     final appliedChanges = <BootstrapFileChange>[];
@@ -213,15 +269,19 @@ final class BootstrapPlan {
         change.apply(repositoryRoot);
         appliedChanges.add(change);
       }
-      mainActivityMove.apply(repositoryRoot);
-      activityMoved = true;
-      _deleteEmptyAndroidPackageDirectories(
-        repositoryRoot,
-        mainActivityMove.sourceRelativePath,
-      );
+      final move = mainActivityMove;
+      if (move != null) {
+        move.apply(repositoryRoot);
+        activityMoved = true;
+        _deleteEmptyAndroidPackageDirectories(
+          repositoryRoot,
+          move.sourceRelativePath,
+        );
+      }
     } on Object {
-      if (activityMoved) {
-        mainActivityMove.rollback(repositoryRoot);
+      final move = mainActivityMove;
+      if (activityMoved && move != null) {
+        move.rollback(repositoryRoot);
       }
       for (final change in appliedChanges.reversed) {
         change.rollback(repositoryRoot);
@@ -288,13 +348,20 @@ final class BootstrapFileMove {
 
 BootstrapPlan createBootstrapPlan(
   Directory repositoryRoot,
-  BootstrapConfig config,
-) {
+  BootstrapConfig config, {
+  BootstrapConfig? previousConfig,
+  String configurationPath = 'project.yaml',
+}) {
   validateRepositoryRoot(repositoryRoot);
 
+  final previous = previousConfig;
+  final previousAndroidApplicationId =
+      previous?.applicationId ?? _templateAndroidApplicationId;
+  final previousIosBundleId = previous?.applicationId ?? _templateIosBundleId;
+  final previousIosTeam = previous?.iosTeam ?? _templateIosTeam;
   final sourceActivityPath =
       'apps/client_app/android/app/src/main/kotlin/'
-      '${_templateAndroidApplicationId.replaceAll('.', '/')}/MainActivity.kt';
+      '${previousAndroidApplicationId.replaceAll('.', '/')}/MainActivity.kt';
   final targetActivityPath =
       'apps/client_app/android/app/src/main/kotlin/'
       '${config.applicationId.replaceAll('.', '/')}/MainActivity.kt';
@@ -327,17 +394,17 @@ BootstrapPlan createBootstrapPlan(
       final source = file.readAsStringSync();
       androidIdentifierReplacements += _countOccurrences(
         source,
-        _templateAndroidApplicationId,
+        previousAndroidApplicationId,
       );
       iosIdentifierReplacements += _countOccurrences(
         source,
-        _templateIosBundleId,
+        previousIosBundleId,
       );
-      iosTeamReplacements += _countOccurrences(source, _templateIosTeam);
+      iosTeamReplacements += _countOccurrences(source, previousIosTeam);
       final updated = source
-          .replaceAll(_templateAndroidApplicationId, config.applicationId)
-          .replaceAll(_templateIosBundleId, config.applicationId)
-          .replaceAll(_templateIosTeam, config.iosTeam);
+          .replaceAll(previousAndroidApplicationId, config.applicationId)
+          .replaceAll(previousIosBundleId, config.applicationId)
+          .replaceAll(previousIosTeam, config.iosTeam);
       if (source != updated) pendingSources[relativePath] = updated;
     }
   }
@@ -347,23 +414,25 @@ BootstrapPlan createBootstrapPlan(
     final source = file.readAsStringSync();
     androidIdentifierReplacements += _countOccurrences(
       source,
-      _templateAndroidApplicationId,
+      previousAndroidApplicationId,
     );
     iosIdentifierReplacements += _countOccurrences(
       source,
-      _templateIosBundleId,
+      previousIosBundleId,
     );
-    iosTeamReplacements += _countOccurrences(source, _templateIosTeam);
+    iosTeamReplacements += _countOccurrences(source, previousIosTeam);
     final updated = source
-        .replaceAll(_templateAndroidApplicationId, config.applicationId)
-        .replaceAll(_templateIosBundleId, config.applicationId)
-        .replaceAll(_templateIosTeam, config.iosTeam);
+        .replaceAll(previousAndroidApplicationId, config.applicationId)
+        .replaceAll(previousIosBundleId, config.applicationId)
+        .replaceAll(previousIosTeam, config.iosTeam);
     if (source != updated) pendingSources[relativePath] = updated;
   }
 
-  if (androidIdentifierReplacements == 0 ||
-      iosIdentifierReplacements == 0 ||
-      iosTeamReplacements == 0) {
+  if ((previousAndroidApplicationId != config.applicationId &&
+          androidIdentifierReplacements == 0) ||
+      (previousIosBundleId != config.applicationId &&
+          iosIdentifierReplacements == 0) ||
+      (previousIosTeam != config.iosTeam && iosTeamReplacements == 0)) {
     throw const BootstrapException(
       'Expected template identifiers were not found. The project might '
       'already be bootstrapped or is not a supported template revision.',
@@ -374,79 +443,93 @@ BootstrapPlan createBootstrapPlan(
     repositoryRoot,
     pendingSources,
     'apps/client_app/android/app/src/main/AndroidManifest.xml',
-    'android:label="client_app"',
+    previous == null
+        ? 'android:label="client_app"'
+        : 'android:label="${_xmlEscape(previous.displayName)}"',
     'android:label="${_xmlEscape(config.displayName)}"',
   );
   _replaceExact(
     repositoryRoot,
     pendingSources,
     'apps/client_app/ios/Runner/Info.plist',
-    '<string>Client App</string>',
+    '<string>${_xmlEscape(previous?.displayName ?? 'Client App')}</string>',
     '<string>${_xmlEscape(config.displayName)}</string>',
   );
   _replaceExact(
     repositoryRoot,
     pendingSources,
     'apps/client_app/ios/Runner/Info.plist',
-    '<string>client_app</string>',
+    '<string>${_xmlEscape(previous?.projectName ?? 'client_app')}</string>',
     '<string>${_xmlEscape(config.projectName)}</string>',
   );
   _replaceExact(
     repositoryRoot,
     pendingSources,
     'apps/client_app/README.md',
-    '# client_app',
+    previous == null ? '# client_app' : '# ${previous.displayName} client app',
     '# ${config.displayName} client app',
   );
   _replaceExact(
     repositoryRoot,
     pendingSources,
     'apps/client_app/README.md',
-    'A new Flutter project.',
+    previous == null
+        ? 'A new Flutter project.'
+        : '${previous.displayName} mobile client application.',
     '${config.displayName} mobile client application.',
   );
   _replaceExact(
     repositoryRoot,
     pendingSources,
     'apps/client_app/pubspec.yaml',
-    'description: Client Flutter application.',
-    'description: '
-        '${jsonEncode('${config.displayName} client Flutter application.')}',
+    previous == null
+        ? 'description: Client Flutter application.'
+        : _pubspecDescription(
+            '${previous.displayName} client Flutter application.',
+          ),
+    _pubspecDescription('${config.displayName} client Flutter application.'),
   );
   _replaceExact(
     repositoryRoot,
     pendingSources,
     'apps/admin_app/README.md',
-    '# admin_app',
+    previous == null ? '# admin_app' : '# ${previous.displayName} admin app',
     '# ${config.displayName} admin app',
   );
   _replaceExact(
     repositoryRoot,
     pendingSources,
     'apps/admin_app/README.md',
-    'Flutter web administration panel.',
+    previous == null
+        ? 'Flutter web administration panel.'
+        : '${previous.displayName} web administration panel.',
     '${config.displayName} web administration panel.',
   );
   _replaceExact(
     repositoryRoot,
     pendingSources,
     'apps/admin_app/pubspec.yaml',
-    'description: Admin Flutter web application.',
-    'description: '
-        '${jsonEncode('${config.displayName} admin Flutter web application.')}',
+    previous == null
+        ? 'description: Admin Flutter web application.'
+        : _pubspecDescription(
+            '${previous.displayName} admin Flutter web application.',
+          ),
+    _pubspecDescription('${config.displayName} admin Flutter web application.'),
   );
   _replaceExact(
     repositoryRoot,
     pendingSources,
     'apps/admin_app/web/index.html',
-    'Admin Panel',
+    previous?.adminDisplayName ?? 'Admin Panel',
     _htmlEscape(config.adminDisplayName),
   );
   _replaceExact(
     repositoryRoot,
     pendingSources,
     'apps/admin_app/web/index.html',
-    'Web administration panel.',
+    previous == null
+        ? 'Web administration panel.'
+        : '${_htmlEscape(previous.displayName)} administration panel.',
     '${_htmlEscape(config.displayName)} administration panel.',
   );
 
@@ -482,52 +565,72 @@ BootstrapPlan createBootstrapPlan(
     );
   }
 
-  const metadataPath = 'project.json';
-  final metadataFile = File.fromUri(repositoryRoot.uri.resolve(metadataPath));
-  if (metadataFile.existsSync()) {
-    throw const BootstrapException(
-      'project.json already exists. The project might already be bootstrapped.',
-    );
+  final fileChanges = pendingSources.entries
+      .map((entry) {
+        final file = File.fromUri(repositoryRoot.uri.resolve(entry.key));
+        final before = file.readAsStringSync();
+        return BootstrapFileChange(
+          relativePath: entry.key,
+          before: before,
+          after: entry.value,
+        );
+      })
+      .where((change) => change.before != change.after)
+      .toList();
+  final configurationChange = _projectConfigurationChange(
+    repositoryRoot,
+    configurationPath,
+    config,
+  );
+  if (configurationChange.before != configurationChange.after) {
+    fileChanges.add(configurationChange);
   }
-  final metadata = <String, String>{
+  fileChanges.sort((first, second) {
+    return first.relativePath.compareTo(second.relativePath);
+  });
+
+  return BootstrapPlan(
+    repositoryRoot: repositoryRoot,
+    fileChanges: fileChanges,
+    mainActivityMove: sourceActivityPath == targetActivityPath
+        ? null
+        : BootstrapFileMove(
+            sourceRelativePath: sourceActivityPath,
+            targetRelativePath: targetActivityPath,
+          ),
+  );
+}
+
+BootstrapFileChange _projectConfigurationChange(
+  Directory repositoryRoot,
+  String relativePath,
+  BootstrapConfig config,
+) {
+  final file = File.fromUri(repositoryRoot.uri.resolve(relativePath));
+  final before = file.existsSync() ? file.readAsStringSync() : null;
+  final fields = <String, String>{
     'name': config.projectName,
     'display_name': config.displayName,
     'organization': config.organization,
     'application_id': config.applicationId,
     'ios_team': config.iosTeam,
   };
+  final buffer = StringBuffer()
+    ..writeln('# Edit the top-level values, then run:')
+    ..writeln('# dart run tool/generation/bootstrap_project.dart')
+    ..writeln('# The applied section is maintained by the script.');
+  for (final entry in fields.entries) {
+    buffer.writeln('${entry.key}: ${jsonEncode(entry.value)}');
+  }
+  buffer.writeln('applied:');
+  for (final entry in fields.entries) {
+    buffer.writeln('  ${entry.key}: ${jsonEncode(entry.value)}');
+  }
 
-  final fileChanges =
-      pendingSources.entries
-          .map((entry) {
-            final file = File.fromUri(repositoryRoot.uri.resolve(entry.key));
-            final before = file.readAsStringSync();
-            return BootstrapFileChange(
-              relativePath: entry.key,
-              before: before,
-              after: entry.value,
-            );
-          })
-          .where((change) => change.before != change.after)
-          .toList()
-        ..add(
-          BootstrapFileChange(
-            relativePath: metadataPath,
-            before: null,
-            after: '${const JsonEncoder.withIndent('  ').convert(metadata)}\n',
-          ),
-        )
-        ..sort((first, second) {
-          return first.relativePath.compareTo(second.relativePath);
-        });
-
-  return BootstrapPlan(
-    repositoryRoot: repositoryRoot,
-    fileChanges: fileChanges,
-    mainActivityMove: BootstrapFileMove(
-      sourceRelativePath: sourceActivityPath,
-      targetRelativePath: targetActivityPath,
-    ),
+  return BootstrapFileChange(
+    relativePath: relativePath,
+    before: before,
+    after: buffer.toString(),
   );
 }
 
@@ -608,6 +711,8 @@ String _xmlEscape(String value) {
 }
 
 String _htmlEscape(String value) => _xmlEscape(value);
+
+String _pubspecDescription(String value) => 'description: ${jsonEncode(value)}';
 
 void _deleteEmptyAndroidPackageDirectories(
   Directory root,
@@ -697,11 +802,7 @@ void validateRepositoryRoot(Directory root) {
 }
 
 _BootstrapOptions _parseArguments(List<String> arguments) {
-  String? projectName;
-  String? displayName;
-  String? organization;
-  String? applicationId;
-  String? iosTeam;
+  var configurationPath = 'project.yaml';
   String? repositoryRoot;
   var dryRun = false;
   var runCodegen = true;
@@ -711,14 +812,8 @@ _BootstrapOptions _parseArguments(List<String> arguments) {
     switch (argument) {
       case '-h' || '--help':
         return const _BootstrapOptions(showHelp: true);
-      case '--display-name':
-        displayName = _optionValue(arguments, ++index, argument);
-      case '--organization':
-        organization = _optionValue(arguments, ++index, argument);
-      case '--application-id':
-        applicationId = _optionValue(arguments, ++index, argument);
-      case '--ios-team':
-        iosTeam = _optionValue(arguments, ++index, argument);
+      case '--config':
+        configurationPath = _optionValue(arguments, ++index, argument);
       case '--root':
         repositoryRoot = _optionValue(arguments, ++index, argument);
       case '--dry-run':
@@ -726,24 +821,12 @@ _BootstrapOptions _parseArguments(List<String> arguments) {
       case '--no-codegen':
         runCodegen = false;
       default:
-        if (argument.startsWith('-')) {
-          throw BootstrapException('Unknown option: $argument');
-        }
-        if (projectName != null) {
-          throw const BootstrapException(
-            'Only one project_name is allowed.',
-          );
-        }
-        projectName = argument;
+        throw BootstrapException('Unknown argument: $argument');
     }
   }
 
   return _BootstrapOptions(
-    projectName: projectName,
-    displayName: displayName,
-    organization: organization,
-    applicationId: applicationId,
-    iosTeam: iosTeam,
+    configurationPath: configurationPath,
     repositoryRoot: repositoryRoot,
     dryRun: dryRun,
     runCodegen: runCodegen,
@@ -759,22 +842,14 @@ String _optionValue(List<String> arguments, int index, String option) {
 
 final class _BootstrapOptions {
   const _BootstrapOptions({
-    this.projectName,
-    this.displayName,
-    this.organization,
-    this.applicationId,
-    this.iosTeam,
+    this.configurationPath = 'project.yaml',
     this.repositoryRoot,
     this.dryRun = false,
     this.runCodegen = true,
     this.showHelp = false,
   });
 
-  final String? projectName;
-  final String? displayName;
-  final String? organization;
-  final String? applicationId;
-  final String? iosTeam;
+  final String configurationPath;
   final String? repositoryRoot;
   final bool dryRun;
   final bool runCodegen;

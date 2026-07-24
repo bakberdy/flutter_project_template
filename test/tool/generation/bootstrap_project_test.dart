@@ -32,7 +32,7 @@ void main() {
     expect(config.applicationId, 'com.acme.myapp');
     expect(
       plan.fileChanges.map((change) => change.relativePath),
-      contains('project.json'),
+      contains('project.yaml'),
     );
 
     plan.apply();
@@ -112,15 +112,83 @@ void main() {
       reason: 'Generated localization must be updated by flutter gen-l10n.',
     );
 
-    final metadata =
-        jsonDecode(_read(repository, 'project.json')) as Map<String, dynamic>;
-    expect(metadata, {
-      'name': 'my_app',
-      'display_name': 'My Product',
-      'organization': 'com.acme',
-      'application_id': 'com.acme.myapp',
-      'ios_team': 'ABCDE12345',
-    });
+    final projectFile = ProjectFile.load(repository, 'project.yaml');
+    expect(projectFile.configuration.projectName, 'my_app');
+    expect(projectFile.appliedConfiguration?.projectName, 'my_app');
+  });
+
+  test('reapplies edited project.yaml values', () {
+    final firstConfig = BootstrapConfig(
+      projectName: 'my_app',
+      displayName: 'My Product',
+      organization: 'com.acme',
+      iosTeam: 'ABCDE12345',
+    );
+    createBootstrapPlan(repository, firstConfig).apply();
+
+    _write(
+      repository,
+      'project.yaml',
+      '''
+name: next_app
+display_name: Next Product
+organization: dev.example
+application_id: dev.example.nextapp
+ios_team: 12345ABCDE
+applied:
+  name: my_app
+  display_name: My Product
+  organization: com.acme
+  application_id: com.acme.myapp
+  ios_team: ABCDE12345
+''',
+    );
+    final projectFile = ProjectFile.load(repository, 'project.yaml');
+
+    createBootstrapPlan(
+      repository,
+      projectFile.configuration,
+      previousConfig: projectFile.appliedConfiguration,
+    ).apply();
+
+    expect(
+      _read(repository, 'apps/client_app/android/app/build.gradle.kts'),
+      contains('dev.example.nextapp'),
+    );
+    expect(
+      File.fromUri(
+        repository.uri.resolve(
+          'apps/client_app/android/app/src/main/kotlin/'
+          'com/acme/myapp/MainActivity.kt',
+        ),
+      ).existsSync(),
+      isFalse,
+    );
+    expect(
+      _read(
+        repository,
+        'apps/client_app/android/app/src/main/kotlin/'
+        'dev/example/nextapp/MainActivity.kt',
+      ),
+      contains('package dev.example.nextapp'),
+    );
+    expect(
+      _read(repository, 'apps/client_app/ios/Runner/Info.plist'),
+      allOf(
+        contains('<string>Next Product</string>'),
+        contains('<string>next_app</string>'),
+      ),
+    );
+    expect(
+      _read(repository, 'apps/client_app/ios/fastlane/Appfile'),
+      allOf(contains('dev.example.nextapp'), contains('12345ABCDE')),
+    );
+    final applied = ProjectFile.load(
+      repository,
+      'project.yaml',
+    ).appliedConfiguration;
+    expect(applied?.projectName, 'next_app');
+    expect(applied?.applicationId, 'dev.example.nextapp');
   });
 
   test('derives a display name and validates identity inputs', () {

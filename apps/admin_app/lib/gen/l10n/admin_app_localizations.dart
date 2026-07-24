@@ -106,7 +106,7 @@ abstract class AdminAppLocalizations {
   /// No description provided for @adminAppTitle.
   ///
   /// In en, this message translates to:
-  /// **'Admin Panel'**
+  /// **'My App Admin'**
   String get adminAppTitle;
 
   /// No description provided for @dashboard.
