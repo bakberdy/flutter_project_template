@@ -1,14 +1,14 @@
 # Edit the top-level values, then run:
 # dart run tool/generation/bootstrap_project.dart
 # The applied section is maintained by the script.
-name: "my_app"
-display_name: "My App"
+name: "client_app"
+display_name: "Client App"
 organization: "com.bakberdi"
 application_id: "com.bakberdi.template"
-ios_team: "ABCDE12345"
+ios_team: "C466ZHPP34"
 applied:
-  name: "my_app"
-  display_name: "My App"
+  name: "client_app"
+  display_name: "Client App"
   organization: "com.bakberdi"
   application_id: "com.bakberdi.template"
-  ios_team: "ABCDE12345"
+  ios_team: "C466ZHPP34"

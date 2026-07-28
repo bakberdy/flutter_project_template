@@ -9,7 +9,7 @@ class AdminAppLocalizationsKk extends AdminAppLocalizations {
   AdminAppLocalizationsKk([String locale = 'kk']) : super(locale);
 
   @override
-  String get adminAppTitle => 'My App Admin';
+  String get adminAppTitle => 'Client App Admin';
 
   @override
   String get dashboard => 'Басты бет';

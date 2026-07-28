@@ -1,11 +1,11 @@
 {
-    "name": "My App Admin",
-    "short_name": "My App Admin",
+    "name": "Client App Admin",
+    "short_name": "Client App Admin",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "My App administration panel.",
+    "description": "Client App administration panel.",
     "prefer_related_applications": false,
     "icons": [
         {

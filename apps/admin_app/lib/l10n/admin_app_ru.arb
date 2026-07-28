@@ -1,6 +1,6 @@
 {
   "@@locale": "ru",
-  "adminAppTitle": "My App Admin",
+  "adminAppTitle": "Client App Admin",
   "dashboard": "Главная",
   "users": "Пользователи",
   "logout": "Выйти",

@@ -1,6 +1,6 @@
-# My App admin app
+# Client App admin app
 
-My App web administration panel. This app is web-only and uses a persistent
+Client App web administration panel. This app is web-only and uses a persistent
 sidebar with nested URL navigation.
 
 Run from this directory:

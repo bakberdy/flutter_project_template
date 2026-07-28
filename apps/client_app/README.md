@@ -1,6 +1,6 @@
-# My App client app
+# Client App client app
 
-My App mobile client application.
+Client App mobile client application.
 
 ## Launcher icons
 

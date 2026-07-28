@@ -9,7 +9,7 @@ class AdminAppLocalizationsRu extends AdminAppLocalizations {
   AdminAppLocalizationsRu([String locale = 'ru']) : super(locale);
 
   @override
-  String get adminAppTitle => 'My App Admin';
+  String get adminAppTitle => 'Client App Admin';
 
   @override
   String get dashboard => 'Главная';

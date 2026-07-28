@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "adminAppTitle": "My App Admin",
+  "adminAppTitle": "Client App Admin",
   "dashboard": "Dashboard",
   "users": "Users",
   "logout": "Log out",
