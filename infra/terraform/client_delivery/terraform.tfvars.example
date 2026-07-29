@@ -1,0 +1,5 @@
+github_owner      = "replace-with-github-owner"
+github_repository = "replace-with-repository-name"
+
+# Optional GitHub numeric user IDs for production approval:
+# production_reviewer_user_ids = [1234567]

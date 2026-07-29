@@ -18,37 +18,6 @@ on:
       evidence_name:
         required: true
         type: string
-      evidence_run_id:
-        required: false
-        type: string
-        default: ""
-  workflow_dispatch:
-    inputs:
-      target_environment:
-        description: "admin-development or admin-production"
-        required: true
-        type: environment
-      source_sha:
-        description: "Exact published source SHA"
-        required: true
-        type: string
-      artifact_digest:
-        description: "Published SHA256 digest"
-        required: true
-        type: string
-      artifact_reference:
-        description: "S3 artifact reference"
-        required: true
-        type: string
-      evidence_name:
-        description: "Evidence artifact name from the publishing run"
-        required: true
-        type: string
-      evidence_run_id:
-        description: "Publishing workflow run ID containing the evidence"
-        required: true
-        type: string
-
 permissions:
   contents: read
 
@@ -83,21 +52,11 @@ jobs:
           [[ "${TARGET_ENVIRONMENT}" == "admin-development" ||
              "${TARGET_ENVIRONMENT}" == "admin-production" ]]
 
-      - name: Download current-run publishing evidence
-        if: inputs.evidence_run_id == ''
+      - name: Download publishing evidence
         uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
         with:
           name: ${{ inputs.evidence_name }}
           path: ${{ runner.temp }}/evidence
-
-      - name: Download prior-run publishing evidence
-        if: inputs.evidence_run_id != ''
-        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
-        with:
-          name: ${{ inputs.evidence_name }}
-          path: ${{ runner.temp }}/evidence
-          github-token: ${{ github.token }}
-          run-id: ${{ inputs.evidence_run_id }}
 
       - name: Verify publishing evidence
         env:

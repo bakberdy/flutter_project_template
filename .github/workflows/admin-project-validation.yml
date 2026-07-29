@@ -7,15 +7,6 @@ on:
         description: "Full source commit SHA"
         required: true
         type: string
-      base_sha:
-        description: "Optional pull request base SHA"
-        required: false
-        type: string
-        default: ""
-      mode:
-        description: "Validation mode: pr or release"
-        required: true
-        type: string
     outputs:
       status:
         description: "Admin application validation result"
@@ -46,7 +37,6 @@ jobs:
 
       - name: Validate inputs
         env:
-          MODE: ${{ inputs.mode }}
           SOURCE_SHA: ${{ inputs.source_sha }}
         run: |
           set -euo pipefail
@@ -54,21 +44,9 @@ jobs:
             echo "::error::source_sha must be a full lowercase Git SHA."
             exit 1
           }
-          [[ "${MODE}" == "pr" || "${MODE}" == "release" ]] || {
-            echo "::error::mode must be pr or release."
-            exit 1
-          }
 
       - name: Check whitespace errors
-        env:
-          BASE_SHA: ${{ inputs.base_sha }}
-        run: |
-          set -euo pipefail
-          if [[ "${BASE_SHA}" =~ ^[0-9a-f]{40}$ ]]; then
-            git diff --check "${BASE_SHA}...HEAD"
-          else
-            git show --check --format= HEAD
-          fi
+        run: git show --check --format= HEAD
 
       - name: Set up Admin Flutter
         uses: ./.github/actions/setup-admin-flutter

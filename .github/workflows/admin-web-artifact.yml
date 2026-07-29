@@ -3,22 +3,15 @@ name: Admin Web Artifact
 on:
   workflow_call:
     inputs:
-      mode:
-        description: "Admin artifact mode: pr or release"
-        required: true
-        type: string
       source_sha:
         description: "Full source commit SHA"
         required: true
         type: string
       target_environment:
-        description: "admin-development or admin-production for release mode"
-        required: false
+        description: "admin-development or admin-production"
+        required: true
         type: string
-        default: ""
     outputs:
-      status:
-        value: ${{ jobs.artifact-gate.outputs.status }}
       artifact_digest:
         value: ${{ jobs.release.outputs.artifact_digest }}
       artifact_reference:
@@ -33,47 +26,8 @@ env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
 jobs:
-  pr:
-    name: Admin PR Web Artifact
-    if: inputs.mode == 'pr'
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-      - name: Check out approved source
-        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
-        with:
-          ref: ${{ inputs.source_sha }}
-          persist-credentials: false
-
-      - name: Set up Admin Flutter
-        uses: ./.github/actions/setup-admin-flutter
-
-      - name: Build deployable Admin Web output
-        working-directory: apps/admin_app
-        run: |
-          flutter build web --release \
-            --dart-define=API_URL=https://admin-ci.invalid \
-            --dart-define=ENVIRONMENT=ci \
-            --dart-define=ENABLE_LOGGING=false \
-            --dart-define=ENABLE_ANALYTICS=false \
-            --dart-define=ENABLE_CRASHLYTICS=false \
-            --dart-define=CONNECT_TIMEOUT_SECONDS=30 \
-            --dart-define=RECEIVE_TIMEOUT_SECONDS=30 \
-            --dart-define=SEND_TIMEOUT_SECONDS=30
-
-      - name: Verify Admin Web artifact
-        run: |
-          set -euo pipefail
-          for file in index.html flutter_bootstrap.js main.dart.js manifest.json; do
-            test -s "apps/admin_app/build/web/${file}" || {
-              echo "::error::Missing Admin Web artifact file: ${file}"
-              exit 1
-            }
-          done
-
   release:
     name: Publish Immutable Admin Web Artifact
-    if: inputs.mode == 'release'
     runs-on: ubuntu-latest
     timeout-minutes: 35
     permissions:
@@ -237,28 +191,3 @@ jobs:
           path: ${{ runner.temp }}/admin-release-evidence.json
           if-no-files-found: error
           retention-days: 30
-
-  artifact-gate:
-    name: Admin Web Artifact Gate
-    if: always()
-    needs: [pr, release]
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    outputs:
-      status: ${{ steps.result.outputs.status }}
-    steps:
-      - name: Require selected artifact mode
-        id: result
-        env:
-          MODE: ${{ inputs.mode }}
-          PR_RESULT: ${{ needs.pr.result }}
-          RELEASE_RESULT: ${{ needs.release.result }}
-        run: |
-          set -euo pipefail
-          if [[ "${MODE}" == "pr" && "${PR_RESULT}" == "success" ]] ||
-             [[ "${MODE}" == "release" && "${RELEASE_RESULT}" == "success" ]]; then
-            echo "status=success" >>"${GITHUB_OUTPUT}"
-            exit 0
-          fi
-          echo "::error::Selected Admin artifact mode did not succeed."
-          exit 1

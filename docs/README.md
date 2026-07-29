@@ -23,6 +23,15 @@ Edit the same configuration and rerun the tool when the identity changes. See
   `common` and internal feature structure, layers, dependencies,
   configuration, DI, routing, public API, and module acceptance criteria.
 
+## Delivery
+
+- [Tag-driven releases](../.github/docs/releases.md) — the shared tag naming
+  convention and the separate Admin and Client release pipelines.
+- [Android delivery](../.github/docs/android.md) — Client Android signing and
+  Google Play setup.
+- [iOS delivery](../.github/docs/ios.md) — Client iOS signing and TestFlight
+  setup.
+
 ## Module dependency rules
 
 Local module dependency rules are configured in the repository-root

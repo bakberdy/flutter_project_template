@@ -1,22 +1,6 @@
-name: ios-upload-to-testflight
+name: Client iOS Deploy
 
 on:
-  workflow_dispatch:
-    inputs:
-      flavor:
-        description: "Flutter iOS flavor to build and upload (development or production)"
-        type: string
-        default: production
-      ref:
-        description: "Git ref or SHA to checkout (defaults to the event ref)"
-        type: string
-        required: false
-        default: ""
-      release_body:
-        description: "Optional. Release notes for TestFlight What to Test (first 4000 chars)."
-        type: string
-        required: false
-        default: ""
   workflow_call:
     inputs:
       flavor:
@@ -28,45 +12,28 @@ on:
         type: string
         required: false
         default: ""
-      release_body:
-        description: "Optional. Passed by release-on-publish. TestFlight What to Test (first 4000 chars)."
-        type: string
-        required: false
-        default: ""
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
+permissions:
+  contents: read
+
 jobs:
   upload-to-testflight:
+    name: TestFlight
     runs-on: macos-26
     timeout-minutes: 60
+    environment: client-${{ inputs.flavor }}
+    permissions:
+      contents: read
     env:
       CI: "true"
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
         with:
           ref: ${{ inputs.ref || github.sha }}
-
-      - name: Write TestFlight What to Test from workflow input
-        if: ${{ inputs.release_body != '' }}
-        env:
-          RELEASE_BODY: ${{ inputs.release_body }}
-        run: |
-          set -euo pipefail
-          python3 <<'PY'
-          import os
-          from pathlib import Path
-
-          body = (os.environ.get("RELEASE_BODY") or "").strip()
-          if not body:
-              raise SystemExit(0)
-          testflight = body[:4000]
-          d = Path(os.environ["GITHUB_WORKSPACE"]) / "release-notes"
-          d.mkdir(parents=True, exist_ok=True)
-          (d / "testflight.txt").write_text(testflight, encoding="utf-8")
-          print("Wrote release-notes/testflight.txt for TestFlight (max 4000 chars).")
-          PY
+          persist-credentials: false
 
       - name: Check required secrets
         env:
@@ -148,21 +115,14 @@ jobs:
             exit 1
           fi
 
-      - uses: ruby/setup-ruby@v1
+      - uses: ruby/setup-ruby@eb49699984a39f23558439581660aa6f088acfd6 # v1
         with:
           ruby-version: "3.3"
           bundler-cache: true
           working-directory: apps/client_app/ios
 
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-          cache: true
-
-      - name: Flutter pub get
-        run: |
-          set -euo pipefail
-          flutter pub get
+      - name: Set up Flutter workspace
+        uses: ./.github/actions/setup-flutter
 
       - name: Install Fastlane and verify SPM-only iOS setup
         env:
@@ -218,19 +178,9 @@ jobs:
           esac
           echo "IOS_KEYCHAIN_PASSWORD=$(openssl rand -hex 32)" >> "${GITHUB_ENV}"
 
-      - name: Expose TestFlight "What to Test" path
-        run: |
-          set -euo pipefail
-          TF="${GITHUB_WORKSPACE}/release-notes/testflight.txt"
-          if [ -f "${TF}" ] && [ -s "${TF}" ]; then
-            echo "TESTFLIGHT_CHANGELOG_FILE=${TF}" >> "${GITHUB_ENV}"
-            echo "Using TestFlight What to Test from workflow input (max 4000 chars)."
-          else
-            echo "No release_body input; TestFlight upload without What to Test text."
-          fi
-
       - name: Run Fastlane TestFlight upload
         env:
+          FLAVOR: ${{ inputs.flavor }}
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
           APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
           IOS_TEAM_ID: ${{ secrets.IOS_TEAM_ID || 'ABCDE12345' }}
@@ -256,11 +206,11 @@ jobs:
         run: |
           set -euo pipefail
           cd apps/client_app/ios
-          bundle exec fastlane "beta_${{ inputs.flavor }}"
+          bundle exec fastlane "beta_${FLAVOR}"
 
       - name: Upload IPA artifact
         if: success()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.0
         with:
           name: ios-${{ inputs.flavor }}-ipa
           path: apps/client_app/build/ios/ipa/*.ipa

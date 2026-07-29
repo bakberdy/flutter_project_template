@@ -25,7 +25,10 @@ data "aws_iam_policy_document" "publisher_assume_role" {
     condition {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:${var.github_owner}/${var.github_repository}:ref:refs/tags/admin-v*"]
+      values = [
+        "repo:${var.github_owner}/${var.github_repository}:ref:refs/tags/admin-development-v*",
+        "repo:${var.github_owner}/${var.github_repository}:ref:refs/tags/admin-production-v*",
+      ]
     }
   }
 }

@@ -114,10 +114,10 @@ For a given workflow run, the workflow `inputs.flavor` must have its profile pai
 
 ## Step 7 — CI: what runs and how
 
-- **Workflow:** `.github/workflows/ios-upload-to-testflight.yml` (reusable). It sets `CI=true`, resolves the workspace with Swift Package Manager enabled, verifies that `client_app` has no Podfile, Pods directory, or Pods xcconfig references, installs Fastlane from `apps/client_app/ios/Gemfile`, then decodes signing + API key and runs `cd apps/client_app/ios && bundle exec fastlane beta_<flavor>`. For **tag releases** from `release-on-publish`, if the **GitHub Release** has a **description**, the `release_body` **input** provides the first **4,000** characters as TestFlight **What to Test** (same string as the Android job, passed from the parent workflow; manual `workflow_dispatch` has no `release_body` unless you set it, so notes are skipped).
-- **Tag releases:** `.github/workflows/release-on-publish.yml` calls that workflow with `flavor: <prefix from tag>` and `release_body` after the version step. Pushing a release tag runs the iOS job if the rest of the release pipeline is set up; you need the secrets for that tag’s flavor (e.g. `production`) plus the shared App Store / signing rows from Step 6.
+- **Workflow:** `.github/workflows/client-ios-deploy.yml` is reusable only from the Client release pipeline. It validates signing material, enforces the Swift Package Manager-only setup, builds the IPA, and uploads it to TestFlight.
+- **Tag releases:** `.github/workflows/client-release.yml` triggers directly from `client-development-v<MAJOR.MINOR.PATCH>` or `client-production-v<MAJOR.MINOR.PATCH>`. The tag version must already match `apps/client_app/pubspec.yaml`.
 - **Artifact:** on success, the job uploads `apps/client_app/build/ios/ipa/*.ipa` as `ios-<flavor>-ipa`.
-- **Other flavors in CI:** add a workflow (or `workflow_dispatch` input) that calls `ios-upload-to-testflight.yml` with `flavor: development` and `secrets: inherit`. Only the secrets for that flavor need to be non-empty for that run (plus shared keys).
+- **Deployment environments:** Terraform creates `client-development` and `client-production`. Put the flavor-specific secrets in the matching environment. Deployments cannot be started manually.
 
 ## Reference (quick)
 

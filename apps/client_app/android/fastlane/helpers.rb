@@ -37,7 +37,8 @@ end
 
 # Android `versionCode` must be at most 2_100_000_000. `GITHUB_RUN_ID` can exceed that.
 # Use the last five decimal digits (via `% 100_000` → 0..99_999). Map 0 → 1 (valid positive code).
-# Keep in sync with `.github/workflows/android-upload-to-play.yml` and `ios/fastlane/helpers.rb`.
+# Keep in sync with `.github/workflows/client-android-deploy.yml` and
+# `ios/fastlane/helpers.rb`.
 def ci_build_number_from_github_run_id
   raw = ENV["GITHUB_RUN_ID"].to_s
   return nil if raw.empty?

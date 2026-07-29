@@ -22,7 +22,7 @@ resource "github_repository_environment_deployment_policy" "admin_tags" {
 
   repository     = var.github_repository
   environment    = github_repository_environment.admin[each.key].environment
-  branch_pattern = "admin-v*"
+  branch_pattern = "admin-${each.key}-v*"
 }
 
 resource "github_actions_variable" "repository" {

@@ -1,3 +1,12 @@
+github_owner      = "replace-with-github-owner"
+github_repository = "replace-with-repository-name"
+project_name      = "replace-with-project-admin-web"
+
+domains = {
+  development = "dev.admin.example.com"
+  production  = "admin.example.com"
+}
+
 environment_config = {
   development = {
     api_url                 = "https://dev.bakberdi.dev"

@@ -1,9 +1,10 @@
 # Admin Web infrastructure
 
-This Terraform root owns only Flutter Admin Web infrastructure:
+This Terraform root owns only Flutter Admin Web infrastructure. Domain names
+come from the `domains` input, for example:
 
-- `admin.bakberdi.dev` for production;
-- `dev.admin.bakberdi.dev` for development;
+- `admin.example.com` for production;
+- `dev.admin.example.com` for development;
 - private, versioned S3 buckets with immutable artifacts and releases;
 - CloudFront distributions and ACM certificates;
 - CloudFront KeyValueStore based atomic release selection;
@@ -13,6 +14,10 @@ This Terraform root owns only Flutter Admin Web infrastructure:
 
 It never creates or imports Client App resources. DNS is hosted outside AWS and
 is intentionally not managed by this root.
+
+Admin deployment is triggered only by `admin-development-v*` and
+`admin-production-v*` tags. Client environments are managed separately in
+`infra/terraform/client_delivery`.
 
 ## Apply
 

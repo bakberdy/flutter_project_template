@@ -1,9 +1,10 @@
-name: Admin Publish
+name: Admin Release
 
 on:
   push:
     tags:
-      - "admin-v*"
+      - "admin-development-v*"
+      - "admin-production-v*"
 
 permissions:
   contents: read
@@ -12,7 +13,7 @@ env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
 concurrency:
-  group: admin-publish-${{ github.ref }}
+  group: admin-release-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -30,31 +31,30 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Require Admin tag on current main HEAD
+      - name: Validate Admin release tag
         id: contract
         env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
           RELEASE_TAG: ${{ github.ref_name }}
           SOURCE_SHA: ${{ github.sha }}
         run: |
           set -euo pipefail
-          git fetch --no-tags origin main
-          test "${SOURCE_SHA}" = "$(git rev-parse origin/main)" || {
-            echo "::error::Admin release tag must point to current main HEAD."
+          git fetch --no-tags origin "${DEFAULT_BRANCH}"
+          test "${SOURCE_SHA}" = "$(git rev-parse "origin/${DEFAULT_BRANCH}")" || {
+            echo "::error::Admin release tag must point to current ${DEFAULT_BRANCH} HEAD."
             exit 1
           }
-          if [[ "${RELEASE_TAG}" =~ ^admin-v[0-9]+\.[0-9]+\.[0-9]+-dev\.[0-9]+$ ]]; then
-            target="admin-development"
-          elif [[ "${RELEASE_TAG}" =~ ^admin-v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            target="admin-production"
+          if [[ "${RELEASE_TAG}" =~ ^admin-(development|production)-v([0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
+            environment="${BASH_REMATCH[1]}"
+            release_version="${BASH_REMATCH[2]}"
+            target="admin-${environment}"
           else
-            echo "::error::Invalid Admin release tag."
+            echo "::error::Tag must match admin-<development|production>-v<MAJOR.MINOR.PATCH>."
             exit 1
           fi
 
           app_version="$(sed -n 's/^version:[[:space:]]*\([^+[:space:]]*\).*/\1/p' \
             apps/admin_app/pubspec.yaml)"
-          release_version="${RELEASE_TAG#admin-v}"
-          release_version="${release_version%%-dev.*}"
           test "${app_version}" = "${release_version}" || {
             echo "::error::Admin tag version must match apps/admin_app/pubspec.yaml."
             exit 1
@@ -67,7 +67,6 @@ jobs:
     uses: ./.github/workflows/admin-project-validation.yml
     with:
       source_sha: ${{ needs.release-contract.outputs.source_sha }}
-      mode: release
 
   security:
     needs: [release-contract]
@@ -82,7 +81,6 @@ jobs:
       id-token: write # Exchange the release-tag OIDC token for the publisher role.
     uses: ./.github/workflows/admin-web-artifact.yml
     with:
-      mode: release
       source_sha: ${{ needs.release-contract.outputs.source_sha }}
       target_environment: ${{ needs.release-contract.outputs.target_environment }}
 

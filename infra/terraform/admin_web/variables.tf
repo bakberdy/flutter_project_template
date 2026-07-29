@@ -11,13 +11,26 @@ variable "project_name" {
 }
 
 variable "github_owner" {
-  type    = string
-  default = "bakberdy"
+  description = "GitHub organization or user that owns the repository."
+  type        = string
 }
 
 variable "github_repository" {
-  type    = string
-  default = "flutter_project_template"
+  description = "GitHub repository name created from this template."
+  type        = string
+}
+
+variable "domains" {
+  description = "Admin Web domains by environment."
+  type        = map(string)
+
+  validation {
+    condition = (
+      toset(keys(var.domains)) == toset(["development", "production"]) &&
+      var.domains.development != var.domains.production
+    )
+    error_message = "domains must contain distinct development and production values."
+  }
 }
 
 variable "github_oidc_provider_arn" {

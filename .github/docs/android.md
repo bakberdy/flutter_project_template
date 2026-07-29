@@ -327,32 +327,18 @@ Same JSON keys as `config/config.example.json` (`API_URL`, `ENVIRONMENT`, …). 
 
 For a given workflow run, the workflow `inputs.flavor` must have its keystore quartet (B3.1) **and** its build-config pair (B3.3), plus the shared Play row (B3.2). Tag-based release uses the **flavor in the tag prefix** (see Step B4).
 
-### B3.4 Tag-based release automation (shared with iOS)
-
-These drive the GitHub App that bumps `apps/client_app/pubspec.yaml` on the default branch after a valid release tag.
-
-
-| Secret                    | Format                   |
-| ------------------------- | ------------------------ |
-| `RELEASE_APP_CLIENT_ID` | GitHub App **Client ID** (string from the app’s **Settings → General**, e.g. `Iv1.…` — not the numeric *App ID*) |
-| `RELEASE_APP_PRIVATE_KEY` | PEM **or** base64 of PEM |
-
-If you still have a repo secret named `RELEASE_APP_ID` (the old numeric **App ID**), create **`RELEASE_APP_CLIENT_ID`** with the **Client ID** value instead — `actions/create-github-app-token` no longer accepts `app-id`.
-
-The App needs **Repository permissions → Contents = Read and write**, must be **installed** on this repo, and (if branch protection / rulesets are on the default branch) must be in the bypass list as **"Always allow"**.
-
 ## Step B4 — What CI runs and how
 
-- **Workflow:** `.github/workflows/android-upload-to-play.yml` (reusable). It checks out the chosen `ref`, validates secrets per flavor, decodes the keystore from base64 to `${RUNNER_TEMP}/upload.jks`, writes `apps/client_app/android/key.<flavor>.properties` with that path so Gradle picks the matching per-flavor signing config, runs `flutter build appbundle --release --flavor <flavor>` with `--build-number` set to the **last five decimal digits** of `GITHUB_RUN_ID` (i.e. `run_id % 100000`, with `0` mapped to `1` so the value is always a valid positive `versionCode` under the [Play maximum](https://developer.android.com/studio/publish/versioning.html)), passes every required build-config key as `--dart-define`, and uploads the AAB via `r0adkll/upload-google-play@v1`. iOS TestFlight builds use the same rule in `ios/fastlane` for a matching Flutter build number.
+- **Workflow:** `.github/workflows/client-android-deploy.yml` is reusable only from the Client release pipeline. It checks out the validated tag SHA, validates secrets per flavor, creates the temporary signing configuration, builds the AAB, and uploads it to Google Play.
 - **Inputs:**
   - `flavor` — `development` | `production` (default `production`)
   - `track` — `internal` | `alpha` | `beta` | `production` (default `internal`)
   - `release_status` — `draft` | `completed` | … (default `draft`). Use `draft` until the Play app is no longer a draft listing; `completed` fails with *“Only releases with status draft may be created on draft app”* in that case.
   - `ref` — optional Git ref/SHA to check out (defaults to event ref)
 - `**packageName`** is derived from `flavor` automatically (see Step B1 table).
-- **Tag releases:** `.github/workflows/release-on-publish.yml` triggers on `release: published`, validates the tag must be `development-MAJOR.MINOR.PATCH` or `production-MAJOR.MINOR.PATCH`, bumps `apps/client_app/pubspec.yaml`, then calls this workflow with `flavor: <prefix>`, `track: internal`, and `release_body` (the published release’s description, truncated in the job output for the 10k workflow-input cap). The bumped commit’s SHA is passed as `ref`. If the release has a **description**, the first **500** characters are written as en-US **What’s new** for this Play build (reusable workflows cannot read **artifacts** from the parent; text is passed as an **input** instead).
+- **Tag releases:** `.github/workflows/client-release.yml` triggers directly from `client-development-v<MAJOR.MINOR.PATCH>` or `client-production-v<MAJOR.MINOR.PATCH>`. It never modifies `pubspec.yaml`; the tag version must already match it.
 - **Artifact:** on success, the AAB is uploaded as `android-<flavor>-aab-<name>-<code>` (also goes to Play in the same run).
-- **Other flavors / other tracks in CI:** open **Actions → android-upload-to-play → Run workflow**, pick `flavor` and `track`. Only the secrets for that flavor + the shared Play row need to be filled.
+- **Deployment environments:** Terraform creates `client-development` and `client-production`. Put the flavor-specific secrets in the matching environment. Deployments cannot be started manually.
 
 ---
 
@@ -383,10 +369,10 @@ The App needs **Repository permissions → Contents = Read and write**, must be 
 
 | Tag prefix                      | Triggers flavor |
 | ------------------------------- | --------------- |
-| `production-MAJOR.MINOR.PATCH`  | `production`    |
-| `development-MAJOR.MINOR.PATCH` | `development`   |
+| `client-production-vMAJOR.MINOR.PATCH`  | `production`    |
+| `client-development-vMAJOR.MINOR.PATCH` | `development`   |
 
 
-**Dart / compile-time defines:** app-owned `AppConfig` reads required values with `String.fromEnvironment(...)` from `apps/client_app/lib/src/common/config/app_config.dart`. **Local:** `config/*.json`. **CI:** secrets `<FLAVOR>_<KEY>` (see Step B3.3). New key: add to `config.example.json`, `String.fromEnvironment(...)` in Dart, Fastlane `DART_DEFINE_KEYS`, and `.github/workflows/android-upload-to-play.yml`.
+**Dart / compile-time defines:** app-owned `AppConfig` reads required values with `String.fromEnvironment(...)` from `apps/client_app/lib/src/common/config/app_config.dart`. **Local:** `config/*.json`. **CI:** secrets `<FLAVOR>_<KEY>` (see Step B3.3). New key: add to `config.example.json`, `String.fromEnvironment(...)` in Dart, Fastlane `DART_DEFINE_KEYS`, and `.github/workflows/client-android-deploy.yml`.
 
 **iOS CI:** [.github/docs/ios.md](ios.md)

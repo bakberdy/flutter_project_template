@@ -1,11 +1,11 @@
 locals {
   environments = {
     development = {
-      domain             = "dev.admin.bakberdi.dev"
+      domain             = var.domains.development
       github_environment = "admin-development"
     }
     production = {
-      domain             = "admin.bakberdi.dev"
+      domain             = var.domains.production
       github_environment = "admin-production"
     }
   }
