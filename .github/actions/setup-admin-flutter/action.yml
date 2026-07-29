@@ -1,5 +1,5 @@
-name: Set up Flutter
-description: Set up the repository Flutter SDK, caches, and dependencies.
+name: Set up Admin Flutter
+description: Set up the pinned Flutter SDK and workspace dependencies for Admin CI.
 
 runs:
   using: composite
@@ -11,8 +11,9 @@ runs:
         cache: true
         pub-cache: true
 
-    - name: Resolve dependencies
+    - name: Resolve workspace dependencies
       shell: bash
       run: |
+        set -euo pipefail
         flutter pub get
         dart pub get --directory packages/project_lints

@@ -1,0 +1,99 @@
+name: Admin Release
+
+on:
+  push:
+    tags:
+      - "admin-development-v*"
+      - "admin-production-v*"
+
+permissions:
+  contents: read
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+concurrency:
+  group: admin-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release-contract:
+    name: Admin Release Contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      source_sha: ${{ steps.contract.outputs.source_sha }}
+      target_environment: ${{ steps.contract.outputs.target_environment }}
+    steps:
+      - name: Check out release history
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Validate Admin release tag
+        id: contract
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          RELEASE_TAG: ${{ github.ref_name }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin "${DEFAULT_BRANCH}"
+          test "${SOURCE_SHA}" = "$(git rev-parse "origin/${DEFAULT_BRANCH}")" || {
+            echo "::error::Admin release tag must point to current ${DEFAULT_BRANCH} HEAD."
+            exit 1
+          }
+          if [[ "${RELEASE_TAG}" =~ ^admin-(development|production)-v([0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
+            environment="${BASH_REMATCH[1]}"
+            release_version="${BASH_REMATCH[2]}"
+            target="admin-${environment}"
+          else
+            echo "::error::Tag must match admin-<development|production>-v<MAJOR.MINOR.PATCH>."
+            exit 1
+          fi
+
+          app_version="$(sed -n 's/^version:[[:space:]]*\([^+[:space:]]*\).*/\1/p' \
+            apps/admin_app/pubspec.yaml)"
+          test "${app_version}" = "${release_version}" || {
+            echo "::error::Admin tag version must match apps/admin_app/pubspec.yaml."
+            exit 1
+          }
+          echo "source_sha=${SOURCE_SHA}" >>"${GITHUB_OUTPUT}"
+          echo "target_environment=${target}" >>"${GITHUB_OUTPUT}"
+
+  validation:
+    needs: [release-contract]
+    uses: ./.github/workflows/admin-project-validation.yml
+    with:
+      source_sha: ${{ needs.release-contract.outputs.source_sha }}
+
+  security:
+    needs: [release-contract]
+    uses: ./.github/workflows/admin-repository-security.yml
+    with:
+      source_sha: ${{ needs.release-contract.outputs.source_sha }}
+
+  artifact:
+    needs: [release-contract, validation, security]
+    permissions:
+      contents: read
+      id-token: write # Exchange the release-tag OIDC token for the publisher role.
+    uses: ./.github/workflows/admin-web-artifact.yml
+    with:
+      source_sha: ${{ needs.release-contract.outputs.source_sha }}
+      target_environment: ${{ needs.release-contract.outputs.target_environment }}
+
+  deploy:
+    needs: [release-contract, artifact]
+    permissions:
+      actions: read # Read immutable publishing evidence before deployment.
+      contents: read
+      id-token: write # Exchange environment OIDC for the deploy role.
+    uses: ./.github/workflows/admin-deploy.yml
+    with:
+      target_environment: ${{ needs.release-contract.outputs.target_environment }}
+      source_sha: ${{ needs.release-contract.outputs.source_sha }}
+      artifact_digest: ${{ needs.artifact.outputs.artifact_digest }}
+      artifact_reference: ${{ needs.artifact.outputs.artifact_reference }}
+      evidence_name: ${{ needs.artifact.outputs.evidence_name }}

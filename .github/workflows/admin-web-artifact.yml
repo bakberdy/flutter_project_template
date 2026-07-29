@@ -1,0 +1,193 @@
+name: Admin Web Artifact
+
+on:
+  workflow_call:
+    inputs:
+      source_sha:
+        description: "Full source commit SHA"
+        required: true
+        type: string
+      target_environment:
+        description: "admin-development or admin-production"
+        required: true
+        type: string
+    outputs:
+      artifact_digest:
+        value: ${{ jobs.release.outputs.artifact_digest }}
+      artifact_reference:
+        value: ${{ jobs.release.outputs.artifact_reference }}
+      evidence_name:
+        value: ${{ jobs.release.outputs.evidence_name }}
+
+permissions:
+  contents: read
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+jobs:
+  release:
+    name: Publish Immutable Admin Web Artifact
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    permissions:
+      contents: read
+      id-token: write # Exchange the Admin release-tag OIDC token for AWS.
+    outputs:
+      artifact_digest: ${{ steps.package.outputs.artifact_digest }}
+      artifact_reference: ${{ steps.package.outputs.artifact_reference }}
+      evidence_name: ${{ steps.package.outputs.evidence_name }}
+    steps:
+      - name: Check out approved source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          ref: ${{ inputs.source_sha }}
+          persist-credentials: false
+
+      - name: Resolve isolated Admin environment
+        id: environment
+        env:
+          TARGET_ENVIRONMENT: ${{ inputs.target_environment }}
+          DEVELOPMENT_API_URL: ${{ vars.ADMIN_DEVELOPMENT_API_URL }}
+          DEVELOPMENT_BUCKET: ${{ vars.ADMIN_DEVELOPMENT_WEB_BUCKET }}
+          DEVELOPMENT_ROLE: ${{ vars.ADMIN_DEVELOPMENT_PUBLISH_ROLE_ARN }}
+          DEVELOPMENT_ENABLE_LOGGING: ${{ vars.ADMIN_DEVELOPMENT_ENABLE_LOGGING }}
+          DEVELOPMENT_ENABLE_ANALYTICS: ${{ vars.ADMIN_DEVELOPMENT_ENABLE_ANALYTICS }}
+          DEVELOPMENT_ENABLE_CRASHLYTICS: ${{ vars.ADMIN_DEVELOPMENT_ENABLE_CRASHLYTICS }}
+          DEVELOPMENT_CONNECT_TIMEOUT: ${{ vars.ADMIN_DEVELOPMENT_CONNECT_TIMEOUT_SECONDS }}
+          DEVELOPMENT_RECEIVE_TIMEOUT: ${{ vars.ADMIN_DEVELOPMENT_RECEIVE_TIMEOUT_SECONDS }}
+          DEVELOPMENT_SEND_TIMEOUT: ${{ vars.ADMIN_DEVELOPMENT_SEND_TIMEOUT_SECONDS }}
+          PRODUCTION_API_URL: ${{ vars.ADMIN_PRODUCTION_API_URL }}
+          PRODUCTION_BUCKET: ${{ vars.ADMIN_PRODUCTION_WEB_BUCKET }}
+          PRODUCTION_ROLE: ${{ vars.ADMIN_PRODUCTION_PUBLISH_ROLE_ARN }}
+          PRODUCTION_ENABLE_LOGGING: ${{ vars.ADMIN_PRODUCTION_ENABLE_LOGGING }}
+          PRODUCTION_ENABLE_ANALYTICS: ${{ vars.ADMIN_PRODUCTION_ENABLE_ANALYTICS }}
+          PRODUCTION_ENABLE_CRASHLYTICS: ${{ vars.ADMIN_PRODUCTION_ENABLE_CRASHLYTICS }}
+          PRODUCTION_CONNECT_TIMEOUT: ${{ vars.ADMIN_PRODUCTION_CONNECT_TIMEOUT_SECONDS }}
+          PRODUCTION_RECEIVE_TIMEOUT: ${{ vars.ADMIN_PRODUCTION_RECEIVE_TIMEOUT_SECONDS }}
+          PRODUCTION_SEND_TIMEOUT: ${{ vars.ADMIN_PRODUCTION_SEND_TIMEOUT_SECONDS }}
+        run: |
+          set -euo pipefail
+          case "${TARGET_ENVIRONMENT}" in
+            admin-development)
+              echo "environment=development" >>"${GITHUB_OUTPUT}"
+              echo "api_url=${DEVELOPMENT_API_URL}" >>"${GITHUB_OUTPUT}"
+              echo "bucket=${DEVELOPMENT_BUCKET}" >>"${GITHUB_OUTPUT}"
+              echo "role=${DEVELOPMENT_ROLE}" >>"${GITHUB_OUTPUT}"
+              echo "enable_logging=${DEVELOPMENT_ENABLE_LOGGING}" >>"${GITHUB_OUTPUT}"
+              echo "enable_analytics=${DEVELOPMENT_ENABLE_ANALYTICS}" >>"${GITHUB_OUTPUT}"
+              echo "enable_crashlytics=${DEVELOPMENT_ENABLE_CRASHLYTICS}" >>"${GITHUB_OUTPUT}"
+              echo "connect_timeout=${DEVELOPMENT_CONNECT_TIMEOUT}" >>"${GITHUB_OUTPUT}"
+              echo "receive_timeout=${DEVELOPMENT_RECEIVE_TIMEOUT}" >>"${GITHUB_OUTPUT}"
+              echo "send_timeout=${DEVELOPMENT_SEND_TIMEOUT}" >>"${GITHUB_OUTPUT}"
+              ;;
+            admin-production)
+              echo "environment=production" >>"${GITHUB_OUTPUT}"
+              echo "api_url=${PRODUCTION_API_URL}" >>"${GITHUB_OUTPUT}"
+              echo "bucket=${PRODUCTION_BUCKET}" >>"${GITHUB_OUTPUT}"
+              echo "role=${PRODUCTION_ROLE}" >>"${GITHUB_OUTPUT}"
+              echo "enable_logging=${PRODUCTION_ENABLE_LOGGING}" >>"${GITHUB_OUTPUT}"
+              echo "enable_analytics=${PRODUCTION_ENABLE_ANALYTICS}" >>"${GITHUB_OUTPUT}"
+              echo "enable_crashlytics=${PRODUCTION_ENABLE_CRASHLYTICS}" >>"${GITHUB_OUTPUT}"
+              echo "connect_timeout=${PRODUCTION_CONNECT_TIMEOUT}" >>"${GITHUB_OUTPUT}"
+              echo "receive_timeout=${PRODUCTION_RECEIVE_TIMEOUT}" >>"${GITHUB_OUTPUT}"
+              echo "send_timeout=${PRODUCTION_SEND_TIMEOUT}" >>"${GITHUB_OUTPUT}"
+              ;;
+            *)
+              echo "::error::Unsupported Admin target environment."
+              exit 1
+              ;;
+          esac
+
+      - name: Set up Admin Flutter
+        uses: ./.github/actions/setup-admin-flutter
+
+      - name: Build exact Admin release
+        working-directory: apps/admin_app
+        env:
+          API_URL: ${{ steps.environment.outputs.api_url }}
+          ENVIRONMENT: ${{ steps.environment.outputs.environment }}
+          ENABLE_LOGGING: ${{ steps.environment.outputs.enable_logging }}
+          ENABLE_ANALYTICS: ${{ steps.environment.outputs.enable_analytics }}
+          ENABLE_CRASHLYTICS: ${{ steps.environment.outputs.enable_crashlytics }}
+          CONNECT_TIMEOUT: ${{ steps.environment.outputs.connect_timeout }}
+          RECEIVE_TIMEOUT: ${{ steps.environment.outputs.receive_timeout }}
+          SEND_TIMEOUT: ${{ steps.environment.outputs.send_timeout }}
+        run: |
+          set -euo pipefail
+          flutter build web --release \
+            --dart-define="API_URL=${API_URL}" \
+            --dart-define="ENVIRONMENT=${ENVIRONMENT}" \
+            --dart-define="ENABLE_LOGGING=${ENABLE_LOGGING}" \
+            --dart-define="ENABLE_ANALYTICS=${ENABLE_ANALYTICS}" \
+            --dart-define="ENABLE_CRASHLYTICS=${ENABLE_CRASHLYTICS}" \
+            --dart-define="CONNECT_TIMEOUT_SECONDS=${CONNECT_TIMEOUT}" \
+            --dart-define="RECEIVE_TIMEOUT_SECONDS=${RECEIVE_TIMEOUT}" \
+            --dart-define="SEND_TIMEOUT_SECONDS=${SEND_TIMEOUT}"
+
+      - name: Package immutable Admin release
+        id: package
+        env:
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          TARGET_ENVIRONMENT: ${{ inputs.target_environment }}
+        run: |
+          set -euo pipefail
+          build_dir="apps/admin_app/build/web"
+          jq -n \
+            --arg source_sha "${SOURCE_SHA}" \
+            --arg target_environment "${TARGET_ENVIRONMENT}" \
+            --arg release_tag "${GITHUB_REF_NAME}" \
+            '{source_sha: $source_sha, target_environment: $target_environment, release_tag: $release_tag}' \
+            >"${build_dir}/release.json"
+
+          archive="${RUNNER_TEMP}/admin-web.tar.gz"
+          tar --sort=name --mtime="@0" --owner=0 --group=0 --numeric-owner \
+            --create --file=- --directory="${build_dir}" . |
+            gzip --no-name >"${archive}"
+          digest="$(sha256sum "${archive}" | cut -d' ' -f1)"
+          reference="artifacts/sha256/${digest}.tar.gz"
+          evidence_name="admin-release-evidence-${digest}"
+          {
+            echo "artifact_digest=${digest}"
+            echo "artifact_reference=${reference}"
+            echo "evidence_name=${evidence_name}"
+          } >>"${GITHUB_OUTPUT}"
+
+          jq -n \
+            --arg artifact_digest "${digest}" \
+            --arg artifact_reference "${reference}" \
+            --arg source_sha "${SOURCE_SHA}" \
+            --arg target_environment "${TARGET_ENVIRONMENT}" \
+            '{artifact_digest: $artifact_digest, artifact_reference: $artifact_reference, source_sha: $source_sha, target_environment: $target_environment}' \
+            >"${RUNNER_TEMP}/admin-release-evidence.json"
+
+      - name: Configure Admin publisher identity
+        uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4.3.1
+        with:
+          aws-region: ${{ vars.ADMIN_AWS_REGION }}
+          role-to-assume: ${{ steps.environment.outputs.role }}
+
+      - name: Publish immutable files
+        env:
+          BUCKET: ${{ steps.environment.outputs.bucket }}
+          DIGEST: ${{ steps.package.outputs.artifact_digest }}
+          REFERENCE: ${{ steps.package.outputs.artifact_reference }}
+        run: |
+          set -euo pipefail
+          if aws s3api head-object --bucket "${BUCKET}" --key "${REFERENCE}" >/dev/null 2>&1; then
+            echo "::error::Immutable Admin artifact already exists."
+            exit 1
+          fi
+          aws s3 cp "${RUNNER_TEMP}/admin-web.tar.gz" "s3://${BUCKET}/${REFERENCE}" \
+            --only-show-errors
+          aws s3 sync apps/admin_app/build/web \
+            "s3://${BUCKET}/releases/${DIGEST}/" \
+            --only-show-errors
+
+      - name: Upload release evidence
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: ${{ steps.package.outputs.evidence_name }}
+          path: ${{ runner.temp }}/admin-release-evidence.json
+          if-no-files-found: error
+          retention-days: 30

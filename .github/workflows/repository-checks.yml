@@ -1,0 +1,73 @@
+name: Repository Checks
+
+on:
+  workflow_call:
+    inputs:
+      source_sha:
+        description: "Full source commit SHA"
+        required: true
+        type: string
+      base_sha:
+        description: "Full pull request or merge group base SHA"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+jobs:
+  workspace:
+    name: Workspace Quality & Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Check out approved repository source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          ref: ${{ inputs.source_sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Validate revisions
+        env:
+          BASE_SHA: ${{ inputs.base_sha }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+        run: |
+          set -euo pipefail
+          [[ "${SOURCE_SHA}" =~ ^[0-9a-f]{40}$ ]] || {
+            echo "::error::source_sha must be a full lowercase Git SHA."
+            exit 1
+          }
+          [[ "${BASE_SHA}" =~ ^[0-9a-f]{40}$ ]] || {
+            echo "::error::base_sha must be a full lowercase Git SHA."
+            exit 1
+          }
+          test "$(git rev-parse HEAD)" = "${SOURCE_SHA}"
+          git cat-file -e "${BASE_SHA}^{commit}"
+
+      - name: Check whitespace errors
+        env:
+          BASE_SHA: ${{ inputs.base_sha }}
+        run: git diff --check "${BASE_SHA}...HEAD"
+
+      - name: Set up Flutter workspace once
+        uses: ./.github/actions/setup-flutter
+
+      - name: Check workspace formatting
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Analyze workspace
+        run: dart analyze
+
+      - name: Validate hardcoded UI text
+        run: dart run tool/validation/check_hardcoded_ui_strings.dart
+
+      - name: Run tests for changed packages
+        env:
+          BASE_SHA: ${{ inputs.base_sha }}
+        run: |
+          dart run tool/validation/run_changed_tests.dart \
+            --base "${BASE_SHA}"

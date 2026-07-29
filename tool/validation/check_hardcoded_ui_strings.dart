@@ -1,7 +1,7 @@
 import 'dart:io';
 
 const _allowedComment = 'hardcoded-ui-text: allow';
-const _scannedRoots = ['apps', 'modules'];
+const _defaultScannedRoots = ['apps', 'modules'];
 
 final _literalPatterns = [
   RegExp(
@@ -16,10 +16,11 @@ final _literalPatterns = [
 
 void main(List<String> arguments) {
   final isNonBlocking = arguments.contains('--non-blocking');
+  final scannedRoots = _parseScannedRoots(arguments);
   final repositoryRoot = _findRepositoryRoot();
   final violations = <_Violation>[];
 
-  for (final rootName in _scannedRoots) {
+  for (final rootName in scannedRoots) {
     final root = Directory.fromUri(repositoryRoot.uri.resolve('$rootName/'));
     if (!root.existsSync()) continue;
 
@@ -77,6 +78,40 @@ void main(List<String> arguments) {
   }
 
   exitCode = 1;
+}
+
+List<String> _parseScannedRoots(List<String> arguments) {
+  final roots = <String>[];
+  for (var index = 0; index < arguments.length; index++) {
+    final argument = arguments[index];
+    if (argument == '--non-blocking') continue;
+    if (argument != '--root') {
+      _usageError('Unknown argument: $argument');
+    }
+    if (index + 1 >= arguments.length) {
+      _usageError('Missing path after --root.');
+    }
+    final root = arguments[++index].trim().replaceAll(r'\', '/');
+    if (root.isEmpty ||
+        root.startsWith('/') ||
+        root == '..' ||
+        root.startsWith('../') ||
+        root.contains('/../')) {
+      _usageError('Root must be a repository-relative path: $root');
+    }
+    roots.add(root);
+  }
+  return roots.isEmpty ? _defaultScannedRoots : roots;
+}
+
+Never _usageError(String message) {
+  stderr
+    ..writeln(message)
+    ..writeln(
+      'Usage: dart run tool/validation/check_hardcoded_ui_strings.dart '
+      '[--non-blocking] [--root <repository-relative-path>]...',
+    );
+  exit(64);
 }
 
 void _writeGitHubReport(

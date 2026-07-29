@@ -1,0 +1,55 @@
+name: Pull Request Validation
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  merge_group:
+
+permissions:
+  contents: read
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+concurrency:
+  group: pull-request-validation-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  repository-checks:
+    name: Repository Checks
+    uses: ./.github/workflows/repository-checks.yml
+    with:
+      source_sha: ${{ github.event.pull_request.head.sha || github.sha }}
+      base_sha: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
+
+  security-checks:
+    name: Security Checks
+    uses: ./.github/workflows/security-checks.yml
+    with:
+      source_sha: ${{ github.event.pull_request.head.sha || github.sha }}
+
+  pull-request-gate:
+    name: Pull Request Gate
+    if: always()
+    needs:
+      - repository-checks
+      - security-checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Require all mandatory checks
+        env:
+          REPOSITORY_CHECKS_RESULT: ${{ needs.repository-checks.result }}
+          SECURITY_CHECKS_RESULT: ${{ needs.security-checks.result }}
+        run: |
+          set -euo pipefail
+          if [[ "${REPOSITORY_CHECKS_RESULT}" != "success" ||
+                "${SECURITY_CHECKS_RESULT}" != "success" ]]; then
+            echo "::error::Mandatory pull request checks did not succeed."
+            echo "Repository Checks: ${REPOSITORY_CHECKS_RESULT}"
+            echo "Security Checks: ${SECURITY_CHECKS_RESULT}"
+            exit 1
+          fi
+
+          echo "All mandatory Client/Admin pull request checks succeeded."
