@@ -68,9 +68,23 @@ void main() {
     expect(
       _read(repository, 'apps/client_app/ios/Runner/Info.plist'),
       allOf(
-        contains('<string>My Product</string>'),
+        contains(r'<string>$(APP_DISPLAY_NAME)</string>'),
         contains('<string>my_app</string>'),
       ),
+    );
+    expect(
+      _read(
+        repository,
+        'apps/client_app/ios/Flutter/Debug-development.xcconfig',
+      ),
+      contains('APP_DISPLAY_NAME=My Product Dev'),
+    );
+    expect(
+      _read(
+        repository,
+        'apps/client_app/ios/Flutter/Release-production.xcconfig',
+      ),
+      contains('APP_DISPLAY_NAME=My Product'),
     );
     expect(
       _read(repository, 'apps/client_app/ios/Flutter/Debug.xcconfig'),
@@ -175,9 +189,23 @@ applied:
     expect(
       _read(repository, 'apps/client_app/ios/Runner/Info.plist'),
       allOf(
-        contains('<string>Next Product</string>'),
+        contains(r'<string>$(APP_DISPLAY_NAME)</string>'),
         contains('<string>next_app</string>'),
       ),
+    );
+    expect(
+      _read(
+        repository,
+        'apps/client_app/ios/Flutter/Profile-development.xcconfig',
+      ),
+      contains('APP_DISPLAY_NAME=Next Product Dev'),
+    );
+    expect(
+      _read(
+        repository,
+        'apps/client_app/ios/Flutter/Profile-production.xcconfig',
+      ),
+      contains('APP_DISPLAY_NAME=Next Product'),
     );
     expect(
       _read(repository, 'apps/client_app/ios/fastlane/Appfile'),
@@ -280,6 +308,20 @@ void _createTemplateFixture(Directory repository) {
     'apps/client_app/ios/Flutter/Debug.xcconfig',
     'PRODUCT_BUNDLE_IDENTIFIER=com.example.clientApp\n',
   );
+  for (final mode in ['Debug', 'Profile', 'Release']) {
+    _write(
+      repository,
+      'apps/client_app/ios/Flutter/$mode-development.xcconfig',
+      'PRODUCT_BUNDLE_IDENTIFIER=com.example.clientApp.development\n'
+          'INFOPLIST_KEY_CFBundleDisplayName=Client Dev\n',
+    );
+    _write(
+      repository,
+      'apps/client_app/ios/Flutter/$mode-production.xcconfig',
+      'PRODUCT_BUNDLE_IDENTIFIER=com.example.clientApp\n'
+          'INFOPLIST_KEY_CFBundleDisplayName=Client App\n',
+    );
+  }
   _write(
     repository,
     'apps/client_app/ios/Runner/Info.plist',

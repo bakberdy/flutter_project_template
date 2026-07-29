@@ -1,3 +1,3 @@
 #include "Generated.xcconfig"
 PRODUCT_BUNDLE_IDENTIFIER=com.bakberdi.template
-INFOPLIST_KEY_CFBundleDisplayName=Client App
+APP_DISPLAY_NAME=Client App

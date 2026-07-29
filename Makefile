@@ -49,10 +49,10 @@ client-apk-prod:
 	cd $(CLIENT_APP) && flutter build apk --release --flavor production --dart-define-from-file=$(CLIENT_CONFIG_PRODUCTION)
 
 client-ios-dev:
-	cd $(CLIENT_APP) && flutter build ios --simulator --debug --no-codesign --flavor development --dart-define-from-file=$(CLIENT_CONFIG_DEVELOPMENT)
+	cd $(CLIENT_APP) && flutter build ios --no-codesign --flavor development --dart-define-from-file=$(CLIENT_CONFIG_DEVELOPMENT)
 
 client-ios-prod:
-	cd $(CLIENT_APP) && flutter build ios --simulator --debug --no-codesign --flavor production --dart-define-from-file=$(CLIENT_CONFIG_PRODUCTION)
+	cd $(CLIENT_APP) && flutter build ios --no-codesign --flavor production --dart-define-from-file=$(CLIENT_CONFIG_PRODUCTION)
 
 client-icons:
 	cd $(CLIENT_APP) && dart run flutter_launcher_icons

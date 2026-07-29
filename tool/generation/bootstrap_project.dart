@@ -450,13 +450,42 @@ BootstrapPlan createBootstrapPlan(
         : 'android:label="${_xmlEscape(previous.displayName)}"',
     'android:label="${_xmlEscape(config.displayName)}"',
   );
-  _replaceExact(
+  _replaceOneOfExact(
     repositoryRoot,
     pendingSources,
     'apps/client_app/ios/Runner/Info.plist',
-    '<string>${_xmlEscape(previous?.displayName ?? 'Client App')}</string>',
-    '<string>${_xmlEscape(config.displayName)}</string>',
+    [
+      '<string>${_xmlEscape(previous?.displayName ?? 'Client App')}</string>',
+      r'<string>$(APP_DISPLAY_NAME)</string>',
+    ],
+    r'<string>$(APP_DISPLAY_NAME)</string>',
   );
+  final previousProductionDisplayName = previous?.displayName ?? 'Client App';
+  for (final mode in ['Debug', 'Profile', 'Release']) {
+    _replaceOneOfExact(
+      repositoryRoot,
+      pendingSources,
+      'apps/client_app/ios/Flutter/$mode-development.xcconfig',
+      [
+        'INFOPLIST_KEY_CFBundleDisplayName=Client Dev',
+        'INFOPLIST_KEY_CFBundleDisplayName=${previous?.displayName} Dev',
+        'APP_DISPLAY_NAME=${previous?.displayName} Dev',
+        'APP_DISPLAY_NAME=${config.displayName} Dev',
+      ],
+      'APP_DISPLAY_NAME=${config.displayName} Dev',
+    );
+    _replaceOneOfExact(
+      repositoryRoot,
+      pendingSources,
+      'apps/client_app/ios/Flutter/$mode-production.xcconfig',
+      [
+        'INFOPLIST_KEY_CFBundleDisplayName=$previousProductionDisplayName',
+        'APP_DISPLAY_NAME=$previousProductionDisplayName',
+        'APP_DISPLAY_NAME=${config.displayName}',
+      ],
+      'APP_DISPLAY_NAME=${config.displayName}',
+    );
+  }
   _replaceExact(
     repositoryRoot,
     pendingSources,
@@ -684,6 +713,30 @@ void _replaceExact(
   if (!source.contains(from)) {
     throw BootstrapException(
       'Expected template value was not found in $relativePath: $from',
+    );
+  }
+  pendingSources[relativePath] = source.replaceAll(from, to);
+}
+
+void _replaceOneOfExact(
+  Directory root,
+  Map<String, String> pendingSources,
+  String relativePath,
+  List<String> candidates,
+  String to,
+) {
+  final source = _pendingOrCurrent(root, pendingSources, relativePath);
+  String? from;
+  for (final candidate in candidates) {
+    if (source.contains(candidate)) {
+      from = candidate;
+      break;
+    }
+  }
+  if (from == null) {
+    throw BootstrapException(
+      'Expected template value was not found in $relativePath: '
+      '${candidates.join(' or ')}',
     );
   }
   pendingSources[relativePath] = source.replaceAll(from, to);
