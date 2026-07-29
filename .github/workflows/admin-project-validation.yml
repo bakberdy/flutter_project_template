@@ -7,10 +7,6 @@ on:
         description: "Full source commit SHA"
         required: true
         type: string
-    outputs:
-      status:
-        description: "Admin application validation result"
-        value: ${{ jobs.application-gate.outputs.status }}
 
 permissions:
   contents: read
@@ -23,10 +19,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  quality:
+  validation:
     name: Admin Application Quality
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 45
     steps:
       - name: Check out approved source
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
@@ -35,7 +31,7 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Validate inputs
+      - name: Validate source revision
         env:
           SOURCE_SHA: ${{ inputs.source_sha }}
         run: |
@@ -44,120 +40,161 @@ jobs:
             echo "::error::source_sha must be a full lowercase Git SHA."
             exit 1
           }
+          test "$(git rev-parse HEAD)" = "${SOURCE_SHA}"
+          git show --check --format= HEAD
 
-      - name: Check whitespace errors
-        run: git show --check --format= HEAD
-
-      - name: Set up Admin Flutter
+      - name: Set up Admin Flutter once
         uses: ./.github/actions/setup-admin-flutter
 
-      - name: Check Admin formatting
-        run: |
-          dart format --output=none --set-exit-if-changed \
-            apps/admin_app \
-            modules/admin_auth \
-            modules/admin_preferences \
-            modules/admin_profile \
-            modules/admin_users \
-            modules/core \
-            modules/design_system \
-            modules/shared
-
-      - name: Analyze Admin dependency scope
+      - name: Run Admin static checks in parallel
         run: |
           set -euo pipefail
-          packages=(
-            apps/admin_app
-            modules/admin_auth
-            modules/admin_preferences
-            modules/admin_profile
-            modules/admin_users
-            modules/core
-            modules/design_system
-            modules/shared
-          )
-          for package in "${packages[@]}"; do
-            echo "==> dart analyze ${package}"
-            (
-              cd "${package}"
-              dart analyze
+          logs="${RUNNER_TEMP}/admin-static-checks"
+          mkdir -p "${logs}"
+
+          (
+            dart format --output=none --set-exit-if-changed \
+              apps/admin_app \
+              modules/admin_auth \
+              modules/admin_preferences \
+              modules/admin_profile \
+              modules/admin_users \
+              modules/core \
+              modules/design_system \
+              modules/shared
+          ) >"${logs}/format.log" 2>&1 &
+          format_pid=$!
+
+          (
+            packages=(
+              apps/admin_app
+              modules/admin_auth
+              modules/admin_preferences
+              modules/admin_profile
+              modules/admin_users
+              modules/core
+              modules/design_system
+              modules/shared
             )
+            analyze_pids=()
+            for package in "${packages[@]}"; do
+              (
+                cd "${package}"
+                dart analyze
+              ) >"${logs}/analyze-${package//\//-}.log" 2>&1 &
+              analyze_pids+=("$!")
+            done
+
+            analyze_result=0
+            for index in "${!analyze_pids[@]}"; do
+              package="${packages[${index}]}"
+              if wait "${analyze_pids[${index}]}"; then
+                echo "==> ${package}: analyze passed"
+              else
+                echo "==> ${package}: analyze failed"
+                analyze_result=1
+              fi
+              cat "${logs}/analyze-${package//\//-}.log"
+            done
+            exit "${analyze_result}"
+          ) >"${logs}/analyze.log" 2>&1 &
+          analyze_pid=$!
+
+          (
+            dart run tool/validation/check_hardcoded_ui_strings.dart \
+              --root apps/admin_app \
+              --root modules/admin_auth \
+              --root modules/admin_preferences \
+              --root modules/admin_profile \
+              --root modules/admin_users \
+              --root modules/core \
+              --root modules/design_system \
+              --root modules/shared
+          ) >"${logs}/hardcoded.log" 2>&1 &
+          hardcoded_pid=$!
+
+          result=0
+          for check in format analyze hardcoded; do
+            case "${check}" in
+              format) pid="${format_pid}" ;;
+              analyze) pid="${analyze_pid}" ;;
+              hardcoded) pid="${hardcoded_pid}" ;;
+            esac
+            if wait "${pid}"; then
+              echo "::notice::${check} check passed"
+            else
+              echo "::error::${check} check failed"
+              result=1
+            fi
+            echo "::group::${check} output"
+            cat "${logs}/${check}.log"
+            echo "::endgroup::"
           done
+          exit "${result}"
 
-      - name: Check Admin hardcoded UI strings
-        run: |
-          dart run tool/validation/check_hardcoded_ui_strings.dart \
-            --root apps/admin_app \
-            --root modules/admin_auth \
-            --root modules/admin_preferences \
-            --root modules/admin_profile \
-            --root modules/admin_users \
-            --root modules/core \
-            --root modules/design_system \
-            --root modules/shared
-
-  unit:
-    name: Admin Unit Tests
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-      - name: Check out approved source
-        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
-        with:
-          ref: ${{ inputs.source_sha }}
-          persist-credentials: false
-
-      - name: Set up Admin Flutter
-        uses: ./.github/actions/setup-admin-flutter
-
-      - name: Test Admin dependency scope
+      - name: Run Admin tests and Web build in parallel
         run: |
           set -euo pipefail
-          packages=(
-            apps/admin_app
-            modules/admin_auth
-            modules/admin_preferences
-            modules/admin_profile
-            modules/admin_users
-            modules/core
-            modules/design_system
-            modules/shared
-          )
-          for package in "${packages[@]}"; do
-            if [[ ! -d "${package}/test" ]]; then
-              echo "==> ${package}: no tests"
-              continue
-            fi
-            echo "==> flutter test ${package}"
-            flutter test "${package}"
-          done
+          logs="${RUNNER_TEMP}/admin-runtime-checks"
+          mkdir -p "${logs}"
 
-  runtime:
-    name: Admin Web Runtime
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-      - name: Check out approved source
-        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
-        with:
-          ref: ${{ inputs.source_sha }}
-          persist-credentials: false
+          (
+            packages=(
+              apps/admin_app
+              modules/admin_auth
+              modules/admin_preferences
+              modules/admin_profile
+              modules/admin_users
+              modules/core
+              modules/design_system
+              modules/shared
+            )
+            for package in "${packages[@]}"; do
+              if [[ ! -d "${package}/test" ]]; then
+                echo "==> ${package}: no tests"
+                continue
+              fi
+              echo "==> flutter test ${package}"
+              flutter test "${package}"
+            done
+          ) >"${logs}/tests.log" 2>&1 &
+          tests_pid=$!
 
-      - name: Set up Admin Flutter
-        uses: ./.github/actions/setup-admin-flutter
+          (
+            cd apps/admin_app
+            flutter build web --release \
+              --dart-define=API_URL=https://admin-ci.invalid \
+              --dart-define=ENVIRONMENT=ci \
+              --dart-define=ENABLE_LOGGING=false \
+              --dart-define=ENABLE_ANALYTICS=false \
+              --dart-define=ENABLE_CRASHLYTICS=false \
+              --dart-define=CONNECT_TIMEOUT_SECONDS=30 \
+              --dart-define=RECEIVE_TIMEOUT_SECONDS=30 \
+              --dart-define=SEND_TIMEOUT_SECONDS=30
+          ) >"${logs}/web-build.log" 2>&1 &
+          web_build_pid=$!
 
-      - name: Build Admin Web with synthetic configuration
-        working-directory: apps/admin_app
-        run: |
-          flutter build web --release \
-            --dart-define=API_URL=https://admin-ci.invalid \
-            --dart-define=ENVIRONMENT=ci \
-            --dart-define=ENABLE_LOGGING=false \
-            --dart-define=ENABLE_ANALYTICS=false \
-            --dart-define=ENABLE_CRASHLYTICS=false \
-            --dart-define=CONNECT_TIMEOUT_SECONDS=30 \
-            --dart-define=RECEIVE_TIMEOUT_SECONDS=30 \
-            --dart-define=SEND_TIMEOUT_SECONDS=30
+          result=0
+          if wait "${tests_pid}"; then
+            echo "::notice::Admin tests passed"
+          else
+            echo "::error::Admin tests failed"
+            result=1
+          fi
+          echo "::group::Admin tests output"
+          cat "${logs}/tests.log"
+          echo "::endgroup::"
+
+          if wait "${web_build_pid}"; then
+            echo "::notice::Admin Web build passed"
+          else
+            echo "::error::Admin Web build failed"
+            result=1
+          fi
+          echo "::group::Admin Web build output"
+          cat "${logs}/web-build.log"
+          echo "::endgroup::"
+          exit "${result}"
 
       - name: Smoke test built Admin Web
         run: |
@@ -192,31 +229,3 @@ jobs:
           curl --fail --silent --show-error \
             "http://127.0.0.1:8080/main.dart.js" \
             --output /dev/null
-
-  application-gate:
-    name: Admin Application Gate
-    if: always()
-    needs:
-      - quality
-      - unit
-      - runtime
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    outputs:
-      status: ${{ steps.result.outputs.status }}
-    steps:
-      - name: Require all Admin application checks
-        id: result
-        env:
-          QUALITY_RESULT: ${{ needs.quality.result }}
-          RUNTIME_RESULT: ${{ needs.runtime.result }}
-          UNIT_RESULT: ${{ needs.unit.result }}
-        run: |
-          set -euo pipefail
-          if [[ "${QUALITY_RESULT}" != "success" ||
-                "${UNIT_RESULT}" != "success" ||
-                "${RUNTIME_RESULT}" != "success" ]]; then
-            echo "::error::Admin application checks did not all succeed."
-            exit 1
-          fi
-          echo "status=success" >>"${GITHUB_OUTPUT}"
