@@ -193,9 +193,11 @@ jobs:
           digest="$(sha256sum "${archive}" | cut -d' ' -f1)"
           reference="artifacts/sha256/${digest}.tar.gz"
           evidence_name="admin-release-evidence-${digest}"
-          echo "artifact_digest=${digest}" >>"${GITHUB_OUTPUT}"
-          echo "artifact_reference=${reference}" >>"${GITHUB_OUTPUT}"
-          echo "evidence_name=${evidence_name}" >>"${GITHUB_OUTPUT}"
+          {
+            echo "artifact_digest=${digest}"
+            echo "artifact_reference=${reference}"
+            echo "evidence_name=${evidence_name}"
+          } >>"${GITHUB_OUTPUT}"
 
           jq -n \
             --arg artifact_digest "${digest}" \

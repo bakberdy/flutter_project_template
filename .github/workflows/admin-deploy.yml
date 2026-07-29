@@ -156,7 +156,7 @@ jobs:
             --distribution-id "${DISTRIBUTION_ID}" --paths "/*" >/dev/null
 
           healthy=false
-          for attempt in {1..12}; do
+          for _attempt in {1..12}; do
             if curl --fail --silent --show-error \
               "${PUBLIC_URL}/release.json?digest=${DIGEST}" \
               --output "${RUNNER_TEMP}/live-release.json" &&
@@ -185,7 +185,7 @@ jobs:
               "${previous_metadata}" --only-show-errors
             previous_source="$(jq -r .source_sha "${previous_metadata}")"
             rollback_healthy=false
-            for attempt in {1..12}; do
+            for _attempt in {1..12}; do
               if curl --fail --silent --show-error \
                 "${PUBLIC_URL}/release.json?rollback=${previous}" \
                 --output "${RUNNER_TEMP}/rollback-release.json" &&
