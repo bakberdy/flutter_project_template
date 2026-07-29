@@ -1,0 +1,186 @@
+name: Pull Request Validation
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  merge_group:
+
+permissions:
+  contents: read
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+concurrency:
+  group: pull-request-validation-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  format:
+    name: Format
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+
+      - name: Set up Flutter workspace
+        uses: ./.github/actions/setup-flutter
+
+      - name: Check workspace formatting
+        run: dart format --output=none --set-exit-if-changed .
+
+  analyze:
+    name: Analyze Workspace
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+
+      - name: Set up Flutter workspace
+        uses: ./.github/actions/setup-flutter
+
+      - name: Analyze workspace
+        run: dart analyze
+
+  tests:
+    name: Changed Package Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Check out repository history
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Flutter workspace
+        uses: ./.github/actions/setup-flutter
+
+      - name: Run tests for changed packages
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
+        run: |
+          set -euo pipefail
+          dart run tool/validation/run_changed_tests.dart \
+            --base "${BASE_SHA}"
+
+  hardcoded-texts:
+    name: Hardcoded Texts
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+
+      - name: Set up Flutter workspace
+        uses: ./.github/actions/setup-flutter
+
+      - name: Validate hardcoded UI text
+        run: dart run tool/validation/check_hardcoded_ui_strings.dart
+
+  security:
+    name: Sensitive Data & Credentials
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository history
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install pinned Gitleaks
+        env:
+          GITLEAKS_SHA256: 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb
+          GITLEAKS_VERSION: 8.30.1
+        run: |
+          set -euo pipefail
+          archive="${RUNNER_TEMP}/gitleaks.tar.gz"
+          curl --fail --silent --show-error --location --retry 3 \
+            "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" \
+            --output "${archive}"
+          echo "${GITLEAKS_SHA256}  ${archive}" |
+            sha256sum --check --status
+          tar --extract --gzip --file "${archive}" \
+            --directory "${RUNNER_TEMP}" gitleaks
+
+      - name: Scan repository history for secrets
+        run: |
+          "${RUNNER_TEMP}/gitleaks" git \
+            --redact \
+            --no-banner \
+            --verbose \
+            .
+
+  diff-check:
+    name: Diff Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository history
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Check whitespace errors
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
+        run: |
+          set -euo pipefail
+          [[ "${BASE_SHA}" =~ ^[0-9a-f]{40}$ ]] || {
+            echo "::error::Could not resolve the pull request base SHA."
+            exit 1
+          }
+          git diff --check "${BASE_SHA}...HEAD"
+
+  pull-request-gate:
+    name: Pull Request Gate
+    if: always()
+    needs:
+      - format
+      - analyze
+      - tests
+      - hardcoded-texts
+      - security
+      - diff-check
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Require all mandatory checks
+        env:
+          ANALYZE_RESULT: ${{ needs.analyze.result }}
+          DIFF_CHECK_RESULT: ${{ needs.diff-check.result }}
+          FORMAT_RESULT: ${{ needs.format.result }}
+          HARDCODED_TEXTS_RESULT: ${{ needs.hardcoded-texts.result }}
+          SECURITY_RESULT: ${{ needs.security.result }}
+          TESTS_RESULT: ${{ needs.tests.result }}
+        run: |
+          set -euo pipefail
+          failed=false
+          for result in \
+            "${FORMAT_RESULT}" \
+            "${ANALYZE_RESULT}" \
+            "${TESTS_RESULT}" \
+            "${HARDCODED_TEXTS_RESULT}" \
+            "${SECURITY_RESULT}" \
+            "${DIFF_CHECK_RESULT}"; do
+            if [[ "${result}" != "success" ]]; then
+              failed=true
+            fi
+          done
+
+          if [[ "${failed}" == "true" ]]; then
+            echo "::error::One or more mandatory pull request checks did not succeed."
+            exit 1
+          fi
+
+          echo "All mandatory Client/Admin pull request checks succeeded."

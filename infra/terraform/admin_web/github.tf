@@ -42,10 +42,15 @@ resource "github_actions_environment_variable" "admin" {
   value         = each.value.value
 }
 
-resource "github_repository_ruleset" "admin_delivery" {
+moved {
+  from = github_repository_ruleset.project_validation[0]
+  to   = github_repository_ruleset.pull_request_validation[0]
+}
+
+resource "github_repository_ruleset" "pull_request_validation" {
   count = var.manage_github_configuration ? 1 : 0
 
-  name        = "admin-delivery"
+  name        = "pull-request-validation"
   repository  = var.github_repository
   target      = "branch"
   enforcement = "active"
@@ -62,7 +67,7 @@ resource "github_repository_ruleset" "admin_delivery" {
       strict_required_status_checks_policy = true
 
       required_check {
-        context = "Admin Delivery Gate"
+        context = "Pull Request Gate"
       }
     }
   }

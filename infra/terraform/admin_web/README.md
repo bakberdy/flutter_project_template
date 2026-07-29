@@ -9,7 +9,7 @@ This Terraform root owns only Flutter Admin Web infrastructure:
 - CloudFront KeyValueStore based atomic release selection;
 - separate GitHub OIDC publish/deploy roles;
 - `admin-development` and `admin-production` GitHub Environments and variables;
-- a separate `Admin Delivery Gate` repository ruleset.
+- the shared Client/Admin `pull-request-validation` repository ruleset.
 
 It never creates or imports Client App resources. DNS is hosted outside AWS and
 is intentionally not managed by this root.

@@ -27,7 +27,7 @@ variable "github_oidc_provider_arn" {
 }
 
 variable "manage_github_configuration" {
-  description = "Manage Admin GitHub environments, variables and ruleset."
+  description = "Manage Admin GitHub environments/variables and the shared project validation ruleset."
   type        = bool
   default     = true
 }
