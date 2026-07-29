@@ -1,0 +1,19 @@
+name: Set up Admin Flutter
+description: Set up the pinned Flutter SDK and workspace dependencies for Admin CI.
+
+runs:
+  using: composite
+  steps:
+    - name: Set up Flutter
+      uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
+      with:
+        flutter-version-file: .fvmrc
+        cache: true
+        pub-cache: true
+
+    - name: Resolve workspace dependencies
+      shell: bash
+      run: |
+        set -euo pipefail
+        flutter pub get
+        dart pub get --directory packages/project_lints

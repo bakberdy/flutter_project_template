@@ -1,0 +1,155 @@
+name: Admin Delivery
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize, reopened, ready_for_review]
+  merge_group:
+
+permissions:
+  contents: read
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+concurrency:
+  group: admin-delivery-pr-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  scope:
+    name: Admin Change Scope
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      admin_changed: ${{ steps.changes.outputs.admin_changed }}
+      base_sha: ${{ steps.revisions.outputs.base_sha }}
+      source_sha: ${{ steps.revisions.outputs.source_sha }}
+    steps:
+      - name: Check out repository history
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Resolve checked revisions
+        id: revisions
+        env:
+          EVENT_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
+          EVENT_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          [[ "${EVENT_SOURCE_SHA}" =~ ^[0-9a-f]{40}$ ]] || {
+            echo "::error::Could not resolve a full Admin source SHA."
+            exit 1
+          }
+          [[ "${EVENT_BASE_SHA}" =~ ^[0-9a-f]{40}$ ]] || {
+            echo "::error::Could not resolve a full Admin base SHA."
+            exit 1
+          }
+          echo "source_sha=${EVENT_SOURCE_SHA}" >>"${GITHUB_OUTPUT}"
+          echo "base_sha=${EVENT_BASE_SHA}" >>"${GITHUB_OUTPUT}"
+
+      - name: Detect Admin-owned changes
+        id: changes
+        env:
+          BASE_SHA: ${{ steps.revisions.outputs.base_sha }}
+          SOURCE_SHA: ${{ steps.revisions.outputs.source_sha }}
+        run: |
+          set -euo pipefail
+          changed_files="$(git diff --name-only \
+            --diff-filter=ACDMRT \
+            "${BASE_SHA}...${SOURCE_SHA}")"
+          printf '%s\n' "${changed_files}"
+
+          admin_changed=false
+          while IFS= read -r path; do
+            case "${path}" in
+              apps/admin_app/*|\
+              modules/admin_*/*|\
+              modules/core/*|\
+              modules/design_system/*|\
+              modules/shared/*|\
+              .github/workflows/admin-*.yml|\
+              .github/actions/setup-admin-flutter/*|\
+              infra/terraform/admin_web/*|\
+              tool/validation/check_hardcoded_ui_strings.dart|\
+              pubspec.yaml|\
+              .fvmrc|\
+              analysis_options.yaml|\
+              architecture.yaml)
+                admin_changed=true
+                break
+                ;;
+            esac
+          done <<<"${changed_files}"
+
+          echo "admin_changed=${admin_changed}" >>"${GITHUB_OUTPUT}"
+
+  validation:
+    name: Admin Application Validation
+    if: needs.scope.outputs.admin_changed == 'true'
+    needs:
+      - scope
+    uses: ./.github/workflows/admin-project-validation.yml
+    with:
+      source_sha: ${{ needs.scope.outputs.source_sha }}
+      base_sha: ${{ needs.scope.outputs.base_sha }}
+      mode: pr
+
+  repository-security:
+    name: Admin Repository Security
+    if: needs.scope.outputs.admin_changed == 'true'
+    needs:
+      - scope
+    uses: ./.github/workflows/admin-repository-security.yml
+    with:
+      source_sha: ${{ needs.scope.outputs.source_sha }}
+
+  web-artifact:
+    name: Admin Web Artifact Validation
+    if: needs.scope.outputs.admin_changed == 'true'
+    needs:
+      - scope
+    uses: ./.github/workflows/admin-web-artifact.yml
+    with:
+      mode: pr
+      source_sha: ${{ needs.scope.outputs.source_sha }}
+
+  delivery-gate:
+    name: Admin Delivery Gate
+    if: always()
+    needs:
+      - scope
+      - validation
+      - repository-security
+      - web-artifact
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Require relevant Admin checks
+        env:
+          ADMIN_CHANGED: ${{ needs.scope.outputs.admin_changed }}
+          REPOSITORY_SECURITY_RESULT: ${{ needs.repository-security.result }}
+          SCOPE_RESULT: ${{ needs.scope.result }}
+          VALIDATION_RESULT: ${{ needs.validation.result }}
+          WEB_ARTIFACT_RESULT: ${{ needs.web-artifact.result }}
+        run: |
+          set -euo pipefail
+          if [[ "${SCOPE_RESULT}" != "success" ]]; then
+            echo "::error::Admin change scope could not be determined."
+            exit 1
+          fi
+
+          if [[ "${ADMIN_CHANGED}" != "true" ]]; then
+            echo "No Admin-owned changes; Admin Flutter jobs were skipped."
+            exit 0
+          fi
+
+          if [[ "${VALIDATION_RESULT}" != "success" ||
+                "${REPOSITORY_SECURITY_RESULT}" != "success" ||
+                "${WEB_ARTIFACT_RESULT}" != "success" ]]; then
+            echo "::error::Latest Admin checks did not all succeed."
+            exit 1
+          fi

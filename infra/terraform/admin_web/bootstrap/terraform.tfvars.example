@@ -1,0 +1,4 @@
+aws_region = "eu-central-1"
+
+# Optional override:
+# state_bucket_name = "globally-unique-admin-web-terraform-state"

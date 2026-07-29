@@ -1,0 +1,244 @@
+name: Admin Project Validation
+
+on:
+  workflow_call:
+    inputs:
+      source_sha:
+        description: "Full source commit SHA"
+        required: true
+        type: string
+      base_sha:
+        description: "Optional pull request base SHA"
+        required: false
+        type: string
+        default: ""
+      mode:
+        description: "Validation mode: pr or release"
+        required: true
+        type: string
+    outputs:
+      status:
+        description: "Admin application validation result"
+        value: ${{ jobs.application-gate.outputs.status }}
+
+permissions:
+  contents: read
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+concurrency:
+  group: admin-project-validation-${{ github.ref }}-${{ inputs.source_sha }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Admin Application Quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out approved source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          ref: ${{ inputs.source_sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Validate inputs
+        env:
+          MODE: ${{ inputs.mode }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+        run: |
+          set -euo pipefail
+          [[ "${SOURCE_SHA}" =~ ^[0-9a-f]{40}$ ]] || {
+            echo "::error::source_sha must be a full lowercase Git SHA."
+            exit 1
+          }
+          [[ "${MODE}" == "pr" || "${MODE}" == "release" ]] || {
+            echo "::error::mode must be pr or release."
+            exit 1
+          }
+
+      - name: Check whitespace errors
+        env:
+          BASE_SHA: ${{ inputs.base_sha }}
+        run: |
+          set -euo pipefail
+          if [[ "${BASE_SHA}" =~ ^[0-9a-f]{40}$ ]]; then
+            git diff --check "${BASE_SHA}...HEAD"
+          else
+            git show --check --format= HEAD
+          fi
+
+      - name: Set up Admin Flutter
+        uses: ./.github/actions/setup-admin-flutter
+
+      - name: Check Admin formatting
+        run: |
+          dart format --output=none --set-exit-if-changed \
+            apps/admin_app \
+            modules/admin_auth \
+            modules/admin_preferences \
+            modules/admin_profile \
+            modules/admin_users \
+            modules/core \
+            modules/design_system \
+            modules/shared
+
+      - name: Analyze Admin dependency scope
+        run: |
+          set -euo pipefail
+          packages=(
+            apps/admin_app
+            modules/admin_auth
+            modules/admin_preferences
+            modules/admin_profile
+            modules/admin_users
+            modules/core
+            modules/design_system
+            modules/shared
+          )
+          for package in "${packages[@]}"; do
+            echo "==> dart analyze ${package}"
+            (
+              cd "${package}"
+              dart analyze
+            )
+          done
+
+      - name: Check Admin hardcoded UI strings
+        run: |
+          dart run tool/validation/check_hardcoded_ui_strings.dart \
+            --root apps/admin_app \
+            --root modules/admin_auth \
+            --root modules/admin_preferences \
+            --root modules/admin_profile \
+            --root modules/admin_users \
+            --root modules/core \
+            --root modules/design_system \
+            --root modules/shared
+
+  unit:
+    name: Admin Unit Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out approved source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          ref: ${{ inputs.source_sha }}
+          persist-credentials: false
+
+      - name: Set up Admin Flutter
+        uses: ./.github/actions/setup-admin-flutter
+
+      - name: Test Admin dependency scope
+        run: |
+          set -euo pipefail
+          packages=(
+            apps/admin_app
+            modules/admin_auth
+            modules/admin_preferences
+            modules/admin_profile
+            modules/admin_users
+            modules/core
+            modules/design_system
+            modules/shared
+          )
+          for package in "${packages[@]}"; do
+            if [[ ! -d "${package}/test" ]]; then
+              echo "==> ${package}: no tests"
+              continue
+            fi
+            echo "==> flutter test ${package}"
+            flutter test "${package}"
+          done
+
+  runtime:
+    name: Admin Web Runtime
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out approved source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          ref: ${{ inputs.source_sha }}
+          persist-credentials: false
+
+      - name: Set up Admin Flutter
+        uses: ./.github/actions/setup-admin-flutter
+
+      - name: Build Admin Web with synthetic configuration
+        working-directory: apps/admin_app
+        run: |
+          flutter build web --release \
+            --dart-define=API_URL=https://admin-ci.invalid \
+            --dart-define=ENVIRONMENT=ci \
+            --dart-define=ENABLE_LOGGING=false \
+            --dart-define=ENABLE_ANALYTICS=false \
+            --dart-define=ENABLE_CRASHLYTICS=false \
+            --dart-define=CONNECT_TIMEOUT_SECONDS=30 \
+            --dart-define=RECEIVE_TIMEOUT_SECONDS=30 \
+            --dart-define=SEND_TIMEOUT_SECONDS=30
+
+      - name: Smoke test built Admin Web
+        run: |
+          set -euo pipefail
+          build_dir="apps/admin_app/build/web"
+          test -s "${build_dir}/index.html"
+          test -s "${build_dir}/flutter_bootstrap.js"
+          test -s "${build_dir}/main.dart.js"
+
+          python3 -m http.server 8080 --directory "${build_dir}" \
+            >"${RUNNER_TEMP}/admin-web-server.log" 2>&1 &
+          server_pid=$!
+          trap 'kill "${server_pid}" 2>/dev/null || true' EXIT
+
+          for attempt in {1..10}; do
+            if curl --fail --silent --show-error \
+              "http://127.0.0.1:8080/index.html" \
+              --output "${RUNNER_TEMP}/admin-index.html"; then
+              break
+            fi
+            if [[ "${attempt}" -eq 10 ]]; then
+              cat "${RUNNER_TEMP}/admin-web-server.log"
+              exit 1
+            fi
+            sleep 1
+          done
+
+          grep -q "flutter_bootstrap.js" "${RUNNER_TEMP}/admin-index.html"
+          curl --fail --silent --show-error \
+            "http://127.0.0.1:8080/flutter_bootstrap.js" \
+            --output /dev/null
+          curl --fail --silent --show-error \
+            "http://127.0.0.1:8080/main.dart.js" \
+            --output /dev/null
+
+  application-gate:
+    name: Admin Application Gate
+    if: always()
+    needs:
+      - quality
+      - unit
+      - runtime
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      status: ${{ steps.result.outputs.status }}
+    steps:
+      - name: Require all Admin application checks
+        id: result
+        env:
+          QUALITY_RESULT: ${{ needs.quality.result }}
+          RUNTIME_RESULT: ${{ needs.runtime.result }}
+          UNIT_RESULT: ${{ needs.unit.result }}
+        run: |
+          set -euo pipefail
+          if [[ "${QUALITY_RESULT}" != "success" ||
+                "${UNIT_RESULT}" != "success" ||
+                "${RUNTIME_RESULT}" != "success" ]]; then
+            echo "::error::Admin application checks did not all succeed."
+            exit 1
+          fi
+          echo "status=success" >>"${GITHUB_OUTPUT}"

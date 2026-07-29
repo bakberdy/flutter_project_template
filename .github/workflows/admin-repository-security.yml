@@ -1,0 +1,278 @@
+name: Admin Repository Security
+
+on:
+  workflow_call:
+    inputs:
+      source_sha:
+        description: "Full source commit SHA"
+        required: true
+        type: string
+    outputs:
+      status:
+        description: "Admin repository security result"
+        value: ${{ jobs.repository-security-gate.outputs.status }}
+      report_id:
+        description: "Run-scoped Admin security report identifier"
+        value: ${{ jobs.repository-security-gate.outputs.report_id }}
+
+permissions:
+  contents: read
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+concurrency:
+  group: admin-repository-security-${{ github.ref }}-${{ inputs.source_sha }}
+  cancel-in-progress: true
+
+jobs:
+  secrets:
+    name: Admin Secret Scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out approved source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          ref: ${{ inputs.source_sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Reject tracked Admin local configuration
+        run: |
+          set -euo pipefail
+          tracked_ignored="$(git ls-files --cached --ignored \
+            --exclude-standard \
+            apps/admin_app \
+            modules/admin_auth \
+            modules/admin_preferences \
+            modules/admin_profile \
+            modules/admin_users \
+            .github/workflows/admin-\*.yml \
+            .github/actions/setup-admin-flutter \
+            infra/terraform/admin_web)"
+          if [[ -n "${tracked_ignored}" ]]; then
+            echo "::error::Ignored Admin files are already tracked:"
+            printf '%s\n' "${tracked_ignored}"
+            exit 1
+          fi
+
+      - name: Install pinned Gitleaks
+        env:
+          GITLEAKS_SHA256: 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb
+          GITLEAKS_VERSION: 8.30.1
+        run: |
+          set -euo pipefail
+          archive="${RUNNER_TEMP}/gitleaks.tar.gz"
+          curl --fail --silent --show-error --location --retry 3 \
+            "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" \
+            --output "${archive}"
+          echo "${GITLEAKS_SHA256}  ${archive}" |
+            sha256sum --check --status
+          tar --extract --gzip --file "${archive}" \
+            --directory "${RUNNER_TEMP}" gitleaks
+
+      - name: Scan Admin history for secrets
+        run: |
+          "${RUNNER_TEMP}/gitleaks" git \
+            --log-opts="--all -- apps/admin_app modules/admin_auth modules/admin_preferences modules/admin_profile modules/admin_users .github/actions/setup-admin-flutter" \
+            --redact \
+            --no-banner \
+            --verbose \
+            .
+
+      - name: Scan current Admin workflow files for secrets
+        run: |
+          set -euo pipefail
+          for path in \
+            .github/workflows/admin-*.yml \
+            .github/actions/setup-admin-flutter \
+            infra/terraform/admin_web; do
+            "${RUNNER_TEMP}/gitleaks" dir \
+              --redact \
+              --no-banner \
+              --verbose \
+              "${path}"
+          done
+
+  dependencies:
+    name: Admin Dependency Audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out approved source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          ref: ${{ inputs.source_sha }}
+          persist-credentials: false
+
+      - name: Install pinned OSV-Scanner
+        env:
+          OSV_SCANNER_SHA256: bc98e15319ed0d515e3f9235287ba53cdc5535d576d24fd573978ecfe9ab92dc
+          OSV_SCANNER_VERSION: 2.3.8
+        run: |
+          set -euo pipefail
+          scanner="${RUNNER_TEMP}/osv-scanner"
+          curl --fail --silent --show-error --location --retry 3 \
+            "https://github.com/google/osv-scanner/releases/download/v${OSV_SCANNER_VERSION}/osv-scanner_linux_amd64" \
+            --output "${scanner}"
+          echo "${OSV_SCANNER_SHA256}  ${scanner}" |
+            sha256sum --check --status
+          chmod 0755 "${scanner}"
+
+      - name: Audit locked Dart dependencies
+        run: |
+          "${RUNNER_TEMP}/osv-scanner" scan source -r .
+
+      - name: Record dependency evidence
+        env:
+          SOURCE_SHA: ${{ inputs.source_sha }}
+        run: |
+          printf "### Admin dependency audit passed for \`%s\`\n" \
+            "${SOURCE_SHA}" >>"${GITHUB_STEP_SUMMARY}"
+          printf "\nThe Dart workspace uses one shared pubspec.lock; no Client App build or deployment was performed.\n" \
+            >>"${GITHUB_STEP_SUMMARY}"
+
+  workflows:
+    name: Admin Workflow Security
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out approved source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          ref: ${{ inputs.source_sha }}
+          persist-credentials: false
+
+      - name: Install pinned actionlint
+        env:
+          ACTIONLINT_SHA256: 8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8
+          ACTIONLINT_VERSION: 1.7.12
+        run: |
+          set -euo pipefail
+          archive="${RUNNER_TEMP}/actionlint.tar.gz"
+          curl --fail --silent --show-error --location --retry 3 \
+            "https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}/actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz" \
+            --output "${archive}"
+          echo "${ACTIONLINT_SHA256}  ${archive}" |
+            sha256sum --check --status
+          mkdir -p "${RUNNER_TEMP}/actionlint"
+          tar --extract --gzip --file "${archive}" \
+            --directory "${RUNNER_TEMP}/actionlint"
+
+      - name: Install pinned uv
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+
+      - name: Validate Admin workflow syntax and expressions
+        run: |
+          "${RUNNER_TEMP}/actionlint/actionlint" -color \
+            .github/workflows/admin-*.yml
+
+      - name: Enforce Admin workflow security policy
+        env:
+          ZIZMOR_VERSION: 1.28.0
+        run: |
+          uvx "zizmor@${ZIZMOR_VERSION}" --persona pedantic \
+            .github/workflows/admin-*.yml \
+            .github/actions/setup-admin-flutter/action.yml
+
+  configuration:
+    name: Admin Configuration Security
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out approved source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          ref: ${{ inputs.source_sha }}
+          persist-credentials: false
+
+      - name: Validate Admin configuration policy
+        run: |
+          set -euo pipefail
+          python3 -m json.tool apps/admin_app/config/config.example.json \
+            >/dev/null
+          python3 -m json.tool apps/admin_app/web/manifest.json \
+            >/dev/null
+
+          git check-ignore --quiet \
+            apps/admin_app/config/config.development.json
+          git check-ignore --quiet \
+            apps/admin_app/config/config.production.json
+
+          if git check-ignore --quiet \
+            apps/admin_app/config/config.example.json; then
+            echo "::error::Admin config.example.json must remain trackable."
+            exit 1
+          fi
+
+      - name: Install pinned Terraform
+        env:
+          TERRAFORM_SHA256: a71695fa6db9344db02ff1adb69cce891c1b2b4dc31c08df0dd4a12101a33b26
+          TERRAFORM_VERSION: 1.15.4
+        run: |
+          set -euo pipefail
+          archive="${RUNNER_TEMP}/terraform.zip"
+          curl --fail --silent --show-error --location --retry 3 \
+            "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip" \
+            --output "${archive}"
+          echo "${TERRAFORM_SHA256}  ${archive}" |
+            sha256sum --check --status
+          unzip -q "${archive}" -d "${RUNNER_TEMP}/terraform"
+          echo "${RUNNER_TEMP}/terraform" >>"${GITHUB_PATH}"
+
+      - name: Validate Admin Terraform formatting
+        run: terraform fmt -check -recursive infra/terraform/admin_web
+
+      - name: Validate Admin Terraform roots
+        run: |
+          set -euo pipefail
+          terraform -chdir=infra/terraform/admin_web \
+            init -backend=false -input=false
+          terraform -chdir=infra/terraform/admin_web validate
+          terraform -chdir=infra/terraform/admin_web/bootstrap \
+            init -backend=false -input=false
+          terraform -chdir=infra/terraform/admin_web/bootstrap validate
+
+          unexpected_configs="$(git ls-files \
+            'apps/admin_app/config/config.*.json' \
+            ':!apps/admin_app/config/config.example.json')"
+          if [[ -n "${unexpected_configs}" ]]; then
+            echo "::error::Environment-specific Admin config is tracked:"
+            printf '%s\n' "${unexpected_configs}"
+            exit 1
+          fi
+
+  repository-security-gate:
+    name: Admin Repository Security Gate
+    if: always()
+    needs:
+      - secrets
+      - dependencies
+      - workflows
+      - configuration
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      status: ${{ steps.result.outputs.status }}
+      report_id: ${{ steps.result.outputs.report_id }}
+    steps:
+      - name: Require all Admin repository security checks
+        id: result
+        env:
+          CONFIGURATION_RESULT: ${{ needs.configuration.result }}
+          DEPENDENCIES_RESULT: ${{ needs.dependencies.result }}
+          SECRETS_RESULT: ${{ needs.secrets.result }}
+          WORKFLOWS_RESULT: ${{ needs.workflows.result }}
+        run: |
+          set -euo pipefail
+          if [[ "${SECRETS_RESULT}" != "success" ||
+                "${DEPENDENCIES_RESULT}" != "success" ||
+                "${WORKFLOWS_RESULT}" != "success" ||
+                "${CONFIGURATION_RESULT}" != "success" ]]; then
+            echo "::error::Admin repository security checks failed."
+            exit 1
+          fi
+          echo "status=success" >>"${GITHUB_OUTPUT}"
+          echo "report_id=${GITHUB_RUN_ID}:${GITHUB_RUN_ATTEMPT}" \
+            >>"${GITHUB_OUTPUT}"

@@ -1,0 +1,204 @@
+name: Admin Deploy
+
+on:
+  workflow_call:
+    inputs:
+      target_environment:
+        required: true
+        type: string
+      source_sha:
+        required: true
+        type: string
+      artifact_digest:
+        required: true
+        type: string
+      artifact_reference:
+        required: true
+        type: string
+      evidence_name:
+        required: true
+        type: string
+      evidence_run_id:
+        required: false
+        type: string
+        default: ""
+  workflow_dispatch:
+    inputs:
+      target_environment:
+        description: "admin-development or admin-production"
+        required: true
+        type: environment
+      source_sha:
+        description: "Exact published source SHA"
+        required: true
+        type: string
+      artifact_digest:
+        description: "Published SHA256 digest"
+        required: true
+        type: string
+      artifact_reference:
+        description: "S3 artifact reference"
+        required: true
+        type: string
+      evidence_name:
+        description: "Evidence artifact name from the publishing run"
+        required: true
+        type: string
+      evidence_run_id:
+        description: "Publishing workflow run ID containing the evidence"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+jobs:
+  deploy:
+    name: Deploy Admin Web
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: ${{ inputs.target_environment }}
+    permissions:
+      actions: read # Read immutable publishing evidence from the approved run.
+      contents: read
+      id-token: write # Exchange GitHub OIDC for the environment deploy role.
+    concurrency:
+      group: admin-deploy-${{ inputs.target_environment }}
+      cancel-in-progress: false
+    steps:
+      - name: Validate immutable deployment contract
+        env:
+          DIGEST: ${{ inputs.artifact_digest }}
+          REFERENCE: ${{ inputs.artifact_reference }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          TARGET_ENVIRONMENT: ${{ inputs.target_environment }}
+        run: |
+          set -euo pipefail
+          [[ "${SOURCE_SHA}" =~ ^[0-9a-f]{40}$ ]]
+          [[ "${DIGEST}" =~ ^[0-9a-f]{64}$ ]]
+          [[ "${REFERENCE}" == "artifacts/sha256/${DIGEST}.tar.gz" ]]
+          [[ "${TARGET_ENVIRONMENT}" == "admin-development" ||
+             "${TARGET_ENVIRONMENT}" == "admin-production" ]]
+
+      - name: Download current-run publishing evidence
+        if: inputs.evidence_run_id == ''
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
+        with:
+          name: ${{ inputs.evidence_name }}
+          path: ${{ runner.temp }}/evidence
+
+      - name: Download prior-run publishing evidence
+        if: inputs.evidence_run_id != ''
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
+        with:
+          name: ${{ inputs.evidence_name }}
+          path: ${{ runner.temp }}/evidence
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.evidence_run_id }}
+
+      - name: Verify publishing evidence
+        env:
+          DIGEST: ${{ inputs.artifact_digest }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          TARGET_ENVIRONMENT: ${{ inputs.target_environment }}
+        run: |
+          set -euo pipefail
+          evidence="${RUNNER_TEMP}/evidence/admin-release-evidence.json"
+          test "$(jq -r .artifact_digest "${evidence}")" = "${DIGEST}"
+          test "$(jq -r .source_sha "${evidence}")" = "${SOURCE_SHA}"
+          test "$(jq -r .target_environment "${evidence}")" = "${TARGET_ENVIRONMENT}"
+
+      - name: Configure environment-scoped deploy identity
+        uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4.3.1
+        with:
+          aws-region: ${{ vars.ADMIN_AWS_REGION }}
+          role-to-assume: ${{ vars.ADMIN_DEPLOY_ROLE_ARN }}
+
+      - name: Verify release and switch active version
+        id: switch
+        env:
+          BUCKET: ${{ vars.ADMIN_WEB_BUCKET }}
+          DIGEST: ${{ inputs.artifact_digest }}
+          DISTRIBUTION_ID: ${{ vars.ADMIN_CLOUDFRONT_DISTRIBUTION_ID }}
+          KVS_ARN: ${{ vars.ADMIN_KVS_ARN }}
+          KVS_REGION: ${{ vars.ADMIN_KVS_REGION }}
+          PUBLIC_URL: ${{ vars.ADMIN_PUBLIC_URL }}
+          REFERENCE: ${{ inputs.artifact_reference }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          TARGET_ENVIRONMENT: ${{ inputs.target_environment }}
+        run: |
+          set -euo pipefail
+          archive="${RUNNER_TEMP}/admin-web.tar.gz"
+          aws s3 cp "s3://${BUCKET}/${REFERENCE}" "${archive}" --only-show-errors
+          echo "${DIGEST}  ${archive}" | sha256sum --check --status
+
+          metadata="${RUNNER_TEMP}/release.json"
+          aws s3 cp "s3://${BUCKET}/releases/${DIGEST}/release.json" \
+            "${metadata}" --only-show-errors
+          test "$(jq -r .source_sha "${metadata}")" = "${SOURCE_SHA}"
+          test "$(jq -r .target_environment "${metadata}")" = "${TARGET_ENVIRONMENT}"
+
+          previous="$(aws cloudfront-keyvaluestore get-key \
+            --kvs-arn "${KVS_ARN}" --key active_release \
+            --region "${KVS_REGION}" --query Value --output text)"
+          etag="$(aws cloudfront-keyvaluestore describe-key-value-store \
+            --kvs-arn "${KVS_ARN}" --region "${KVS_REGION}" \
+            --query ETag --output text)"
+          echo "previous=${previous}" >>"${GITHUB_OUTPUT}"
+
+          aws cloudfront-keyvaluestore put-key \
+            --kvs-arn "${KVS_ARN}" --key active_release --value "${DIGEST}" \
+            --if-match "${etag}" --region "${KVS_REGION}" >/dev/null
+          aws cloudfront create-invalidation \
+            --distribution-id "${DISTRIBUTION_ID}" --paths "/*" >/dev/null
+
+          healthy=false
+          for attempt in {1..12}; do
+            if curl --fail --silent --show-error \
+              "${PUBLIC_URL}/release.json?digest=${DIGEST}" \
+              --output "${RUNNER_TEMP}/live-release.json" &&
+               test "$(jq -r .source_sha "${RUNNER_TEMP}/live-release.json")" = "${SOURCE_SHA}" &&
+               test "$(jq -r .target_environment "${RUNNER_TEMP}/live-release.json")" = "${TARGET_ENVIRONMENT}"; then
+              healthy=true
+              break
+            fi
+            sleep 5
+          done
+
+          if [[ "${healthy}" != "true" ]]; then
+            rollback_etag="$(aws cloudfront-keyvaluestore describe-key-value-store \
+              --kvs-arn "${KVS_ARN}" --region "${KVS_REGION}" \
+              --query ETag --output text)"
+            aws cloudfront-keyvaluestore put-key \
+              --kvs-arn "${KVS_ARN}" --key active_release \
+              --value "${previous}" --if-match "${rollback_etag}" \
+              --region "${KVS_REGION}" >/dev/null
+            aws cloudfront create-invalidation \
+              --distribution-id "${DISTRIBUTION_ID}" --paths "/*" >/dev/null
+
+            previous_metadata="${RUNNER_TEMP}/previous-release.json"
+            aws s3 cp \
+              "s3://${BUCKET}/releases/${previous}/release.json" \
+              "${previous_metadata}" --only-show-errors
+            previous_source="$(jq -r .source_sha "${previous_metadata}")"
+            rollback_healthy=false
+            for attempt in {1..12}; do
+              if curl --fail --silent --show-error \
+                "${PUBLIC_URL}/release.json?rollback=${previous}" \
+                --output "${RUNNER_TEMP}/rollback-release.json" &&
+                 test "$(jq -r .source_sha "${RUNNER_TEMP}/rollback-release.json")" = "${previous_source}"; then
+                rollback_healthy=true
+                break
+              fi
+              sleep 5
+            done
+            if [[ "${rollback_healthy}" != "true" ]]; then
+              echo "::error::Admin health check and automatic rollback both failed."
+              exit 1
+            fi
+            echo "::error::Admin health check failed; previous release is healthy after rollback."
+            exit 1
+          fi

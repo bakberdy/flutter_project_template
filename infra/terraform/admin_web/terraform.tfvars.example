@@ -1,0 +1,26 @@
+environment_config = {
+  development = {
+    api_url                 = "https://dev.bakberdi.dev"
+    enable_logging          = true
+    enable_analytics        = false
+    enable_crashlytics      = false
+    connect_timeout_seconds = 30
+    receive_timeout_seconds = 30
+    send_timeout_seconds    = 30
+  }
+  production = {
+    api_url                 = "https://api.bakberdi.dev"
+    enable_logging          = false
+    enable_analytics        = true
+    enable_crashlytics      = true
+    connect_timeout_seconds = 30
+    receive_timeout_seconds = 30
+    send_timeout_seconds    = 30
+  }
+}
+
+# Existing account-wide provider is preferred:
+# github_oidc_provider_arn = "arn:aws:iam::123456789012:oidc-provider/token.actions.githubusercontent.com"
+
+# Optional GitHub numeric user IDs for production approval:
+# production_reviewer_user_ids = [1234567]
