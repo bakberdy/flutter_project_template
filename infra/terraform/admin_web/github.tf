@@ -20,9 +20,9 @@ resource "github_repository_environment" "admin" {
 resource "github_repository_environment_deployment_policy" "admin_tags" {
   for_each = var.manage_github_configuration ? local.environments : {}
 
-  repository     = var.github_repository
-  environment    = github_repository_environment.admin[each.key].environment
-  branch_pattern = "admin-${each.key}-v*"
+  repository  = var.github_repository
+  environment = github_repository_environment.admin[each.key].environment
+  tag_pattern = "admin-${each.key}-v*"
 }
 
 resource "github_actions_variable" "repository" {

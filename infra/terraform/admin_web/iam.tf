@@ -26,8 +26,8 @@ data "aws_iam_policy_document" "publisher_assume_role" {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
       values = [
-        "repo:${var.github_owner}/${var.github_repository}:ref:refs/tags/admin-development-v*",
-        "repo:${var.github_owner}/${var.github_repository}:ref:refs/tags/admin-production-v*",
+        "${local.github_oidc_repository}:ref:refs/tags/admin-development-v*",
+        "${local.github_oidc_repository}:ref:refs/tags/admin-production-v*",
       ]
     }
   }
@@ -93,7 +93,7 @@ data "aws_iam_policy_document" "deployer_assume_role" {
     condition {
       test     = "StringEquals"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:${var.github_owner}/${var.github_repository}:environment:${each.value.github_environment}"]
+      values   = ["${local.github_oidc_repository}:environment:${each.value.github_environment}"]
     }
   }
 }
@@ -109,10 +109,13 @@ data "aws_iam_policy_document" "deployer" {
   for_each = local.environments
 
   statement {
-    sid       = "ReadApprovedAdminRelease"
-    effect    = "Allow"
-    actions   = ["s3:GetObject"]
-    resources = ["${aws_s3_bucket.admin_web[each.key].arn}/releases/*"]
+    sid     = "ReadApprovedAdminRelease"
+    effect  = "Allow"
+    actions = ["s3:GetObject"]
+    resources = [
+      "${aws_s3_bucket.admin_web[each.key].arn}/artifacts/sha256/*",
+      "${aws_s3_bucket.admin_web[each.key].arn}/releases/*",
+    ]
   }
 
   statement {

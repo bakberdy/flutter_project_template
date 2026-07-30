@@ -17,7 +17,8 @@ locals {
     Repository  = "${var.github_owner}/${var.github_repository}"
   }
 
-  oidc_provider_arn = var.github_oidc_provider_arn != null ? var.github_oidc_provider_arn : aws_iam_openid_connect_provider.github[0].arn
+  oidc_provider_arn      = var.github_oidc_provider_arn != null ? var.github_oidc_provider_arn : aws_iam_openid_connect_provider.github[0].arn
+  github_oidc_repository = "repo:${var.github_owner}@${data.github_user.owner.id}/${var.github_repository}@${data.github_repository.current.repo_id}"
 
   repository_variables = merge(
     {
