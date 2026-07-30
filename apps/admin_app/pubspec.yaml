@@ -1,7 +1,7 @@
 name: admin_app
 description: "Client App admin Flutter web application."
 publish_to: none
-version: 0.1.0+1
+version: 0.1.1+2
 resolution: workspace
 
 environment:
