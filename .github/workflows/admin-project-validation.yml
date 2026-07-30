@@ -64,7 +64,7 @@ jobs:
 
   formatting:
     name: Admin Formatting
-    needs: [source-contract]
+    needs: [dependencies]
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -74,10 +74,8 @@ jobs:
           ref: ${{ inputs.source_sha }}
           persist-credentials: false
 
-      - name: Set up pinned Flutter SDK
+      - name: Restore Admin Flutter and dependencies
         uses: ./.github/actions/setup-admin-flutter
-        with:
-          resolve-dependencies: "false"
 
       - name: Check Admin formatting
         run: |
