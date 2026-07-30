@@ -9,7 +9,7 @@ domains = {
 
 environment_config = {
   development = {
-    api_url                 = "https://dev.bakberdi.dev"
+    api_url                 = "https://dev.api.bakberdi.dev"
     enable_logging          = true
     enable_analytics        = false
     enable_crashlytics      = false
