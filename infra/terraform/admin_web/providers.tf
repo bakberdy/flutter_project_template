@@ -21,3 +21,11 @@ provider "github" {
 
 data "aws_caller_identity" "current" {}
 data "aws_partition" "current" {}
+
+data "github_user" "owner" {
+  username = var.github_owner
+}
+
+data "github_repository" "current" {
+  full_name = "${var.github_owner}/${var.github_repository}"
+}
