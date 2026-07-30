@@ -1,6 +1,12 @@
 name: Set up Admin Flutter
 description: Set up the pinned Flutter SDK and workspace dependencies for Admin CI.
 
+inputs:
+  resolve-dependencies:
+    description: Restore and resolve Admin workspace dependencies.
+    required: false
+    default: "true"
+
 runs:
   using: composite
   steps:
@@ -11,7 +17,18 @@ runs:
         cache: true
         pub-cache: true
 
-    - name: Resolve workspace dependencies
+    - name: Restore Admin workspace metadata
+      if: inputs.resolve-dependencies == 'true'
+      id: admin-workspace-cache
+      uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.0.3
+      with:
+        path: |
+          .dart_tool
+          packages/project_lints/.dart_tool
+        key: admin-workspace-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('.fvmrc', 'pubspec.yaml', 'pubspec.lock', 'apps/admin_app/pubspec.yaml', 'modules/admin_auth/pubspec.yaml', 'modules/admin_preferences/pubspec.yaml', 'modules/admin_profile/pubspec.yaml', 'modules/admin_users/pubspec.yaml', 'modules/core/pubspec.yaml', 'modules/design_system/pubspec.yaml', 'modules/shared/pubspec.yaml', 'packages/project_lints/pubspec.yaml', 'packages/project_lints/pubspec.lock') }}
+
+    - name: Resolve Admin workspace dependencies
+      if: inputs.resolve-dependencies == 'true' && steps.admin-workspace-cache.outputs.cache-hit != 'true'
       shell: bash
       run: |
         set -euo pipefail

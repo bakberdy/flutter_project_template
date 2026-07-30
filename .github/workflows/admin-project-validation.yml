@@ -7,6 +7,10 @@ on:
         description: "Full source commit SHA"
         required: true
         type: string
+    outputs:
+      status:
+        description: "Admin quality gate result"
+        value: ${{ jobs.quality-gate.outputs.status }}
 
 permissions:
   contents: read
@@ -19,10 +23,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  validation:
-    name: Admin Application Quality
+  source-contract:
+    name: Admin Quality Source Contract
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 5
     steps:
       - name: Check out approved source
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
@@ -43,163 +47,204 @@ jobs:
           test "$(git rev-parse HEAD)" = "${SOURCE_SHA}"
           git show --check --format= HEAD
 
-      - name: Set up Admin Flutter once
+  dependencies:
+    name: Admin Quality Dependencies
+    needs: [source-contract]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out approved source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          ref: ${{ inputs.source_sha }}
+          persist-credentials: false
+
+      - name: Warm Admin Flutter and dependency caches
         uses: ./.github/actions/setup-admin-flutter
 
-      - name: Run Admin static checks in parallel
+  formatting:
+    name: Admin Formatting
+    needs: [source-contract]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out approved source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          ref: ${{ inputs.source_sha }}
+          persist-credentials: false
+
+      - name: Set up pinned Flutter SDK
+        uses: ./.github/actions/setup-admin-flutter
+        with:
+          resolve-dependencies: "false"
+
+      - name: Check Admin formatting
+        run: |
+          dart format --output=none --set-exit-if-changed \
+            apps/admin_app \
+            modules/admin_auth \
+            modules/admin_preferences \
+            modules/admin_profile \
+            modules/admin_users \
+            modules/core \
+            modules/design_system \
+            modules/shared
+
+  analysis:
+    name: Admin Analysis
+    needs: [dependencies]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out approved source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          ref: ${{ inputs.source_sha }}
+          persist-credentials: false
+
+      - name: Restore Admin Flutter and dependencies
+        uses: ./.github/actions/setup-admin-flutter
+
+      - name: Analyze Admin dependency scope
         run: |
           set -euo pipefail
-          logs="${RUNNER_TEMP}/admin-static-checks"
-          mkdir -p "${logs}"
-
-          (
-            dart format --output=none --set-exit-if-changed \
-              apps/admin_app \
-              modules/admin_auth \
-              modules/admin_preferences \
-              modules/admin_profile \
-              modules/admin_users \
-              modules/core \
-              modules/design_system \
-              modules/shared
-          ) >"${logs}/format.log" 2>&1 &
-          format_pid=$!
-
-          (
-            packages=(
-              apps/admin_app
-              modules/admin_auth
-              modules/admin_preferences
-              modules/admin_profile
-              modules/admin_users
-              modules/core
-              modules/design_system
-              modules/shared
+          packages=(
+            apps/admin_app
+            modules/admin_auth
+            modules/admin_preferences
+            modules/admin_profile
+            modules/admin_users
+            modules/core
+            modules/design_system
+            modules/shared
+          )
+          for package in "${packages[@]}"; do
+            echo "::group::dart analyze ${package}"
+            (
+              cd "${package}"
+              dart analyze
             )
-            analyze_pids=()
-            for package in "${packages[@]}"; do
-              (
-                cd "${package}"
-                dart analyze
-              ) >"${logs}/analyze-${package//\//-}.log" 2>&1 &
-              analyze_pids+=("$!")
-            done
-
-            analyze_result=0
-            for index in "${!analyze_pids[@]}"; do
-              package="${packages[${index}]}"
-              if wait "${analyze_pids[${index}]}"; then
-                echo "==> ${package}: analyze passed"
-              else
-                echo "==> ${package}: analyze failed"
-                analyze_result=1
-              fi
-              cat "${logs}/analyze-${package//\//-}.log"
-            done
-            exit "${analyze_result}"
-          ) >"${logs}/analyze.log" 2>&1 &
-          analyze_pid=$!
-
-          (
-            dart run tool/validation/check_hardcoded_ui_strings.dart \
-              --root apps/admin_app \
-              --root modules/admin_auth \
-              --root modules/admin_preferences \
-              --root modules/admin_profile \
-              --root modules/admin_users \
-              --root modules/core \
-              --root modules/design_system \
-              --root modules/shared
-          ) >"${logs}/hardcoded.log" 2>&1 &
-          hardcoded_pid=$!
-
-          result=0
-          for check in format analyze hardcoded; do
-            case "${check}" in
-              format) pid="${format_pid}" ;;
-              analyze) pid="${analyze_pid}" ;;
-              hardcoded) pid="${hardcoded_pid}" ;;
-            esac
-            if wait "${pid}"; then
-              echo "::notice::${check} check passed"
-            else
-              echo "::error::${check} check failed"
-              result=1
-            fi
-            echo "::group::${check} output"
-            cat "${logs}/${check}.log"
             echo "::endgroup::"
           done
-          exit "${result}"
 
-      - name: Run Admin tests and Web build in parallel
+  ui-string-policy:
+    name: Admin UI String Policy
+    needs: [dependencies]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out approved source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          ref: ${{ inputs.source_sha }}
+          persist-credentials: false
+
+      - name: Restore Admin Flutter and dependencies
+        uses: ./.github/actions/setup-admin-flutter
+
+      - name: Check Admin hardcoded UI strings
+        run: |
+          dart run tool/validation/check_hardcoded_ui_strings.dart \
+            --root apps/admin_app \
+            --root modules/admin_auth \
+            --root modules/admin_preferences \
+            --root modules/admin_profile \
+            --root modules/admin_users \
+            --root modules/core \
+            --root modules/design_system \
+            --root modules/shared
+
+  unit-tests:
+    name: Admin Unit Tests
+    needs: [dependencies]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out approved source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          ref: ${{ inputs.source_sha }}
+          persist-credentials: false
+
+      - name: Restore Admin Flutter and dependencies
+        uses: ./.github/actions/setup-admin-flutter
+
+      - name: Test Admin dependency scope
         run: |
           set -euo pipefail
-          logs="${RUNNER_TEMP}/admin-runtime-checks"
-          mkdir -p "${logs}"
+          packages=(
+            apps/admin_app
+            modules/admin_auth
+            modules/admin_preferences
+            modules/admin_profile
+            modules/admin_users
+            modules/core
+            modules/design_system
+            modules/shared
+          )
+          for package in "${packages[@]}"; do
+            if [[ ! -d "${package}/test" ]]; then
+              echo "==> ${package}: no tests"
+              continue
+            fi
+            echo "::group::flutter test ${package}"
+            flutter test "${package}"
+            echo "::endgroup::"
+          done
 
-          (
-            packages=(
-              apps/admin_app
-              modules/admin_auth
-              modules/admin_preferences
-              modules/admin_profile
-              modules/admin_users
-              modules/core
-              modules/design_system
-              modules/shared
-            )
-            for package in "${packages[@]}"; do
-              if [[ ! -d "${package}/test" ]]; then
-                echo "==> ${package}: no tests"
-                continue
-              fi
-              echo "==> flutter test ${package}"
-              flutter test "${package}"
-            done
-          ) >"${logs}/tests.log" 2>&1 &
-          tests_pid=$!
+  web-build:
+    name: Admin Web Build
+    needs: [dependencies]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out approved source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          ref: ${{ inputs.source_sha }}
+          persist-credentials: false
 
-          (
-            cd apps/admin_app
-            flutter build web --release \
-              --dart-define=API_URL=https://admin-ci.invalid \
-              --dart-define=ENVIRONMENT=ci \
-              --dart-define=ENABLE_LOGGING=false \
-              --dart-define=ENABLE_ANALYTICS=false \
-              --dart-define=ENABLE_CRASHLYTICS=false \
-              --dart-define=CONNECT_TIMEOUT_SECONDS=30 \
-              --dart-define=RECEIVE_TIMEOUT_SECONDS=30 \
-              --dart-define=SEND_TIMEOUT_SECONDS=30
-          ) >"${logs}/web-build.log" 2>&1 &
-          web_build_pid=$!
+      - name: Restore Admin Flutter and dependencies
+        uses: ./.github/actions/setup-admin-flutter
 
-          result=0
-          if wait "${tests_pid}"; then
-            echo "::notice::Admin tests passed"
-          else
-            echo "::error::Admin tests failed"
-            result=1
-          fi
-          echo "::group::Admin tests output"
-          cat "${logs}/tests.log"
-          echo "::endgroup::"
+      - name: Build Admin Web with synthetic configuration
+        working-directory: apps/admin_app
+        run: |
+          flutter build web --release \
+            --dart-define=API_URL=https://admin-ci.invalid \
+            --dart-define=ENVIRONMENT=ci \
+            --dart-define=ENABLE_LOGGING=false \
+            --dart-define=ENABLE_ANALYTICS=false \
+            --dart-define=ENABLE_CRASHLYTICS=false \
+            --dart-define=CONNECT_TIMEOUT_SECONDS=30 \
+            --dart-define=RECEIVE_TIMEOUT_SECONDS=30 \
+            --dart-define=SEND_TIMEOUT_SECONDS=30
 
-          if wait "${web_build_pid}"; then
-            echo "::notice::Admin Web build passed"
-          else
-            echo "::error::Admin Web build failed"
-            result=1
-          fi
-          echo "::group::Admin Web build output"
-          cat "${logs}/web-build.log"
-          echo "::endgroup::"
-          exit "${result}"
+      - name: Upload Admin Web quality artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.0
+        with:
+          name: admin-quality-web-${{ inputs.source_sha }}
+          path: apps/admin_app/build/web
+          if-no-files-found: error
+          retention-days: 1
+
+  web-smoke:
+    name: Admin Web Smoke
+    needs: [web-build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Download Admin Web quality artifact
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
+        with:
+          name: admin-quality-web-${{ inputs.source_sha }}
+          path: build/web
 
       - name: Smoke test built Admin Web
         run: |
           set -euo pipefail
-          build_dir="apps/admin_app/build/web"
+          build_dir="build/web"
           test -s "${build_dir}/index.html"
           test -s "${build_dir}/flutter_bootstrap.js"
           test -s "${build_dir}/main.dart.js"
@@ -229,3 +274,59 @@ jobs:
           curl --fail --silent --show-error \
             "http://127.0.0.1:8080/main.dart.js" \
             --output /dev/null
+
+  quality-gate:
+    name: Admin Quality Gate
+    if: always()
+    needs:
+      - source-contract
+      - dependencies
+      - formatting
+      - analysis
+      - ui-string-policy
+      - unit-tests
+      - web-build
+      - web-smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      status: ${{ steps.result.outputs.status }}
+    steps:
+      - name: Require all Admin quality checks
+        id: result
+        env:
+          ANALYSIS_RESULT: ${{ needs.analysis.result }}
+          DEPENDENCIES_RESULT: ${{ needs.dependencies.result }}
+          FORMATTING_RESULT: ${{ needs.formatting.result }}
+          SOURCE_CONTRACT_RESULT: ${{ needs.source-contract.result }}
+          UI_STRING_POLICY_RESULT: ${{ needs.ui-string-policy.result }}
+          UNIT_TESTS_RESULT: ${{ needs.unit-tests.result }}
+          WEB_BUILD_RESULT: ${{ needs.web-build.result }}
+          WEB_SMOKE_RESULT: ${{ needs.web-smoke.result }}
+        run: |
+          set -euo pipefail
+          results=(
+            "source-contract=${SOURCE_CONTRACT_RESULT}"
+            "dependencies=${DEPENDENCIES_RESULT}"
+            "formatting=${FORMATTING_RESULT}"
+            "analysis=${ANALYSIS_RESULT}"
+            "ui-string-policy=${UI_STRING_POLICY_RESULT}"
+            "unit-tests=${UNIT_TESTS_RESULT}"
+            "web-build=${WEB_BUILD_RESULT}"
+            "web-smoke=${WEB_SMOKE_RESULT}"
+          )
+          failed=0
+          for result in "${results[@]}"; do
+            name="${result%%=*}"
+            status="${result#*=}"
+            if [[ "${status}" == "success" ]]; then
+              echo "::notice::${name} passed"
+            else
+              echo "::error::${name} finished with ${status}"
+              failed=1
+            fi
+          done
+          if [[ "${failed}" -ne 0 ]]; then
+            exit 1
+          fi
+          echo "status=success" >>"${GITHUB_OUTPUT}"
